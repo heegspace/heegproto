@@ -6,6 +6,7 @@ struct s2sname {
     1:string    host,
     2:i32   port,
     3:i32   prority,
+    4:string name,
 }
 
 struct register_req {

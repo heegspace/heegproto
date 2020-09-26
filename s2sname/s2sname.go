@@ -25,10 +25,12 @@ var _ = rescode.GoUnusedProtection__
 //  - Host
 //  - Port
 //  - Prority
+//  - Name
 type S2sname struct {
   Host string `thrift:"host,1" db:"host" json:"host"`
   Port int32 `thrift:"port,2" db:"port" json:"port"`
   Prority int32 `thrift:"prority,3" db:"prority" json:"prority"`
+  Name string `thrift:"name,4" db:"name" json:"name"`
 }
 
 func NewS2sname() *S2sname {
@@ -46,6 +48,10 @@ func (p *S2sname) GetPort() int32 {
 
 func (p *S2sname) GetPrority() int32 {
   return p.Prority
+}
+
+func (p *S2sname) GetName() string {
+  return p.Name
 }
 func (p *S2sname) Read(iprot thrift.TProtocol) error {
   if _, err := iprot.ReadStructBegin(); err != nil {
@@ -83,6 +89,16 @@ func (p *S2sname) Read(iprot thrift.TProtocol) error {
     case 3:
       if fieldTypeId == thrift.I32 {
         if err := p.ReadField3(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 4:
+      if fieldTypeId == thrift.STRING {
+        if err := p.ReadField4(iprot); err != nil {
           return err
         }
       } else {
@@ -132,6 +148,15 @@ func (p *S2sname)  ReadField3(iprot thrift.TProtocol) error {
   return nil
 }
 
+func (p *S2sname)  ReadField4(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadString(); err != nil {
+  return thrift.PrependError("error reading field 4: ", err)
+} else {
+  p.Name = v
+}
+  return nil
+}
+
 func (p *S2sname) Write(oprot thrift.TProtocol) error {
   if err := oprot.WriteStructBegin("s2sname"); err != nil {
     return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
@@ -139,6 +164,7 @@ func (p *S2sname) Write(oprot thrift.TProtocol) error {
     if err := p.writeField1(oprot); err != nil { return err }
     if err := p.writeField2(oprot); err != nil { return err }
     if err := p.writeField3(oprot); err != nil { return err }
+    if err := p.writeField4(oprot); err != nil { return err }
   }
   if err := oprot.WriteFieldStop(); err != nil {
     return thrift.PrependError("write field stop error: ", err) }
@@ -174,6 +200,16 @@ func (p *S2sname) writeField3(oprot thrift.TProtocol) (err error) {
   return thrift.PrependError(fmt.Sprintf("%T.prority (3) field write error: ", p), err) }
   if err := oprot.WriteFieldEnd(); err != nil {
     return thrift.PrependError(fmt.Sprintf("%T write field end error 3:prority: ", p), err) }
+  return err
+}
+
+func (p *S2sname) writeField4(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("name", thrift.STRING, 4); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:name: ", p), err) }
+  if err := oprot.WriteString(string(p.Name)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.name (4) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 4:name: ", p), err) }
   return err
 }
 
