@@ -9,7 +9,7 @@ import(
 	"reflect"
 	"fmt"
 	"github.com/apache/thrift/lib/go/thrift"
-	"heegproto/rescode"
+	"github.com/heegspace/heegproto/rescode"
 
 )
 

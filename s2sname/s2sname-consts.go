@@ -3,14 +3,14 @@
 
 package s2sname
 
-import(
+import (
 	"bytes"
 	"context"
-	"reflect"
 	"fmt"
-	"github.com/apache/thrift/lib/go/thrift"
-	"heegproto/rescode"
+	"reflect"
 
+	"github.com/apache/thrift/lib/go/thrift"
+	"github.com/heegspace/heegproto/rescode"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -24,4 +24,3 @@ var _ = rescode.GoUnusedProtection__
 
 func init() {
 }
-
