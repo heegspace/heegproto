@@ -33,7 +33,7 @@ type S2sname struct {
 	Port    int32  `thrift:"port,2" db:"port" json:"port"`
 	Prority int32  `thrift:"prority,3" db:"prority" json:"prority"`
 	Name    string `thrift:"name,4" db:"name" json:"name"`
-	Expired int32  `thrift:"Expired,5" db:"Expired" json:"Expired"`
+	Expired int64  `thrift:"Expired,5" db:"Expired" json:"Expired"`
 }
 
 func NewS2sname() *S2sname {
@@ -56,7 +56,7 @@ func (p *S2sname) GetName() string {
 	return p.Name
 }
 
-func (p *S2sname) GetExpired() int32 {
+func (p *S2sname) GetExpired() int64 {
 	return p.Expired
 }
 func (p *S2sname) Read(iprot thrift.TProtocol) error {
@@ -114,7 +114,7 @@ func (p *S2sname) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 5:
-			if fieldTypeId == thrift.I32 {
+			if fieldTypeId == thrift.I64 {
 				if err := p.ReadField5(iprot); err != nil {
 					return err
 				}
@@ -175,7 +175,7 @@ func (p *S2sname) ReadField4(iprot thrift.TProtocol) error {
 }
 
 func (p *S2sname) ReadField5(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadI32(); err != nil {
+	if v, err := iprot.ReadI64(); err != nil {
 		return thrift.PrependError("error reading field 5: ", err)
 	} else {
 		p.Expired = v
@@ -266,10 +266,10 @@ func (p *S2sname) writeField4(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *S2sname) writeField5(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("Expired", thrift.I32, 5); err != nil {
+	if err := oprot.WriteFieldBegin("Expired", thrift.I64, 5); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:Expired: ", p), err)
 	}
-	if err := oprot.WriteI32(int32(p.Expired)); err != nil {
+	if err := oprot.WriteI64(int64(p.Expired)); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T.Expired (5) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
