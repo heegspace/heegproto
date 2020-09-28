@@ -7,7 +7,7 @@ struct s2sname {
     2:i32   port,
     3:i32   prority,
     4:string name,
-    5:i32   Expire;
+    5:i32   Expired;
 }
 
 struct register_req {

@@ -27,13 +27,13 @@ var _ = rescode.GoUnusedProtection__
 //  - Port
 //  - Prority
 //  - Name
-//  - Expire
+//  - Expired
 type S2sname struct {
 	Host    string `thrift:"host,1" db:"host" json:"host"`
 	Port    int32  `thrift:"port,2" db:"port" json:"port"`
 	Prority int32  `thrift:"prority,3" db:"prority" json:"prority"`
 	Name    string `thrift:"name,4" db:"name" json:"name"`
-	Expire  int32  `thrift:"Expire,5" db:"Expire" json:"Expire"`
+	Expired int32  `thrift:"Expired,5" db:"Expired" json:"Expired"`
 }
 
 func NewS2sname() *S2sname {
@@ -56,8 +56,8 @@ func (p *S2sname) GetName() string {
 	return p.Name
 }
 
-func (p *S2sname) GetExpire() int32 {
-	return p.Expire
+func (p *S2sname) GetExpired() int32 {
+	return p.Expired
 }
 func (p *S2sname) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -178,7 +178,7 @@ func (p *S2sname) ReadField5(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return thrift.PrependError("error reading field 5: ", err)
 	} else {
-		p.Expire = v
+		p.Expired = v
 	}
 	return nil
 }
@@ -266,14 +266,14 @@ func (p *S2sname) writeField4(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *S2sname) writeField5(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("Expire", thrift.I32, 5); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:Expire: ", p), err)
+	if err := oprot.WriteFieldBegin("Expired", thrift.I32, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:Expired: ", p), err)
 	}
-	if err := oprot.WriteI32(int32(p.Expire)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.Expire (5) field write error: ", p), err)
+	if err := oprot.WriteI32(int32(p.Expired)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.Expired (5) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:Expire: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:Expired: ", p), err)
 	}
 	return err
 }
