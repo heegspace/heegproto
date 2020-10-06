@@ -1066,8 +1066,10 @@ func (p *FetchRes) String() string {
 
 // Attributes:
 //  - Name
+//  - S2s
 type HeartReq struct {
-	Name string `thrift:"name,1" db:"name" json:"name"`
+	Name string   `thrift:"name,1" db:"name" json:"name"`
+	S2s  *S2sname `thrift:"s2s,2" db:"s2s" json:"s2s"`
 }
 
 func NewHeartReq() *HeartReq {
@@ -1077,6 +1079,19 @@ func NewHeartReq() *HeartReq {
 func (p *HeartReq) GetName() string {
 	return p.Name
 }
+
+var HeartReq_S2s_DEFAULT *S2sname
+
+func (p *HeartReq) GetS2s() *S2sname {
+	if !p.IsSetS2s() {
+		return HeartReq_S2s_DEFAULT
+	}
+	return p.S2s
+}
+func (p *HeartReq) IsSetS2s() bool {
+	return p.S2s != nil
+}
+
 func (p *HeartReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
@@ -1094,6 +1109,16 @@ func (p *HeartReq) Read(iprot thrift.TProtocol) error {
 		case 1:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -1125,12 +1150,23 @@ func (p *HeartReq) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *HeartReq) ReadField2(iprot thrift.TProtocol) error {
+	p.S2s = &S2sname{}
+	if err := p.S2s.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.S2s), err)
+	}
+	return nil
+}
+
 func (p *HeartReq) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("heart_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
 		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
 			return err
 		}
 	}
@@ -1152,6 +1188,19 @@ func (p *HeartReq) writeField1(oprot thrift.TProtocol) (err error) {
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:name: ", p), err)
+	}
+	return err
+}
+
+func (p *HeartReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("s2s", thrift.STRUCT, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:s2s: ", p), err)
+	}
+	if err := p.S2s.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.S2s), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:s2s: ", p), err)
 	}
 	return err
 }

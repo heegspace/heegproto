@@ -10,7 +10,6 @@ import (
 	"reflect"
 
 	"github.com/heegspace/heegproto/rescode"
-
 	"github.com/heegspace/thrift"
 )
 

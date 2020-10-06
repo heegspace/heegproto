@@ -38,6 +38,7 @@ struct fetch_res {
 
 struct heart_req {
     1:string    name,
+    2:s2sname   s2s,
 }
 
 struct heart_res {
