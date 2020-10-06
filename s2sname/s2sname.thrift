@@ -36,6 +36,15 @@ struct fetch_res {
     3:list<s2sname>     s2ss,
 }
 
+struct heart_req {
+    1:string    name,
+}
+
+struct heart_res {
+    1:rescode.code    rescode,
+    2:string    resmsg,
+}
+
 service s2sname_service {
     // 注册s2s服务
     register_res registerS2sname(1:register_req req),
@@ -48,4 +57,7 @@ service s2sname_service {
 
     // 获取所有的s2sname 列表信息
     fetch_res fetchS2snames(),
+
+    // 服务心跳包，用于更新服务的状态
+    heart_res heart(1:heart_req req),
 }

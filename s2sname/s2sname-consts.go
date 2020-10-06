@@ -7,9 +7,9 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"heegproto/rescode"
 	"reflect"
 
-	"github.com/heegspace/heegproto/rescode"
 	"github.com/heegspace/thrift"
 )
 
