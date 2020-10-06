@@ -3,13 +3,14 @@
 
 package rescode
 
-import(
+import (
 	"bytes"
 	"context"
-	"reflect"
 	"database/sql/driver"
 	"errors"
 	"fmt"
+	"reflect"
+
 	"github.com/heegspace/thrift"
 )
 
@@ -21,55 +22,59 @@ var _ = reflect.DeepEqual
 var _ = bytes.Equal
 
 type Code int64
+
 const (
-  Code_SUCCESS Code = 0
-  Code_EXISTS Code = 100
+	Code_SUCCESS Code = 0
+	Code_EXISTS  Code = 100
 )
 
 func (p Code) String() string {
-  switch p {
-  case Code_SUCCESS: return "SUCCESS"
-  case Code_EXISTS: return "EXISTS"
-  }
-  return "<UNSET>"
+	switch p {
+	case Code_SUCCESS:
+		return "SUCCESS"
+	case Code_EXISTS:
+		return "EXISTS"
+	}
+	return "<UNSET>"
 }
 
 func CodeFromString(s string) (Code, error) {
-  switch s {
-  case "SUCCESS": return Code_SUCCESS, nil 
-  case "EXISTS": return Code_EXISTS, nil 
-  }
-  return Code(0), fmt.Errorf("not a valid Code string")
+	switch s {
+	case "SUCCESS":
+		return Code_SUCCESS, nil
+	case "EXISTS":
+		return Code_EXISTS, nil
+	}
+	return Code(0), fmt.Errorf("not a valid Code string")
 }
-
 
 func CodePtr(v Code) *Code { return &v }
 
 func (p Code) MarshalText() ([]byte, error) {
-return []byte(p.String()), nil
+	return []byte(p.String()), nil
 }
 
 func (p *Code) UnmarshalText(text []byte) error {
-q, err := CodeFromString(string(text))
-if (err != nil) {
-return err
-}
-*p = q
-return nil
+	q, err := CodeFromString(string(text))
+	if err != nil {
+		return err
+	}
+	*p = q
+	return nil
 }
 
 func (p *Code) Scan(value interface{}) error {
-v, ok := value.(int64)
-if !ok {
-return errors.New("Scan value is not int64")
-}
-*p = Code(v)
-return nil
+	v, ok := value.(int64)
+	if !ok {
+		return errors.New("Scan value is not int64")
+	}
+	*p = Code(v)
+	return nil
 }
 
-func (p * Code) Value() (driver.Value, error) {
-  if p == nil {
-    return nil, nil
-  }
-return int64(*p), nil
+func (p *Code) Value() (driver.Value, error) {
+	if p == nil {
+		return nil, nil
+	}
+	return int64(*p), nil
 }

@@ -1,6 +1,8 @@
 namespace go datanode
 
 include "../rescode.thrift"
+
+
 struct user{
     1:string    uid,
     2:string    account,
