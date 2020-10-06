@@ -2,12 +2,16 @@ namespace go s2sname
 
 include "../rescode.thrift"
 
+enum Const {
+    Expired  = 30, // 超时时间
+}
+
 struct s2sname {
     1:string    host,
     2:i32   port,
     3:i32   prority,
     4:string name,
-    5:i64   Expired;
+    5:i64   expired;
 }
 
 struct register_req {

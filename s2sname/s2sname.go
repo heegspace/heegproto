@@ -6,6 +6,8 @@ package s2sname
 import (
 	"bytes"
 	"context"
+	"database/sql/driver"
+	"errors"
 	"fmt"
 	"reflect"
 
@@ -22,6 +24,59 @@ var _ = bytes.Equal
 
 var _ = rescode.GoUnusedProtection__
 
+type Const int64
+
+const (
+	Const_Expired Const = 30
+)
+
+func (p Const) String() string {
+	switch p {
+	case Const_Expired:
+		return "Expired"
+	}
+	return "<UNSET>"
+}
+
+func ConstFromString(s string) (Const, error) {
+	switch s {
+	case "Expired":
+		return Const_Expired, nil
+	}
+	return Const(0), fmt.Errorf("not a valid Const string")
+}
+
+func ConstPtr(v Const) *Const { return &v }
+
+func (p Const) MarshalText() ([]byte, error) {
+	return []byte(p.String()), nil
+}
+
+func (p *Const) UnmarshalText(text []byte) error {
+	q, err := ConstFromString(string(text))
+	if err != nil {
+		return err
+	}
+	*p = q
+	return nil
+}
+
+func (p *Const) Scan(value interface{}) error {
+	v, ok := value.(int64)
+	if !ok {
+		return errors.New("Scan value is not int64")
+	}
+	*p = Const(v)
+	return nil
+}
+
+func (p *Const) Value() (driver.Value, error) {
+	if p == nil {
+		return nil, nil
+	}
+	return int64(*p), nil
+}
+
 // Attributes:
 //  - Host
 //  - Port
@@ -33,7 +88,7 @@ type S2sname struct {
 	Port    int32  `thrift:"port,2" db:"port" json:"port"`
 	Prority int32  `thrift:"prority,3" db:"prority" json:"prority"`
 	Name    string `thrift:"name,4" db:"name" json:"name"`
-	Expired int64  `thrift:"Expired,5" db:"Expired" json:"Expired"`
+	Expired int64  `thrift:"expired,5" db:"expired" json:"expired"`
 }
 
 func NewS2sname() *S2sname {
@@ -266,14 +321,14 @@ func (p *S2sname) writeField4(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *S2sname) writeField5(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("Expired", thrift.I64, 5); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:Expired: ", p), err)
+	if err := oprot.WriteFieldBegin("expired", thrift.I64, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:expired: ", p), err)
 	}
 	if err := oprot.WriteI64(int64(p.Expired)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.Expired (5) field write error: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T.expired (5) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:Expired: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:expired: ", p), err)
 	}
 	return err
 }
