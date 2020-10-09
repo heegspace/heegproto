@@ -24,16 +24,22 @@ var _ = bytes.Equal
 type Code int64
 
 const (
-	Code_SUCCESS Code = 0
-	Code_EXISTS  Code = 100
+	Code_SUCCESS    Code = 0
+	Code_PARAM_ERR  Code = 99
+	Code_EXISTS     Code = 100
+	Code_NOT_EXISTS Code = 400
 )
 
 func (p Code) String() string {
 	switch p {
 	case Code_SUCCESS:
 		return "SUCCESS"
+	case Code_PARAM_ERR:
+		return "PARAM_ERR"
 	case Code_EXISTS:
 		return "EXISTS"
+	case Code_NOT_EXISTS:
+		return "NOT_EXISTS"
 	}
 	return "<UNSET>"
 }
@@ -42,8 +48,12 @@ func CodeFromString(s string) (Code, error) {
 	switch s {
 	case "SUCCESS":
 		return Code_SUCCESS, nil
+	case "PARAM_ERR":
+		return Code_PARAM_ERR, nil
 	case "EXISTS":
 		return Code_EXISTS, nil
+	case "NOT_EXISTS":
+		return Code_NOT_EXISTS, nil
 	}
 	return Code(0), fmt.Errorf("not a valid Code string")
 }

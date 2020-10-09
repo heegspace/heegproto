@@ -3,11 +3,12 @@
 
 package rescode
 
-import(
+import (
 	"bytes"
 	"context"
-	"reflect"
 	"fmt"
+	"reflect"
+
 	"github.com/heegspace/thrift"
 )
 
@@ -18,7 +19,5 @@ var _ = context.Background
 var _ = reflect.DeepEqual
 var _ = bytes.Equal
 
-
 func init() {
 }
-

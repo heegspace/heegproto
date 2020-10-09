@@ -42,16 +42,41 @@ struct new_user_req {
 }
 
 struct search_user_req {
-    1:list<string>      uids
-    2:string            user_name
-    3:string            phone
-    4:string            email
+    1:list<string>      uids,
+    2:string            user_name,
+    3:string            phone,
+    4:string            email,
 }
 
 struct user_res {
     1:rescode.code    rescode,
     2:string    resmsg,
     3:user      user,
+}
+
+struct update_req {
+    1:string    uid,
+    2:string    pass_wd,
+    3:string    user_name,
+    4:string    brithday,
+    5:string    card_id,
+    6:string    address,
+    7:string    nick_name,
+    8:string    avatar,
+    9:string   phone,
+    10:string   login_at,
+    11:string   login_ip,
+    12:string   last_at,
+    13:i16      status,
+    14:i64      role,
+    15:string   email,
+    16:string   contact_name,
+    17:string   brand_name,
+    18:string   company_name,
+    19:string   attention,
+    20:string   update_at,
+    21:i64      vip,
+    22:double  coin,
 }
 
 service datanode_service {
@@ -63,5 +88,5 @@ service datanode_service {
     // 搜索用户信息
     list<user> searchUser(1:search_user_req req),
     // 更新用户信息
-    user_res updateUser(1:user req),
+    user_res updateUser(1:update_req req),
 }
