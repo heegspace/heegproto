@@ -79,6 +79,101 @@ struct update_req {
     22:double  coin,
 }
 
+struct add_friend_req {
+    1:string   phone,
+}
+
+struct add_friend_res {
+    1:rescode.code    rescode,
+    2:string    resmsg,
+}
+
+struct agree_friend_req {
+    1:string   uid,
+}
+
+struct agree_friend_res {
+    1:rescode.code    rescode,
+    2:string    resmsg,
+}
+
+struct friend_item {
+    1:string    uid,
+    2:string    note,
+    3:string    account,
+    4:string    nick_name,
+    5:string    avatar,
+    6:string    brithday,
+    7:i64       join_at,
+}
+
+struct group {
+    1:i64           sort,
+    2:string        name,
+    3:list<friend_item> lists,
+}
+
+struct friend {
+    1:i64   total,
+    2:list<group> data,
+    3:list<friend_item> invite,
+    4:list<friend_item> blacks,
+}
+
+struct friend_res {
+    1:rescode.code    rescode,
+    2:string    resmsg,
+    3:friend    friends,
+}
+
+struct create_group_req {
+    1:string    name,
+}
+
+struct create_group_res {
+    1:rescode.code    rescode,
+    2:string    resmsg,
+}
+
+struct rename_group_req {
+    1:string    old_name,
+    2:string    new_name,
+}
+
+struct rename_group_res {
+    1:rescode.code    rescode,
+    2:string    resmsg,
+}
+
+struct add_friend_note_req {
+    1:string    note,
+}
+
+struct add_friend_note_res {
+    1:rescode.code    rescode,
+    2:string    resmsg,
+}
+
+struct move_group_req {
+    1:string    uid,
+    2:string    group,
+}
+
+struct move_group_res {
+    1:rescode.code    rescode,
+    2:string    resmsg,
+}
+
+struct remove_friend_req {
+    1:string    uid,
+}
+
+struct remove_friend_res {
+    1:rescode.code    rescode,
+    2:string    resmsg,
+}
+
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -89,4 +184,22 @@ service datanode_service {
     list<user> searchUser(1:search_user_req req),
     // 更新用户信息
     user_res updateUser(1:update_req req),
+
+    // --------------- 好友接口 -----------//
+    // 添加好友
+    add_friend_res addFriends(1:add_friend_req req),
+    // 同意好友
+    agree_friend_req agreeFriends(1:agree_friend_req req),
+    //  请求好友列表
+    friend_res friendsList(1:string uid),
+    // 添加组
+    create_group_res createGroup(1:create_group_req req),
+    // 重命名组
+    rename_group_res renameGroup(1:rename_group_req req),
+    // 添加好友备注
+    add_friend_note_res addNoteFriend(1:add_friend_note_req req),
+    // 移动到新的组
+    move_group_res moveToNewGroup(1:move_group_req req),
+    // 删除好友
+    remove_friend_res removeFriend(1:remove_friend_req req),
 }

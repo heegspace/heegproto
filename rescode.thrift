@@ -2,6 +2,7 @@ namespace go heegproto.rescode
 
 enum code {
     SUCCESS =   0,      // 成功
+    ERROR   =   1,      // 失败
     
     PARAM_ERR = 99,     // 参数错误
 
