@@ -7,6 +7,7 @@ enum code {
     PARAM_ERR = 99,     // 参数错误
 
     EXISTS  =   100,    // 已经存在
+    IS_SELF =   101,    // 自己
 
     NOT_EXISTS = 400,    // 不存在
 }

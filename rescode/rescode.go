@@ -25,8 +25,10 @@ type Code int64
 
 const (
 	Code_SUCCESS    Code = 0
+	Code_ERROR      Code = 1
 	Code_PARAM_ERR  Code = 99
 	Code_EXISTS     Code = 100
+	Code_IS_SELF    Code = 101
 	Code_NOT_EXISTS Code = 400
 )
 
@@ -34,10 +36,14 @@ func (p Code) String() string {
 	switch p {
 	case Code_SUCCESS:
 		return "SUCCESS"
+	case Code_ERROR:
+		return "ERROR"
 	case Code_PARAM_ERR:
 		return "PARAM_ERR"
 	case Code_EXISTS:
 		return "EXISTS"
+	case Code_IS_SELF:
+		return "IS_SELF"
 	case Code_NOT_EXISTS:
 		return "NOT_EXISTS"
 	}
@@ -48,10 +54,14 @@ func CodeFromString(s string) (Code, error) {
 	switch s {
 	case "SUCCESS":
 		return Code_SUCCESS, nil
+	case "ERROR":
+		return Code_ERROR, nil
 	case "PARAM_ERR":
 		return Code_PARAM_ERR, nil
 	case "EXISTS":
 		return Code_EXISTS, nil
+	case "IS_SELF":
+		return Code_IS_SELF, nil
 	case "NOT_EXISTS":
 		return Code_NOT_EXISTS, nil
 	}

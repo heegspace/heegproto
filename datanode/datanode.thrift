@@ -187,19 +187,19 @@ service datanode_service {
 
     // --------------- 好友接口 -----------//
     // 添加好友
-    add_friend_res addFriends(1:add_friend_req req),
+    add_friend_res addFriends(1:string uid,2:add_friend_req req),
     // 同意好友
-    agree_friend_req agreeFriends(1:agree_friend_req req),
+    agree_friend_req agreeFriends(1:string uid,2:agree_friend_req req),
     //  请求好友列表
-    friend_res friendsList(1:string uid),
+    friend_res friendsList(1:string uid, 2:string uid2),
     // 添加组
-    create_group_res createGroup(1:create_group_req req),
+    create_group_res createGroup(1:string uid,2:create_group_req req),
     // 重命名组
-    rename_group_res renameGroup(1:rename_group_req req),
+    rename_group_res renameGroup(1:string uid,2:rename_group_req req),
     // 添加好友备注
-    add_friend_note_res addNoteFriend(1:add_friend_note_req req),
+    add_friend_note_res addNoteFriend(1:string uid,2:add_friend_note_req req),
     // 移动到新的组
-    move_group_res moveToNewGroup(1:move_group_req req),
+    move_group_res moveToNewGroup(1:string uid,2:move_group_req req),
     // 删除好友
-    remove_friend_res removeFriend(1:remove_friend_req req),
+    remove_friend_res removeFriend(1:string uid,2:remove_friend_req req),
 }

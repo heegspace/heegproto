@@ -5568,29 +5568,37 @@ type DatanodeService interface {
 	//  - Req
 	UpdateUser(ctx context.Context, req *UpdateReq) (r *UserRes, err error)
 	// Parameters:
+	//  - UID
 	//  - Req
-	AddFriends(ctx context.Context, req *AddFriendReq) (r *AddFriendRes, err error)
-	// Parameters:
-	//  - Req
-	AgreeFriends(ctx context.Context, req *AgreeFriendReq) (r *AgreeFriendReq, err error)
+	AddFriends(ctx context.Context, uid string, req *AddFriendReq) (r *AddFriendRes, err error)
 	// Parameters:
 	//  - UID
-	FriendsList(ctx context.Context, uid string) (r *FriendRes, err error)
-	// Parameters:
 	//  - Req
-	CreateGroup(ctx context.Context, req *CreateGroupReq) (r *CreateGroupRes, err error)
+	AgreeFriends(ctx context.Context, uid string, req *AgreeFriendReq) (r *AgreeFriendReq, err error)
 	// Parameters:
-	//  - Req
-	RenameGroup(ctx context.Context, req *RenameGroupReq) (r *RenameGroupRes, err error)
+	//  - UID
+	//  - Uid2
+	FriendsList(ctx context.Context, uid string, uid2 string) (r *FriendRes, err error)
 	// Parameters:
+	//  - UID
 	//  - Req
-	AddNoteFriend(ctx context.Context, req *AddFriendNoteReq) (r *AddFriendNoteRes, err error)
+	CreateGroup(ctx context.Context, uid string, req *CreateGroupReq) (r *CreateGroupRes, err error)
 	// Parameters:
+	//  - UID
 	//  - Req
-	MoveToNewGroup(ctx context.Context, req *MoveGroupReq) (r *MoveGroupRes, err error)
+	RenameGroup(ctx context.Context, uid string, req *RenameGroupReq) (r *RenameGroupRes, err error)
 	// Parameters:
+	//  - UID
 	//  - Req
-	RemoveFriend(ctx context.Context, req *RemoveFriendReq) (r *RemoveFriendRes, err error)
+	AddNoteFriend(ctx context.Context, uid string, req *AddFriendNoteReq) (r *AddFriendNoteRes, err error)
+	// Parameters:
+	//  - UID
+	//  - Req
+	MoveToNewGroup(ctx context.Context, uid string, req *MoveGroupReq) (r *MoveGroupRes, err error)
+	// Parameters:
+	//  - UID
+	//  - Req
+	RemoveFriend(ctx context.Context, uid string, req *RemoveFriendReq) (r *RemoveFriendRes, err error)
 }
 
 type DatanodeServiceClient struct {
@@ -5668,9 +5676,11 @@ func (p *DatanodeServiceClient) UpdateUser(ctx context.Context, req *UpdateReq) 
 }
 
 // Parameters:
+//  - UID
 //  - Req
-func (p *DatanodeServiceClient) AddFriends(ctx context.Context, req *AddFriendReq) (r *AddFriendRes, err error) {
+func (p *DatanodeServiceClient) AddFriends(ctx context.Context, uid string, req *AddFriendReq) (r *AddFriendRes, err error) {
 	var _args13 DatanodeServiceAddFriendsArgs
+	_args13.UID = uid
 	_args13.Req = req
 	var _result14 DatanodeServiceAddFriendsResult
 	if err = p.Client_().Call(ctx, "addFriends", &_args13, &_result14); err != nil {
@@ -5680,9 +5690,11 @@ func (p *DatanodeServiceClient) AddFriends(ctx context.Context, req *AddFriendRe
 }
 
 // Parameters:
+//  - UID
 //  - Req
-func (p *DatanodeServiceClient) AgreeFriends(ctx context.Context, req *AgreeFriendReq) (r *AgreeFriendReq, err error) {
+func (p *DatanodeServiceClient) AgreeFriends(ctx context.Context, uid string, req *AgreeFriendReq) (r *AgreeFriendReq, err error) {
 	var _args15 DatanodeServiceAgreeFriendsArgs
+	_args15.UID = uid
 	_args15.Req = req
 	var _result16 DatanodeServiceAgreeFriendsResult
 	if err = p.Client_().Call(ctx, "agreeFriends", &_args15, &_result16); err != nil {
@@ -5693,9 +5705,11 @@ func (p *DatanodeServiceClient) AgreeFriends(ctx context.Context, req *AgreeFrie
 
 // Parameters:
 //  - UID
-func (p *DatanodeServiceClient) FriendsList(ctx context.Context, uid string) (r *FriendRes, err error) {
+//  - Uid2
+func (p *DatanodeServiceClient) FriendsList(ctx context.Context, uid string, uid2 string) (r *FriendRes, err error) {
 	var _args17 DatanodeServiceFriendsListArgs
 	_args17.UID = uid
+	_args17.Uid2 = uid2
 	var _result18 DatanodeServiceFriendsListResult
 	if err = p.Client_().Call(ctx, "friendsList", &_args17, &_result18); err != nil {
 		return
@@ -5704,9 +5718,11 @@ func (p *DatanodeServiceClient) FriendsList(ctx context.Context, uid string) (r 
 }
 
 // Parameters:
+//  - UID
 //  - Req
-func (p *DatanodeServiceClient) CreateGroup(ctx context.Context, req *CreateGroupReq) (r *CreateGroupRes, err error) {
+func (p *DatanodeServiceClient) CreateGroup(ctx context.Context, uid string, req *CreateGroupReq) (r *CreateGroupRes, err error) {
 	var _args19 DatanodeServiceCreateGroupArgs
+	_args19.UID = uid
 	_args19.Req = req
 	var _result20 DatanodeServiceCreateGroupResult
 	if err = p.Client_().Call(ctx, "createGroup", &_args19, &_result20); err != nil {
@@ -5716,9 +5732,11 @@ func (p *DatanodeServiceClient) CreateGroup(ctx context.Context, req *CreateGrou
 }
 
 // Parameters:
+//  - UID
 //  - Req
-func (p *DatanodeServiceClient) RenameGroup(ctx context.Context, req *RenameGroupReq) (r *RenameGroupRes, err error) {
+func (p *DatanodeServiceClient) RenameGroup(ctx context.Context, uid string, req *RenameGroupReq) (r *RenameGroupRes, err error) {
 	var _args21 DatanodeServiceRenameGroupArgs
+	_args21.UID = uid
 	_args21.Req = req
 	var _result22 DatanodeServiceRenameGroupResult
 	if err = p.Client_().Call(ctx, "renameGroup", &_args21, &_result22); err != nil {
@@ -5728,9 +5746,11 @@ func (p *DatanodeServiceClient) RenameGroup(ctx context.Context, req *RenameGrou
 }
 
 // Parameters:
+//  - UID
 //  - Req
-func (p *DatanodeServiceClient) AddNoteFriend(ctx context.Context, req *AddFriendNoteReq) (r *AddFriendNoteRes, err error) {
+func (p *DatanodeServiceClient) AddNoteFriend(ctx context.Context, uid string, req *AddFriendNoteReq) (r *AddFriendNoteRes, err error) {
 	var _args23 DatanodeServiceAddNoteFriendArgs
+	_args23.UID = uid
 	_args23.Req = req
 	var _result24 DatanodeServiceAddNoteFriendResult
 	if err = p.Client_().Call(ctx, "addNoteFriend", &_args23, &_result24); err != nil {
@@ -5740,9 +5760,11 @@ func (p *DatanodeServiceClient) AddNoteFriend(ctx context.Context, req *AddFrien
 }
 
 // Parameters:
+//  - UID
 //  - Req
-func (p *DatanodeServiceClient) MoveToNewGroup(ctx context.Context, req *MoveGroupReq) (r *MoveGroupRes, err error) {
+func (p *DatanodeServiceClient) MoveToNewGroup(ctx context.Context, uid string, req *MoveGroupReq) (r *MoveGroupRes, err error) {
 	var _args25 DatanodeServiceMoveToNewGroupArgs
+	_args25.UID = uid
 	_args25.Req = req
 	var _result26 DatanodeServiceMoveToNewGroupResult
 	if err = p.Client_().Call(ctx, "moveToNewGroup", &_args25, &_result26); err != nil {
@@ -5752,9 +5774,11 @@ func (p *DatanodeServiceClient) MoveToNewGroup(ctx context.Context, req *MoveGro
 }
 
 // Parameters:
+//  - UID
 //  - Req
-func (p *DatanodeServiceClient) RemoveFriend(ctx context.Context, req *RemoveFriendReq) (r *RemoveFriendRes, err error) {
+func (p *DatanodeServiceClient) RemoveFriend(ctx context.Context, uid string, req *RemoveFriendReq) (r *RemoveFriendRes, err error) {
 	var _args27 DatanodeServiceRemoveFriendArgs
+	_args27.UID = uid
 	_args27.Req = req
 	var _result28 DatanodeServiceRemoveFriendResult
 	if err = p.Client_().Call(ctx, "removeFriend", &_args27, &_result28); err != nil {
@@ -6030,7 +6054,7 @@ func (p *datanodeServiceProcessorAddFriends) Process(ctx context.Context, seqId 
 	result := DatanodeServiceAddFriendsResult{}
 	var retval *AddFriendRes
 	var err2 error
-	if retval, err2 = p.handler.AddFriends(ctx, args.Req); err2 != nil {
+	if retval, err2 = p.handler.AddFriends(ctx, args.UID, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing addFriends: "+err2.Error())
 		oprot.WriteMessageBegin("addFriends", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
@@ -6078,7 +6102,7 @@ func (p *datanodeServiceProcessorAgreeFriends) Process(ctx context.Context, seqI
 	result := DatanodeServiceAgreeFriendsResult{}
 	var retval *AgreeFriendReq
 	var err2 error
-	if retval, err2 = p.handler.AgreeFriends(ctx, args.Req); err2 != nil {
+	if retval, err2 = p.handler.AgreeFriends(ctx, args.UID, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing agreeFriends: "+err2.Error())
 		oprot.WriteMessageBegin("agreeFriends", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
@@ -6126,7 +6150,7 @@ func (p *datanodeServiceProcessorFriendsList) Process(ctx context.Context, seqId
 	result := DatanodeServiceFriendsListResult{}
 	var retval *FriendRes
 	var err2 error
-	if retval, err2 = p.handler.FriendsList(ctx, args.UID); err2 != nil {
+	if retval, err2 = p.handler.FriendsList(ctx, args.UID, args.Uid2); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing friendsList: "+err2.Error())
 		oprot.WriteMessageBegin("friendsList", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
@@ -6174,7 +6198,7 @@ func (p *datanodeServiceProcessorCreateGroup) Process(ctx context.Context, seqId
 	result := DatanodeServiceCreateGroupResult{}
 	var retval *CreateGroupRes
 	var err2 error
-	if retval, err2 = p.handler.CreateGroup(ctx, args.Req); err2 != nil {
+	if retval, err2 = p.handler.CreateGroup(ctx, args.UID, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing createGroup: "+err2.Error())
 		oprot.WriteMessageBegin("createGroup", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
@@ -6222,7 +6246,7 @@ func (p *datanodeServiceProcessorRenameGroup) Process(ctx context.Context, seqId
 	result := DatanodeServiceRenameGroupResult{}
 	var retval *RenameGroupRes
 	var err2 error
-	if retval, err2 = p.handler.RenameGroup(ctx, args.Req); err2 != nil {
+	if retval, err2 = p.handler.RenameGroup(ctx, args.UID, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing renameGroup: "+err2.Error())
 		oprot.WriteMessageBegin("renameGroup", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
@@ -6270,7 +6294,7 @@ func (p *datanodeServiceProcessorAddNoteFriend) Process(ctx context.Context, seq
 	result := DatanodeServiceAddNoteFriendResult{}
 	var retval *AddFriendNoteRes
 	var err2 error
-	if retval, err2 = p.handler.AddNoteFriend(ctx, args.Req); err2 != nil {
+	if retval, err2 = p.handler.AddNoteFriend(ctx, args.UID, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing addNoteFriend: "+err2.Error())
 		oprot.WriteMessageBegin("addNoteFriend", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
@@ -6318,7 +6342,7 @@ func (p *datanodeServiceProcessorMoveToNewGroup) Process(ctx context.Context, se
 	result := DatanodeServiceMoveToNewGroupResult{}
 	var retval *MoveGroupRes
 	var err2 error
-	if retval, err2 = p.handler.MoveToNewGroup(ctx, args.Req); err2 != nil {
+	if retval, err2 = p.handler.MoveToNewGroup(ctx, args.UID, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing moveToNewGroup: "+err2.Error())
 		oprot.WriteMessageBegin("moveToNewGroup", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
@@ -6366,7 +6390,7 @@ func (p *datanodeServiceProcessorRemoveFriend) Process(ctx context.Context, seqI
 	result := DatanodeServiceRemoveFriendResult{}
 	var retval *RemoveFriendRes
 	var err2 error
-	if retval, err2 = p.handler.RemoveFriend(ctx, args.Req); err2 != nil {
+	if retval, err2 = p.handler.RemoveFriend(ctx, args.UID, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing removeFriend: "+err2.Error())
 		oprot.WriteMessageBegin("removeFriend", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
@@ -7278,13 +7302,19 @@ func (p *DatanodeServiceUpdateUserResult) String() string {
 }
 
 // Attributes:
+//  - UID
 //  - Req
 type DatanodeServiceAddFriendsArgs struct {
-	Req *AddFriendReq `thrift:"req,1" db:"req" json:"req"`
+	UID string        `thrift:"uid,1" db:"uid" json:"uid"`
+	Req *AddFriendReq `thrift:"req,2" db:"req" json:"req"`
 }
 
 func NewDatanodeServiceAddFriendsArgs() *DatanodeServiceAddFriendsArgs {
 	return &DatanodeServiceAddFriendsArgs{}
+}
+
+func (p *DatanodeServiceAddFriendsArgs) GetUID() string {
+	return p.UID
 }
 
 var DatanodeServiceAddFriendsArgs_Req_DEFAULT *AddFriendReq
@@ -7314,8 +7344,18 @@ func (p *DatanodeServiceAddFriendsArgs) Read(iprot thrift.TProtocol) error {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRUCT {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -7339,6 +7379,15 @@ func (p *DatanodeServiceAddFriendsArgs) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *DatanodeServiceAddFriendsArgs) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
+func (p *DatanodeServiceAddFriendsArgs) ReadField2(iprot thrift.TProtocol) error {
 	p.Req = &AddFriendReq{}
 	if err := p.Req.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
@@ -7354,6 +7403,9 @@ func (p *DatanodeServiceAddFriendsArgs) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField1(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -7365,14 +7417,27 @@ func (p *DatanodeServiceAddFriendsArgs) Write(oprot thrift.TProtocol) error {
 }
 
 func (p *DatanodeServiceAddFriendsArgs) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *DatanodeServiceAddFriendsArgs) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:req: ", p), err)
 	}
 	if err := p.Req.Write(oprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:req: ", p), err)
 	}
 	return err
 }
@@ -7494,13 +7559,19 @@ func (p *DatanodeServiceAddFriendsResult) String() string {
 }
 
 // Attributes:
+//  - UID
 //  - Req
 type DatanodeServiceAgreeFriendsArgs struct {
-	Req *AgreeFriendReq `thrift:"req,1" db:"req" json:"req"`
+	UID string          `thrift:"uid,1" db:"uid" json:"uid"`
+	Req *AgreeFriendReq `thrift:"req,2" db:"req" json:"req"`
 }
 
 func NewDatanodeServiceAgreeFriendsArgs() *DatanodeServiceAgreeFriendsArgs {
 	return &DatanodeServiceAgreeFriendsArgs{}
+}
+
+func (p *DatanodeServiceAgreeFriendsArgs) GetUID() string {
+	return p.UID
 }
 
 var DatanodeServiceAgreeFriendsArgs_Req_DEFAULT *AgreeFriendReq
@@ -7530,8 +7601,18 @@ func (p *DatanodeServiceAgreeFriendsArgs) Read(iprot thrift.TProtocol) error {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRUCT {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -7555,6 +7636,15 @@ func (p *DatanodeServiceAgreeFriendsArgs) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *DatanodeServiceAgreeFriendsArgs) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
+func (p *DatanodeServiceAgreeFriendsArgs) ReadField2(iprot thrift.TProtocol) error {
 	p.Req = &AgreeFriendReq{}
 	if err := p.Req.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
@@ -7570,6 +7660,9 @@ func (p *DatanodeServiceAgreeFriendsArgs) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField1(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -7581,14 +7674,27 @@ func (p *DatanodeServiceAgreeFriendsArgs) Write(oprot thrift.TProtocol) error {
 }
 
 func (p *DatanodeServiceAgreeFriendsArgs) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *DatanodeServiceAgreeFriendsArgs) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:req: ", p), err)
 	}
 	if err := p.Req.Write(oprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:req: ", p), err)
 	}
 	return err
 }
@@ -7711,8 +7817,10 @@ func (p *DatanodeServiceAgreeFriendsResult) String() string {
 
 // Attributes:
 //  - UID
+//  - Uid2
 type DatanodeServiceFriendsListArgs struct {
-	UID string `thrift:"uid,1" db:"uid" json:"uid"`
+	UID  string `thrift:"uid,1" db:"uid" json:"uid"`
+	Uid2 string `thrift:"uid2,2" db:"uid2" json:"uid2"`
 }
 
 func NewDatanodeServiceFriendsListArgs() *DatanodeServiceFriendsListArgs {
@@ -7721,6 +7829,10 @@ func NewDatanodeServiceFriendsListArgs() *DatanodeServiceFriendsListArgs {
 
 func (p *DatanodeServiceFriendsListArgs) GetUID() string {
 	return p.UID
+}
+
+func (p *DatanodeServiceFriendsListArgs) GetUid2() string {
+	return p.Uid2
 }
 func (p *DatanodeServiceFriendsListArgs) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -7739,6 +7851,16 @@ func (p *DatanodeServiceFriendsListArgs) Read(iprot thrift.TProtocol) error {
 		case 1:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -7770,12 +7892,24 @@ func (p *DatanodeServiceFriendsListArgs) ReadField1(iprot thrift.TProtocol) erro
 	return nil
 }
 
+func (p *DatanodeServiceFriendsListArgs) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Uid2 = v
+	}
+	return nil
+}
+
 func (p *DatanodeServiceFriendsListArgs) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("friendsList_args"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
 		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
 			return err
 		}
 	}
@@ -7797,6 +7931,19 @@ func (p *DatanodeServiceFriendsListArgs) writeField1(oprot thrift.TProtocol) (er
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *DatanodeServiceFriendsListArgs) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("uid2", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:uid2: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Uid2)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid2 (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:uid2: ", p), err)
 	}
 	return err
 }
@@ -7918,13 +8065,19 @@ func (p *DatanodeServiceFriendsListResult) String() string {
 }
 
 // Attributes:
+//  - UID
 //  - Req
 type DatanodeServiceCreateGroupArgs struct {
-	Req *CreateGroupReq `thrift:"req,1" db:"req" json:"req"`
+	UID string          `thrift:"uid,1" db:"uid" json:"uid"`
+	Req *CreateGroupReq `thrift:"req,2" db:"req" json:"req"`
 }
 
 func NewDatanodeServiceCreateGroupArgs() *DatanodeServiceCreateGroupArgs {
 	return &DatanodeServiceCreateGroupArgs{}
+}
+
+func (p *DatanodeServiceCreateGroupArgs) GetUID() string {
+	return p.UID
 }
 
 var DatanodeServiceCreateGroupArgs_Req_DEFAULT *CreateGroupReq
@@ -7954,8 +8107,18 @@ func (p *DatanodeServiceCreateGroupArgs) Read(iprot thrift.TProtocol) error {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRUCT {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -7979,6 +8142,15 @@ func (p *DatanodeServiceCreateGroupArgs) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *DatanodeServiceCreateGroupArgs) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
+func (p *DatanodeServiceCreateGroupArgs) ReadField2(iprot thrift.TProtocol) error {
 	p.Req = &CreateGroupReq{}
 	if err := p.Req.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
@@ -7994,6 +8166,9 @@ func (p *DatanodeServiceCreateGroupArgs) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField1(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -8005,14 +8180,27 @@ func (p *DatanodeServiceCreateGroupArgs) Write(oprot thrift.TProtocol) error {
 }
 
 func (p *DatanodeServiceCreateGroupArgs) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *DatanodeServiceCreateGroupArgs) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:req: ", p), err)
 	}
 	if err := p.Req.Write(oprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:req: ", p), err)
 	}
 	return err
 }
@@ -8134,13 +8322,19 @@ func (p *DatanodeServiceCreateGroupResult) String() string {
 }
 
 // Attributes:
+//  - UID
 //  - Req
 type DatanodeServiceRenameGroupArgs struct {
-	Req *RenameGroupReq `thrift:"req,1" db:"req" json:"req"`
+	UID string          `thrift:"uid,1" db:"uid" json:"uid"`
+	Req *RenameGroupReq `thrift:"req,2" db:"req" json:"req"`
 }
 
 func NewDatanodeServiceRenameGroupArgs() *DatanodeServiceRenameGroupArgs {
 	return &DatanodeServiceRenameGroupArgs{}
+}
+
+func (p *DatanodeServiceRenameGroupArgs) GetUID() string {
+	return p.UID
 }
 
 var DatanodeServiceRenameGroupArgs_Req_DEFAULT *RenameGroupReq
@@ -8170,8 +8364,18 @@ func (p *DatanodeServiceRenameGroupArgs) Read(iprot thrift.TProtocol) error {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRUCT {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -8195,6 +8399,15 @@ func (p *DatanodeServiceRenameGroupArgs) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *DatanodeServiceRenameGroupArgs) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
+func (p *DatanodeServiceRenameGroupArgs) ReadField2(iprot thrift.TProtocol) error {
 	p.Req = &RenameGroupReq{}
 	if err := p.Req.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
@@ -8210,6 +8423,9 @@ func (p *DatanodeServiceRenameGroupArgs) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField1(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -8221,14 +8437,27 @@ func (p *DatanodeServiceRenameGroupArgs) Write(oprot thrift.TProtocol) error {
 }
 
 func (p *DatanodeServiceRenameGroupArgs) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *DatanodeServiceRenameGroupArgs) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:req: ", p), err)
 	}
 	if err := p.Req.Write(oprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:req: ", p), err)
 	}
 	return err
 }
@@ -8350,13 +8579,19 @@ func (p *DatanodeServiceRenameGroupResult) String() string {
 }
 
 // Attributes:
+//  - UID
 //  - Req
 type DatanodeServiceAddNoteFriendArgs struct {
-	Req *AddFriendNoteReq `thrift:"req,1" db:"req" json:"req"`
+	UID string            `thrift:"uid,1" db:"uid" json:"uid"`
+	Req *AddFriendNoteReq `thrift:"req,2" db:"req" json:"req"`
 }
 
 func NewDatanodeServiceAddNoteFriendArgs() *DatanodeServiceAddNoteFriendArgs {
 	return &DatanodeServiceAddNoteFriendArgs{}
+}
+
+func (p *DatanodeServiceAddNoteFriendArgs) GetUID() string {
+	return p.UID
 }
 
 var DatanodeServiceAddNoteFriendArgs_Req_DEFAULT *AddFriendNoteReq
@@ -8386,8 +8621,18 @@ func (p *DatanodeServiceAddNoteFriendArgs) Read(iprot thrift.TProtocol) error {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRUCT {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -8411,6 +8656,15 @@ func (p *DatanodeServiceAddNoteFriendArgs) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *DatanodeServiceAddNoteFriendArgs) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
+func (p *DatanodeServiceAddNoteFriendArgs) ReadField2(iprot thrift.TProtocol) error {
 	p.Req = &AddFriendNoteReq{}
 	if err := p.Req.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
@@ -8426,6 +8680,9 @@ func (p *DatanodeServiceAddNoteFriendArgs) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField1(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -8437,14 +8694,27 @@ func (p *DatanodeServiceAddNoteFriendArgs) Write(oprot thrift.TProtocol) error {
 }
 
 func (p *DatanodeServiceAddNoteFriendArgs) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *DatanodeServiceAddNoteFriendArgs) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:req: ", p), err)
 	}
 	if err := p.Req.Write(oprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:req: ", p), err)
 	}
 	return err
 }
@@ -8566,13 +8836,19 @@ func (p *DatanodeServiceAddNoteFriendResult) String() string {
 }
 
 // Attributes:
+//  - UID
 //  - Req
 type DatanodeServiceMoveToNewGroupArgs struct {
-	Req *MoveGroupReq `thrift:"req,1" db:"req" json:"req"`
+	UID string        `thrift:"uid,1" db:"uid" json:"uid"`
+	Req *MoveGroupReq `thrift:"req,2" db:"req" json:"req"`
 }
 
 func NewDatanodeServiceMoveToNewGroupArgs() *DatanodeServiceMoveToNewGroupArgs {
 	return &DatanodeServiceMoveToNewGroupArgs{}
+}
+
+func (p *DatanodeServiceMoveToNewGroupArgs) GetUID() string {
+	return p.UID
 }
 
 var DatanodeServiceMoveToNewGroupArgs_Req_DEFAULT *MoveGroupReq
@@ -8602,8 +8878,18 @@ func (p *DatanodeServiceMoveToNewGroupArgs) Read(iprot thrift.TProtocol) error {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRUCT {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -8627,6 +8913,15 @@ func (p *DatanodeServiceMoveToNewGroupArgs) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *DatanodeServiceMoveToNewGroupArgs) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
+func (p *DatanodeServiceMoveToNewGroupArgs) ReadField2(iprot thrift.TProtocol) error {
 	p.Req = &MoveGroupReq{}
 	if err := p.Req.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
@@ -8642,6 +8937,9 @@ func (p *DatanodeServiceMoveToNewGroupArgs) Write(oprot thrift.TProtocol) error 
 		if err := p.writeField1(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -8653,14 +8951,27 @@ func (p *DatanodeServiceMoveToNewGroupArgs) Write(oprot thrift.TProtocol) error 
 }
 
 func (p *DatanodeServiceMoveToNewGroupArgs) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *DatanodeServiceMoveToNewGroupArgs) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:req: ", p), err)
 	}
 	if err := p.Req.Write(oprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:req: ", p), err)
 	}
 	return err
 }
@@ -8782,13 +9093,19 @@ func (p *DatanodeServiceMoveToNewGroupResult) String() string {
 }
 
 // Attributes:
+//  - UID
 //  - Req
 type DatanodeServiceRemoveFriendArgs struct {
-	Req *RemoveFriendReq `thrift:"req,1" db:"req" json:"req"`
+	UID string           `thrift:"uid,1" db:"uid" json:"uid"`
+	Req *RemoveFriendReq `thrift:"req,2" db:"req" json:"req"`
 }
 
 func NewDatanodeServiceRemoveFriendArgs() *DatanodeServiceRemoveFriendArgs {
 	return &DatanodeServiceRemoveFriendArgs{}
+}
+
+func (p *DatanodeServiceRemoveFriendArgs) GetUID() string {
+	return p.UID
 }
 
 var DatanodeServiceRemoveFriendArgs_Req_DEFAULT *RemoveFriendReq
@@ -8818,8 +9135,18 @@ func (p *DatanodeServiceRemoveFriendArgs) Read(iprot thrift.TProtocol) error {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRUCT {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -8843,6 +9170,15 @@ func (p *DatanodeServiceRemoveFriendArgs) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *DatanodeServiceRemoveFriendArgs) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
+func (p *DatanodeServiceRemoveFriendArgs) ReadField2(iprot thrift.TProtocol) error {
 	p.Req = &RemoveFriendReq{}
 	if err := p.Req.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
@@ -8858,6 +9194,9 @@ func (p *DatanodeServiceRemoveFriendArgs) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField1(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -8869,14 +9208,27 @@ func (p *DatanodeServiceRemoveFriendArgs) Write(oprot thrift.TProtocol) error {
 }
 
 func (p *DatanodeServiceRemoveFriendArgs) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *DatanodeServiceRemoveFriendArgs) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:req: ", p), err)
 	}
 	if err := p.Req.Write(oprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:req: ", p), err)
 	}
 	return err
 }
