@@ -5574,7 +5574,7 @@ type DatanodeService interface {
 	// Parameters:
 	//  - UID
 	//  - Req
-	AgreeFriends(ctx context.Context, uid string, req *AgreeFriendReq) (r *AgreeFriendReq, err error)
+	AgreeFriends(ctx context.Context, uid string, req *AgreeFriendReq) (r *AgreeFriendRes, err error)
 	// Parameters:
 	//  - UID
 	//  - Uid2
@@ -5692,7 +5692,7 @@ func (p *DatanodeServiceClient) AddFriends(ctx context.Context, uid string, req 
 // Parameters:
 //  - UID
 //  - Req
-func (p *DatanodeServiceClient) AgreeFriends(ctx context.Context, uid string, req *AgreeFriendReq) (r *AgreeFriendReq, err error) {
+func (p *DatanodeServiceClient) AgreeFriends(ctx context.Context, uid string, req *AgreeFriendReq) (r *AgreeFriendRes, err error) {
 	var _args15 DatanodeServiceAgreeFriendsArgs
 	_args15.UID = uid
 	_args15.Req = req
@@ -6100,7 +6100,7 @@ func (p *datanodeServiceProcessorAgreeFriends) Process(ctx context.Context, seqI
 
 	iprot.ReadMessageEnd()
 	result := DatanodeServiceAgreeFriendsResult{}
-	var retval *AgreeFriendReq
+	var retval *AgreeFriendRes
 	var err2 error
 	if retval, err2 = p.handler.AgreeFriends(ctx, args.UID, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing agreeFriends: "+err2.Error())
@@ -7709,16 +7709,16 @@ func (p *DatanodeServiceAgreeFriendsArgs) String() string {
 // Attributes:
 //  - Success
 type DatanodeServiceAgreeFriendsResult struct {
-	Success *AgreeFriendReq `thrift:"success,0" db:"success" json:"success,omitempty"`
+	Success *AgreeFriendRes `thrift:"success,0" db:"success" json:"success,omitempty"`
 }
 
 func NewDatanodeServiceAgreeFriendsResult() *DatanodeServiceAgreeFriendsResult {
 	return &DatanodeServiceAgreeFriendsResult{}
 }
 
-var DatanodeServiceAgreeFriendsResult_Success_DEFAULT *AgreeFriendReq
+var DatanodeServiceAgreeFriendsResult_Success_DEFAULT *AgreeFriendRes
 
-func (p *DatanodeServiceAgreeFriendsResult) GetSuccess() *AgreeFriendReq {
+func (p *DatanodeServiceAgreeFriendsResult) GetSuccess() *AgreeFriendRes {
 	if !p.IsSetSuccess() {
 		return DatanodeServiceAgreeFriendsResult_Success_DEFAULT
 	}
@@ -7768,7 +7768,7 @@ func (p *DatanodeServiceAgreeFriendsResult) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *DatanodeServiceAgreeFriendsResult) ReadField0(iprot thrift.TProtocol) error {
-	p.Success = &AgreeFriendReq{}
+	p.Success = &AgreeFriendRes{}
 	if err := p.Success.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
 	}

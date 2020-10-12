@@ -189,7 +189,7 @@ service datanode_service {
     // 添加好友
     add_friend_res addFriends(1:string uid,2:add_friend_req req),
     // 同意好友
-    agree_friend_req agreeFriends(1:string uid,2:agree_friend_req req),
+    agree_friend_res agreeFriends(1:string uid,2:agree_friend_req req),
     //  请求好友列表
     friend_res friendsList(1:string uid, 2:string uid2),
     // 添加组
