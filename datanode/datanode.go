@@ -6269,7 +6269,8 @@ type DatanodeService interface {
 	LikesCount(ctx context.Context, mid string) (r *LikesCountRes, err error)
 	// Parameters:
 	//  - Mid
-	LikesAdd(ctx context.Context, mid string) (r *LikesAddRes, err error)
+	//  - UID
+	LikesAdd(ctx context.Context, mid string, uid string) (r *LikesAddRes, err error)
 	// Parameters:
 	//  - Mid
 	LikesList(ctx context.Context, mid string) (r *LikesListRes, err error)
@@ -6475,9 +6476,11 @@ func (p *DatanodeServiceClient) LikesCount(ctx context.Context, mid string) (r *
 
 // Parameters:
 //  - Mid
-func (p *DatanodeServiceClient) LikesAdd(ctx context.Context, mid string) (r *LikesAddRes, err error) {
+//  - UID
+func (p *DatanodeServiceClient) LikesAdd(ctx context.Context, mid string, uid string) (r *LikesAddRes, err error) {
 	var _args32 DatanodeServiceLikesAddArgs
 	_args32.Mid = mid
+	_args32.UID = uid
 	var _result33 DatanodeServiceLikesAddResult
 	if err = p.Client_().Call(ctx, "likesAdd", &_args32, &_result33); err != nil {
 		return
@@ -7199,7 +7202,7 @@ func (p *datanodeServiceProcessorLikesAdd) Process(ctx context.Context, seqId in
 	result := DatanodeServiceLikesAddResult{}
 	var retval *LikesAddRes
 	var err2 error
-	if retval, err2 = p.handler.LikesAdd(ctx, args.Mid); err2 != nil {
+	if retval, err2 = p.handler.LikesAdd(ctx, args.Mid, args.UID); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing likesAdd: "+err2.Error())
 		oprot.WriteMessageBegin("likesAdd", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
@@ -10416,8 +10419,10 @@ func (p *DatanodeServiceLikesCountResult) String() string {
 
 // Attributes:
 //  - Mid
+//  - UID
 type DatanodeServiceLikesAddArgs struct {
 	Mid string `thrift:"mid,1" db:"mid" json:"mid"`
+	UID string `thrift:"uid,2" db:"uid" json:"uid"`
 }
 
 func NewDatanodeServiceLikesAddArgs() *DatanodeServiceLikesAddArgs {
@@ -10426,6 +10431,10 @@ func NewDatanodeServiceLikesAddArgs() *DatanodeServiceLikesAddArgs {
 
 func (p *DatanodeServiceLikesAddArgs) GetMid() string {
 	return p.Mid
+}
+
+func (p *DatanodeServiceLikesAddArgs) GetUID() string {
+	return p.UID
 }
 func (p *DatanodeServiceLikesAddArgs) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -10444,6 +10453,16 @@ func (p *DatanodeServiceLikesAddArgs) Read(iprot thrift.TProtocol) error {
 		case 1:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -10475,12 +10494,24 @@ func (p *DatanodeServiceLikesAddArgs) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *DatanodeServiceLikesAddArgs) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
 func (p *DatanodeServiceLikesAddArgs) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("likesAdd_args"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
 		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
 			return err
 		}
 	}
@@ -10502,6 +10533,19 @@ func (p *DatanodeServiceLikesAddArgs) writeField1(oprot thrift.TProtocol) (err e
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:mid: ", p), err)
+	}
+	return err
+}
+
+func (p *DatanodeServiceLikesAddArgs) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:uid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:uid: ", p), err)
 	}
 	return err
 }

@@ -228,7 +228,7 @@ service datanode_service {
     // 获取点赞的数量
     likes_count_res likesCount(1:string mid),
     // 添加点赞
-    likes_add_res likesAdd(1:string mid),
+    likes_add_res likesAdd(1:string mid,2:string uid),
     // 获取点赞列表
     likes_list_res likesList(1:string mid),
 }
