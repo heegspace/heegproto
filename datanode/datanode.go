@@ -6273,7 +6273,9 @@ type DatanodeService interface {
 	LikesAdd(ctx context.Context, mid string, uid string) (r *LikesAddRes, err error)
 	// Parameters:
 	//  - Mid
-	LikesList(ctx context.Context, mid string) (r *LikesListRes, err error)
+	//  - Page
+	//  - Size
+	LikesList(ctx context.Context, mid string, page int32, size int32) (r *LikesListRes, err error)
 }
 
 type DatanodeServiceClient struct {
@@ -6490,9 +6492,13 @@ func (p *DatanodeServiceClient) LikesAdd(ctx context.Context, mid string, uid st
 
 // Parameters:
 //  - Mid
-func (p *DatanodeServiceClient) LikesList(ctx context.Context, mid string) (r *LikesListRes, err error) {
+//  - Page
+//  - Size
+func (p *DatanodeServiceClient) LikesList(ctx context.Context, mid string, page int32, size int32) (r *LikesListRes, err error) {
 	var _args34 DatanodeServiceLikesListArgs
 	_args34.Mid = mid
+	_args34.Page = page
+	_args34.Size = size
 	var _result35 DatanodeServiceLikesListResult
 	if err = p.Client_().Call(ctx, "likesList", &_args34, &_result35); err != nil {
 		return
@@ -7250,7 +7256,7 @@ func (p *datanodeServiceProcessorLikesList) Process(ctx context.Context, seqId i
 	result := DatanodeServiceLikesListResult{}
 	var retval *LikesListRes
 	var err2 error
-	if retval, err2 = p.handler.LikesList(ctx, args.Mid); err2 != nil {
+	if retval, err2 = p.handler.LikesList(ctx, args.Mid, args.Page, args.Size); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing likesList: "+err2.Error())
 		oprot.WriteMessageBegin("likesList", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
@@ -10668,8 +10674,12 @@ func (p *DatanodeServiceLikesAddResult) String() string {
 
 // Attributes:
 //  - Mid
+//  - Page
+//  - Size
 type DatanodeServiceLikesListArgs struct {
-	Mid string `thrift:"mid,1" db:"mid" json:"mid"`
+	Mid  string `thrift:"mid,1" db:"mid" json:"mid"`
+	Page int32  `thrift:"page,2" db:"page" json:"page"`
+	Size int32  `thrift:"size,3" db:"size" json:"size"`
 }
 
 func NewDatanodeServiceLikesListArgs() *DatanodeServiceLikesListArgs {
@@ -10678,6 +10688,14 @@ func NewDatanodeServiceLikesListArgs() *DatanodeServiceLikesListArgs {
 
 func (p *DatanodeServiceLikesListArgs) GetMid() string {
 	return p.Mid
+}
+
+func (p *DatanodeServiceLikesListArgs) GetPage() int32 {
+	return p.Page
+}
+
+func (p *DatanodeServiceLikesListArgs) GetSize() int32 {
+	return p.Size
 }
 func (p *DatanodeServiceLikesListArgs) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -10696,6 +10714,26 @@ func (p *DatanodeServiceLikesListArgs) Read(iprot thrift.TProtocol) error {
 		case 1:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -10727,12 +10765,36 @@ func (p *DatanodeServiceLikesListArgs) ReadField1(iprot thrift.TProtocol) error 
 	return nil
 }
 
+func (p *DatanodeServiceLikesListArgs) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Page = v
+	}
+	return nil
+}
+
+func (p *DatanodeServiceLikesListArgs) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Size = v
+	}
+	return nil
+}
+
 func (p *DatanodeServiceLikesListArgs) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("likesList_args"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
 		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
 	}
@@ -10754,6 +10816,32 @@ func (p *DatanodeServiceLikesListArgs) writeField1(oprot thrift.TProtocol) (err 
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:mid: ", p), err)
+	}
+	return err
+}
+
+func (p *DatanodeServiceLikesListArgs) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("page", thrift.I32, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:page: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Page)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.page (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:page: ", p), err)
+	}
+	return err
+}
+
+func (p *DatanodeServiceLikesListArgs) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("size", thrift.I32, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:size: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Size)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.size (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:size: ", p), err)
 	}
 	return err
 }

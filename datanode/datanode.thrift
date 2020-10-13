@@ -230,5 +230,5 @@ service datanode_service {
     // 添加点赞
     likes_add_res likesAdd(1:string mid,2:string uid),
     // 获取点赞列表
-    likes_list_res likesList(1:string mid),
+    likes_list_res likesList(1:string mid,2:i32 page, 3:i32 size),
 }
