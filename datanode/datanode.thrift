@@ -49,9 +49,9 @@ struct search_user_req {
 }
 
 struct user_res {
-    1:rescode.code    rescode,
-    2:string    resmsg,
-    3:user      user,
+    1:rescode.code      rescode,
+    2:string            resmsg,
+    3:user              user,
 }
 
 struct update_req {
@@ -63,7 +63,7 @@ struct update_req {
     6:string    address,
     7:string    nick_name,
     8:string    avatar,
-    9:string   phone,
+    9:string    phone,
     10:string   login_at,
     11:string   login_ip,
     12:string   last_at,
@@ -76,7 +76,7 @@ struct update_req {
     19:string   attention,
     20:string   update_at,
     21:i64      vip,
-    22:double  coin,
+    22:double   coin,
 }
 
 struct add_friend_req {
@@ -85,7 +85,7 @@ struct add_friend_req {
 
 struct add_friend_res {
     1:rescode.code    rescode,
-    2:string    resmsg,
+    2:string          resmsg,
 }
 
 struct agree_friend_req {
@@ -93,8 +93,8 @@ struct agree_friend_req {
 }
 
 struct agree_friend_res {
-    1:rescode.code    rescode,
-    2:string    resmsg,
+    1:rescode.code      rescode,
+    2:string            resmsg,
 }
 
 struct friend_item {
@@ -108,22 +108,22 @@ struct friend_item {
 }
 
 struct group {
-    1:i64           sort,
-    2:string        name,
+    1:i64               sort,
+    2:string            name,
     3:list<friend_item> lists,
 }
 
 struct friend {
-    1:i64   total,
-    2:list<group> data,
-    3:list<friend_item> invite,
-    4:list<friend_item> blacks,
+    1:i64                   total,
+    2:list<group>           data,
+    3:list<friend_item>     invite,
+    4:list<friend_item>     blacks,
 }
 
 struct friend_res {
-    1:rescode.code    rescode,
-    2:string    resmsg,
-    3:friend    friends,
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:friend                friends,
 }
 
 struct create_group_req {
@@ -131,8 +131,8 @@ struct create_group_req {
 }
 
 struct create_group_res {
-    1:rescode.code    rescode,
-    2:string    resmsg,
+    1:rescode.code      rescode,
+    2:string            resmsg,
 }
 
 struct rename_group_req {
@@ -141,17 +141,17 @@ struct rename_group_req {
 }
 
 struct rename_group_res {
-    1:rescode.code    rescode,
-    2:string    resmsg,
+    1:rescode.code      rescode,
+    2:string            resmsg,
 }
 
 struct add_friend_note_req {
-    1:string    note,
+    1:string            note,
 }
 
 struct add_friend_note_res {
-    1:rescode.code    rescode,
-    2:string    resmsg,
+    1:rescode.code      rescode,
+    2:string            resmsg,
 }
 
 struct move_group_req {
@@ -160,19 +160,40 @@ struct move_group_req {
 }
 
 struct move_group_res {
-    1:rescode.code    rescode,
-    2:string    resmsg,
+    1:rescode.code      rescode,
+    2:string            resmsg,
 }
 
 struct remove_friend_req {
-    1:string    uid,
+    1:string            uid,
 }
 
 struct remove_friend_res {
-    1:rescode.code    rescode,
-    2:string    resmsg,
+    1:rescode.code      rescode,
+    2:string            resmsg,
 }
 
+struct likes_count_res {
+    1:rescode.code      rescode,
+    2:i32               count,
+    3:string            resmsg,
+}
+
+struct likes_add_res {
+    1:rescode.code      rescode,
+    3:string            resmsg,
+}
+
+struct likes {
+    1:string            uid,
+    2:i64               create_at,
+}
+
+struct likes_list_res {
+    1:rescode.code      rescode,
+    3:string            resmsg,
+    2:list<likes>       data,
+}
 
 service datanode_service {
     // ---------- 用户接口 ------- //
@@ -185,7 +206,7 @@ service datanode_service {
     // 更新用户信息
     user_res updateUser(1:update_req req),
 
-    // --------------- 好友接口 -----------//
+    // --------------- 好友接口 ----------- //
     // 添加好友
     add_friend_res addFriends(1:string uid,2:add_friend_req req),
     // 同意好友
@@ -202,4 +223,12 @@ service datanode_service {
     move_group_res moveToNewGroup(1:string uid,2:move_group_req req),
     // 删除好友
     remove_friend_res removeFriend(1:string uid,2:remove_friend_req req),
+
+    // ----------------- 点赞 --------------- //
+    // 获取点赞的数量
+    likes_count_res likesCount(1:string mid),
+    // 添加点赞
+    likes_add_res likesAdd(1:string mid),
+    // 获取点赞列表
+    likes_list_res likesList(1:string mid),
 }
