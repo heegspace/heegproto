@@ -195,6 +195,82 @@ struct likes_list_res {
     2:list<likes>       data,
 }
 
+struct note_meta {
+    1:string uid,
+    2:string user_id,
+    3:string title,
+    4:string thumb,
+    5:string desc,
+    6:string sign,
+    7:string create_at,
+    8:string update_at,
+}
+
+struct update_note_req {
+    1:string    uid,
+    2:string    data,
+    3:string    html,
+}
+
+struct note_meta_res {
+    1:rescode.code      rescode,
+    3:string            resmsg,
+    2:note_meta      meta,
+}
+
+struct note_meta_list_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+    3:note_meta      meta,
+}
+
+struct note_list_count_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+    3:i32      count,
+}
+
+struct note_data_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+    3:string      data,
+}
+
+struct note_html_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+    3:string      data,
+}
+
+struct moments_count_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+    3:i32      count,
+}
+
+struct extra {
+    1:string path,
+    2:i32 type,
+}
+
+struct moments {
+    1:i32   id,
+    2:string mid,
+    3:string text,
+    4:list<extra> extra,
+    5:i32 create_at,
+}
+
+struct add_moments_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+}
+
+struct moments_list_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+    3:list<moments>     data,
+}
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -231,4 +307,24 @@ service datanode_service {
     likes_add_res likesAdd(1:string mid,2:string uid),
     // 获取点赞列表
     likes_list_res likesList(1:string mid,2:i32 page, 3:i32 size),
+
+    // ----------------- 笔记 ----------------// 
+    //更新或者添加笔记信息
+    likes_list_res updateNote(1:string uid, 2:update_note_req req),
+    // 获取笔记列表
+    note_meta_list_res noteMetaList(1:string uid, 2:i32 page, 3:i32 size),
+    // 获取用户笔记数量
+    note_list_count_res noteListCount(1:string uid),
+    // 获取笔记数据列
+    note_data_res noteData(1:string uid, 2:string nid),
+    // 获取笔记html数据
+    note_html_res noteHtml(1:string uid, 2:string nid),
+
+    // ---------------- 动态 --------------- //
+    // 获取动态的数量
+    moments_count_res momentsCount(1:string uid),
+    // 添加动态
+    add_moments_res momentsAdd(1:string uid, 2:moments moments),
+    // 获取动态列表
+    moments_list_res momentsList(1:string uid, 2:i32 page, 3:i32 size),
 }
