@@ -310,7 +310,7 @@ service datanode_service {
 
     // ----------------- 笔记 ----------------// 
     //更新或者添加笔记信息
-    likes_list_res updateNote(1:string uid, 2:update_note_req req),
+    note_meta_res updateNote(1:string uid, 2:update_note_req req),
     // 获取笔记列表
     note_meta_list_res noteMetaList(1:string uid, 2:i32 page, 3:i32 size),
     // 获取用户笔记数量

@@ -8718,7 +8718,7 @@ type DatanodeService interface {
 	// Parameters:
 	//  - UID
 	//  - Req
-	UpdateNote(ctx context.Context, uid string, req *UpdateNoteReq) (r *LikesListRes, err error)
+	UpdateNote(ctx context.Context, uid string, req *UpdateNoteReq) (r *NoteMetaRes, err error)
 	// Parameters:
 	//  - UID
 	//  - Page
@@ -8980,7 +8980,7 @@ func (p *DatanodeServiceClient) LikesList(ctx context.Context, mid string, page 
 // Parameters:
 //  - UID
 //  - Req
-func (p *DatanodeServiceClient) UpdateNote(ctx context.Context, uid string, req *UpdateNoteReq) (r *LikesListRes, err error) {
+func (p *DatanodeServiceClient) UpdateNote(ctx context.Context, uid string, req *UpdateNoteReq) (r *NoteMetaRes, err error) {
 	var _args38 DatanodeServiceUpdateNoteArgs
 	_args38.UID = uid
 	_args38.Req = req
@@ -9893,7 +9893,7 @@ func (p *datanodeServiceProcessorUpdateNote) Process(ctx context.Context, seqId 
 
 	iprot.ReadMessageEnd()
 	result := DatanodeServiceUpdateNoteResult{}
-	var retval *LikesListRes
+	var retval *NoteMetaRes
 	var err2 error
 	if retval, err2 = p.handler.UpdateNote(ctx, args.UID, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing updateNote: "+err2.Error())
@@ -14088,16 +14088,16 @@ func (p *DatanodeServiceUpdateNoteArgs) String() string {
 // Attributes:
 //  - Success
 type DatanodeServiceUpdateNoteResult struct {
-	Success *LikesListRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+	Success *NoteMetaRes `thrift:"success,0" db:"success" json:"success,omitempty"`
 }
 
 func NewDatanodeServiceUpdateNoteResult() *DatanodeServiceUpdateNoteResult {
 	return &DatanodeServiceUpdateNoteResult{}
 }
 
-var DatanodeServiceUpdateNoteResult_Success_DEFAULT *LikesListRes
+var DatanodeServiceUpdateNoteResult_Success_DEFAULT *NoteMetaRes
 
-func (p *DatanodeServiceUpdateNoteResult) GetSuccess() *LikesListRes {
+func (p *DatanodeServiceUpdateNoteResult) GetSuccess() *NoteMetaRes {
 	if !p.IsSetSuccess() {
 		return DatanodeServiceUpdateNoteResult_Success_DEFAULT
 	}
@@ -14147,7 +14147,7 @@ func (p *DatanodeServiceUpdateNoteResult) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *DatanodeServiceUpdateNoteResult) ReadField0(iprot thrift.TProtocol) error {
-	p.Success = &LikesListRes{}
+	p.Success = &NoteMetaRes{}
 	if err := p.Success.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
 	}
