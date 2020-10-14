@@ -221,7 +221,7 @@ struct note_meta_res {
 struct note_meta_list_res {
     1:rescode.code      rescode,
     2:string            resmsg,
-    3:note_meta      meta,
+    3:list<note_meta>      meta,
 }
 
 struct note_list_count_res {

@@ -6983,7 +6983,7 @@ func (p *NoteMetaRes) String() string {
 type NoteMetaListRes struct {
 	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
 	Resmsg  string       `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
-	Meta    *NoteMeta    `thrift:"meta,3" db:"meta" json:"meta"`
+	Meta    []*NoteMeta  `thrift:"meta,3" db:"meta" json:"meta"`
 }
 
 func NewNoteMetaListRes() *NoteMetaListRes {
@@ -6998,18 +6998,9 @@ func (p *NoteMetaListRes) GetResmsg() string {
 	return p.Resmsg
 }
 
-var NoteMetaListRes_Meta_DEFAULT *NoteMeta
-
-func (p *NoteMetaListRes) GetMeta() *NoteMeta {
-	if !p.IsSetMeta() {
-		return NoteMetaListRes_Meta_DEFAULT
-	}
+func (p *NoteMetaListRes) GetMeta() []*NoteMeta {
 	return p.Meta
 }
-func (p *NoteMetaListRes) IsSetMeta() bool {
-	return p.Meta != nil
-}
-
 func (p *NoteMetaListRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
@@ -7045,7 +7036,7 @@ func (p *NoteMetaListRes) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 3:
-			if fieldTypeId == thrift.STRUCT {
+			if fieldTypeId == thrift.LIST {
 				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
@@ -7089,9 +7080,21 @@ func (p *NoteMetaListRes) ReadField2(iprot thrift.TProtocol) error {
 }
 
 func (p *NoteMetaListRes) ReadField3(iprot thrift.TProtocol) error {
-	p.Meta = &NoteMeta{}
-	if err := p.Meta.Read(iprot); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Meta), err)
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
+		return thrift.PrependError("error reading list begin: ", err)
+	}
+	tSlice := make([]*NoteMeta, 0, size)
+	p.Meta = tSlice
+	for i := 0; i < size; i++ {
+		_elem6 := &NoteMeta{}
+		if err := _elem6.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem6), err)
+		}
+		p.Meta = append(p.Meta, _elem6)
+	}
+	if err := iprot.ReadListEnd(); err != nil {
+		return thrift.PrependError("error reading list end: ", err)
 	}
 	return nil
 }
@@ -7147,11 +7150,19 @@ func (p *NoteMetaListRes) writeField2(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *NoteMetaListRes) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("meta", thrift.STRUCT, 3); err != nil {
+	if err := oprot.WriteFieldBegin("meta", thrift.LIST, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:meta: ", p), err)
 	}
-	if err := p.Meta.Write(oprot); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Meta), err)
+	if err := oprot.WriteListBegin(thrift.STRUCT, len(p.Meta)); err != nil {
+		return thrift.PrependError("error writing list begin: ", err)
+	}
+	for _, v := range p.Meta {
+		if err := v.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", v), err)
+		}
+	}
+	if err := oprot.WriteListEnd(); err != nil {
+		return thrift.PrependError("error writing list end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:meta: ", p), err)
@@ -8185,11 +8196,11 @@ func (p *Moments) ReadField4(iprot thrift.TProtocol) error {
 	tSlice := make([]*Extra, 0, size)
 	p.Extra = tSlice
 	for i := 0; i < size; i++ {
-		_elem6 := &Extra{}
-		if err := _elem6.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem6), err)
+		_elem7 := &Extra{}
+		if err := _elem7.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem7), err)
 		}
-		p.Extra = append(p.Extra, _elem6)
+		p.Extra = append(p.Extra, _elem7)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
@@ -8568,11 +8579,11 @@ func (p *MomentsListRes) ReadField3(iprot thrift.TProtocol) error {
 	tSlice := make([]*Moments, 0, size)
 	p.Data = tSlice
 	for i := 0; i < size; i++ {
-		_elem7 := &Moments{}
-		if err := _elem7.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem7), err)
+		_elem8 := &Moments{}
+		if err := _elem8.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem8), err)
 		}
-		p.Data = append(p.Data, _elem7)
+		p.Data = append(p.Data, _elem8)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
@@ -8778,187 +8789,187 @@ func (p *DatanodeServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) CreateUser(ctx context.Context, req *NewUserReq_) (r *UserRes, err error) {
-	var _args8 DatanodeServiceCreateUserArgs
-	_args8.Req = req
-	var _result9 DatanodeServiceCreateUserResult
-	if err = p.Client_().Call(ctx, "createUser", &_args8, &_result9); err != nil {
+	var _args9 DatanodeServiceCreateUserArgs
+	_args9.Req = req
+	var _result10 DatanodeServiceCreateUserResult
+	if err = p.Client_().Call(ctx, "createUser", &_args9, &_result10); err != nil {
 		return
 	}
-	return _result9.GetSuccess(), nil
+	return _result10.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) UserInfo(ctx context.Context, req *UserInfoReq) (r *UserRes, err error) {
-	var _args10 DatanodeServiceUserInfoArgs
-	_args10.Req = req
-	var _result11 DatanodeServiceUserInfoResult
-	if err = p.Client_().Call(ctx, "userInfo", &_args10, &_result11); err != nil {
+	var _args11 DatanodeServiceUserInfoArgs
+	_args11.Req = req
+	var _result12 DatanodeServiceUserInfoResult
+	if err = p.Client_().Call(ctx, "userInfo", &_args11, &_result12); err != nil {
 		return
 	}
-	return _result11.GetSuccess(), nil
+	return _result12.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) SearchUser(ctx context.Context, req *SearchUserReq) (r []*User, err error) {
-	var _args12 DatanodeServiceSearchUserArgs
-	_args12.Req = req
-	var _result13 DatanodeServiceSearchUserResult
-	if err = p.Client_().Call(ctx, "searchUser", &_args12, &_result13); err != nil {
+	var _args13 DatanodeServiceSearchUserArgs
+	_args13.Req = req
+	var _result14 DatanodeServiceSearchUserResult
+	if err = p.Client_().Call(ctx, "searchUser", &_args13, &_result14); err != nil {
 		return
 	}
-	return _result13.GetSuccess(), nil
+	return _result14.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) UpdateUser(ctx context.Context, req *UpdateReq) (r *UserRes, err error) {
-	var _args14 DatanodeServiceUpdateUserArgs
-	_args14.Req = req
-	var _result15 DatanodeServiceUpdateUserResult
-	if err = p.Client_().Call(ctx, "updateUser", &_args14, &_result15); err != nil {
+	var _args15 DatanodeServiceUpdateUserArgs
+	_args15.Req = req
+	var _result16 DatanodeServiceUpdateUserResult
+	if err = p.Client_().Call(ctx, "updateUser", &_args15, &_result16); err != nil {
 		return
 	}
-	return _result15.GetSuccess(), nil
+	return _result16.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) AddFriends(ctx context.Context, uid string, req *AddFriendReq) (r *AddFriendRes, err error) {
-	var _args16 DatanodeServiceAddFriendsArgs
-	_args16.UID = uid
-	_args16.Req = req
-	var _result17 DatanodeServiceAddFriendsResult
-	if err = p.Client_().Call(ctx, "addFriends", &_args16, &_result17); err != nil {
+	var _args17 DatanodeServiceAddFriendsArgs
+	_args17.UID = uid
+	_args17.Req = req
+	var _result18 DatanodeServiceAddFriendsResult
+	if err = p.Client_().Call(ctx, "addFriends", &_args17, &_result18); err != nil {
 		return
 	}
-	return _result17.GetSuccess(), nil
+	return _result18.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) AgreeFriends(ctx context.Context, uid string, req *AgreeFriendReq) (r *AgreeFriendRes, err error) {
-	var _args18 DatanodeServiceAgreeFriendsArgs
-	_args18.UID = uid
-	_args18.Req = req
-	var _result19 DatanodeServiceAgreeFriendsResult
-	if err = p.Client_().Call(ctx, "agreeFriends", &_args18, &_result19); err != nil {
+	var _args19 DatanodeServiceAgreeFriendsArgs
+	_args19.UID = uid
+	_args19.Req = req
+	var _result20 DatanodeServiceAgreeFriendsResult
+	if err = p.Client_().Call(ctx, "agreeFriends", &_args19, &_result20); err != nil {
 		return
 	}
-	return _result19.GetSuccess(), nil
+	return _result20.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Uid2
 func (p *DatanodeServiceClient) FriendsList(ctx context.Context, uid string, uid2 string) (r *FriendRes, err error) {
-	var _args20 DatanodeServiceFriendsListArgs
-	_args20.UID = uid
-	_args20.Uid2 = uid2
-	var _result21 DatanodeServiceFriendsListResult
-	if err = p.Client_().Call(ctx, "friendsList", &_args20, &_result21); err != nil {
+	var _args21 DatanodeServiceFriendsListArgs
+	_args21.UID = uid
+	_args21.Uid2 = uid2
+	var _result22 DatanodeServiceFriendsListResult
+	if err = p.Client_().Call(ctx, "friendsList", &_args21, &_result22); err != nil {
 		return
 	}
-	return _result21.GetSuccess(), nil
+	return _result22.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) CreateGroup(ctx context.Context, uid string, req *CreateGroupReq) (r *CreateGroupRes, err error) {
-	var _args22 DatanodeServiceCreateGroupArgs
-	_args22.UID = uid
-	_args22.Req = req
-	var _result23 DatanodeServiceCreateGroupResult
-	if err = p.Client_().Call(ctx, "createGroup", &_args22, &_result23); err != nil {
+	var _args23 DatanodeServiceCreateGroupArgs
+	_args23.UID = uid
+	_args23.Req = req
+	var _result24 DatanodeServiceCreateGroupResult
+	if err = p.Client_().Call(ctx, "createGroup", &_args23, &_result24); err != nil {
 		return
 	}
-	return _result23.GetSuccess(), nil
+	return _result24.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) RenameGroup(ctx context.Context, uid string, req *RenameGroupReq) (r *RenameGroupRes, err error) {
-	var _args24 DatanodeServiceRenameGroupArgs
-	_args24.UID = uid
-	_args24.Req = req
-	var _result25 DatanodeServiceRenameGroupResult
-	if err = p.Client_().Call(ctx, "renameGroup", &_args24, &_result25); err != nil {
+	var _args25 DatanodeServiceRenameGroupArgs
+	_args25.UID = uid
+	_args25.Req = req
+	var _result26 DatanodeServiceRenameGroupResult
+	if err = p.Client_().Call(ctx, "renameGroup", &_args25, &_result26); err != nil {
 		return
 	}
-	return _result25.GetSuccess(), nil
+	return _result26.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) AddNoteFriend(ctx context.Context, uid string, req *AddFriendNoteReq) (r *AddFriendNoteRes, err error) {
-	var _args26 DatanodeServiceAddNoteFriendArgs
-	_args26.UID = uid
-	_args26.Req = req
-	var _result27 DatanodeServiceAddNoteFriendResult
-	if err = p.Client_().Call(ctx, "addNoteFriend", &_args26, &_result27); err != nil {
+	var _args27 DatanodeServiceAddNoteFriendArgs
+	_args27.UID = uid
+	_args27.Req = req
+	var _result28 DatanodeServiceAddNoteFriendResult
+	if err = p.Client_().Call(ctx, "addNoteFriend", &_args27, &_result28); err != nil {
 		return
 	}
-	return _result27.GetSuccess(), nil
+	return _result28.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) MoveToNewGroup(ctx context.Context, uid string, req *MoveGroupReq) (r *MoveGroupRes, err error) {
-	var _args28 DatanodeServiceMoveToNewGroupArgs
-	_args28.UID = uid
-	_args28.Req = req
-	var _result29 DatanodeServiceMoveToNewGroupResult
-	if err = p.Client_().Call(ctx, "moveToNewGroup", &_args28, &_result29); err != nil {
+	var _args29 DatanodeServiceMoveToNewGroupArgs
+	_args29.UID = uid
+	_args29.Req = req
+	var _result30 DatanodeServiceMoveToNewGroupResult
+	if err = p.Client_().Call(ctx, "moveToNewGroup", &_args29, &_result30); err != nil {
 		return
 	}
-	return _result29.GetSuccess(), nil
+	return _result30.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) RemoveFriend(ctx context.Context, uid string, req *RemoveFriendReq) (r *RemoveFriendRes, err error) {
-	var _args30 DatanodeServiceRemoveFriendArgs
-	_args30.UID = uid
-	_args30.Req = req
-	var _result31 DatanodeServiceRemoveFriendResult
-	if err = p.Client_().Call(ctx, "removeFriend", &_args30, &_result31); err != nil {
+	var _args31 DatanodeServiceRemoveFriendArgs
+	_args31.UID = uid
+	_args31.Req = req
+	var _result32 DatanodeServiceRemoveFriendResult
+	if err = p.Client_().Call(ctx, "removeFriend", &_args31, &_result32); err != nil {
 		return
 	}
-	return _result31.GetSuccess(), nil
+	return _result32.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Mid
 func (p *DatanodeServiceClient) LikesCount(ctx context.Context, mid string) (r *LikesCountRes, err error) {
-	var _args32 DatanodeServiceLikesCountArgs
-	_args32.Mid = mid
-	var _result33 DatanodeServiceLikesCountResult
-	if err = p.Client_().Call(ctx, "likesCount", &_args32, &_result33); err != nil {
+	var _args33 DatanodeServiceLikesCountArgs
+	_args33.Mid = mid
+	var _result34 DatanodeServiceLikesCountResult
+	if err = p.Client_().Call(ctx, "likesCount", &_args33, &_result34); err != nil {
 		return
 	}
-	return _result33.GetSuccess(), nil
+	return _result34.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Mid
 //  - UID
 func (p *DatanodeServiceClient) LikesAdd(ctx context.Context, mid string, uid string) (r *LikesAddRes, err error) {
-	var _args34 DatanodeServiceLikesAddArgs
-	_args34.Mid = mid
-	_args34.UID = uid
-	var _result35 DatanodeServiceLikesAddResult
-	if err = p.Client_().Call(ctx, "likesAdd", &_args34, &_result35); err != nil {
+	var _args35 DatanodeServiceLikesAddArgs
+	_args35.Mid = mid
+	_args35.UID = uid
+	var _result36 DatanodeServiceLikesAddResult
+	if err = p.Client_().Call(ctx, "likesAdd", &_args35, &_result36); err != nil {
 		return
 	}
-	return _result35.GetSuccess(), nil
+	return _result36.GetSuccess(), nil
 }
 
 // Parameters:
@@ -8966,29 +8977,29 @@ func (p *DatanodeServiceClient) LikesAdd(ctx context.Context, mid string, uid st
 //  - Page
 //  - Size
 func (p *DatanodeServiceClient) LikesList(ctx context.Context, mid string, page int32, size int32) (r *LikesListRes, err error) {
-	var _args36 DatanodeServiceLikesListArgs
-	_args36.Mid = mid
-	_args36.Page = page
-	_args36.Size = size
-	var _result37 DatanodeServiceLikesListResult
-	if err = p.Client_().Call(ctx, "likesList", &_args36, &_result37); err != nil {
+	var _args37 DatanodeServiceLikesListArgs
+	_args37.Mid = mid
+	_args37.Page = page
+	_args37.Size = size
+	var _result38 DatanodeServiceLikesListResult
+	if err = p.Client_().Call(ctx, "likesList", &_args37, &_result38); err != nil {
 		return
 	}
-	return _result37.GetSuccess(), nil
+	return _result38.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) UpdateNote(ctx context.Context, uid string, req *UpdateNoteReq) (r *NoteMetaRes, err error) {
-	var _args38 DatanodeServiceUpdateNoteArgs
-	_args38.UID = uid
-	_args38.Req = req
-	var _result39 DatanodeServiceUpdateNoteResult
-	if err = p.Client_().Call(ctx, "updateNote", &_args38, &_result39); err != nil {
+	var _args39 DatanodeServiceUpdateNoteArgs
+	_args39.UID = uid
+	_args39.Req = req
+	var _result40 DatanodeServiceUpdateNoteResult
+	if err = p.Client_().Call(ctx, "updateNote", &_args39, &_result40); err != nil {
 		return
 	}
-	return _result39.GetSuccess(), nil
+	return _result40.GetSuccess(), nil
 }
 
 // Parameters:
@@ -8996,81 +9007,81 @@ func (p *DatanodeServiceClient) UpdateNote(ctx context.Context, uid string, req 
 //  - Page
 //  - Size
 func (p *DatanodeServiceClient) NoteMetaList(ctx context.Context, uid string, page int32, size int32) (r *NoteMetaListRes, err error) {
-	var _args40 DatanodeServiceNoteMetaListArgs
-	_args40.UID = uid
-	_args40.Page = page
-	_args40.Size = size
-	var _result41 DatanodeServiceNoteMetaListResult
-	if err = p.Client_().Call(ctx, "noteMetaList", &_args40, &_result41); err != nil {
+	var _args41 DatanodeServiceNoteMetaListArgs
+	_args41.UID = uid
+	_args41.Page = page
+	_args41.Size = size
+	var _result42 DatanodeServiceNoteMetaListResult
+	if err = p.Client_().Call(ctx, "noteMetaList", &_args41, &_result42); err != nil {
 		return
 	}
-	return _result41.GetSuccess(), nil
+	return _result42.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 func (p *DatanodeServiceClient) NoteListCount(ctx context.Context, uid string) (r *NoteListCountRes, err error) {
-	var _args42 DatanodeServiceNoteListCountArgs
-	_args42.UID = uid
-	var _result43 DatanodeServiceNoteListCountResult
-	if err = p.Client_().Call(ctx, "noteListCount", &_args42, &_result43); err != nil {
+	var _args43 DatanodeServiceNoteListCountArgs
+	_args43.UID = uid
+	var _result44 DatanodeServiceNoteListCountResult
+	if err = p.Client_().Call(ctx, "noteListCount", &_args43, &_result44); err != nil {
 		return
 	}
-	return _result43.GetSuccess(), nil
+	return _result44.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Nid
 func (p *DatanodeServiceClient) NoteData(ctx context.Context, uid string, nid string) (r *NoteDataRes, err error) {
-	var _args44 DatanodeServiceNoteDataArgs
-	_args44.UID = uid
-	_args44.Nid = nid
-	var _result45 DatanodeServiceNoteDataResult
-	if err = p.Client_().Call(ctx, "noteData", &_args44, &_result45); err != nil {
+	var _args45 DatanodeServiceNoteDataArgs
+	_args45.UID = uid
+	_args45.Nid = nid
+	var _result46 DatanodeServiceNoteDataResult
+	if err = p.Client_().Call(ctx, "noteData", &_args45, &_result46); err != nil {
 		return
 	}
-	return _result45.GetSuccess(), nil
+	return _result46.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Nid
 func (p *DatanodeServiceClient) NoteHtml(ctx context.Context, uid string, nid string) (r *NoteHTMLRes, err error) {
-	var _args46 DatanodeServiceNoteHtmlArgs
-	_args46.UID = uid
-	_args46.Nid = nid
-	var _result47 DatanodeServiceNoteHtmlResult
-	if err = p.Client_().Call(ctx, "noteHtml", &_args46, &_result47); err != nil {
+	var _args47 DatanodeServiceNoteHtmlArgs
+	_args47.UID = uid
+	_args47.Nid = nid
+	var _result48 DatanodeServiceNoteHtmlResult
+	if err = p.Client_().Call(ctx, "noteHtml", &_args47, &_result48); err != nil {
 		return
 	}
-	return _result47.GetSuccess(), nil
+	return _result48.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 func (p *DatanodeServiceClient) MomentsCount(ctx context.Context, uid string) (r *MomentsCountRes, err error) {
-	var _args48 DatanodeServiceMomentsCountArgs
-	_args48.UID = uid
-	var _result49 DatanodeServiceMomentsCountResult
-	if err = p.Client_().Call(ctx, "momentsCount", &_args48, &_result49); err != nil {
+	var _args49 DatanodeServiceMomentsCountArgs
+	_args49.UID = uid
+	var _result50 DatanodeServiceMomentsCountResult
+	if err = p.Client_().Call(ctx, "momentsCount", &_args49, &_result50); err != nil {
 		return
 	}
-	return _result49.GetSuccess(), nil
+	return _result50.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Moments
 func (p *DatanodeServiceClient) MomentsAdd(ctx context.Context, uid string, moments *Moments) (r *AddMomentsRes, err error) {
-	var _args50 DatanodeServiceMomentsAddArgs
-	_args50.UID = uid
-	_args50.Moments = moments
-	var _result51 DatanodeServiceMomentsAddResult
-	if err = p.Client_().Call(ctx, "momentsAdd", &_args50, &_result51); err != nil {
+	var _args51 DatanodeServiceMomentsAddArgs
+	_args51.UID = uid
+	_args51.Moments = moments
+	var _result52 DatanodeServiceMomentsAddResult
+	if err = p.Client_().Call(ctx, "momentsAdd", &_args51, &_result52); err != nil {
 		return
 	}
-	return _result51.GetSuccess(), nil
+	return _result52.GetSuccess(), nil
 }
 
 // Parameters:
@@ -9078,15 +9089,15 @@ func (p *DatanodeServiceClient) MomentsAdd(ctx context.Context, uid string, mome
 //  - Page
 //  - Size
 func (p *DatanodeServiceClient) MomentsList(ctx context.Context, uid string, page int32, size int32) (r *MomentsListRes, err error) {
-	var _args52 DatanodeServiceMomentsListArgs
-	_args52.UID = uid
-	_args52.Page = page
-	_args52.Size = size
-	var _result53 DatanodeServiceMomentsListResult
-	if err = p.Client_().Call(ctx, "momentsList", &_args52, &_result53); err != nil {
+	var _args53 DatanodeServiceMomentsListArgs
+	_args53.UID = uid
+	_args53.Page = page
+	_args53.Size = size
+	var _result54 DatanodeServiceMomentsListResult
+	if err = p.Client_().Call(ctx, "momentsList", &_args53, &_result54); err != nil {
 		return
 	}
-	return _result53.GetSuccess(), nil
+	return _result54.GetSuccess(), nil
 }
 
 type DatanodeServiceProcessor struct {
@@ -9109,31 +9120,31 @@ func (p *DatanodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFu
 
 func NewDatanodeServiceProcessor(handler DatanodeService) *DatanodeServiceProcessor {
 
-	self54 := &DatanodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self54.processorMap["createUser"] = &datanodeServiceProcessorCreateUser{handler: handler}
-	self54.processorMap["userInfo"] = &datanodeServiceProcessorUserInfo{handler: handler}
-	self54.processorMap["searchUser"] = &datanodeServiceProcessorSearchUser{handler: handler}
-	self54.processorMap["updateUser"] = &datanodeServiceProcessorUpdateUser{handler: handler}
-	self54.processorMap["addFriends"] = &datanodeServiceProcessorAddFriends{handler: handler}
-	self54.processorMap["agreeFriends"] = &datanodeServiceProcessorAgreeFriends{handler: handler}
-	self54.processorMap["friendsList"] = &datanodeServiceProcessorFriendsList{handler: handler}
-	self54.processorMap["createGroup"] = &datanodeServiceProcessorCreateGroup{handler: handler}
-	self54.processorMap["renameGroup"] = &datanodeServiceProcessorRenameGroup{handler: handler}
-	self54.processorMap["addNoteFriend"] = &datanodeServiceProcessorAddNoteFriend{handler: handler}
-	self54.processorMap["moveToNewGroup"] = &datanodeServiceProcessorMoveToNewGroup{handler: handler}
-	self54.processorMap["removeFriend"] = &datanodeServiceProcessorRemoveFriend{handler: handler}
-	self54.processorMap["likesCount"] = &datanodeServiceProcessorLikesCount{handler: handler}
-	self54.processorMap["likesAdd"] = &datanodeServiceProcessorLikesAdd{handler: handler}
-	self54.processorMap["likesList"] = &datanodeServiceProcessorLikesList{handler: handler}
-	self54.processorMap["updateNote"] = &datanodeServiceProcessorUpdateNote{handler: handler}
-	self54.processorMap["noteMetaList"] = &datanodeServiceProcessorNoteMetaList{handler: handler}
-	self54.processorMap["noteListCount"] = &datanodeServiceProcessorNoteListCount{handler: handler}
-	self54.processorMap["noteData"] = &datanodeServiceProcessorNoteData{handler: handler}
-	self54.processorMap["noteHtml"] = &datanodeServiceProcessorNoteHtml{handler: handler}
-	self54.processorMap["momentsCount"] = &datanodeServiceProcessorMomentsCount{handler: handler}
-	self54.processorMap["momentsAdd"] = &datanodeServiceProcessorMomentsAdd{handler: handler}
-	self54.processorMap["momentsList"] = &datanodeServiceProcessorMomentsList{handler: handler}
-	return self54
+	self55 := &DatanodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self55.processorMap["createUser"] = &datanodeServiceProcessorCreateUser{handler: handler}
+	self55.processorMap["userInfo"] = &datanodeServiceProcessorUserInfo{handler: handler}
+	self55.processorMap["searchUser"] = &datanodeServiceProcessorSearchUser{handler: handler}
+	self55.processorMap["updateUser"] = &datanodeServiceProcessorUpdateUser{handler: handler}
+	self55.processorMap["addFriends"] = &datanodeServiceProcessorAddFriends{handler: handler}
+	self55.processorMap["agreeFriends"] = &datanodeServiceProcessorAgreeFriends{handler: handler}
+	self55.processorMap["friendsList"] = &datanodeServiceProcessorFriendsList{handler: handler}
+	self55.processorMap["createGroup"] = &datanodeServiceProcessorCreateGroup{handler: handler}
+	self55.processorMap["renameGroup"] = &datanodeServiceProcessorRenameGroup{handler: handler}
+	self55.processorMap["addNoteFriend"] = &datanodeServiceProcessorAddNoteFriend{handler: handler}
+	self55.processorMap["moveToNewGroup"] = &datanodeServiceProcessorMoveToNewGroup{handler: handler}
+	self55.processorMap["removeFriend"] = &datanodeServiceProcessorRemoveFriend{handler: handler}
+	self55.processorMap["likesCount"] = &datanodeServiceProcessorLikesCount{handler: handler}
+	self55.processorMap["likesAdd"] = &datanodeServiceProcessorLikesAdd{handler: handler}
+	self55.processorMap["likesList"] = &datanodeServiceProcessorLikesList{handler: handler}
+	self55.processorMap["updateNote"] = &datanodeServiceProcessorUpdateNote{handler: handler}
+	self55.processorMap["noteMetaList"] = &datanodeServiceProcessorNoteMetaList{handler: handler}
+	self55.processorMap["noteListCount"] = &datanodeServiceProcessorNoteListCount{handler: handler}
+	self55.processorMap["noteData"] = &datanodeServiceProcessorNoteData{handler: handler}
+	self55.processorMap["noteHtml"] = &datanodeServiceProcessorNoteHtml{handler: handler}
+	self55.processorMap["momentsCount"] = &datanodeServiceProcessorMomentsCount{handler: handler}
+	self55.processorMap["momentsAdd"] = &datanodeServiceProcessorMomentsAdd{handler: handler}
+	self55.processorMap["momentsList"] = &datanodeServiceProcessorMomentsList{handler: handler}
+	return self55
 }
 
 func (p *DatanodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -9146,12 +9157,12 @@ func (p *DatanodeServiceProcessor) Process(ctx context.Context, iprot, oprot thr
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x55 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x56 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x55.Write(oprot)
+	x56.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x55
+	return false, x56
 
 }
 
@@ -10866,11 +10877,11 @@ func (p *DatanodeServiceSearchUserResult) ReadField0(iprot thrift.TProtocol) err
 	tSlice := make([]*User, 0, size)
 	p.Success = tSlice
 	for i := 0; i < size; i++ {
-		_elem56 := &User{}
-		if err := _elem56.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem56), err)
+		_elem57 := &User{}
+		if err := _elem57.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem57), err)
 		}
-		p.Success = append(p.Success, _elem56)
+		p.Success = append(p.Success, _elem57)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
