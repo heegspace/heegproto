@@ -271,6 +271,60 @@ struct moments_list_res {
     2:string            resmsg,
     3:list<moments>     data,
 }
+
+struct FileItem {
+    1:string    name,
+    2:i32       type,
+    3:string    path,
+    4:i64       size,
+    5:string    url,
+    6:i64       create_at,
+    7:i64       update_at,
+    8:string    extra,
+}
+
+struct file_dir_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+    3:list<FileItem>     dirs,
+}
+
+struct add_dir_req {
+    1:string    parent,
+    2:string    name,
+}
+
+struct add_dir_res {
+    1:rescode.code  rescode,
+    2:string        resmsg,
+}
+
+struct add_file_req {
+    1:i32    type,
+    2:i64    size,
+    3:string path,
+    4:string name,
+    5:string url,
+}
+
+struct add_file_res {
+    1:rescode.code  rescode,
+    2:string        resmsg,
+}
+
+struct file_attr_res {
+    1:rescode.code  rescode,
+    2:string        resmsg,
+    3:i64           capacity,
+    4:i32           number,
+}
+
+struct thumbnail_res {
+    1:rescode.code  rescode,
+    2:string        resmsg,
+    3:string        thumb,
+}
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -327,4 +381,17 @@ service datanode_service {
     add_moments_res momentsAdd(1:string uid, 2:moments moments),
     // 获取动态列表
     moments_list_res momentsList(1:string uid, 2:i32 page, 3:i32 size),
+
+    // ---------------- 文件 ------------------//
+    // 获取目录,目录之间的/替换成-
+    file_dir_res fileDirOne(1:string uid, 2:string path),
+    // 添加目录
+    add_dir_res fileDirAdd(1:string uid, 2:add_dir_req req),
+    // 添加文件
+    add_file_res addFile(1:string uid, 2:add_file_req req),
+    // 获取云盘属性，容量和文件数量
+    file_attr_res yunSaveAttr(1:string uid),
+
+    // 获取图像缩略图
+    thumbnail_res thumbnail(1:string uid, 2:string path)
 }
