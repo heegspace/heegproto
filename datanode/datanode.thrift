@@ -300,11 +300,12 @@ struct add_dir_res {
 }
 
 struct add_file_req {
-    1:i32    type,
-    2:i64    size,
-    3:string path,
-    4:string name,
-    5:string url,
+    1:i64    size,
+    2:string path,
+    3:string name,
+    4:string url,
+    5:string thumb,
+    6:string content_type,
 }
 
 struct add_file_res {

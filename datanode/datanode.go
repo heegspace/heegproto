@@ -9538,25 +9538,23 @@ func (p *AddDirRes) String() string {
 }
 
 // Attributes:
-//  - Type
 //  - Size
 //  - Path
 //  - Name
 //  - URL
+//  - Thumb
+//  - ContentType
 type AddFileReq struct {
-	Type int32  `thrift:"type,1" db:"type" json:"type"`
-	Size int64  `thrift:"size,2" db:"size" json:"size"`
-	Path string `thrift:"path,3" db:"path" json:"path"`
-	Name string `thrift:"name,4" db:"name" json:"name"`
-	URL  string `thrift:"url,5" db:"url" json:"url"`
+	Size        int64  `thrift:"size,1" db:"size" json:"size"`
+	Path        string `thrift:"path,2" db:"path" json:"path"`
+	Name        string `thrift:"name,3" db:"name" json:"name"`
+	URL         string `thrift:"url,4" db:"url" json:"url"`
+	Thumb       string `thrift:"thumb,5" db:"thumb" json:"thumb"`
+	ContentType string `thrift:"content_type,6" db:"content_type" json:"content_type"`
 }
 
 func NewAddFileReq() *AddFileReq {
 	return &AddFileReq{}
-}
-
-func (p *AddFileReq) GetType() int32 {
-	return p.Type
 }
 
 func (p *AddFileReq) GetSize() int64 {
@@ -9574,6 +9572,14 @@ func (p *AddFileReq) GetName() string {
 func (p *AddFileReq) GetURL() string {
 	return p.URL
 }
+
+func (p *AddFileReq) GetThumb() string {
+	return p.Thumb
+}
+
+func (p *AddFileReq) GetContentType() string {
+	return p.ContentType
+}
 func (p *AddFileReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
@@ -9589,7 +9595,7 @@ func (p *AddFileReq) Read(iprot thrift.TProtocol) error {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.I32 {
+			if fieldTypeId == thrift.I64 {
 				if err := p.ReadField1(iprot); err != nil {
 					return err
 				}
@@ -9599,7 +9605,7 @@ func (p *AddFileReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 2:
-			if fieldTypeId == thrift.I64 {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
@@ -9638,6 +9644,16 @@ func (p *AddFileReq) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
+		case 6:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField6(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
 		default:
 			if err := iprot.Skip(fieldTypeId); err != nil {
 				return err
@@ -9654,19 +9670,19 @@ func (p *AddFileReq) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *AddFileReq) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadI32(); err != nil {
+	if v, err := iprot.ReadI64(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
-		p.Type = v
+		p.Size = v
 	}
 	return nil
 }
 
 func (p *AddFileReq) ReadField2(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadI64(); err != nil {
+	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
-		p.Size = v
+		p.Path = v
 	}
 	return nil
 }
@@ -9675,7 +9691,7 @@ func (p *AddFileReq) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 3: ", err)
 	} else {
-		p.Path = v
+		p.Name = v
 	}
 	return nil
 }
@@ -9684,7 +9700,7 @@ func (p *AddFileReq) ReadField4(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 4: ", err)
 	} else {
-		p.Name = v
+		p.URL = v
 	}
 	return nil
 }
@@ -9693,7 +9709,16 @@ func (p *AddFileReq) ReadField5(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 5: ", err)
 	} else {
-		p.URL = v
+		p.Thumb = v
+	}
+	return nil
+}
+
+func (p *AddFileReq) ReadField6(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 6: ", err)
+	} else {
+		p.ContentType = v
 	}
 	return nil
 }
@@ -9718,6 +9743,9 @@ func (p *AddFileReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField5(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField6(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -9729,66 +9757,79 @@ func (p *AddFileReq) Write(oprot thrift.TProtocol) error {
 }
 
 func (p *AddFileReq) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("type", thrift.I32, 1); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:type: ", p), err)
+	if err := oprot.WriteFieldBegin("size", thrift.I64, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:size: ", p), err)
 	}
-	if err := oprot.WriteI32(int32(p.Type)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.type (1) field write error: ", p), err)
+	if err := oprot.WriteI64(int64(p.Size)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.size (1) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:type: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:size: ", p), err)
 	}
 	return err
 }
 
 func (p *AddFileReq) writeField2(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("size", thrift.I64, 2); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:size: ", p), err)
+	if err := oprot.WriteFieldBegin("path", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:path: ", p), err)
 	}
-	if err := oprot.WriteI64(int64(p.Size)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.size (2) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Path)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.path (2) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:size: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:path: ", p), err)
 	}
 	return err
 }
 
 func (p *AddFileReq) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("path", thrift.STRING, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:path: ", p), err)
+	if err := oprot.WriteFieldBegin("name", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:name: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Path)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.path (3) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Name)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.name (3) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:path: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:name: ", p), err)
 	}
 	return err
 }
 
 func (p *AddFileReq) writeField4(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("name", thrift.STRING, 4); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:name: ", p), err)
+	if err := oprot.WriteFieldBegin("url", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:url: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Name)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.name (4) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.URL)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.url (4) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:name: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:url: ", p), err)
 	}
 	return err
 }
 
 func (p *AddFileReq) writeField5(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("url", thrift.STRING, 5); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:url: ", p), err)
+	if err := oprot.WriteFieldBegin("thumb", thrift.STRING, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:thumb: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.URL)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.url (5) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Thumb)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.thumb (5) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:url: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:thumb: ", p), err)
+	}
+	return err
+}
+
+func (p *AddFileReq) writeField6(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("content_type", thrift.STRING, 6); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:content_type: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.ContentType)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.content_type (6) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:content_type: ", p), err)
 	}
 	return err
 }
