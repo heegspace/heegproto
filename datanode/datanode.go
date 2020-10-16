@@ -10391,28 +10391,28 @@ func (p *ThumbnailRes) String() string {
 //  - Key
 //  - Value
 //  - Expire
-type SetCacheReq struct {
+type SetKeyvalueReq struct {
 	Key    string `thrift:"key,1" db:"key" json:"key"`
 	Value  string `thrift:"value,2" db:"value" json:"value"`
 	Expire int64  `thrift:"expire,3" db:"expire" json:"expire"`
 }
 
-func NewSetCacheReq() *SetCacheReq {
-	return &SetCacheReq{}
+func NewSetKeyvalueReq() *SetKeyvalueReq {
+	return &SetKeyvalueReq{}
 }
 
-func (p *SetCacheReq) GetKey() string {
+func (p *SetKeyvalueReq) GetKey() string {
 	return p.Key
 }
 
-func (p *SetCacheReq) GetValue() string {
+func (p *SetKeyvalueReq) GetValue() string {
 	return p.Value
 }
 
-func (p *SetCacheReq) GetExpire() int64 {
+func (p *SetKeyvalueReq) GetExpire() int64 {
 	return p.Expire
 }
-func (p *SetCacheReq) Read(iprot thrift.TProtocol) error {
+func (p *SetKeyvalueReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -10471,7 +10471,7 @@ func (p *SetCacheReq) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *SetCacheReq) ReadField1(iprot thrift.TProtocol) error {
+func (p *SetKeyvalueReq) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
@@ -10480,7 +10480,7 @@ func (p *SetCacheReq) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *SetCacheReq) ReadField2(iprot thrift.TProtocol) error {
+func (p *SetKeyvalueReq) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
@@ -10489,7 +10489,7 @@ func (p *SetCacheReq) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *SetCacheReq) ReadField3(iprot thrift.TProtocol) error {
+func (p *SetKeyvalueReq) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI64(); err != nil {
 		return thrift.PrependError("error reading field 3: ", err)
 	} else {
@@ -10498,8 +10498,8 @@ func (p *SetCacheReq) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *SetCacheReq) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("set_cache_req"); err != nil {
+func (p *SetKeyvalueReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("set_keyvalue_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -10522,7 +10522,7 @@ func (p *SetCacheReq) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *SetCacheReq) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *SetKeyvalueReq) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("key", thrift.STRING, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:key: ", p), err)
 	}
@@ -10535,7 +10535,7 @@ func (p *SetCacheReq) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *SetCacheReq) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *SetKeyvalueReq) writeField2(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("value", thrift.STRING, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:value: ", p), err)
 	}
@@ -10548,7 +10548,7 @@ func (p *SetCacheReq) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *SetCacheReq) writeField3(oprot thrift.TProtocol) (err error) {
+func (p *SetKeyvalueReq) writeField3(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("expire", thrift.I64, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:expire: ", p), err)
 	}
@@ -10561,33 +10561,33 @@ func (p *SetCacheReq) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *SetCacheReq) String() string {
+func (p *SetKeyvalueReq) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("SetCacheReq(%+v)", *p)
+	return fmt.Sprintf("SetKeyvalueReq(%+v)", *p)
 }
 
 // Attributes:
 //  - Rescode
 //  - Resmsg
-type SetCacheRes struct {
+type SetKeyvalueRes struct {
 	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
 	Resmsg  string       `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
 }
 
-func NewSetCacheRes() *SetCacheRes {
-	return &SetCacheRes{}
+func NewSetKeyvalueRes() *SetKeyvalueRes {
+	return &SetKeyvalueRes{}
 }
 
-func (p *SetCacheRes) GetRescode() rescode.Code {
+func (p *SetKeyvalueRes) GetRescode() rescode.Code {
 	return p.Rescode
 }
 
-func (p *SetCacheRes) GetResmsg() string {
+func (p *SetKeyvalueRes) GetResmsg() string {
 	return p.Resmsg
 }
-func (p *SetCacheRes) Read(iprot thrift.TProtocol) error {
+func (p *SetKeyvalueRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -10636,7 +10636,7 @@ func (p *SetCacheRes) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *SetCacheRes) ReadField1(iprot thrift.TProtocol) error {
+func (p *SetKeyvalueRes) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
@@ -10646,7 +10646,7 @@ func (p *SetCacheRes) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *SetCacheRes) ReadField2(iprot thrift.TProtocol) error {
+func (p *SetKeyvalueRes) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
@@ -10655,8 +10655,8 @@ func (p *SetCacheRes) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *SetCacheRes) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("set_cache_res"); err != nil {
+func (p *SetKeyvalueRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("set_keyvalue_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -10676,7 +10676,7 @@ func (p *SetCacheRes) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *SetCacheRes) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *SetKeyvalueRes) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
 	}
@@ -10689,7 +10689,7 @@ func (p *SetCacheRes) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *SetCacheRes) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *SetKeyvalueRes) writeField2(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
 	}
@@ -10702,27 +10702,27 @@ func (p *SetCacheRes) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *SetCacheRes) String() string {
+func (p *SetKeyvalueRes) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("SetCacheRes(%+v)", *p)
+	return fmt.Sprintf("SetKeyvalueRes(%+v)", *p)
 }
 
 // Attributes:
 //  - Key
-type GetCacheReq struct {
+type GetKeyvalueReq struct {
 	Key string `thrift:"key,1" db:"key" json:"key"`
 }
 
-func NewGetCacheReq() *GetCacheReq {
-	return &GetCacheReq{}
+func NewGetKeyvalueReq() *GetKeyvalueReq {
+	return &GetKeyvalueReq{}
 }
 
-func (p *GetCacheReq) GetKey() string {
+func (p *GetKeyvalueReq) GetKey() string {
 	return p.Key
 }
-func (p *GetCacheReq) Read(iprot thrift.TProtocol) error {
+func (p *GetKeyvalueReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -10761,7 +10761,7 @@ func (p *GetCacheReq) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *GetCacheReq) ReadField1(iprot thrift.TProtocol) error {
+func (p *GetKeyvalueReq) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
@@ -10770,8 +10770,8 @@ func (p *GetCacheReq) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *GetCacheReq) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("get_cache_req"); err != nil {
+func (p *GetKeyvalueReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("get_keyvalue_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -10788,7 +10788,7 @@ func (p *GetCacheReq) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *GetCacheReq) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *GetKeyvalueReq) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("key", thrift.STRING, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:key: ", p), err)
 	}
@@ -10801,39 +10801,39 @@ func (p *GetCacheReq) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *GetCacheReq) String() string {
+func (p *GetKeyvalueReq) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("GetCacheReq(%+v)", *p)
+	return fmt.Sprintf("GetKeyvalueReq(%+v)", *p)
 }
 
 // Attributes:
 //  - Rescode
 //  - Resmsg
 //  - Value
-type GetCacheRes struct {
+type GetKeyvalueRes struct {
 	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
 	Resmsg  string       `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
 	Value   string       `thrift:"value,3" db:"value" json:"value"`
 }
 
-func NewGetCacheRes() *GetCacheRes {
-	return &GetCacheRes{}
+func NewGetKeyvalueRes() *GetKeyvalueRes {
+	return &GetKeyvalueRes{}
 }
 
-func (p *GetCacheRes) GetRescode() rescode.Code {
+func (p *GetKeyvalueRes) GetRescode() rescode.Code {
 	return p.Rescode
 }
 
-func (p *GetCacheRes) GetResmsg() string {
+func (p *GetKeyvalueRes) GetResmsg() string {
 	return p.Resmsg
 }
 
-func (p *GetCacheRes) GetValue() string {
+func (p *GetKeyvalueRes) GetValue() string {
 	return p.Value
 }
-func (p *GetCacheRes) Read(iprot thrift.TProtocol) error {
+func (p *GetKeyvalueRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -10892,7 +10892,7 @@ func (p *GetCacheRes) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *GetCacheRes) ReadField1(iprot thrift.TProtocol) error {
+func (p *GetKeyvalueRes) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
@@ -10902,7 +10902,7 @@ func (p *GetCacheRes) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *GetCacheRes) ReadField2(iprot thrift.TProtocol) error {
+func (p *GetKeyvalueRes) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
@@ -10911,7 +10911,7 @@ func (p *GetCacheRes) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *GetCacheRes) ReadField3(iprot thrift.TProtocol) error {
+func (p *GetKeyvalueRes) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 3: ", err)
 	} else {
@@ -10920,8 +10920,8 @@ func (p *GetCacheRes) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *GetCacheRes) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("get_cache_res"); err != nil {
+func (p *GetKeyvalueRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("get_keyvalue_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -10944,7 +10944,7 @@ func (p *GetCacheRes) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *GetCacheRes) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *GetKeyvalueRes) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
 	}
@@ -10957,7 +10957,7 @@ func (p *GetCacheRes) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *GetCacheRes) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *GetKeyvalueRes) writeField2(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
 	}
@@ -10970,7 +10970,7 @@ func (p *GetCacheRes) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *GetCacheRes) writeField3(oprot thrift.TProtocol) (err error) {
+func (p *GetKeyvalueRes) writeField3(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("value", thrift.STRING, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:value: ", p), err)
 	}
@@ -10983,11 +10983,11 @@ func (p *GetCacheRes) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *GetCacheRes) String() string {
+func (p *GetKeyvalueRes) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("GetCacheRes(%+v)", *p)
+	return fmt.Sprintf("GetKeyvalueRes(%+v)", *p)
 }
 
 type DatanodeService interface {
@@ -11100,10 +11100,10 @@ type DatanodeService interface {
 	Thumbnail(ctx context.Context, uid string, path string) (r *ThumbnailRes, err error)
 	// Parameters:
 	//  - Req
-	SetCache(ctx context.Context, req *SetCacheReq) (r *SetCacheRes, err error)
+	SetKeyValue(ctx context.Context, req *SetKeyvalueReq) (r *SetKeyvalueRes, err error)
 	// Parameters:
 	//  - Req
-	GetCache(ctx context.Context, req *GetCacheReq) (r *GetCacheRes, err error)
+	GetKeyValue(ctx context.Context, req *GetKeyvalueReq) (r *GetKeyvalueRes, err error)
 }
 
 type DatanodeServiceClient struct {
@@ -11516,11 +11516,11 @@ func (p *DatanodeServiceClient) Thumbnail(ctx context.Context, uid string, path 
 
 // Parameters:
 //  - Req
-func (p *DatanodeServiceClient) SetCache(ctx context.Context, req *SetCacheReq) (r *SetCacheRes, err error) {
-	var _args66 DatanodeServiceSetCacheArgs
+func (p *DatanodeServiceClient) SetKeyValue(ctx context.Context, req *SetKeyvalueReq) (r *SetKeyvalueRes, err error) {
+	var _args66 DatanodeServiceSetKeyValueArgs
 	_args66.Req = req
-	var _result67 DatanodeServiceSetCacheResult
-	if err = p.Client_().Call(ctx, "setCache", &_args66, &_result67); err != nil {
+	var _result67 DatanodeServiceSetKeyValueResult
+	if err = p.Client_().Call(ctx, "setKeyValue", &_args66, &_result67); err != nil {
 		return
 	}
 	return _result67.GetSuccess(), nil
@@ -11528,11 +11528,11 @@ func (p *DatanodeServiceClient) SetCache(ctx context.Context, req *SetCacheReq) 
 
 // Parameters:
 //  - Req
-func (p *DatanodeServiceClient) GetCache(ctx context.Context, req *GetCacheReq) (r *GetCacheRes, err error) {
-	var _args68 DatanodeServiceGetCacheArgs
+func (p *DatanodeServiceClient) GetKeyValue(ctx context.Context, req *GetKeyvalueReq) (r *GetKeyvalueRes, err error) {
+	var _args68 DatanodeServiceGetKeyValueArgs
 	_args68.Req = req
-	var _result69 DatanodeServiceGetCacheResult
-	if err = p.Client_().Call(ctx, "getCache", &_args68, &_result69); err != nil {
+	var _result69 DatanodeServiceGetKeyValueResult
+	if err = p.Client_().Call(ctx, "getKeyValue", &_args68, &_result69); err != nil {
 		return
 	}
 	return _result69.GetSuccess(), nil
@@ -11587,8 +11587,8 @@ func NewDatanodeServiceProcessor(handler DatanodeService) *DatanodeServiceProces
 	self70.processorMap["addFile"] = &datanodeServiceProcessorAddFile{handler: handler}
 	self70.processorMap["yunSaveAttr"] = &datanodeServiceProcessorYunSaveAttr{handler: handler}
 	self70.processorMap["thumbnail"] = &datanodeServiceProcessorThumbnail{handler: handler}
-	self70.processorMap["setCache"] = &datanodeServiceProcessorSetCache{handler: handler}
-	self70.processorMap["getCache"] = &datanodeServiceProcessorGetCache{handler: handler}
+	self70.processorMap["setKeyValue"] = &datanodeServiceProcessorSetKeyValue{handler: handler}
+	self70.processorMap["getKeyValue"] = &datanodeServiceProcessorGetKeyValue{handler: handler}
 	return self70
 }
 
@@ -12955,16 +12955,16 @@ func (p *datanodeServiceProcessorThumbnail) Process(ctx context.Context, seqId i
 	return true, err
 }
 
-type datanodeServiceProcessorSetCache struct {
+type datanodeServiceProcessorSetKeyValue struct {
 	handler DatanodeService
 }
 
-func (p *datanodeServiceProcessorSetCache) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	args := DatanodeServiceSetCacheArgs{}
+func (p *datanodeServiceProcessorSetKeyValue) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := DatanodeServiceSetKeyValueArgs{}
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
-		oprot.WriteMessageBegin("setCache", thrift.EXCEPTION, seqId)
+		oprot.WriteMessageBegin("setKeyValue", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -12972,12 +12972,12 @@ func (p *datanodeServiceProcessorSetCache) Process(ctx context.Context, seqId in
 	}
 
 	iprot.ReadMessageEnd()
-	result := DatanodeServiceSetCacheResult{}
-	var retval *SetCacheRes
+	result := DatanodeServiceSetKeyValueResult{}
+	var retval *SetKeyvalueRes
 	var err2 error
-	if retval, err2 = p.handler.SetCache(ctx, args.Req); err2 != nil {
-		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing setCache: "+err2.Error())
-		oprot.WriteMessageBegin("setCache", thrift.EXCEPTION, seqId)
+	if retval, err2 = p.handler.SetKeyValue(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing setKeyValue: "+err2.Error())
+		oprot.WriteMessageBegin("setKeyValue", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -12985,7 +12985,7 @@ func (p *datanodeServiceProcessorSetCache) Process(ctx context.Context, seqId in
 	} else {
 		result.Success = retval
 	}
-	if err2 = oprot.WriteMessageBegin("setCache", thrift.REPLY, seqId); err2 != nil {
+	if err2 = oprot.WriteMessageBegin("setKeyValue", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -13003,16 +13003,16 @@ func (p *datanodeServiceProcessorSetCache) Process(ctx context.Context, seqId in
 	return true, err
 }
 
-type datanodeServiceProcessorGetCache struct {
+type datanodeServiceProcessorGetKeyValue struct {
 	handler DatanodeService
 }
 
-func (p *datanodeServiceProcessorGetCache) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	args := DatanodeServiceGetCacheArgs{}
+func (p *datanodeServiceProcessorGetKeyValue) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := DatanodeServiceGetKeyValueArgs{}
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
-		oprot.WriteMessageBegin("getCache", thrift.EXCEPTION, seqId)
+		oprot.WriteMessageBegin("getKeyValue", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -13020,12 +13020,12 @@ func (p *datanodeServiceProcessorGetCache) Process(ctx context.Context, seqId in
 	}
 
 	iprot.ReadMessageEnd()
-	result := DatanodeServiceGetCacheResult{}
-	var retval *GetCacheRes
+	result := DatanodeServiceGetKeyValueResult{}
+	var retval *GetKeyvalueRes
 	var err2 error
-	if retval, err2 = p.handler.GetCache(ctx, args.Req); err2 != nil {
-		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing getCache: "+err2.Error())
-		oprot.WriteMessageBegin("getCache", thrift.EXCEPTION, seqId)
+	if retval, err2 = p.handler.GetKeyValue(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing getKeyValue: "+err2.Error())
+		oprot.WriteMessageBegin("getKeyValue", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -13033,7 +13033,7 @@ func (p *datanodeServiceProcessorGetCache) Process(ctx context.Context, seqId in
 	} else {
 		result.Success = retval
 	}
-	if err2 = oprot.WriteMessageBegin("getCache", thrift.REPLY, seqId); err2 != nil {
+	if err2 = oprot.WriteMessageBegin("getKeyValue", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -19959,27 +19959,27 @@ func (p *DatanodeServiceThumbnailResult) String() string {
 
 // Attributes:
 //  - Req
-type DatanodeServiceSetCacheArgs struct {
-	Req *SetCacheReq `thrift:"req,1" db:"req" json:"req"`
+type DatanodeServiceSetKeyValueArgs struct {
+	Req *SetKeyvalueReq `thrift:"req,1" db:"req" json:"req"`
 }
 
-func NewDatanodeServiceSetCacheArgs() *DatanodeServiceSetCacheArgs {
-	return &DatanodeServiceSetCacheArgs{}
+func NewDatanodeServiceSetKeyValueArgs() *DatanodeServiceSetKeyValueArgs {
+	return &DatanodeServiceSetKeyValueArgs{}
 }
 
-var DatanodeServiceSetCacheArgs_Req_DEFAULT *SetCacheReq
+var DatanodeServiceSetKeyValueArgs_Req_DEFAULT *SetKeyvalueReq
 
-func (p *DatanodeServiceSetCacheArgs) GetReq() *SetCacheReq {
+func (p *DatanodeServiceSetKeyValueArgs) GetReq() *SetKeyvalueReq {
 	if !p.IsSetReq() {
-		return DatanodeServiceSetCacheArgs_Req_DEFAULT
+		return DatanodeServiceSetKeyValueArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *DatanodeServiceSetCacheArgs) IsSetReq() bool {
+func (p *DatanodeServiceSetKeyValueArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *DatanodeServiceSetCacheArgs) Read(iprot thrift.TProtocol) error {
+func (p *DatanodeServiceSetKeyValueArgs) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -20018,16 +20018,16 @@ func (p *DatanodeServiceSetCacheArgs) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DatanodeServiceSetCacheArgs) ReadField1(iprot thrift.TProtocol) error {
-	p.Req = &SetCacheReq{}
+func (p *DatanodeServiceSetKeyValueArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &SetKeyvalueReq{}
 	if err := p.Req.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
 	}
 	return nil
 }
 
-func (p *DatanodeServiceSetCacheArgs) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("setCache_args"); err != nil {
+func (p *DatanodeServiceSetKeyValueArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("setKeyValue_args"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -20044,7 +20044,7 @@ func (p *DatanodeServiceSetCacheArgs) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DatanodeServiceSetCacheArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *DatanodeServiceSetKeyValueArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
 	}
@@ -20057,36 +20057,36 @@ func (p *DatanodeServiceSetCacheArgs) writeField1(oprot thrift.TProtocol) (err e
 	return err
 }
 
-func (p *DatanodeServiceSetCacheArgs) String() string {
+func (p *DatanodeServiceSetKeyValueArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("DatanodeServiceSetCacheArgs(%+v)", *p)
+	return fmt.Sprintf("DatanodeServiceSetKeyValueArgs(%+v)", *p)
 }
 
 // Attributes:
 //  - Success
-type DatanodeServiceSetCacheResult struct {
-	Success *SetCacheRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+type DatanodeServiceSetKeyValueResult struct {
+	Success *SetKeyvalueRes `thrift:"success,0" db:"success" json:"success,omitempty"`
 }
 
-func NewDatanodeServiceSetCacheResult() *DatanodeServiceSetCacheResult {
-	return &DatanodeServiceSetCacheResult{}
+func NewDatanodeServiceSetKeyValueResult() *DatanodeServiceSetKeyValueResult {
+	return &DatanodeServiceSetKeyValueResult{}
 }
 
-var DatanodeServiceSetCacheResult_Success_DEFAULT *SetCacheRes
+var DatanodeServiceSetKeyValueResult_Success_DEFAULT *SetKeyvalueRes
 
-func (p *DatanodeServiceSetCacheResult) GetSuccess() *SetCacheRes {
+func (p *DatanodeServiceSetKeyValueResult) GetSuccess() *SetKeyvalueRes {
 	if !p.IsSetSuccess() {
-		return DatanodeServiceSetCacheResult_Success_DEFAULT
+		return DatanodeServiceSetKeyValueResult_Success_DEFAULT
 	}
 	return p.Success
 }
-func (p *DatanodeServiceSetCacheResult) IsSetSuccess() bool {
+func (p *DatanodeServiceSetKeyValueResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *DatanodeServiceSetCacheResult) Read(iprot thrift.TProtocol) error {
+func (p *DatanodeServiceSetKeyValueResult) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -20125,16 +20125,16 @@ func (p *DatanodeServiceSetCacheResult) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DatanodeServiceSetCacheResult) ReadField0(iprot thrift.TProtocol) error {
-	p.Success = &SetCacheRes{}
+func (p *DatanodeServiceSetKeyValueResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &SetKeyvalueRes{}
 	if err := p.Success.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
 	}
 	return nil
 }
 
-func (p *DatanodeServiceSetCacheResult) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("setCache_result"); err != nil {
+func (p *DatanodeServiceSetKeyValueResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("setKeyValue_result"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -20151,7 +20151,7 @@ func (p *DatanodeServiceSetCacheResult) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DatanodeServiceSetCacheResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *DatanodeServiceSetKeyValueResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
@@ -20166,36 +20166,36 @@ func (p *DatanodeServiceSetCacheResult) writeField0(oprot thrift.TProtocol) (err
 	return err
 }
 
-func (p *DatanodeServiceSetCacheResult) String() string {
+func (p *DatanodeServiceSetKeyValueResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("DatanodeServiceSetCacheResult(%+v)", *p)
+	return fmt.Sprintf("DatanodeServiceSetKeyValueResult(%+v)", *p)
 }
 
 // Attributes:
 //  - Req
-type DatanodeServiceGetCacheArgs struct {
-	Req *GetCacheReq `thrift:"req,1" db:"req" json:"req"`
+type DatanodeServiceGetKeyValueArgs struct {
+	Req *GetKeyvalueReq `thrift:"req,1" db:"req" json:"req"`
 }
 
-func NewDatanodeServiceGetCacheArgs() *DatanodeServiceGetCacheArgs {
-	return &DatanodeServiceGetCacheArgs{}
+func NewDatanodeServiceGetKeyValueArgs() *DatanodeServiceGetKeyValueArgs {
+	return &DatanodeServiceGetKeyValueArgs{}
 }
 
-var DatanodeServiceGetCacheArgs_Req_DEFAULT *GetCacheReq
+var DatanodeServiceGetKeyValueArgs_Req_DEFAULT *GetKeyvalueReq
 
-func (p *DatanodeServiceGetCacheArgs) GetReq() *GetCacheReq {
+func (p *DatanodeServiceGetKeyValueArgs) GetReq() *GetKeyvalueReq {
 	if !p.IsSetReq() {
-		return DatanodeServiceGetCacheArgs_Req_DEFAULT
+		return DatanodeServiceGetKeyValueArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *DatanodeServiceGetCacheArgs) IsSetReq() bool {
+func (p *DatanodeServiceGetKeyValueArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *DatanodeServiceGetCacheArgs) Read(iprot thrift.TProtocol) error {
+func (p *DatanodeServiceGetKeyValueArgs) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -20234,16 +20234,16 @@ func (p *DatanodeServiceGetCacheArgs) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DatanodeServiceGetCacheArgs) ReadField1(iprot thrift.TProtocol) error {
-	p.Req = &GetCacheReq{}
+func (p *DatanodeServiceGetKeyValueArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &GetKeyvalueReq{}
 	if err := p.Req.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
 	}
 	return nil
 }
 
-func (p *DatanodeServiceGetCacheArgs) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("getCache_args"); err != nil {
+func (p *DatanodeServiceGetKeyValueArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("getKeyValue_args"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -20260,7 +20260,7 @@ func (p *DatanodeServiceGetCacheArgs) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DatanodeServiceGetCacheArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *DatanodeServiceGetKeyValueArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
 	}
@@ -20273,36 +20273,36 @@ func (p *DatanodeServiceGetCacheArgs) writeField1(oprot thrift.TProtocol) (err e
 	return err
 }
 
-func (p *DatanodeServiceGetCacheArgs) String() string {
+func (p *DatanodeServiceGetKeyValueArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("DatanodeServiceGetCacheArgs(%+v)", *p)
+	return fmt.Sprintf("DatanodeServiceGetKeyValueArgs(%+v)", *p)
 }
 
 // Attributes:
 //  - Success
-type DatanodeServiceGetCacheResult struct {
-	Success *GetCacheRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+type DatanodeServiceGetKeyValueResult struct {
+	Success *GetKeyvalueRes `thrift:"success,0" db:"success" json:"success,omitempty"`
 }
 
-func NewDatanodeServiceGetCacheResult() *DatanodeServiceGetCacheResult {
-	return &DatanodeServiceGetCacheResult{}
+func NewDatanodeServiceGetKeyValueResult() *DatanodeServiceGetKeyValueResult {
+	return &DatanodeServiceGetKeyValueResult{}
 }
 
-var DatanodeServiceGetCacheResult_Success_DEFAULT *GetCacheRes
+var DatanodeServiceGetKeyValueResult_Success_DEFAULT *GetKeyvalueRes
 
-func (p *DatanodeServiceGetCacheResult) GetSuccess() *GetCacheRes {
+func (p *DatanodeServiceGetKeyValueResult) GetSuccess() *GetKeyvalueRes {
 	if !p.IsSetSuccess() {
-		return DatanodeServiceGetCacheResult_Success_DEFAULT
+		return DatanodeServiceGetKeyValueResult_Success_DEFAULT
 	}
 	return p.Success
 }
-func (p *DatanodeServiceGetCacheResult) IsSetSuccess() bool {
+func (p *DatanodeServiceGetKeyValueResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *DatanodeServiceGetCacheResult) Read(iprot thrift.TProtocol) error {
+func (p *DatanodeServiceGetKeyValueResult) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -20341,16 +20341,16 @@ func (p *DatanodeServiceGetCacheResult) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DatanodeServiceGetCacheResult) ReadField0(iprot thrift.TProtocol) error {
-	p.Success = &GetCacheRes{}
+func (p *DatanodeServiceGetKeyValueResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &GetKeyvalueRes{}
 	if err := p.Success.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
 	}
 	return nil
 }
 
-func (p *DatanodeServiceGetCacheResult) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("getCache_result"); err != nil {
+func (p *DatanodeServiceGetKeyValueResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("getKeyValue_result"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -20367,7 +20367,7 @@ func (p *DatanodeServiceGetCacheResult) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DatanodeServiceGetCacheResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *DatanodeServiceGetKeyValueResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
@@ -20382,9 +20382,9 @@ func (p *DatanodeServiceGetCacheResult) writeField0(oprot thrift.TProtocol) (err
 	return err
 }
 
-func (p *DatanodeServiceGetCacheResult) String() string {
+func (p *DatanodeServiceGetKeyValueResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("DatanodeServiceGetCacheResult(%+v)", *p)
+	return fmt.Sprintf("DatanodeServiceGetKeyValueResult(%+v)", *p)
 }

@@ -326,22 +326,22 @@ struct thumbnail_res {
     3:string        thumb,
 }
 
-struct set_cache_req {
+struct set_keyvalue_req {
     1:string        key,
     2:string        value,
     3:i64           expire,
 }
 
-struct set_cache_res {
+struct set_keyvalue_res {
     1:rescode.code  rescode,
     2:string        resmsg,
 }
 
-struct get_cache_req {
+struct get_keyvalue_req {
     1:string        key,
 }
 
-struct get_cache_res {
+struct get_keyvalue_res {
     1:rescode.code  rescode,
     2:string        resmsg,
     3:string        value,
@@ -417,9 +417,9 @@ service datanode_service {
     // 获取图像缩略图
     thumbnail_res thumbnail(1:string uid, 2:string path)
 
-    // ------------- cache ----------------//
+    // ------------- key-value ----------------//
     // 设置缓存
-    set_cache_res setCache(1:set_cache_req req),
+    set_keyvalue_res setKeyValue(1:set_keyvalue_req req),
     // 获取缓存
-    get_cache_res getCache(1:get_cache_req req),
+    get_keyvalue_res getKeyValue(1:get_keyvalue_req req),
 }
