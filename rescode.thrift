@@ -10,4 +10,5 @@ enum code {
     IS_SELF =   101,    // 自己
 
     NOT_EXISTS = 400,    // 不存在
+    SEND_CODE_ERR = 401, // 发送验证码错误
 }
