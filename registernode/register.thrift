@@ -37,7 +37,7 @@ struct cooperator_user_res {
     3:map<string,string>    extra,
 }
 
-service codenode_service {
+service registernode_service {
     // 创建普通用户
     normal_user_res   normal_user(1:normal_user_req req), 
 

@@ -1319,7 +1319,7 @@ func (p *CooperatorUserRes) String() string {
 	return fmt.Sprintf("CooperatorUserRes(%+v)", *p)
 }
 
-type CodenodeService interface {
+type RegisternodeService interface {
 	// Parameters:
 	//  - Req
 	NormalUser(ctx context.Context, req *NormalUserReq) (r *NormalUserRes, err error)
@@ -1328,38 +1328,38 @@ type CodenodeService interface {
 	CooperatorUser(ctx context.Context, req *CooperatorUserReq) (r *CooperatorUserRes, err error)
 }
 
-type CodenodeServiceClient struct {
+type RegisternodeServiceClient struct {
 	c thrift.TClient
 }
 
-func NewCodenodeServiceClientFactory(t thrift.TTransport, f thrift.TProtocolFactory) *CodenodeServiceClient {
-	return &CodenodeServiceClient{
+func NewRegisternodeServiceClientFactory(t thrift.TTransport, f thrift.TProtocolFactory) *RegisternodeServiceClient {
+	return &RegisternodeServiceClient{
 		c: thrift.NewTStandardClient(f.GetProtocol(t), f.GetProtocol(t)),
 	}
 }
 
-func NewCodenodeServiceClientProtocol(t thrift.TTransport, iprot thrift.TProtocol, oprot thrift.TProtocol) *CodenodeServiceClient {
-	return &CodenodeServiceClient{
+func NewRegisternodeServiceClientProtocol(t thrift.TTransport, iprot thrift.TProtocol, oprot thrift.TProtocol) *RegisternodeServiceClient {
+	return &RegisternodeServiceClient{
 		c: thrift.NewTStandardClient(iprot, oprot),
 	}
 }
 
-func NewCodenodeServiceClient(c thrift.TClient) *CodenodeServiceClient {
-	return &CodenodeServiceClient{
+func NewRegisternodeServiceClient(c thrift.TClient) *RegisternodeServiceClient {
+	return &RegisternodeServiceClient{
 		c: c,
 	}
 }
 
-func (p *CodenodeServiceClient) Client_() thrift.TClient {
+func (p *RegisternodeServiceClient) Client_() thrift.TClient {
 	return p.c
 }
 
 // Parameters:
 //  - Req
-func (p *CodenodeServiceClient) NormalUser(ctx context.Context, req *NormalUserReq) (r *NormalUserRes, err error) {
-	var _args8 CodenodeServiceNormalUserArgs
+func (p *RegisternodeServiceClient) NormalUser(ctx context.Context, req *NormalUserReq) (r *NormalUserRes, err error) {
+	var _args8 RegisternodeServiceNormalUserArgs
 	_args8.Req = req
-	var _result9 CodenodeServiceNormalUserResult
+	var _result9 RegisternodeServiceNormalUserResult
 	if err = p.Client_().Call(ctx, "normal_user", &_args8, &_result9); err != nil {
 		return
 	}
@@ -1368,43 +1368,43 @@ func (p *CodenodeServiceClient) NormalUser(ctx context.Context, req *NormalUserR
 
 // Parameters:
 //  - Req
-func (p *CodenodeServiceClient) CooperatorUser(ctx context.Context, req *CooperatorUserReq) (r *CooperatorUserRes, err error) {
-	var _args10 CodenodeServiceCooperatorUserArgs
+func (p *RegisternodeServiceClient) CooperatorUser(ctx context.Context, req *CooperatorUserReq) (r *CooperatorUserRes, err error) {
+	var _args10 RegisternodeServiceCooperatorUserArgs
 	_args10.Req = req
-	var _result11 CodenodeServiceCooperatorUserResult
+	var _result11 RegisternodeServiceCooperatorUserResult
 	if err = p.Client_().Call(ctx, "cooperator_user", &_args10, &_result11); err != nil {
 		return
 	}
 	return _result11.GetSuccess(), nil
 }
 
-type CodenodeServiceProcessor struct {
+type RegisternodeServiceProcessor struct {
 	processorMap map[string]thrift.TProcessorFunction
-	handler      CodenodeService
+	handler      RegisternodeService
 }
 
-func (p *CodenodeServiceProcessor) AddToProcessorMap(key string, processor thrift.TProcessorFunction) {
+func (p *RegisternodeServiceProcessor) AddToProcessorMap(key string, processor thrift.TProcessorFunction) {
 	p.processorMap[key] = processor
 }
 
-func (p *CodenodeServiceProcessor) GetProcessorFunction(key string) (processor thrift.TProcessorFunction, ok bool) {
+func (p *RegisternodeServiceProcessor) GetProcessorFunction(key string) (processor thrift.TProcessorFunction, ok bool) {
 	processor, ok = p.processorMap[key]
 	return processor, ok
 }
 
-func (p *CodenodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFunction {
+func (p *RegisternodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFunction {
 	return p.processorMap
 }
 
-func NewCodenodeServiceProcessor(handler CodenodeService) *CodenodeServiceProcessor {
+func NewRegisternodeServiceProcessor(handler RegisternodeService) *RegisternodeServiceProcessor {
 
-	self12 := &CodenodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self12.processorMap["normal_user"] = &codenodeServiceProcessorNormalUser{handler: handler}
-	self12.processorMap["cooperator_user"] = &codenodeServiceProcessorCooperatorUser{handler: handler}
+	self12 := &RegisternodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self12.processorMap["normal_user"] = &registernodeServiceProcessorNormalUser{handler: handler}
+	self12.processorMap["cooperator_user"] = &registernodeServiceProcessorCooperatorUser{handler: handler}
 	return self12
 }
 
-func (p *CodenodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+func (p *RegisternodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
 	name, _, seqId, err := iprot.ReadMessageBegin()
 	if err != nil {
 		return false, err
@@ -1423,12 +1423,12 @@ func (p *CodenodeServiceProcessor) Process(ctx context.Context, iprot, oprot thr
 
 }
 
-type codenodeServiceProcessorNormalUser struct {
-	handler CodenodeService
+type registernodeServiceProcessorNormalUser struct {
+	handler RegisternodeService
 }
 
-func (p *codenodeServiceProcessorNormalUser) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	args := CodenodeServiceNormalUserArgs{}
+func (p *registernodeServiceProcessorNormalUser) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := RegisternodeServiceNormalUserArgs{}
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
@@ -1440,7 +1440,7 @@ func (p *codenodeServiceProcessorNormalUser) Process(ctx context.Context, seqId 
 	}
 
 	iprot.ReadMessageEnd()
-	result := CodenodeServiceNormalUserResult{}
+	result := RegisternodeServiceNormalUserResult{}
 	var retval *NormalUserRes
 	var err2 error
 	if retval, err2 = p.handler.NormalUser(ctx, args.Req); err2 != nil {
@@ -1471,12 +1471,12 @@ func (p *codenodeServiceProcessorNormalUser) Process(ctx context.Context, seqId 
 	return true, err
 }
 
-type codenodeServiceProcessorCooperatorUser struct {
-	handler CodenodeService
+type registernodeServiceProcessorCooperatorUser struct {
+	handler RegisternodeService
 }
 
-func (p *codenodeServiceProcessorCooperatorUser) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	args := CodenodeServiceCooperatorUserArgs{}
+func (p *registernodeServiceProcessorCooperatorUser) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := RegisternodeServiceCooperatorUserArgs{}
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
@@ -1488,7 +1488,7 @@ func (p *codenodeServiceProcessorCooperatorUser) Process(ctx context.Context, se
 	}
 
 	iprot.ReadMessageEnd()
-	result := CodenodeServiceCooperatorUserResult{}
+	result := RegisternodeServiceCooperatorUserResult{}
 	var retval *CooperatorUserRes
 	var err2 error
 	if retval, err2 = p.handler.CooperatorUser(ctx, args.Req); err2 != nil {
@@ -1523,27 +1523,27 @@ func (p *codenodeServiceProcessorCooperatorUser) Process(ctx context.Context, se
 
 // Attributes:
 //  - Req
-type CodenodeServiceNormalUserArgs struct {
+type RegisternodeServiceNormalUserArgs struct {
 	Req *NormalUserReq `thrift:"req,1" db:"req" json:"req"`
 }
 
-func NewCodenodeServiceNormalUserArgs() *CodenodeServiceNormalUserArgs {
-	return &CodenodeServiceNormalUserArgs{}
+func NewRegisternodeServiceNormalUserArgs() *RegisternodeServiceNormalUserArgs {
+	return &RegisternodeServiceNormalUserArgs{}
 }
 
-var CodenodeServiceNormalUserArgs_Req_DEFAULT *NormalUserReq
+var RegisternodeServiceNormalUserArgs_Req_DEFAULT *NormalUserReq
 
-func (p *CodenodeServiceNormalUserArgs) GetReq() *NormalUserReq {
+func (p *RegisternodeServiceNormalUserArgs) GetReq() *NormalUserReq {
 	if !p.IsSetReq() {
-		return CodenodeServiceNormalUserArgs_Req_DEFAULT
+		return RegisternodeServiceNormalUserArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *CodenodeServiceNormalUserArgs) IsSetReq() bool {
+func (p *RegisternodeServiceNormalUserArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *CodenodeServiceNormalUserArgs) Read(iprot thrift.TProtocol) error {
+func (p *RegisternodeServiceNormalUserArgs) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -1582,7 +1582,7 @@ func (p *CodenodeServiceNormalUserArgs) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *CodenodeServiceNormalUserArgs) ReadField1(iprot thrift.TProtocol) error {
+func (p *RegisternodeServiceNormalUserArgs) ReadField1(iprot thrift.TProtocol) error {
 	p.Req = &NormalUserReq{}
 	if err := p.Req.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
@@ -1590,7 +1590,7 @@ func (p *CodenodeServiceNormalUserArgs) ReadField1(iprot thrift.TProtocol) error
 	return nil
 }
 
-func (p *CodenodeServiceNormalUserArgs) Write(oprot thrift.TProtocol) error {
+func (p *RegisternodeServiceNormalUserArgs) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("normal_user_args"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
@@ -1608,7 +1608,7 @@ func (p *CodenodeServiceNormalUserArgs) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *CodenodeServiceNormalUserArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *RegisternodeServiceNormalUserArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
 	}
@@ -1621,36 +1621,36 @@ func (p *CodenodeServiceNormalUserArgs) writeField1(oprot thrift.TProtocol) (err
 	return err
 }
 
-func (p *CodenodeServiceNormalUserArgs) String() string {
+func (p *RegisternodeServiceNormalUserArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("CodenodeServiceNormalUserArgs(%+v)", *p)
+	return fmt.Sprintf("RegisternodeServiceNormalUserArgs(%+v)", *p)
 }
 
 // Attributes:
 //  - Success
-type CodenodeServiceNormalUserResult struct {
+type RegisternodeServiceNormalUserResult struct {
 	Success *NormalUserRes `thrift:"success,0" db:"success" json:"success,omitempty"`
 }
 
-func NewCodenodeServiceNormalUserResult() *CodenodeServiceNormalUserResult {
-	return &CodenodeServiceNormalUserResult{}
+func NewRegisternodeServiceNormalUserResult() *RegisternodeServiceNormalUserResult {
+	return &RegisternodeServiceNormalUserResult{}
 }
 
-var CodenodeServiceNormalUserResult_Success_DEFAULT *NormalUserRes
+var RegisternodeServiceNormalUserResult_Success_DEFAULT *NormalUserRes
 
-func (p *CodenodeServiceNormalUserResult) GetSuccess() *NormalUserRes {
+func (p *RegisternodeServiceNormalUserResult) GetSuccess() *NormalUserRes {
 	if !p.IsSetSuccess() {
-		return CodenodeServiceNormalUserResult_Success_DEFAULT
+		return RegisternodeServiceNormalUserResult_Success_DEFAULT
 	}
 	return p.Success
 }
-func (p *CodenodeServiceNormalUserResult) IsSetSuccess() bool {
+func (p *RegisternodeServiceNormalUserResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *CodenodeServiceNormalUserResult) Read(iprot thrift.TProtocol) error {
+func (p *RegisternodeServiceNormalUserResult) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -1689,7 +1689,7 @@ func (p *CodenodeServiceNormalUserResult) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *CodenodeServiceNormalUserResult) ReadField0(iprot thrift.TProtocol) error {
+func (p *RegisternodeServiceNormalUserResult) ReadField0(iprot thrift.TProtocol) error {
 	p.Success = &NormalUserRes{}
 	if err := p.Success.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
@@ -1697,7 +1697,7 @@ func (p *CodenodeServiceNormalUserResult) ReadField0(iprot thrift.TProtocol) err
 	return nil
 }
 
-func (p *CodenodeServiceNormalUserResult) Write(oprot thrift.TProtocol) error {
+func (p *RegisternodeServiceNormalUserResult) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("normal_user_result"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
@@ -1715,7 +1715,7 @@ func (p *CodenodeServiceNormalUserResult) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *CodenodeServiceNormalUserResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *RegisternodeServiceNormalUserResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
@@ -1730,36 +1730,36 @@ func (p *CodenodeServiceNormalUserResult) writeField0(oprot thrift.TProtocol) (e
 	return err
 }
 
-func (p *CodenodeServiceNormalUserResult) String() string {
+func (p *RegisternodeServiceNormalUserResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("CodenodeServiceNormalUserResult(%+v)", *p)
+	return fmt.Sprintf("RegisternodeServiceNormalUserResult(%+v)", *p)
 }
 
 // Attributes:
 //  - Req
-type CodenodeServiceCooperatorUserArgs struct {
+type RegisternodeServiceCooperatorUserArgs struct {
 	Req *CooperatorUserReq `thrift:"req,1" db:"req" json:"req"`
 }
 
-func NewCodenodeServiceCooperatorUserArgs() *CodenodeServiceCooperatorUserArgs {
-	return &CodenodeServiceCooperatorUserArgs{}
+func NewRegisternodeServiceCooperatorUserArgs() *RegisternodeServiceCooperatorUserArgs {
+	return &RegisternodeServiceCooperatorUserArgs{}
 }
 
-var CodenodeServiceCooperatorUserArgs_Req_DEFAULT *CooperatorUserReq
+var RegisternodeServiceCooperatorUserArgs_Req_DEFAULT *CooperatorUserReq
 
-func (p *CodenodeServiceCooperatorUserArgs) GetReq() *CooperatorUserReq {
+func (p *RegisternodeServiceCooperatorUserArgs) GetReq() *CooperatorUserReq {
 	if !p.IsSetReq() {
-		return CodenodeServiceCooperatorUserArgs_Req_DEFAULT
+		return RegisternodeServiceCooperatorUserArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *CodenodeServiceCooperatorUserArgs) IsSetReq() bool {
+func (p *RegisternodeServiceCooperatorUserArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *CodenodeServiceCooperatorUserArgs) Read(iprot thrift.TProtocol) error {
+func (p *RegisternodeServiceCooperatorUserArgs) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -1798,7 +1798,7 @@ func (p *CodenodeServiceCooperatorUserArgs) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *CodenodeServiceCooperatorUserArgs) ReadField1(iprot thrift.TProtocol) error {
+func (p *RegisternodeServiceCooperatorUserArgs) ReadField1(iprot thrift.TProtocol) error {
 	p.Req = &CooperatorUserReq{}
 	if err := p.Req.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
@@ -1806,7 +1806,7 @@ func (p *CodenodeServiceCooperatorUserArgs) ReadField1(iprot thrift.TProtocol) e
 	return nil
 }
 
-func (p *CodenodeServiceCooperatorUserArgs) Write(oprot thrift.TProtocol) error {
+func (p *RegisternodeServiceCooperatorUserArgs) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("cooperator_user_args"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
@@ -1824,7 +1824,7 @@ func (p *CodenodeServiceCooperatorUserArgs) Write(oprot thrift.TProtocol) error 
 	return nil
 }
 
-func (p *CodenodeServiceCooperatorUserArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *RegisternodeServiceCooperatorUserArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
 	}
@@ -1837,36 +1837,36 @@ func (p *CodenodeServiceCooperatorUserArgs) writeField1(oprot thrift.TProtocol) 
 	return err
 }
 
-func (p *CodenodeServiceCooperatorUserArgs) String() string {
+func (p *RegisternodeServiceCooperatorUserArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("CodenodeServiceCooperatorUserArgs(%+v)", *p)
+	return fmt.Sprintf("RegisternodeServiceCooperatorUserArgs(%+v)", *p)
 }
 
 // Attributes:
 //  - Success
-type CodenodeServiceCooperatorUserResult struct {
+type RegisternodeServiceCooperatorUserResult struct {
 	Success *CooperatorUserRes `thrift:"success,0" db:"success" json:"success,omitempty"`
 }
 
-func NewCodenodeServiceCooperatorUserResult() *CodenodeServiceCooperatorUserResult {
-	return &CodenodeServiceCooperatorUserResult{}
+func NewRegisternodeServiceCooperatorUserResult() *RegisternodeServiceCooperatorUserResult {
+	return &RegisternodeServiceCooperatorUserResult{}
 }
 
-var CodenodeServiceCooperatorUserResult_Success_DEFAULT *CooperatorUserRes
+var RegisternodeServiceCooperatorUserResult_Success_DEFAULT *CooperatorUserRes
 
-func (p *CodenodeServiceCooperatorUserResult) GetSuccess() *CooperatorUserRes {
+func (p *RegisternodeServiceCooperatorUserResult) GetSuccess() *CooperatorUserRes {
 	if !p.IsSetSuccess() {
-		return CodenodeServiceCooperatorUserResult_Success_DEFAULT
+		return RegisternodeServiceCooperatorUserResult_Success_DEFAULT
 	}
 	return p.Success
 }
-func (p *CodenodeServiceCooperatorUserResult) IsSetSuccess() bool {
+func (p *RegisternodeServiceCooperatorUserResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *CodenodeServiceCooperatorUserResult) Read(iprot thrift.TProtocol) error {
+func (p *RegisternodeServiceCooperatorUserResult) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -1905,7 +1905,7 @@ func (p *CodenodeServiceCooperatorUserResult) Read(iprot thrift.TProtocol) error
 	return nil
 }
 
-func (p *CodenodeServiceCooperatorUserResult) ReadField0(iprot thrift.TProtocol) error {
+func (p *RegisternodeServiceCooperatorUserResult) ReadField0(iprot thrift.TProtocol) error {
 	p.Success = &CooperatorUserRes{}
 	if err := p.Success.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
@@ -1913,7 +1913,7 @@ func (p *CodenodeServiceCooperatorUserResult) ReadField0(iprot thrift.TProtocol)
 	return nil
 }
 
-func (p *CodenodeServiceCooperatorUserResult) Write(oprot thrift.TProtocol) error {
+func (p *RegisternodeServiceCooperatorUserResult) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("cooperator_user_result"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
@@ -1931,7 +1931,7 @@ func (p *CodenodeServiceCooperatorUserResult) Write(oprot thrift.TProtocol) erro
 	return nil
 }
 
-func (p *CodenodeServiceCooperatorUserResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *RegisternodeServiceCooperatorUserResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
@@ -1946,9 +1946,9 @@ func (p *CodenodeServiceCooperatorUserResult) writeField0(oprot thrift.TProtocol
 	return err
 }
 
-func (p *CodenodeServiceCooperatorUserResult) String() string {
+func (p *RegisternodeServiceCooperatorUserResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("CodenodeServiceCooperatorUserResult(%+v)", *p)
+	return fmt.Sprintf("RegisternodeServiceCooperatorUserResult(%+v)", *p)
 }
