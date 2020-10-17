@@ -2,14 +2,21 @@ namespace go registernode
 
 include "../rescode.thrift"
 
+struct authorize {
+    1:string    key,
+    2:string    value,
+    3:map<string,string> extra,
+}
+
 struct normal_user_req {
-    1:string    account,
-    2:string    passwd,
-    3:string    code,
-    4:bool      policy,
-    5:string    source,
-    6:string    invitor,
-    7:map<string,string> extra,
+    1:authorize auth,
+    2:string    account,
+    3:string    passwd,
+    4:string    code,
+    5:bool      policy,
+    6:string    source,
+    7:string    invitor,
+    8:map<string,string> extra,
 }
 
 struct normal_user_res {
@@ -19,16 +26,17 @@ struct normal_user_res {
 }
 
 struct cooperator_user_req {
-    1:string    account,
-    2:string    passwd,
-    3:string    code,  
-    4:string    contactor,  // 联系人
-    5:string    email,
-    6:string    brand_name, 
-    7:string    company_name,
-    8:bool      policy,
-    9:string    invitor,
-    10:map<string,string> extra,
+    1:authorize auth,
+    2:string    account,
+    3:string    passwd,
+    4:string    code,  
+    5:string    contactor,  // 联系人
+    6:string    email,
+    7:string    brand_name, 
+    8:string    company_name,
+    9:bool      policy,
+    10:string    invitor,
+    11:map<string,string> extra,
 }
 
 struct cooperator_user_res {
