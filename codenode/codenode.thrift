@@ -44,7 +44,7 @@ struct verify_code_res {
 
 service codenode_service {
     // 发送验证码
-    code_res   SendCode(1:code_req req), 
+    code_res   send_code(1:code_req req), 
     // 请求验证码
     verify_code_res verify_code(1:verify_code_req req),
 }

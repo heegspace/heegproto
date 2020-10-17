@@ -1332,7 +1332,7 @@ func (p *CodenodeServiceClient) SendCode(ctx context.Context, req *CodeReq) (r *
 	var _args10 CodenodeServiceSendCodeArgs
 	_args10.Req = req
 	var _result11 CodenodeServiceSendCodeResult
-	if err = p.Client_().Call(ctx, "SendCode", &_args10, &_result11); err != nil {
+	if err = p.Client_().Call(ctx, "send_code", &_args10, &_result11); err != nil {
 		return
 	}
 	return _result11.GetSuccess(), nil
@@ -1371,7 +1371,7 @@ func (p *CodenodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFu
 func NewCodenodeServiceProcessor(handler CodenodeService) *CodenodeServiceProcessor {
 
 	self14 := &CodenodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self14.processorMap["SendCode"] = &codenodeServiceProcessorSendCode{handler: handler}
+	self14.processorMap["send_code"] = &codenodeServiceProcessorSendCode{handler: handler}
 	self14.processorMap["verify_code"] = &codenodeServiceProcessorVerifyCode{handler: handler}
 	return self14
 }
@@ -1404,7 +1404,7 @@ func (p *codenodeServiceProcessorSendCode) Process(ctx context.Context, seqId in
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
-		oprot.WriteMessageBegin("SendCode", thrift.EXCEPTION, seqId)
+		oprot.WriteMessageBegin("send_code", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -1416,8 +1416,8 @@ func (p *codenodeServiceProcessorSendCode) Process(ctx context.Context, seqId in
 	var retval *CodeRes
 	var err2 error
 	if retval, err2 = p.handler.SendCode(ctx, args.Req); err2 != nil {
-		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing SendCode: "+err2.Error())
-		oprot.WriteMessageBegin("SendCode", thrift.EXCEPTION, seqId)
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing send_code: "+err2.Error())
+		oprot.WriteMessageBegin("send_code", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -1425,7 +1425,7 @@ func (p *codenodeServiceProcessorSendCode) Process(ctx context.Context, seqId in
 	} else {
 		result.Success = retval
 	}
-	if err2 = oprot.WriteMessageBegin("SendCode", thrift.REPLY, seqId); err2 != nil {
+	if err2 = oprot.WriteMessageBegin("send_code", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -1563,7 +1563,7 @@ func (p *CodenodeServiceSendCodeArgs) ReadField1(iprot thrift.TProtocol) error {
 }
 
 func (p *CodenodeServiceSendCodeArgs) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("SendCode_args"); err != nil {
+	if err := oprot.WriteStructBegin("send_code_args"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -1670,7 +1670,7 @@ func (p *CodenodeServiceSendCodeResult) ReadField0(iprot thrift.TProtocol) error
 }
 
 func (p *CodenodeServiceSendCodeResult) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("SendCode_result"); err != nil {
+	if err := oprot.WriteStructBegin("send_code_result"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {

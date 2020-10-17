@@ -24,12 +24,22 @@ var _ = bytes.Equal
 type Code int64
 
 const (
-	Code_SUCCESS    Code = 0
-	Code_ERROR      Code = 1
-	Code_PARAM_ERR  Code = 99
-	Code_EXISTS     Code = 100
-	Code_IS_SELF    Code = 101
-	Code_NOT_EXISTS Code = 400
+	Code_SUCCESS       Code = 0
+	Code_ERROR         Code = 1
+	Code_DB_ERROR      Code = 2
+	Code_AUTH_ERR      Code = 3
+	Code_MOBILE_ERR    Code = 4
+	Code_EMAIL_ERR     Code = 5
+	Code_PARAM_ERR     Code = 99
+	Code_EXISTS        Code = 100
+	Code_IS_SELF       Code = 101
+	Code_NOT_EXISTS    Code = 400
+	Code_SEND_CODE_ERR Code = 10000
+	Code_CODE_ERROR    Code = 10001
+	Code_CODE_EXPIRE   Code = 10002
+	Code_CODE_RATE     Code = 10003
+	Code_CODE_LIMIT    Code = 10004
+	Code_CODE_TYPE_ERR Code = 10005
 )
 
 func (p Code) String() string {
@@ -38,6 +48,14 @@ func (p Code) String() string {
 		return "SUCCESS"
 	case Code_ERROR:
 		return "ERROR"
+	case Code_DB_ERROR:
+		return "DB_ERROR"
+	case Code_AUTH_ERR:
+		return "AUTH_ERR"
+	case Code_MOBILE_ERR:
+		return "MOBILE_ERR"
+	case Code_EMAIL_ERR:
+		return "EMAIL_ERR"
 	case Code_PARAM_ERR:
 		return "PARAM_ERR"
 	case Code_EXISTS:
@@ -46,6 +64,18 @@ func (p Code) String() string {
 		return "IS_SELF"
 	case Code_NOT_EXISTS:
 		return "NOT_EXISTS"
+	case Code_SEND_CODE_ERR:
+		return "SEND_CODE_ERR"
+	case Code_CODE_ERROR:
+		return "CODE_ERROR"
+	case Code_CODE_EXPIRE:
+		return "CODE_EXPIRE"
+	case Code_CODE_RATE:
+		return "CODE_RATE"
+	case Code_CODE_LIMIT:
+		return "CODE_LIMIT"
+	case Code_CODE_TYPE_ERR:
+		return "CODE_TYPE_ERR"
 	}
 	return "<UNSET>"
 }
@@ -56,6 +86,14 @@ func CodeFromString(s string) (Code, error) {
 		return Code_SUCCESS, nil
 	case "ERROR":
 		return Code_ERROR, nil
+	case "DB_ERROR":
+		return Code_DB_ERROR, nil
+	case "AUTH_ERR":
+		return Code_AUTH_ERR, nil
+	case "MOBILE_ERR":
+		return Code_MOBILE_ERR, nil
+	case "EMAIL_ERR":
+		return Code_EMAIL_ERR, nil
 	case "PARAM_ERR":
 		return Code_PARAM_ERR, nil
 	case "EXISTS":
@@ -64,6 +102,18 @@ func CodeFromString(s string) (Code, error) {
 		return Code_IS_SELF, nil
 	case "NOT_EXISTS":
 		return Code_NOT_EXISTS, nil
+	case "SEND_CODE_ERR":
+		return Code_SEND_CODE_ERR, nil
+	case "CODE_ERROR":
+		return Code_CODE_ERROR, nil
+	case "CODE_EXPIRE":
+		return Code_CODE_EXPIRE, nil
+	case "CODE_RATE":
+		return Code_CODE_RATE, nil
+	case "CODE_LIMIT":
+		return Code_CODE_LIMIT, nil
+	case "CODE_TYPE_ERR":
+		return Code_CODE_TYPE_ERR, nil
 	}
 	return Code(0), fmt.Errorf("not a valid Code string")
 }
