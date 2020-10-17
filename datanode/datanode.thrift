@@ -30,15 +30,17 @@ struct user{
 }
 
 struct user_info_req {
-    1:string    uid
+    1:string    uid,
+    2:map<string,string> extra,
 }
 
 struct new_user_req {
     1:string    account,
-    2:string    code,
-    3:string    pass_wd,
-    4:string    client_ip,
-    5:i32       role,        
+    2:string    pass_wd,
+    3:string    client_ip,
+    4:i32       role,     
+    5:string    invitor,
+    6:map<string,string> extra,
 }
 
 struct search_user_req {
@@ -46,12 +48,14 @@ struct search_user_req {
     2:string            user_name,
     3:string            phone,
     4:string            email,
+    5:map<string,string> extra,
 }
 
 struct user_res {
     1:rescode.code      rescode,
     2:string            resmsg,
     3:user              user,
+    4:map<string,string> extra,
 }
 
 struct update_req {
@@ -77,24 +81,29 @@ struct update_req {
     20:string   update_at,
     21:i64      vip,
     22:double   coin,
+    23:map<string,string> extra,
 }
 
 struct add_friend_req {
     1:string   phone,
+    2:map<string,string> extra,
 }
 
 struct add_friend_res {
     1:rescode.code    rescode,
     2:string          resmsg,
+    3:map<string,string> extra,
 }
 
 struct agree_friend_req {
     1:string   uid,
+    2:map<string,string> extra,
 }
 
 struct agree_friend_res {
     1:rescode.code      rescode,
     2:string            resmsg,
+    3:map<string,string> extra,
 }
 
 struct friend_item {
@@ -124,64 +133,77 @@ struct friend_res {
     1:rescode.code          rescode,
     2:string                resmsg,
     3:friend                friends,
+    4:map<string,string>    extra,
 }
 
 struct create_group_req {
     1:string    name,
+    2:map<string,string> extra,
 }
 
 struct create_group_res {
     1:rescode.code      rescode,
     2:string            resmsg,
+    3:map<string,string> extra,
 }
 
 struct rename_group_req {
     1:string    old_name,
     2:string    new_name,
+    3:map<string,string> extra,
 }
 
 struct rename_group_res {
     1:rescode.code      rescode,
     2:string            resmsg,
+    3:map<string,string> extra,
 }
 
 struct add_friend_note_req {
     1:string            note,
+    2:map<string,string> extra,
 }
 
 struct add_friend_note_res {
     1:rescode.code      rescode,
     2:string            resmsg,
+    3:map<string,string> extra,
 }
 
 struct move_group_req {
     1:string    uid,
     2:string    group,
+    3:map<string,string> extra,
 }
 
 struct move_group_res {
     1:rescode.code      rescode,
     2:string            resmsg,
+    3:map<string,string> extra,
 }
 
 struct remove_friend_req {
     1:string            uid,
+    2:map<string,string> extra,
 }
 
 struct remove_friend_res {
     1:rescode.code      rescode,
     2:string            resmsg,
+    3:map<string,string> extra,
 }
 
 struct likes_count_res {
     1:rescode.code      rescode,
     2:i32               count,
     3:string            resmsg,
+    4:map<string,string> extra,
 }
 
 struct likes_add_res {
     1:rescode.code      rescode,
-    3:string            resmsg,
+    2:string            resmsg,
+    3:map<string,string> extra,
 }
 
 struct likes {
@@ -191,8 +213,9 @@ struct likes {
 
 struct likes_list_res {
     1:rescode.code      rescode,
-    3:string            resmsg,
-    2:list<likes>       data,
+    2:string            resmsg,
+    3:list<likes>       data,
+    4:map<string,string> extra,
 }
 
 struct note_meta {
@@ -210,42 +233,49 @@ struct update_note_req {
     1:string    uid,
     2:string    data,
     3:string    html,
+    4:map<string,string> extra,
 }
 
 struct note_meta_res {
     1:rescode.code      rescode,
-    3:string            resmsg,
-    2:note_meta      meta,
+    2:string            resmsg,
+    3:note_meta      meta,
+    4:map<string,string> extra,
 }
 
 struct note_meta_list_res {
     1:rescode.code      rescode,
     2:string            resmsg,
     3:list<note_meta>      meta,
+    4:map<string,string> extra,
 }
 
 struct note_list_count_res {
     1:rescode.code      rescode,
     2:string            resmsg,
     3:i32      count,
+    4:map<string,string> extra,
 }
 
 struct note_data_res {
     1:rescode.code      rescode,
     2:string            resmsg,
-    3:string      data,
+    3:string            data,
+    4:map<string,string> extra,
 }
 
 struct note_html_res {
     1:rescode.code      rescode,
     2:string            resmsg,
-    3:string      data,
+    3:string            data,
+    4:map<string,string> extra,
 }
 
 struct moments_count_res {
     1:rescode.code      rescode,
     2:string            resmsg,
-    3:i32      count,
+    3:i32               count,
+    4:map<string,string> extra,
 }
 
 struct extra {

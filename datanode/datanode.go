@@ -1025,8 +1025,10 @@ func (p *User) String() string {
 
 // Attributes:
 //  - UID
+//  - Extra
 type UserInfoReq struct {
-	UID string `thrift:"uid,1" db:"uid" json:"uid"`
+	UID   string            `thrift:"uid,1" db:"uid" json:"uid"`
+	Extra map[string]string `thrift:"extra,2" db:"extra" json:"extra"`
 }
 
 func NewUserInfoReq() *UserInfoReq {
@@ -1035,6 +1037,10 @@ func NewUserInfoReq() *UserInfoReq {
 
 func (p *UserInfoReq) GetUID() string {
 	return p.UID
+}
+
+func (p *UserInfoReq) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *UserInfoReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -1053,6 +1059,16 @@ func (p *UserInfoReq) Read(iprot thrift.TProtocol) error {
 		case 1:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -1084,12 +1100,43 @@ func (p *UserInfoReq) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *UserInfoReq) ReadField2(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key0 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key0 = v
+		}
+		var _val1 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val1 = v
+		}
+		p.Extra[_key0] = _val1
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *UserInfoReq) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("user_info_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
 		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
 			return err
 		}
 	}
@@ -1115,6 +1162,30 @@ func (p *UserInfoReq) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *UserInfoReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *UserInfoReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1124,16 +1195,18 @@ func (p *UserInfoReq) String() string {
 
 // Attributes:
 //  - Account
-//  - Code
 //  - PassWd
 //  - ClientIP
 //  - Role
+//  - Invitor
+//  - Extra
 type NewUserReq_ struct {
-	Account  string `thrift:"account,1" db:"account" json:"account"`
-	Code     string `thrift:"code,2" db:"code" json:"code"`
-	PassWd   string `thrift:"pass_wd,3" db:"pass_wd" json:"pass_wd"`
-	ClientIP string `thrift:"client_ip,4" db:"client_ip" json:"client_ip"`
-	Role     int32  `thrift:"role,5" db:"role" json:"role"`
+	Account  string            `thrift:"account,1" db:"account" json:"account"`
+	PassWd   string            `thrift:"pass_wd,2" db:"pass_wd" json:"pass_wd"`
+	ClientIP string            `thrift:"client_ip,3" db:"client_ip" json:"client_ip"`
+	Role     int32             `thrift:"role,4" db:"role" json:"role"`
+	Invitor  string            `thrift:"invitor,5" db:"invitor" json:"invitor"`
+	Extra    map[string]string `thrift:"extra,6" db:"extra" json:"extra"`
 }
 
 func NewNewUserReq_() *NewUserReq_ {
@@ -1142,10 +1215,6 @@ func NewNewUserReq_() *NewUserReq_ {
 
 func (p *NewUserReq_) GetAccount() string {
 	return p.Account
-}
-
-func (p *NewUserReq_) GetCode() string {
-	return p.Code
 }
 
 func (p *NewUserReq_) GetPassWd() string {
@@ -1158,6 +1227,14 @@ func (p *NewUserReq_) GetClientIP() string {
 
 func (p *NewUserReq_) GetRole() int32 {
 	return p.Role
+}
+
+func (p *NewUserReq_) GetInvitor() string {
+	return p.Invitor
+}
+
+func (p *NewUserReq_) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *NewUserReq_) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -1204,7 +1281,7 @@ func (p *NewUserReq_) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 4:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I32 {
 				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
@@ -1214,8 +1291,18 @@ func (p *NewUserReq_) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 5:
-			if fieldTypeId == thrift.I32 {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 6:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField6(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -1251,7 +1338,7 @@ func (p *NewUserReq_) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
-		p.Code = v
+		p.PassWd = v
 	}
 	return nil
 }
@@ -1260,25 +1347,53 @@ func (p *NewUserReq_) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 3: ", err)
 	} else {
-		p.PassWd = v
-	}
-	return nil
-}
-
-func (p *NewUserReq_) ReadField4(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return thrift.PrependError("error reading field 4: ", err)
-	} else {
 		p.ClientIP = v
 	}
 	return nil
 }
 
-func (p *NewUserReq_) ReadField5(iprot thrift.TProtocol) error {
+func (p *NewUserReq_) ReadField4(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
-		return thrift.PrependError("error reading field 5: ", err)
+		return thrift.PrependError("error reading field 4: ", err)
 	} else {
 		p.Role = v
+	}
+	return nil
+}
+
+func (p *NewUserReq_) ReadField5(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 5: ", err)
+	} else {
+		p.Invitor = v
+	}
+	return nil
+}
+
+func (p *NewUserReq_) ReadField6(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key2 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key2 = v
+		}
+		var _val3 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val3 = v
+		}
+		p.Extra[_key2] = _val3
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
 	}
 	return nil
 }
@@ -1301,6 +1416,9 @@ func (p *NewUserReq_) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField6(oprot); err != nil {
 			return err
 		}
 	}
@@ -1327,53 +1445,77 @@ func (p *NewUserReq_) writeField1(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *NewUserReq_) writeField2(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("code", thrift.STRING, 2); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:code: ", p), err)
+	if err := oprot.WriteFieldBegin("pass_wd", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:pass_wd: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Code)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.code (2) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.PassWd)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.pass_wd (2) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:code: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:pass_wd: ", p), err)
 	}
 	return err
 }
 
 func (p *NewUserReq_) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("pass_wd", thrift.STRING, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:pass_wd: ", p), err)
+	if err := oprot.WriteFieldBegin("client_ip", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:client_ip: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.PassWd)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.pass_wd (3) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.ClientIP)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.client_ip (3) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:pass_wd: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:client_ip: ", p), err)
 	}
 	return err
 }
 
 func (p *NewUserReq_) writeField4(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("client_ip", thrift.STRING, 4); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:client_ip: ", p), err)
+	if err := oprot.WriteFieldBegin("role", thrift.I32, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:role: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.ClientIP)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.client_ip (4) field write error: ", p), err)
+	if err := oprot.WriteI32(int32(p.Role)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.role (4) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:client_ip: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:role: ", p), err)
 	}
 	return err
 }
 
 func (p *NewUserReq_) writeField5(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("role", thrift.I32, 5); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:role: ", p), err)
+	if err := oprot.WriteFieldBegin("invitor", thrift.STRING, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:invitor: ", p), err)
 	}
-	if err := oprot.WriteI32(int32(p.Role)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.role (5) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Invitor)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.invitor (5) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:role: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:invitor: ", p), err)
+	}
+	return err
+}
+
+func (p *NewUserReq_) writeField6(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 6); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:extra: ", p), err)
 	}
 	return err
 }
@@ -1390,11 +1532,13 @@ func (p *NewUserReq_) String() string {
 //  - UserName
 //  - Phone
 //  - Email
+//  - Extra
 type SearchUserReq struct {
-	Uids     []string `thrift:"uids,1" db:"uids" json:"uids"`
-	UserName string   `thrift:"user_name,2" db:"user_name" json:"user_name"`
-	Phone    string   `thrift:"phone,3" db:"phone" json:"phone"`
-	Email    string   `thrift:"email,4" db:"email" json:"email"`
+	Uids     []string          `thrift:"uids,1" db:"uids" json:"uids"`
+	UserName string            `thrift:"user_name,2" db:"user_name" json:"user_name"`
+	Phone    string            `thrift:"phone,3" db:"phone" json:"phone"`
+	Email    string            `thrift:"email,4" db:"email" json:"email"`
+	Extra    map[string]string `thrift:"extra,5" db:"extra" json:"extra"`
 }
 
 func NewSearchUserReq() *SearchUserReq {
@@ -1415,6 +1559,10 @@ func (p *SearchUserReq) GetPhone() string {
 
 func (p *SearchUserReq) GetEmail() string {
 	return p.Email
+}
+
+func (p *SearchUserReq) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *SearchUserReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -1470,6 +1618,16 @@ func (p *SearchUserReq) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
+		case 5:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
 		default:
 			if err := iprot.Skip(fieldTypeId); err != nil {
 				return err
@@ -1493,13 +1651,13 @@ func (p *SearchUserReq) ReadField1(iprot thrift.TProtocol) error {
 	tSlice := make([]string, 0, size)
 	p.Uids = tSlice
 	for i := 0; i < size; i++ {
-		var _elem0 string
+		var _elem4 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_elem0 = v
+			_elem4 = v
 		}
-		p.Uids = append(p.Uids, _elem0)
+		p.Uids = append(p.Uids, _elem4)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
@@ -1534,6 +1692,34 @@ func (p *SearchUserReq) ReadField4(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *SearchUserReq) ReadField5(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key5 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key5 = v
+		}
+		var _val6 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val6 = v
+		}
+		p.Extra[_key5] = _val6
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *SearchUserReq) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("search_user_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -1549,6 +1735,9 @@ func (p *SearchUserReq) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
 			return err
 		}
 	}
@@ -1621,6 +1810,30 @@ func (p *SearchUserReq) writeField4(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *SearchUserReq) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *SearchUserReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1632,10 +1845,12 @@ func (p *SearchUserReq) String() string {
 //  - Rescode
 //  - Resmsg
 //  - User
+//  - Extra
 type UserRes struct {
-	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Resmsg  string       `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
-	User    *User        `thrift:"user,3" db:"user" json:"user"`
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	User    *User             `thrift:"user,3" db:"user" json:"user"`
+	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewUserRes() *UserRes {
@@ -1657,6 +1872,10 @@ func (p *UserRes) GetUser() *User {
 		return UserRes_User_DEFAULT
 	}
 	return p.User
+}
+
+func (p *UserRes) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *UserRes) IsSetUser() bool {
 	return p.User != nil
@@ -1706,6 +1925,16 @@ func (p *UserRes) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
 		default:
 			if err := iprot.Skip(fieldTypeId); err != nil {
 				return err
@@ -1748,6 +1977,34 @@ func (p *UserRes) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *UserRes) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key7 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key7 = v
+		}
+		var _val8 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val8 = v
+		}
+		p.Extra[_key7] = _val8
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *UserRes) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("user_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -1760,6 +2017,9 @@ func (p *UserRes) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
 	}
@@ -1811,6 +2071,30 @@ func (p *UserRes) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *UserRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *UserRes) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1841,29 +2125,31 @@ func (p *UserRes) String() string {
 //  - UpdateAt
 //  - Vip
 //  - Coin
+//  - Extra
 type UpdateReq struct {
-	UID         string  `thrift:"uid,1" db:"uid" json:"uid"`
-	PassWd      string  `thrift:"pass_wd,2" db:"pass_wd" json:"pass_wd"`
-	UserName    string  `thrift:"user_name,3" db:"user_name" json:"user_name"`
-	Brithday    string  `thrift:"brithday,4" db:"brithday" json:"brithday"`
-	CardID      string  `thrift:"card_id,5" db:"card_id" json:"card_id"`
-	Address     string  `thrift:"address,6" db:"address" json:"address"`
-	NickName    string  `thrift:"nick_name,7" db:"nick_name" json:"nick_name"`
-	Avatar      string  `thrift:"avatar,8" db:"avatar" json:"avatar"`
-	Phone       string  `thrift:"phone,9" db:"phone" json:"phone"`
-	LoginAt     string  `thrift:"login_at,10" db:"login_at" json:"login_at"`
-	LoginIP     string  `thrift:"login_ip,11" db:"login_ip" json:"login_ip"`
-	LastAt      string  `thrift:"last_at,12" db:"last_at" json:"last_at"`
-	Status      int16   `thrift:"status,13" db:"status" json:"status"`
-	Role        int64   `thrift:"role,14" db:"role" json:"role"`
-	Email       string  `thrift:"email,15" db:"email" json:"email"`
-	ContactName string  `thrift:"contact_name,16" db:"contact_name" json:"contact_name"`
-	BrandName   string  `thrift:"brand_name,17" db:"brand_name" json:"brand_name"`
-	CompanyName string  `thrift:"company_name,18" db:"company_name" json:"company_name"`
-	Attention   string  `thrift:"attention,19" db:"attention" json:"attention"`
-	UpdateAt    string  `thrift:"update_at,20" db:"update_at" json:"update_at"`
-	Vip         int64   `thrift:"vip,21" db:"vip" json:"vip"`
-	Coin        float64 `thrift:"coin,22" db:"coin" json:"coin"`
+	UID         string            `thrift:"uid,1" db:"uid" json:"uid"`
+	PassWd      string            `thrift:"pass_wd,2" db:"pass_wd" json:"pass_wd"`
+	UserName    string            `thrift:"user_name,3" db:"user_name" json:"user_name"`
+	Brithday    string            `thrift:"brithday,4" db:"brithday" json:"brithday"`
+	CardID      string            `thrift:"card_id,5" db:"card_id" json:"card_id"`
+	Address     string            `thrift:"address,6" db:"address" json:"address"`
+	NickName    string            `thrift:"nick_name,7" db:"nick_name" json:"nick_name"`
+	Avatar      string            `thrift:"avatar,8" db:"avatar" json:"avatar"`
+	Phone       string            `thrift:"phone,9" db:"phone" json:"phone"`
+	LoginAt     string            `thrift:"login_at,10" db:"login_at" json:"login_at"`
+	LoginIP     string            `thrift:"login_ip,11" db:"login_ip" json:"login_ip"`
+	LastAt      string            `thrift:"last_at,12" db:"last_at" json:"last_at"`
+	Status      int16             `thrift:"status,13" db:"status" json:"status"`
+	Role        int64             `thrift:"role,14" db:"role" json:"role"`
+	Email       string            `thrift:"email,15" db:"email" json:"email"`
+	ContactName string            `thrift:"contact_name,16" db:"contact_name" json:"contact_name"`
+	BrandName   string            `thrift:"brand_name,17" db:"brand_name" json:"brand_name"`
+	CompanyName string            `thrift:"company_name,18" db:"company_name" json:"company_name"`
+	Attention   string            `thrift:"attention,19" db:"attention" json:"attention"`
+	UpdateAt    string            `thrift:"update_at,20" db:"update_at" json:"update_at"`
+	Vip         int64             `thrift:"vip,21" db:"vip" json:"vip"`
+	Coin        float64           `thrift:"coin,22" db:"coin" json:"coin"`
+	Extra       map[string]string `thrift:"extra,23" db:"extra" json:"extra"`
 }
 
 func NewUpdateReq() *UpdateReq {
@@ -1956,6 +2242,10 @@ func (p *UpdateReq) GetVip() int64 {
 
 func (p *UpdateReq) GetCoin() float64 {
 	return p.Coin
+}
+
+func (p *UpdateReq) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *UpdateReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -2191,6 +2481,16 @@ func (p *UpdateReq) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
+		case 23:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField23(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
 		default:
 			if err := iprot.Skip(fieldTypeId); err != nil {
 				return err
@@ -2404,6 +2704,34 @@ func (p *UpdateReq) ReadField22(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *UpdateReq) ReadField23(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key9 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key9 = v
+		}
+		var _val10 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val10 = v
+		}
+		p.Extra[_key9] = _val10
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *UpdateReq) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("update_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -2473,6 +2801,9 @@ func (p *UpdateReq) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField22(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField23(oprot); err != nil {
 			return err
 		}
 	}
@@ -2771,6 +3102,30 @@ func (p *UpdateReq) writeField22(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *UpdateReq) writeField23(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 23); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 23:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 23:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *UpdateReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -2780,8 +3135,10 @@ func (p *UpdateReq) String() string {
 
 // Attributes:
 //  - Phone
+//  - Extra
 type AddFriendReq struct {
-	Phone string `thrift:"phone,1" db:"phone" json:"phone"`
+	Phone string            `thrift:"phone,1" db:"phone" json:"phone"`
+	Extra map[string]string `thrift:"extra,2" db:"extra" json:"extra"`
 }
 
 func NewAddFriendReq() *AddFriendReq {
@@ -2790,6 +3147,10 @@ func NewAddFriendReq() *AddFriendReq {
 
 func (p *AddFriendReq) GetPhone() string {
 	return p.Phone
+}
+
+func (p *AddFriendReq) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *AddFriendReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -2808,6 +3169,16 @@ func (p *AddFriendReq) Read(iprot thrift.TProtocol) error {
 		case 1:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -2839,12 +3210,43 @@ func (p *AddFriendReq) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *AddFriendReq) ReadField2(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key11 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key11 = v
+		}
+		var _val12 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val12 = v
+		}
+		p.Extra[_key11] = _val12
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *AddFriendReq) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("add_friend_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
 		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
 			return err
 		}
 	}
@@ -2870,6 +3272,30 @@ func (p *AddFriendReq) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *AddFriendReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *AddFriendReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -2880,9 +3306,11 @@ func (p *AddFriendReq) String() string {
 // Attributes:
 //  - Rescode
 //  - Resmsg
+//  - Extra
 type AddFriendRes struct {
-	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Resmsg  string       `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Extra   map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
 func NewAddFriendRes() *AddFriendRes {
@@ -2895,6 +3323,10 @@ func (p *AddFriendRes) GetRescode() rescode.Code {
 
 func (p *AddFriendRes) GetResmsg() string {
 	return p.Resmsg
+}
+
+func (p *AddFriendRes) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *AddFriendRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -2923,6 +3355,16 @@ func (p *AddFriendRes) Read(iprot thrift.TProtocol) error {
 		case 2:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -2964,6 +3406,34 @@ func (p *AddFriendRes) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *AddFriendRes) ReadField3(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key13 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key13 = v
+		}
+		var _val14 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val14 = v
+		}
+		p.Extra[_key13] = _val14
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *AddFriendRes) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("add_friend_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -2973,6 +3443,9 @@ func (p *AddFriendRes) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
 	}
@@ -3011,6 +3484,30 @@ func (p *AddFriendRes) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *AddFriendRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *AddFriendRes) String() string {
 	if p == nil {
 		return "<nil>"
@@ -3020,8 +3517,10 @@ func (p *AddFriendRes) String() string {
 
 // Attributes:
 //  - UID
+//  - Extra
 type AgreeFriendReq struct {
-	UID string `thrift:"uid,1" db:"uid" json:"uid"`
+	UID   string            `thrift:"uid,1" db:"uid" json:"uid"`
+	Extra map[string]string `thrift:"extra,2" db:"extra" json:"extra"`
 }
 
 func NewAgreeFriendReq() *AgreeFriendReq {
@@ -3030,6 +3529,10 @@ func NewAgreeFriendReq() *AgreeFriendReq {
 
 func (p *AgreeFriendReq) GetUID() string {
 	return p.UID
+}
+
+func (p *AgreeFriendReq) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *AgreeFriendReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -3048,6 +3551,16 @@ func (p *AgreeFriendReq) Read(iprot thrift.TProtocol) error {
 		case 1:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -3079,12 +3592,43 @@ func (p *AgreeFriendReq) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *AgreeFriendReq) ReadField2(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key15 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key15 = v
+		}
+		var _val16 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val16 = v
+		}
+		p.Extra[_key15] = _val16
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *AgreeFriendReq) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("agree_friend_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
 		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
 			return err
 		}
 	}
@@ -3110,6 +3654,30 @@ func (p *AgreeFriendReq) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *AgreeFriendReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *AgreeFriendReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -3120,9 +3688,11 @@ func (p *AgreeFriendReq) String() string {
 // Attributes:
 //  - Rescode
 //  - Resmsg
+//  - Extra
 type AgreeFriendRes struct {
-	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Resmsg  string       `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Extra   map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
 func NewAgreeFriendRes() *AgreeFriendRes {
@@ -3135,6 +3705,10 @@ func (p *AgreeFriendRes) GetRescode() rescode.Code {
 
 func (p *AgreeFriendRes) GetResmsg() string {
 	return p.Resmsg
+}
+
+func (p *AgreeFriendRes) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *AgreeFriendRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -3163,6 +3737,16 @@ func (p *AgreeFriendRes) Read(iprot thrift.TProtocol) error {
 		case 2:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -3204,6 +3788,34 @@ func (p *AgreeFriendRes) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *AgreeFriendRes) ReadField3(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key17 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key17 = v
+		}
+		var _val18 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val18 = v
+		}
+		p.Extra[_key17] = _val18
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *AgreeFriendRes) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("agree_friend_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -3213,6 +3825,9 @@ func (p *AgreeFriendRes) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
 	}
@@ -3247,6 +3862,30 @@ func (p *AgreeFriendRes) writeField2(oprot thrift.TProtocol) (err error) {
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err)
+	}
+	return err
+}
+
+func (p *AgreeFriendRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
 	}
 	return err
 }
@@ -3713,11 +4352,11 @@ func (p *Group) ReadField3(iprot thrift.TProtocol) error {
 	tSlice := make([]*FriendItem, 0, size)
 	p.Lists = tSlice
 	for i := 0; i < size; i++ {
-		_elem1 := &FriendItem{}
-		if err := _elem1.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem1), err)
+		_elem19 := &FriendItem{}
+		if err := _elem19.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem19), err)
 		}
-		p.Lists = append(p.Lists, _elem1)
+		p.Lists = append(p.Lists, _elem19)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
@@ -3920,11 +4559,11 @@ func (p *Friend) ReadField2(iprot thrift.TProtocol) error {
 	tSlice := make([]*Group, 0, size)
 	p.Data = tSlice
 	for i := 0; i < size; i++ {
-		_elem2 := &Group{}
-		if err := _elem2.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem2), err)
+		_elem20 := &Group{}
+		if err := _elem20.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem20), err)
 		}
-		p.Data = append(p.Data, _elem2)
+		p.Data = append(p.Data, _elem20)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
@@ -3940,11 +4579,11 @@ func (p *Friend) ReadField3(iprot thrift.TProtocol) error {
 	tSlice := make([]*FriendItem, 0, size)
 	p.Invite = tSlice
 	for i := 0; i < size; i++ {
-		_elem3 := &FriendItem{}
-		if err := _elem3.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem3), err)
+		_elem21 := &FriendItem{}
+		if err := _elem21.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem21), err)
 		}
-		p.Invite = append(p.Invite, _elem3)
+		p.Invite = append(p.Invite, _elem21)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
@@ -3960,11 +4599,11 @@ func (p *Friend) ReadField4(iprot thrift.TProtocol) error {
 	tSlice := make([]*FriendItem, 0, size)
 	p.Blacks = tSlice
 	for i := 0; i < size; i++ {
-		_elem4 := &FriendItem{}
-		if err := _elem4.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem4), err)
+		_elem22 := &FriendItem{}
+		if err := _elem22.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem22), err)
 		}
-		p.Blacks = append(p.Blacks, _elem4)
+		p.Blacks = append(p.Blacks, _elem22)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
@@ -4086,10 +4725,12 @@ func (p *Friend) String() string {
 //  - Rescode
 //  - Resmsg
 //  - Friends
+//  - Extra
 type FriendRes struct {
-	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Resmsg  string       `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
-	Friends *Friend      `thrift:"friends,3" db:"friends" json:"friends"`
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Friends *Friend           `thrift:"friends,3" db:"friends" json:"friends"`
+	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewFriendRes() *FriendRes {
@@ -4111,6 +4752,10 @@ func (p *FriendRes) GetFriends() *Friend {
 		return FriendRes_Friends_DEFAULT
 	}
 	return p.Friends
+}
+
+func (p *FriendRes) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *FriendRes) IsSetFriends() bool {
 	return p.Friends != nil
@@ -4160,6 +4805,16 @@ func (p *FriendRes) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
 		default:
 			if err := iprot.Skip(fieldTypeId); err != nil {
 				return err
@@ -4202,6 +4857,34 @@ func (p *FriendRes) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *FriendRes) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key23 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key23 = v
+		}
+		var _val24 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val24 = v
+		}
+		p.Extra[_key23] = _val24
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *FriendRes) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("friend_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -4214,6 +4897,9 @@ func (p *FriendRes) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
 	}
@@ -4265,6 +4951,30 @@ func (p *FriendRes) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *FriendRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *FriendRes) String() string {
 	if p == nil {
 		return "<nil>"
@@ -4274,8 +4984,10 @@ func (p *FriendRes) String() string {
 
 // Attributes:
 //  - Name
+//  - Extra
 type CreateGroupReq struct {
-	Name string `thrift:"name,1" db:"name" json:"name"`
+	Name  string            `thrift:"name,1" db:"name" json:"name"`
+	Extra map[string]string `thrift:"extra,2" db:"extra" json:"extra"`
 }
 
 func NewCreateGroupReq() *CreateGroupReq {
@@ -4284,6 +4996,10 @@ func NewCreateGroupReq() *CreateGroupReq {
 
 func (p *CreateGroupReq) GetName() string {
 	return p.Name
+}
+
+func (p *CreateGroupReq) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *CreateGroupReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -4302,6 +5018,16 @@ func (p *CreateGroupReq) Read(iprot thrift.TProtocol) error {
 		case 1:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -4333,12 +5059,43 @@ func (p *CreateGroupReq) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *CreateGroupReq) ReadField2(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key25 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key25 = v
+		}
+		var _val26 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val26 = v
+		}
+		p.Extra[_key25] = _val26
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *CreateGroupReq) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("create_group_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
 		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
 			return err
 		}
 	}
@@ -4364,6 +5121,30 @@ func (p *CreateGroupReq) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *CreateGroupReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *CreateGroupReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -4374,9 +5155,11 @@ func (p *CreateGroupReq) String() string {
 // Attributes:
 //  - Rescode
 //  - Resmsg
+//  - Extra
 type CreateGroupRes struct {
-	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Resmsg  string       `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Extra   map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
 func NewCreateGroupRes() *CreateGroupRes {
@@ -4389,6 +5172,10 @@ func (p *CreateGroupRes) GetRescode() rescode.Code {
 
 func (p *CreateGroupRes) GetResmsg() string {
 	return p.Resmsg
+}
+
+func (p *CreateGroupRes) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *CreateGroupRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -4417,6 +5204,16 @@ func (p *CreateGroupRes) Read(iprot thrift.TProtocol) error {
 		case 2:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -4458,6 +5255,34 @@ func (p *CreateGroupRes) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *CreateGroupRes) ReadField3(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key27 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key27 = v
+		}
+		var _val28 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val28 = v
+		}
+		p.Extra[_key27] = _val28
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *CreateGroupRes) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("create_group_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -4467,6 +5292,9 @@ func (p *CreateGroupRes) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
 	}
@@ -4505,6 +5333,30 @@ func (p *CreateGroupRes) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *CreateGroupRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *CreateGroupRes) String() string {
 	if p == nil {
 		return "<nil>"
@@ -4515,9 +5367,11 @@ func (p *CreateGroupRes) String() string {
 // Attributes:
 //  - OldName
 //  - NewName_
+//  - Extra
 type RenameGroupReq struct {
-	OldName  string `thrift:"old_name,1" db:"old_name" json:"old_name"`
-	NewName_ string `thrift:"new_name,2" db:"new_name" json:"new_name"`
+	OldName  string            `thrift:"old_name,1" db:"old_name" json:"old_name"`
+	NewName_ string            `thrift:"new_name,2" db:"new_name" json:"new_name"`
+	Extra    map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
 func NewRenameGroupReq() *RenameGroupReq {
@@ -4530,6 +5384,10 @@ func (p *RenameGroupReq) GetOldName() string {
 
 func (p *RenameGroupReq) GetNewName_() string {
 	return p.NewName_
+}
+
+func (p *RenameGroupReq) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *RenameGroupReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -4558,6 +5416,16 @@ func (p *RenameGroupReq) Read(iprot thrift.TProtocol) error {
 		case 2:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -4598,6 +5466,34 @@ func (p *RenameGroupReq) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *RenameGroupReq) ReadField3(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key29 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key29 = v
+		}
+		var _val30 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val30 = v
+		}
+		p.Extra[_key29] = _val30
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *RenameGroupReq) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("rename_group_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -4607,6 +5503,9 @@ func (p *RenameGroupReq) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
 	}
@@ -4645,6 +5544,30 @@ func (p *RenameGroupReq) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *RenameGroupReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *RenameGroupReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -4655,9 +5578,11 @@ func (p *RenameGroupReq) String() string {
 // Attributes:
 //  - Rescode
 //  - Resmsg
+//  - Extra
 type RenameGroupRes struct {
-	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Resmsg  string       `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Extra   map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
 func NewRenameGroupRes() *RenameGroupRes {
@@ -4670,6 +5595,10 @@ func (p *RenameGroupRes) GetRescode() rescode.Code {
 
 func (p *RenameGroupRes) GetResmsg() string {
 	return p.Resmsg
+}
+
+func (p *RenameGroupRes) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *RenameGroupRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -4698,6 +5627,16 @@ func (p *RenameGroupRes) Read(iprot thrift.TProtocol) error {
 		case 2:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -4739,6 +5678,34 @@ func (p *RenameGroupRes) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *RenameGroupRes) ReadField3(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key31 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key31 = v
+		}
+		var _val32 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val32 = v
+		}
+		p.Extra[_key31] = _val32
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *RenameGroupRes) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("rename_group_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -4748,6 +5715,9 @@ func (p *RenameGroupRes) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
 	}
@@ -4786,6 +5756,30 @@ func (p *RenameGroupRes) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *RenameGroupRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *RenameGroupRes) String() string {
 	if p == nil {
 		return "<nil>"
@@ -4795,8 +5789,10 @@ func (p *RenameGroupRes) String() string {
 
 // Attributes:
 //  - Note
+//  - Extra
 type AddFriendNoteReq struct {
-	Note string `thrift:"note,1" db:"note" json:"note"`
+	Note  string            `thrift:"note,1" db:"note" json:"note"`
+	Extra map[string]string `thrift:"extra,2" db:"extra" json:"extra"`
 }
 
 func NewAddFriendNoteReq() *AddFriendNoteReq {
@@ -4805,6 +5801,10 @@ func NewAddFriendNoteReq() *AddFriendNoteReq {
 
 func (p *AddFriendNoteReq) GetNote() string {
 	return p.Note
+}
+
+func (p *AddFriendNoteReq) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *AddFriendNoteReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -4823,6 +5823,16 @@ func (p *AddFriendNoteReq) Read(iprot thrift.TProtocol) error {
 		case 1:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -4854,12 +5864,43 @@ func (p *AddFriendNoteReq) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *AddFriendNoteReq) ReadField2(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key33 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key33 = v
+		}
+		var _val34 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val34 = v
+		}
+		p.Extra[_key33] = _val34
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *AddFriendNoteReq) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("add_friend_note_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
 		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
 			return err
 		}
 	}
@@ -4885,6 +5926,30 @@ func (p *AddFriendNoteReq) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *AddFriendNoteReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *AddFriendNoteReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -4895,9 +5960,11 @@ func (p *AddFriendNoteReq) String() string {
 // Attributes:
 //  - Rescode
 //  - Resmsg
+//  - Extra
 type AddFriendNoteRes struct {
-	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Resmsg  string       `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Extra   map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
 func NewAddFriendNoteRes() *AddFriendNoteRes {
@@ -4910,6 +5977,10 @@ func (p *AddFriendNoteRes) GetRescode() rescode.Code {
 
 func (p *AddFriendNoteRes) GetResmsg() string {
 	return p.Resmsg
+}
+
+func (p *AddFriendNoteRes) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *AddFriendNoteRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -4938,6 +6009,16 @@ func (p *AddFriendNoteRes) Read(iprot thrift.TProtocol) error {
 		case 2:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -4979,6 +6060,34 @@ func (p *AddFriendNoteRes) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *AddFriendNoteRes) ReadField3(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key35 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key35 = v
+		}
+		var _val36 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val36 = v
+		}
+		p.Extra[_key35] = _val36
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *AddFriendNoteRes) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("add_friend_note_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -4988,6 +6097,9 @@ func (p *AddFriendNoteRes) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
 	}
@@ -5026,6 +6138,30 @@ func (p *AddFriendNoteRes) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *AddFriendNoteRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *AddFriendNoteRes) String() string {
 	if p == nil {
 		return "<nil>"
@@ -5036,9 +6172,11 @@ func (p *AddFriendNoteRes) String() string {
 // Attributes:
 //  - UID
 //  - Group
+//  - Extra
 type MoveGroupReq struct {
-	UID   string `thrift:"uid,1" db:"uid" json:"uid"`
-	Group string `thrift:"group,2" db:"group" json:"group"`
+	UID   string            `thrift:"uid,1" db:"uid" json:"uid"`
+	Group string            `thrift:"group,2" db:"group" json:"group"`
+	Extra map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
 func NewMoveGroupReq() *MoveGroupReq {
@@ -5051,6 +6189,10 @@ func (p *MoveGroupReq) GetUID() string {
 
 func (p *MoveGroupReq) GetGroup() string {
 	return p.Group
+}
+
+func (p *MoveGroupReq) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *MoveGroupReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -5079,6 +6221,16 @@ func (p *MoveGroupReq) Read(iprot thrift.TProtocol) error {
 		case 2:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -5119,6 +6271,34 @@ func (p *MoveGroupReq) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *MoveGroupReq) ReadField3(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key37 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key37 = v
+		}
+		var _val38 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val38 = v
+		}
+		p.Extra[_key37] = _val38
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *MoveGroupReq) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("move_group_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -5128,6 +6308,9 @@ func (p *MoveGroupReq) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
 	}
@@ -5166,6 +6349,30 @@ func (p *MoveGroupReq) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *MoveGroupReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *MoveGroupReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -5176,9 +6383,11 @@ func (p *MoveGroupReq) String() string {
 // Attributes:
 //  - Rescode
 //  - Resmsg
+//  - Extra
 type MoveGroupRes struct {
-	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Resmsg  string       `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Extra   map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
 func NewMoveGroupRes() *MoveGroupRes {
@@ -5191,6 +6400,10 @@ func (p *MoveGroupRes) GetRescode() rescode.Code {
 
 func (p *MoveGroupRes) GetResmsg() string {
 	return p.Resmsg
+}
+
+func (p *MoveGroupRes) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *MoveGroupRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -5219,6 +6432,16 @@ func (p *MoveGroupRes) Read(iprot thrift.TProtocol) error {
 		case 2:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -5260,6 +6483,34 @@ func (p *MoveGroupRes) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *MoveGroupRes) ReadField3(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key39 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key39 = v
+		}
+		var _val40 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val40 = v
+		}
+		p.Extra[_key39] = _val40
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *MoveGroupRes) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("move_group_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -5269,6 +6520,9 @@ func (p *MoveGroupRes) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
 	}
@@ -5307,6 +6561,30 @@ func (p *MoveGroupRes) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *MoveGroupRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *MoveGroupRes) String() string {
 	if p == nil {
 		return "<nil>"
@@ -5316,8 +6594,10 @@ func (p *MoveGroupRes) String() string {
 
 // Attributes:
 //  - UID
+//  - Extra
 type RemoveFriendReq struct {
-	UID string `thrift:"uid,1" db:"uid" json:"uid"`
+	UID   string            `thrift:"uid,1" db:"uid" json:"uid"`
+	Extra map[string]string `thrift:"extra,2" db:"extra" json:"extra"`
 }
 
 func NewRemoveFriendReq() *RemoveFriendReq {
@@ -5326,6 +6606,10 @@ func NewRemoveFriendReq() *RemoveFriendReq {
 
 func (p *RemoveFriendReq) GetUID() string {
 	return p.UID
+}
+
+func (p *RemoveFriendReq) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *RemoveFriendReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -5344,6 +6628,16 @@ func (p *RemoveFriendReq) Read(iprot thrift.TProtocol) error {
 		case 1:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -5375,12 +6669,43 @@ func (p *RemoveFriendReq) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *RemoveFriendReq) ReadField2(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key41 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key41 = v
+		}
+		var _val42 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val42 = v
+		}
+		p.Extra[_key41] = _val42
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *RemoveFriendReq) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("remove_friend_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
 		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
 			return err
 		}
 	}
@@ -5406,6 +6731,30 @@ func (p *RemoveFriendReq) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *RemoveFriendReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *RemoveFriendReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -5416,9 +6765,11 @@ func (p *RemoveFriendReq) String() string {
 // Attributes:
 //  - Rescode
 //  - Resmsg
+//  - Extra
 type RemoveFriendRes struct {
-	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Resmsg  string       `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Extra   map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
 func NewRemoveFriendRes() *RemoveFriendRes {
@@ -5431,6 +6782,10 @@ func (p *RemoveFriendRes) GetRescode() rescode.Code {
 
 func (p *RemoveFriendRes) GetResmsg() string {
 	return p.Resmsg
+}
+
+func (p *RemoveFriendRes) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *RemoveFriendRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -5459,6 +6814,16 @@ func (p *RemoveFriendRes) Read(iprot thrift.TProtocol) error {
 		case 2:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -5500,6 +6865,34 @@ func (p *RemoveFriendRes) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *RemoveFriendRes) ReadField3(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key43 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key43 = v
+		}
+		var _val44 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val44 = v
+		}
+		p.Extra[_key43] = _val44
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *RemoveFriendRes) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("remove_friend_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -5509,6 +6902,9 @@ func (p *RemoveFriendRes) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
 	}
@@ -5547,6 +6943,30 @@ func (p *RemoveFriendRes) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *RemoveFriendRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *RemoveFriendRes) String() string {
 	if p == nil {
 		return "<nil>"
@@ -5558,10 +6978,12 @@ func (p *RemoveFriendRes) String() string {
 //  - Rescode
 //  - Count
 //  - Resmsg
+//  - Extra
 type LikesCountRes struct {
-	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Count   int32        `thrift:"count,2" db:"count" json:"count"`
-	Resmsg  string       `thrift:"resmsg,3" db:"resmsg" json:"resmsg"`
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Count   int32             `thrift:"count,2" db:"count" json:"count"`
+	Resmsg  string            `thrift:"resmsg,3" db:"resmsg" json:"resmsg"`
+	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewLikesCountRes() *LikesCountRes {
@@ -5578,6 +7000,10 @@ func (p *LikesCountRes) GetCount() int32 {
 
 func (p *LikesCountRes) GetResmsg() string {
 	return p.Resmsg
+}
+
+func (p *LikesCountRes) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *LikesCountRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -5616,6 +7042,16 @@ func (p *LikesCountRes) Read(iprot thrift.TProtocol) error {
 		case 3:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -5666,6 +7102,34 @@ func (p *LikesCountRes) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *LikesCountRes) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key45 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key45 = v
+		}
+		var _val46 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val46 = v
+		}
+		p.Extra[_key45] = _val46
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *LikesCountRes) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("likes_count_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -5678,6 +7142,9 @@ func (p *LikesCountRes) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
 	}
@@ -5729,6 +7196,30 @@ func (p *LikesCountRes) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *LikesCountRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *LikesCountRes) String() string {
 	if p == nil {
 		return "<nil>"
@@ -5739,10 +7230,11 @@ func (p *LikesCountRes) String() string {
 // Attributes:
 //  - Rescode
 //  - Resmsg
+//  - Extra
 type LikesAddRes struct {
-	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	// unused field # 2
-	Resmsg string `thrift:"resmsg,3" db:"resmsg" json:"resmsg"`
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Extra   map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
 func NewLikesAddRes() *LikesAddRes {
@@ -5755,6 +7247,10 @@ func (p *LikesAddRes) GetRescode() rescode.Code {
 
 func (p *LikesAddRes) GetResmsg() string {
 	return p.Resmsg
+}
+
+func (p *LikesAddRes) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *LikesAddRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -5780,8 +7276,18 @@ func (p *LikesAddRes) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
-		case 3:
+		case 2:
 			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.MAP {
 				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
@@ -5815,11 +7321,39 @@ func (p *LikesAddRes) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *LikesAddRes) ReadField3(iprot thrift.TProtocol) error {
+func (p *LikesAddRes) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
-		return thrift.PrependError("error reading field 3: ", err)
+		return thrift.PrependError("error reading field 2: ", err)
 	} else {
 		p.Resmsg = v
+	}
+	return nil
+}
+
+func (p *LikesAddRes) ReadField3(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key47 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key47 = v
+		}
+		var _val48 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val48 = v
+		}
+		p.Extra[_key47] = _val48
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
 	}
 	return nil
 }
@@ -5830,6 +7364,9 @@ func (p *LikesAddRes) Write(oprot thrift.TProtocol) error {
 	}
 	if p != nil {
 		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
 			return err
 		}
 		if err := p.writeField3(oprot); err != nil {
@@ -5858,15 +7395,39 @@ func (p *LikesAddRes) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *LikesAddRes) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:resmsg: ", p), err)
+func (p *LikesAddRes) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
 	}
 	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.resmsg (3) field write error: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:resmsg: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err)
+	}
+	return err
+}
+
+func (p *LikesAddRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
 	}
 	return err
 }
@@ -6022,10 +7583,12 @@ func (p *Likes) String() string {
 //  - Rescode
 //  - Resmsg
 //  - Data
+//  - Extra
 type LikesListRes struct {
-	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Data    []*Likes     `thrift:"data,2" db:"data" json:"data"`
-	Resmsg  string       `thrift:"resmsg,3" db:"resmsg" json:"resmsg"`
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Data    []*Likes          `thrift:"data,3" db:"data" json:"data"`
+	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewLikesListRes() *LikesListRes {
@@ -6042,6 +7605,10 @@ func (p *LikesListRes) GetResmsg() string {
 
 func (p *LikesListRes) GetData() []*Likes {
 	return p.Data
+}
+
+func (p *LikesListRes) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *LikesListRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -6067,8 +7634,18 @@ func (p *LikesListRes) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
-		case 3:
+		case 2:
 			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.LIST {
 				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
@@ -6077,9 +7654,9 @@ func (p *LikesListRes) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
-		case 2:
-			if fieldTypeId == thrift.LIST {
-				if err := p.ReadField2(iprot); err != nil {
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -6112,16 +7689,16 @@ func (p *LikesListRes) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *LikesListRes) ReadField3(iprot thrift.TProtocol) error {
+func (p *LikesListRes) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
-		return thrift.PrependError("error reading field 3: ", err)
+		return thrift.PrependError("error reading field 2: ", err)
 	} else {
 		p.Resmsg = v
 	}
 	return nil
 }
 
-func (p *LikesListRes) ReadField2(iprot thrift.TProtocol) error {
+func (p *LikesListRes) ReadField3(iprot thrift.TProtocol) error {
 	_, size, err := iprot.ReadListBegin()
 	if err != nil {
 		return thrift.PrependError("error reading list begin: ", err)
@@ -6129,14 +7706,42 @@ func (p *LikesListRes) ReadField2(iprot thrift.TProtocol) error {
 	tSlice := make([]*Likes, 0, size)
 	p.Data = tSlice
 	for i := 0; i < size; i++ {
-		_elem5 := &Likes{}
-		if err := _elem5.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem5), err)
+		_elem49 := &Likes{}
+		if err := _elem49.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem49), err)
 		}
-		p.Data = append(p.Data, _elem5)
+		p.Data = append(p.Data, _elem49)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
+	}
+	return nil
+}
+
+func (p *LikesListRes) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key50 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key50 = v
+		}
+		var _val51 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val51 = v
+		}
+		p.Extra[_key50] = _val51
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
 	}
 	return nil
 }
@@ -6153,6 +7758,9 @@ func (p *LikesListRes) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
 	}
@@ -6179,8 +7787,21 @@ func (p *LikesListRes) writeField1(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *LikesListRes) writeField2(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("data", thrift.LIST, 2); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:data: ", p), err)
+	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err)
+	}
+	return err
+}
+
+func (p *LikesListRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("data", thrift.LIST, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:data: ", p), err)
 	}
 	if err := oprot.WriteListBegin(thrift.STRUCT, len(p.Data)); err != nil {
 		return thrift.PrependError("error writing list begin: ", err)
@@ -6194,20 +7815,31 @@ func (p *LikesListRes) writeField2(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing list end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:data: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:data: ", p), err)
 	}
 	return err
 }
 
-func (p *LikesListRes) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:resmsg: ", p), err)
+func (p *LikesListRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.resmsg (3) field write error: ", p), err)
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:resmsg: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
 	}
 	return err
 }
@@ -6609,10 +8241,12 @@ func (p *NoteMeta) String() string {
 //  - UID
 //  - Data
 //  - HTML
+//  - Extra
 type UpdateNoteReq struct {
-	UID  string `thrift:"uid,1" db:"uid" json:"uid"`
-	Data string `thrift:"data,2" db:"data" json:"data"`
-	HTML string `thrift:"html,3" db:"html" json:"html"`
+	UID   string            `thrift:"uid,1" db:"uid" json:"uid"`
+	Data  string            `thrift:"data,2" db:"data" json:"data"`
+	HTML  string            `thrift:"html,3" db:"html" json:"html"`
+	Extra map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewUpdateNoteReq() *UpdateNoteReq {
@@ -6629,6 +8263,10 @@ func (p *UpdateNoteReq) GetData() string {
 
 func (p *UpdateNoteReq) GetHTML() string {
 	return p.HTML
+}
+
+func (p *UpdateNoteReq) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *UpdateNoteReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -6667,6 +8305,16 @@ func (p *UpdateNoteReq) Read(iprot thrift.TProtocol) error {
 		case 3:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -6716,6 +8364,34 @@ func (p *UpdateNoteReq) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *UpdateNoteReq) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key52 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key52 = v
+		}
+		var _val53 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val53 = v
+		}
+		p.Extra[_key52] = _val53
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *UpdateNoteReq) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("update_note_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -6728,6 +8404,9 @@ func (p *UpdateNoteReq) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
 	}
@@ -6779,6 +8458,30 @@ func (p *UpdateNoteReq) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *UpdateNoteReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *UpdateNoteReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -6790,10 +8493,12 @@ func (p *UpdateNoteReq) String() string {
 //  - Rescode
 //  - Resmsg
 //  - Meta
+//  - Extra
 type NoteMetaRes struct {
-	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Meta    *NoteMeta    `thrift:"meta,2" db:"meta" json:"meta"`
-	Resmsg  string       `thrift:"resmsg,3" db:"resmsg" json:"resmsg"`
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Meta    *NoteMeta         `thrift:"meta,3" db:"meta" json:"meta"`
+	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewNoteMetaRes() *NoteMetaRes {
@@ -6815,6 +8520,10 @@ func (p *NoteMetaRes) GetMeta() *NoteMeta {
 		return NoteMetaRes_Meta_DEFAULT
 	}
 	return p.Meta
+}
+
+func (p *NoteMetaRes) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *NoteMetaRes) IsSetMeta() bool {
 	return p.Meta != nil
@@ -6844,8 +8553,18 @@ func (p *NoteMetaRes) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
-		case 3:
+		case 2:
 			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRUCT {
 				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
@@ -6854,9 +8573,9 @@ func (p *NoteMetaRes) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
-		case 2:
-			if fieldTypeId == thrift.STRUCT {
-				if err := p.ReadField2(iprot); err != nil {
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -6889,19 +8608,47 @@ func (p *NoteMetaRes) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *NoteMetaRes) ReadField3(iprot thrift.TProtocol) error {
+func (p *NoteMetaRes) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
-		return thrift.PrependError("error reading field 3: ", err)
+		return thrift.PrependError("error reading field 2: ", err)
 	} else {
 		p.Resmsg = v
 	}
 	return nil
 }
 
-func (p *NoteMetaRes) ReadField2(iprot thrift.TProtocol) error {
+func (p *NoteMetaRes) ReadField3(iprot thrift.TProtocol) error {
 	p.Meta = &NoteMeta{}
 	if err := p.Meta.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Meta), err)
+	}
+	return nil
+}
+
+func (p *NoteMetaRes) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key54 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key54 = v
+		}
+		var _val55 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val55 = v
+		}
+		p.Extra[_key54] = _val55
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
 	}
 	return nil
 }
@@ -6918,6 +8665,9 @@ func (p *NoteMetaRes) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
 	}
@@ -6944,27 +8694,51 @@ func (p *NoteMetaRes) writeField1(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *NoteMetaRes) writeField2(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("meta", thrift.STRUCT, 2); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:meta: ", p), err)
+	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
 	}
-	if err := p.Meta.Write(oprot); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Meta), err)
+	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:meta: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err)
 	}
 	return err
 }
 
 func (p *NoteMetaRes) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:resmsg: ", p), err)
+	if err := oprot.WriteFieldBegin("meta", thrift.STRUCT, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:meta: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.resmsg (3) field write error: ", p), err)
+	if err := p.Meta.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Meta), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:resmsg: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:meta: ", p), err)
+	}
+	return err
+}
+
+func (p *NoteMetaRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
 	}
 	return err
 }
@@ -6980,10 +8754,12 @@ func (p *NoteMetaRes) String() string {
 //  - Rescode
 //  - Resmsg
 //  - Meta
+//  - Extra
 type NoteMetaListRes struct {
-	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Resmsg  string       `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
-	Meta    []*NoteMeta  `thrift:"meta,3" db:"meta" json:"meta"`
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Meta    []*NoteMeta       `thrift:"meta,3" db:"meta" json:"meta"`
+	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewNoteMetaListRes() *NoteMetaListRes {
@@ -7000,6 +8776,10 @@ func (p *NoteMetaListRes) GetResmsg() string {
 
 func (p *NoteMetaListRes) GetMeta() []*NoteMeta {
 	return p.Meta
+}
+
+func (p *NoteMetaListRes) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *NoteMetaListRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -7038,6 +8818,16 @@ func (p *NoteMetaListRes) Read(iprot thrift.TProtocol) error {
 		case 3:
 			if fieldTypeId == thrift.LIST {
 				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -7087,14 +8877,42 @@ func (p *NoteMetaListRes) ReadField3(iprot thrift.TProtocol) error {
 	tSlice := make([]*NoteMeta, 0, size)
 	p.Meta = tSlice
 	for i := 0; i < size; i++ {
-		_elem6 := &NoteMeta{}
-		if err := _elem6.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem6), err)
+		_elem56 := &NoteMeta{}
+		if err := _elem56.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem56), err)
 		}
-		p.Meta = append(p.Meta, _elem6)
+		p.Meta = append(p.Meta, _elem56)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
+	}
+	return nil
+}
+
+func (p *NoteMetaListRes) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key57 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key57 = v
+		}
+		var _val58 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val58 = v
+		}
+		p.Extra[_key57] = _val58
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
 	}
 	return nil
 }
@@ -7111,6 +8929,9 @@ func (p *NoteMetaListRes) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
 	}
@@ -7170,6 +8991,30 @@ func (p *NoteMetaListRes) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *NoteMetaListRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *NoteMetaListRes) String() string {
 	if p == nil {
 		return "<nil>"
@@ -7181,10 +9026,12 @@ func (p *NoteMetaListRes) String() string {
 //  - Rescode
 //  - Resmsg
 //  - Count
+//  - Extra
 type NoteListCountRes struct {
-	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Resmsg  string       `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
-	Count   int32        `thrift:"count,3" db:"count" json:"count"`
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Count   int32             `thrift:"count,3" db:"count" json:"count"`
+	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewNoteListCountRes() *NoteListCountRes {
@@ -7201,6 +9048,10 @@ func (p *NoteListCountRes) GetResmsg() string {
 
 func (p *NoteListCountRes) GetCount() int32 {
 	return p.Count
+}
+
+func (p *NoteListCountRes) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *NoteListCountRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -7239,6 +9090,16 @@ func (p *NoteListCountRes) Read(iprot thrift.TProtocol) error {
 		case 3:
 			if fieldTypeId == thrift.I32 {
 				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -7289,6 +9150,34 @@ func (p *NoteListCountRes) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *NoteListCountRes) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key59 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key59 = v
+		}
+		var _val60 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val60 = v
+		}
+		p.Extra[_key59] = _val60
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *NoteListCountRes) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("note_list_count_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -7301,6 +9190,9 @@ func (p *NoteListCountRes) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
 	}
@@ -7352,6 +9244,30 @@ func (p *NoteListCountRes) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *NoteListCountRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *NoteListCountRes) String() string {
 	if p == nil {
 		return "<nil>"
@@ -7363,10 +9279,12 @@ func (p *NoteListCountRes) String() string {
 //  - Rescode
 //  - Resmsg
 //  - Data
+//  - Extra
 type NoteDataRes struct {
-	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Resmsg  string       `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
-	Data    string       `thrift:"data,3" db:"data" json:"data"`
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Data    string            `thrift:"data,3" db:"data" json:"data"`
+	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewNoteDataRes() *NoteDataRes {
@@ -7383,6 +9301,10 @@ func (p *NoteDataRes) GetResmsg() string {
 
 func (p *NoteDataRes) GetData() string {
 	return p.Data
+}
+
+func (p *NoteDataRes) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *NoteDataRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -7421,6 +9343,16 @@ func (p *NoteDataRes) Read(iprot thrift.TProtocol) error {
 		case 3:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -7471,6 +9403,34 @@ func (p *NoteDataRes) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *NoteDataRes) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key61 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key61 = v
+		}
+		var _val62 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val62 = v
+		}
+		p.Extra[_key61] = _val62
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *NoteDataRes) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("note_data_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -7483,6 +9443,9 @@ func (p *NoteDataRes) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
 	}
@@ -7534,6 +9497,30 @@ func (p *NoteDataRes) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *NoteDataRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *NoteDataRes) String() string {
 	if p == nil {
 		return "<nil>"
@@ -7545,10 +9532,12 @@ func (p *NoteDataRes) String() string {
 //  - Rescode
 //  - Resmsg
 //  - Data
+//  - Extra
 type NoteHTMLRes struct {
-	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Resmsg  string       `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
-	Data    string       `thrift:"data,3" db:"data" json:"data"`
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Data    string            `thrift:"data,3" db:"data" json:"data"`
+	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewNoteHTMLRes() *NoteHTMLRes {
@@ -7565,6 +9554,10 @@ func (p *NoteHTMLRes) GetResmsg() string {
 
 func (p *NoteHTMLRes) GetData() string {
 	return p.Data
+}
+
+func (p *NoteHTMLRes) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *NoteHTMLRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -7603,6 +9596,16 @@ func (p *NoteHTMLRes) Read(iprot thrift.TProtocol) error {
 		case 3:
 			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -7653,6 +9656,34 @@ func (p *NoteHTMLRes) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *NoteHTMLRes) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key63 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key63 = v
+		}
+		var _val64 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val64 = v
+		}
+		p.Extra[_key63] = _val64
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *NoteHTMLRes) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("note_html_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -7665,6 +9696,9 @@ func (p *NoteHTMLRes) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
 	}
@@ -7716,6 +9750,30 @@ func (p *NoteHTMLRes) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *NoteHTMLRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
 func (p *NoteHTMLRes) String() string {
 	if p == nil {
 		return "<nil>"
@@ -7727,10 +9785,12 @@ func (p *NoteHTMLRes) String() string {
 //  - Rescode
 //  - Resmsg
 //  - Count
+//  - Extra
 type MomentsCountRes struct {
-	Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Resmsg  string       `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
-	Count   int32        `thrift:"count,3" db:"count" json:"count"`
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Count   int32             `thrift:"count,3" db:"count" json:"count"`
+	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewMomentsCountRes() *MomentsCountRes {
@@ -7747,6 +9807,10 @@ func (p *MomentsCountRes) GetResmsg() string {
 
 func (p *MomentsCountRes) GetCount() int32 {
 	return p.Count
+}
+
+func (p *MomentsCountRes) GetExtra() map[string]string {
+	return p.Extra
 }
 func (p *MomentsCountRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -7785,6 +9849,16 @@ func (p *MomentsCountRes) Read(iprot thrift.TProtocol) error {
 		case 3:
 			if fieldTypeId == thrift.I32 {
 				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -7835,6 +9909,34 @@ func (p *MomentsCountRes) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *MomentsCountRes) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key65 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key65 = v
+		}
+		var _val66 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val66 = v
+		}
+		p.Extra[_key65] = _val66
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
 func (p *MomentsCountRes) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("moments_count_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -7847,6 +9949,9 @@ func (p *MomentsCountRes) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
 	}
@@ -7894,6 +9999,30 @@ func (p *MomentsCountRes) writeField3(oprot thrift.TProtocol) (err error) {
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:count: ", p), err)
+	}
+	return err
+}
+
+func (p *MomentsCountRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
 	}
 	return err
 }
@@ -8196,11 +10325,11 @@ func (p *Moments) ReadField4(iprot thrift.TProtocol) error {
 	tSlice := make([]*Extra, 0, size)
 	p.Extra = tSlice
 	for i := 0; i < size; i++ {
-		_elem7 := &Extra{}
-		if err := _elem7.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem7), err)
+		_elem67 := &Extra{}
+		if err := _elem67.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem67), err)
 		}
-		p.Extra = append(p.Extra, _elem7)
+		p.Extra = append(p.Extra, _elem67)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
@@ -8579,11 +10708,11 @@ func (p *MomentsListRes) ReadField3(iprot thrift.TProtocol) error {
 	tSlice := make([]*Moments, 0, size)
 	p.Data = tSlice
 	for i := 0; i < size; i++ {
-		_elem8 := &Moments{}
-		if err := _elem8.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem8), err)
+		_elem68 := &Moments{}
+		if err := _elem68.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem68), err)
 		}
-		p.Data = append(p.Data, _elem8)
+		p.Data = append(p.Data, _elem68)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
@@ -9166,11 +11295,11 @@ func (p *FileDirRes) ReadField3(iprot thrift.TProtocol) error {
 	tSlice := make([]*FileItem, 0, size)
 	p.Dirs = tSlice
 	for i := 0; i < size; i++ {
-		_elem9 := &FileItem{}
-		if err := _elem9.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem9), err)
+		_elem69 := &FileItem{}
+		if err := _elem69.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem69), err)
 		}
-		p.Dirs = append(p.Dirs, _elem9)
+		p.Dirs = append(p.Dirs, _elem69)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
@@ -11135,187 +13264,187 @@ func (p *DatanodeServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) CreateUser(ctx context.Context, req *NewUserReq_) (r *UserRes, err error) {
-	var _args10 DatanodeServiceCreateUserArgs
-	_args10.Req = req
-	var _result11 DatanodeServiceCreateUserResult
-	if err = p.Client_().Call(ctx, "createUser", &_args10, &_result11); err != nil {
+	var _args70 DatanodeServiceCreateUserArgs
+	_args70.Req = req
+	var _result71 DatanodeServiceCreateUserResult
+	if err = p.Client_().Call(ctx, "createUser", &_args70, &_result71); err != nil {
 		return
 	}
-	return _result11.GetSuccess(), nil
+	return _result71.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) UserInfo(ctx context.Context, req *UserInfoReq) (r *UserRes, err error) {
-	var _args12 DatanodeServiceUserInfoArgs
-	_args12.Req = req
-	var _result13 DatanodeServiceUserInfoResult
-	if err = p.Client_().Call(ctx, "userInfo", &_args12, &_result13); err != nil {
+	var _args72 DatanodeServiceUserInfoArgs
+	_args72.Req = req
+	var _result73 DatanodeServiceUserInfoResult
+	if err = p.Client_().Call(ctx, "userInfo", &_args72, &_result73); err != nil {
 		return
 	}
-	return _result13.GetSuccess(), nil
+	return _result73.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) SearchUser(ctx context.Context, req *SearchUserReq) (r []*User, err error) {
-	var _args14 DatanodeServiceSearchUserArgs
-	_args14.Req = req
-	var _result15 DatanodeServiceSearchUserResult
-	if err = p.Client_().Call(ctx, "searchUser", &_args14, &_result15); err != nil {
+	var _args74 DatanodeServiceSearchUserArgs
+	_args74.Req = req
+	var _result75 DatanodeServiceSearchUserResult
+	if err = p.Client_().Call(ctx, "searchUser", &_args74, &_result75); err != nil {
 		return
 	}
-	return _result15.GetSuccess(), nil
+	return _result75.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) UpdateUser(ctx context.Context, req *UpdateReq) (r *UserRes, err error) {
-	var _args16 DatanodeServiceUpdateUserArgs
-	_args16.Req = req
-	var _result17 DatanodeServiceUpdateUserResult
-	if err = p.Client_().Call(ctx, "updateUser", &_args16, &_result17); err != nil {
+	var _args76 DatanodeServiceUpdateUserArgs
+	_args76.Req = req
+	var _result77 DatanodeServiceUpdateUserResult
+	if err = p.Client_().Call(ctx, "updateUser", &_args76, &_result77); err != nil {
 		return
 	}
-	return _result17.GetSuccess(), nil
+	return _result77.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) AddFriends(ctx context.Context, uid string, req *AddFriendReq) (r *AddFriendRes, err error) {
-	var _args18 DatanodeServiceAddFriendsArgs
-	_args18.UID = uid
-	_args18.Req = req
-	var _result19 DatanodeServiceAddFriendsResult
-	if err = p.Client_().Call(ctx, "addFriends", &_args18, &_result19); err != nil {
+	var _args78 DatanodeServiceAddFriendsArgs
+	_args78.UID = uid
+	_args78.Req = req
+	var _result79 DatanodeServiceAddFriendsResult
+	if err = p.Client_().Call(ctx, "addFriends", &_args78, &_result79); err != nil {
 		return
 	}
-	return _result19.GetSuccess(), nil
+	return _result79.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) AgreeFriends(ctx context.Context, uid string, req *AgreeFriendReq) (r *AgreeFriendRes, err error) {
-	var _args20 DatanodeServiceAgreeFriendsArgs
-	_args20.UID = uid
-	_args20.Req = req
-	var _result21 DatanodeServiceAgreeFriendsResult
-	if err = p.Client_().Call(ctx, "agreeFriends", &_args20, &_result21); err != nil {
+	var _args80 DatanodeServiceAgreeFriendsArgs
+	_args80.UID = uid
+	_args80.Req = req
+	var _result81 DatanodeServiceAgreeFriendsResult
+	if err = p.Client_().Call(ctx, "agreeFriends", &_args80, &_result81); err != nil {
 		return
 	}
-	return _result21.GetSuccess(), nil
+	return _result81.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Uid2
 func (p *DatanodeServiceClient) FriendsList(ctx context.Context, uid string, uid2 string) (r *FriendRes, err error) {
-	var _args22 DatanodeServiceFriendsListArgs
-	_args22.UID = uid
-	_args22.Uid2 = uid2
-	var _result23 DatanodeServiceFriendsListResult
-	if err = p.Client_().Call(ctx, "friendsList", &_args22, &_result23); err != nil {
+	var _args82 DatanodeServiceFriendsListArgs
+	_args82.UID = uid
+	_args82.Uid2 = uid2
+	var _result83 DatanodeServiceFriendsListResult
+	if err = p.Client_().Call(ctx, "friendsList", &_args82, &_result83); err != nil {
 		return
 	}
-	return _result23.GetSuccess(), nil
+	return _result83.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) CreateGroup(ctx context.Context, uid string, req *CreateGroupReq) (r *CreateGroupRes, err error) {
-	var _args24 DatanodeServiceCreateGroupArgs
-	_args24.UID = uid
-	_args24.Req = req
-	var _result25 DatanodeServiceCreateGroupResult
-	if err = p.Client_().Call(ctx, "createGroup", &_args24, &_result25); err != nil {
+	var _args84 DatanodeServiceCreateGroupArgs
+	_args84.UID = uid
+	_args84.Req = req
+	var _result85 DatanodeServiceCreateGroupResult
+	if err = p.Client_().Call(ctx, "createGroup", &_args84, &_result85); err != nil {
 		return
 	}
-	return _result25.GetSuccess(), nil
+	return _result85.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) RenameGroup(ctx context.Context, uid string, req *RenameGroupReq) (r *RenameGroupRes, err error) {
-	var _args26 DatanodeServiceRenameGroupArgs
-	_args26.UID = uid
-	_args26.Req = req
-	var _result27 DatanodeServiceRenameGroupResult
-	if err = p.Client_().Call(ctx, "renameGroup", &_args26, &_result27); err != nil {
+	var _args86 DatanodeServiceRenameGroupArgs
+	_args86.UID = uid
+	_args86.Req = req
+	var _result87 DatanodeServiceRenameGroupResult
+	if err = p.Client_().Call(ctx, "renameGroup", &_args86, &_result87); err != nil {
 		return
 	}
-	return _result27.GetSuccess(), nil
+	return _result87.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) AddNoteFriend(ctx context.Context, uid string, req *AddFriendNoteReq) (r *AddFriendNoteRes, err error) {
-	var _args28 DatanodeServiceAddNoteFriendArgs
-	_args28.UID = uid
-	_args28.Req = req
-	var _result29 DatanodeServiceAddNoteFriendResult
-	if err = p.Client_().Call(ctx, "addNoteFriend", &_args28, &_result29); err != nil {
+	var _args88 DatanodeServiceAddNoteFriendArgs
+	_args88.UID = uid
+	_args88.Req = req
+	var _result89 DatanodeServiceAddNoteFriendResult
+	if err = p.Client_().Call(ctx, "addNoteFriend", &_args88, &_result89); err != nil {
 		return
 	}
-	return _result29.GetSuccess(), nil
+	return _result89.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) MoveToNewGroup(ctx context.Context, uid string, req *MoveGroupReq) (r *MoveGroupRes, err error) {
-	var _args30 DatanodeServiceMoveToNewGroupArgs
-	_args30.UID = uid
-	_args30.Req = req
-	var _result31 DatanodeServiceMoveToNewGroupResult
-	if err = p.Client_().Call(ctx, "moveToNewGroup", &_args30, &_result31); err != nil {
+	var _args90 DatanodeServiceMoveToNewGroupArgs
+	_args90.UID = uid
+	_args90.Req = req
+	var _result91 DatanodeServiceMoveToNewGroupResult
+	if err = p.Client_().Call(ctx, "moveToNewGroup", &_args90, &_result91); err != nil {
 		return
 	}
-	return _result31.GetSuccess(), nil
+	return _result91.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) RemoveFriend(ctx context.Context, uid string, req *RemoveFriendReq) (r *RemoveFriendRes, err error) {
-	var _args32 DatanodeServiceRemoveFriendArgs
-	_args32.UID = uid
-	_args32.Req = req
-	var _result33 DatanodeServiceRemoveFriendResult
-	if err = p.Client_().Call(ctx, "removeFriend", &_args32, &_result33); err != nil {
+	var _args92 DatanodeServiceRemoveFriendArgs
+	_args92.UID = uid
+	_args92.Req = req
+	var _result93 DatanodeServiceRemoveFriendResult
+	if err = p.Client_().Call(ctx, "removeFriend", &_args92, &_result93); err != nil {
 		return
 	}
-	return _result33.GetSuccess(), nil
+	return _result93.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Mid
 func (p *DatanodeServiceClient) LikesCount(ctx context.Context, mid string) (r *LikesCountRes, err error) {
-	var _args34 DatanodeServiceLikesCountArgs
-	_args34.Mid = mid
-	var _result35 DatanodeServiceLikesCountResult
-	if err = p.Client_().Call(ctx, "likesCount", &_args34, &_result35); err != nil {
+	var _args94 DatanodeServiceLikesCountArgs
+	_args94.Mid = mid
+	var _result95 DatanodeServiceLikesCountResult
+	if err = p.Client_().Call(ctx, "likesCount", &_args94, &_result95); err != nil {
 		return
 	}
-	return _result35.GetSuccess(), nil
+	return _result95.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Mid
 //  - UID
 func (p *DatanodeServiceClient) LikesAdd(ctx context.Context, mid string, uid string) (r *LikesAddRes, err error) {
-	var _args36 DatanodeServiceLikesAddArgs
-	_args36.Mid = mid
-	_args36.UID = uid
-	var _result37 DatanodeServiceLikesAddResult
-	if err = p.Client_().Call(ctx, "likesAdd", &_args36, &_result37); err != nil {
+	var _args96 DatanodeServiceLikesAddArgs
+	_args96.Mid = mid
+	_args96.UID = uid
+	var _result97 DatanodeServiceLikesAddResult
+	if err = p.Client_().Call(ctx, "likesAdd", &_args96, &_result97); err != nil {
 		return
 	}
-	return _result37.GetSuccess(), nil
+	return _result97.GetSuccess(), nil
 }
 
 // Parameters:
@@ -11323,29 +13452,29 @@ func (p *DatanodeServiceClient) LikesAdd(ctx context.Context, mid string, uid st
 //  - Page
 //  - Size
 func (p *DatanodeServiceClient) LikesList(ctx context.Context, mid string, page int32, size int32) (r *LikesListRes, err error) {
-	var _args38 DatanodeServiceLikesListArgs
-	_args38.Mid = mid
-	_args38.Page = page
-	_args38.Size = size
-	var _result39 DatanodeServiceLikesListResult
-	if err = p.Client_().Call(ctx, "likesList", &_args38, &_result39); err != nil {
+	var _args98 DatanodeServiceLikesListArgs
+	_args98.Mid = mid
+	_args98.Page = page
+	_args98.Size = size
+	var _result99 DatanodeServiceLikesListResult
+	if err = p.Client_().Call(ctx, "likesList", &_args98, &_result99); err != nil {
 		return
 	}
-	return _result39.GetSuccess(), nil
+	return _result99.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) UpdateNote(ctx context.Context, uid string, req *UpdateNoteReq) (r *NoteMetaRes, err error) {
-	var _args40 DatanodeServiceUpdateNoteArgs
-	_args40.UID = uid
-	_args40.Req = req
-	var _result41 DatanodeServiceUpdateNoteResult
-	if err = p.Client_().Call(ctx, "updateNote", &_args40, &_result41); err != nil {
+	var _args100 DatanodeServiceUpdateNoteArgs
+	_args100.UID = uid
+	_args100.Req = req
+	var _result101 DatanodeServiceUpdateNoteResult
+	if err = p.Client_().Call(ctx, "updateNote", &_args100, &_result101); err != nil {
 		return
 	}
-	return _result41.GetSuccess(), nil
+	return _result101.GetSuccess(), nil
 }
 
 // Parameters:
@@ -11353,81 +13482,81 @@ func (p *DatanodeServiceClient) UpdateNote(ctx context.Context, uid string, req 
 //  - Page
 //  - Size
 func (p *DatanodeServiceClient) NoteMetaList(ctx context.Context, uid string, page int32, size int32) (r *NoteMetaListRes, err error) {
-	var _args42 DatanodeServiceNoteMetaListArgs
-	_args42.UID = uid
-	_args42.Page = page
-	_args42.Size = size
-	var _result43 DatanodeServiceNoteMetaListResult
-	if err = p.Client_().Call(ctx, "noteMetaList", &_args42, &_result43); err != nil {
+	var _args102 DatanodeServiceNoteMetaListArgs
+	_args102.UID = uid
+	_args102.Page = page
+	_args102.Size = size
+	var _result103 DatanodeServiceNoteMetaListResult
+	if err = p.Client_().Call(ctx, "noteMetaList", &_args102, &_result103); err != nil {
 		return
 	}
-	return _result43.GetSuccess(), nil
+	return _result103.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 func (p *DatanodeServiceClient) NoteListCount(ctx context.Context, uid string) (r *NoteListCountRes, err error) {
-	var _args44 DatanodeServiceNoteListCountArgs
-	_args44.UID = uid
-	var _result45 DatanodeServiceNoteListCountResult
-	if err = p.Client_().Call(ctx, "noteListCount", &_args44, &_result45); err != nil {
+	var _args104 DatanodeServiceNoteListCountArgs
+	_args104.UID = uid
+	var _result105 DatanodeServiceNoteListCountResult
+	if err = p.Client_().Call(ctx, "noteListCount", &_args104, &_result105); err != nil {
 		return
 	}
-	return _result45.GetSuccess(), nil
+	return _result105.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Nid
 func (p *DatanodeServiceClient) NoteData(ctx context.Context, uid string, nid string) (r *NoteDataRes, err error) {
-	var _args46 DatanodeServiceNoteDataArgs
-	_args46.UID = uid
-	_args46.Nid = nid
-	var _result47 DatanodeServiceNoteDataResult
-	if err = p.Client_().Call(ctx, "noteData", &_args46, &_result47); err != nil {
+	var _args106 DatanodeServiceNoteDataArgs
+	_args106.UID = uid
+	_args106.Nid = nid
+	var _result107 DatanodeServiceNoteDataResult
+	if err = p.Client_().Call(ctx, "noteData", &_args106, &_result107); err != nil {
 		return
 	}
-	return _result47.GetSuccess(), nil
+	return _result107.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Nid
 func (p *DatanodeServiceClient) NoteHtml(ctx context.Context, uid string, nid string) (r *NoteHTMLRes, err error) {
-	var _args48 DatanodeServiceNoteHtmlArgs
-	_args48.UID = uid
-	_args48.Nid = nid
-	var _result49 DatanodeServiceNoteHtmlResult
-	if err = p.Client_().Call(ctx, "noteHtml", &_args48, &_result49); err != nil {
+	var _args108 DatanodeServiceNoteHtmlArgs
+	_args108.UID = uid
+	_args108.Nid = nid
+	var _result109 DatanodeServiceNoteHtmlResult
+	if err = p.Client_().Call(ctx, "noteHtml", &_args108, &_result109); err != nil {
 		return
 	}
-	return _result49.GetSuccess(), nil
+	return _result109.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 func (p *DatanodeServiceClient) MomentsCount(ctx context.Context, uid string) (r *MomentsCountRes, err error) {
-	var _args50 DatanodeServiceMomentsCountArgs
-	_args50.UID = uid
-	var _result51 DatanodeServiceMomentsCountResult
-	if err = p.Client_().Call(ctx, "momentsCount", &_args50, &_result51); err != nil {
+	var _args110 DatanodeServiceMomentsCountArgs
+	_args110.UID = uid
+	var _result111 DatanodeServiceMomentsCountResult
+	if err = p.Client_().Call(ctx, "momentsCount", &_args110, &_result111); err != nil {
 		return
 	}
-	return _result51.GetSuccess(), nil
+	return _result111.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Moments
 func (p *DatanodeServiceClient) MomentsAdd(ctx context.Context, uid string, moments *Moments) (r *AddMomentsRes, err error) {
-	var _args52 DatanodeServiceMomentsAddArgs
-	_args52.UID = uid
-	_args52.Moments = moments
-	var _result53 DatanodeServiceMomentsAddResult
-	if err = p.Client_().Call(ctx, "momentsAdd", &_args52, &_result53); err != nil {
+	var _args112 DatanodeServiceMomentsAddArgs
+	_args112.UID = uid
+	_args112.Moments = moments
+	var _result113 DatanodeServiceMomentsAddResult
+	if err = p.Client_().Call(ctx, "momentsAdd", &_args112, &_result113); err != nil {
 		return
 	}
-	return _result53.GetSuccess(), nil
+	return _result113.GetSuccess(), nil
 }
 
 // Parameters:
@@ -11435,107 +13564,107 @@ func (p *DatanodeServiceClient) MomentsAdd(ctx context.Context, uid string, mome
 //  - Page
 //  - Size
 func (p *DatanodeServiceClient) MomentsList(ctx context.Context, uid string, page int32, size int32) (r *MomentsListRes, err error) {
-	var _args54 DatanodeServiceMomentsListArgs
-	_args54.UID = uid
-	_args54.Page = page
-	_args54.Size = size
-	var _result55 DatanodeServiceMomentsListResult
-	if err = p.Client_().Call(ctx, "momentsList", &_args54, &_result55); err != nil {
+	var _args114 DatanodeServiceMomentsListArgs
+	_args114.UID = uid
+	_args114.Page = page
+	_args114.Size = size
+	var _result115 DatanodeServiceMomentsListResult
+	if err = p.Client_().Call(ctx, "momentsList", &_args114, &_result115); err != nil {
 		return
 	}
-	return _result55.GetSuccess(), nil
+	return _result115.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Path
 func (p *DatanodeServiceClient) FileDirOne(ctx context.Context, uid string, path string) (r *FileDirRes, err error) {
-	var _args56 DatanodeServiceFileDirOneArgs
-	_args56.UID = uid
-	_args56.Path = path
-	var _result57 DatanodeServiceFileDirOneResult
-	if err = p.Client_().Call(ctx, "fileDirOne", &_args56, &_result57); err != nil {
+	var _args116 DatanodeServiceFileDirOneArgs
+	_args116.UID = uid
+	_args116.Path = path
+	var _result117 DatanodeServiceFileDirOneResult
+	if err = p.Client_().Call(ctx, "fileDirOne", &_args116, &_result117); err != nil {
 		return
 	}
-	return _result57.GetSuccess(), nil
+	return _result117.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) FileDirAdd(ctx context.Context, uid string, req *AddDirReq) (r *AddDirRes, err error) {
-	var _args58 DatanodeServiceFileDirAddArgs
-	_args58.UID = uid
-	_args58.Req = req
-	var _result59 DatanodeServiceFileDirAddResult
-	if err = p.Client_().Call(ctx, "fileDirAdd", &_args58, &_result59); err != nil {
+	var _args118 DatanodeServiceFileDirAddArgs
+	_args118.UID = uid
+	_args118.Req = req
+	var _result119 DatanodeServiceFileDirAddResult
+	if err = p.Client_().Call(ctx, "fileDirAdd", &_args118, &_result119); err != nil {
 		return
 	}
-	return _result59.GetSuccess(), nil
+	return _result119.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) AddFile(ctx context.Context, uid string, req *AddFileReq) (r *AddFileRes, err error) {
-	var _args60 DatanodeServiceAddFileArgs
-	_args60.UID = uid
-	_args60.Req = req
-	var _result61 DatanodeServiceAddFileResult
-	if err = p.Client_().Call(ctx, "addFile", &_args60, &_result61); err != nil {
+	var _args120 DatanodeServiceAddFileArgs
+	_args120.UID = uid
+	_args120.Req = req
+	var _result121 DatanodeServiceAddFileResult
+	if err = p.Client_().Call(ctx, "addFile", &_args120, &_result121); err != nil {
 		return
 	}
-	return _result61.GetSuccess(), nil
+	return _result121.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 func (p *DatanodeServiceClient) YunSaveAttr(ctx context.Context, uid string) (r *FileAttrRes, err error) {
-	var _args62 DatanodeServiceYunSaveAttrArgs
-	_args62.UID = uid
-	var _result63 DatanodeServiceYunSaveAttrResult
-	if err = p.Client_().Call(ctx, "yunSaveAttr", &_args62, &_result63); err != nil {
+	var _args122 DatanodeServiceYunSaveAttrArgs
+	_args122.UID = uid
+	var _result123 DatanodeServiceYunSaveAttrResult
+	if err = p.Client_().Call(ctx, "yunSaveAttr", &_args122, &_result123); err != nil {
 		return
 	}
-	return _result63.GetSuccess(), nil
+	return _result123.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Path
 func (p *DatanodeServiceClient) Thumbnail(ctx context.Context, uid string, path string) (r *ThumbnailRes, err error) {
-	var _args64 DatanodeServiceThumbnailArgs
-	_args64.UID = uid
-	_args64.Path = path
-	var _result65 DatanodeServiceThumbnailResult
-	if err = p.Client_().Call(ctx, "thumbnail", &_args64, &_result65); err != nil {
+	var _args124 DatanodeServiceThumbnailArgs
+	_args124.UID = uid
+	_args124.Path = path
+	var _result125 DatanodeServiceThumbnailResult
+	if err = p.Client_().Call(ctx, "thumbnail", &_args124, &_result125); err != nil {
 		return
 	}
-	return _result65.GetSuccess(), nil
+	return _result125.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) SetKeyValue(ctx context.Context, req *SetKeyvalueReq) (r *SetKeyvalueRes, err error) {
-	var _args66 DatanodeServiceSetKeyValueArgs
-	_args66.Req = req
-	var _result67 DatanodeServiceSetKeyValueResult
-	if err = p.Client_().Call(ctx, "setKeyValue", &_args66, &_result67); err != nil {
+	var _args126 DatanodeServiceSetKeyValueArgs
+	_args126.Req = req
+	var _result127 DatanodeServiceSetKeyValueResult
+	if err = p.Client_().Call(ctx, "setKeyValue", &_args126, &_result127); err != nil {
 		return
 	}
-	return _result67.GetSuccess(), nil
+	return _result127.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) GetKeyValue(ctx context.Context, req *GetKeyvalueReq) (r *GetKeyvalueRes, err error) {
-	var _args68 DatanodeServiceGetKeyValueArgs
-	_args68.Req = req
-	var _result69 DatanodeServiceGetKeyValueResult
-	if err = p.Client_().Call(ctx, "getKeyValue", &_args68, &_result69); err != nil {
+	var _args128 DatanodeServiceGetKeyValueArgs
+	_args128.Req = req
+	var _result129 DatanodeServiceGetKeyValueResult
+	if err = p.Client_().Call(ctx, "getKeyValue", &_args128, &_result129); err != nil {
 		return
 	}
-	return _result69.GetSuccess(), nil
+	return _result129.GetSuccess(), nil
 }
 
 type DatanodeServiceProcessor struct {
@@ -11558,38 +13687,38 @@ func (p *DatanodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFu
 
 func NewDatanodeServiceProcessor(handler DatanodeService) *DatanodeServiceProcessor {
 
-	self70 := &DatanodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self70.processorMap["createUser"] = &datanodeServiceProcessorCreateUser{handler: handler}
-	self70.processorMap["userInfo"] = &datanodeServiceProcessorUserInfo{handler: handler}
-	self70.processorMap["searchUser"] = &datanodeServiceProcessorSearchUser{handler: handler}
-	self70.processorMap["updateUser"] = &datanodeServiceProcessorUpdateUser{handler: handler}
-	self70.processorMap["addFriends"] = &datanodeServiceProcessorAddFriends{handler: handler}
-	self70.processorMap["agreeFriends"] = &datanodeServiceProcessorAgreeFriends{handler: handler}
-	self70.processorMap["friendsList"] = &datanodeServiceProcessorFriendsList{handler: handler}
-	self70.processorMap["createGroup"] = &datanodeServiceProcessorCreateGroup{handler: handler}
-	self70.processorMap["renameGroup"] = &datanodeServiceProcessorRenameGroup{handler: handler}
-	self70.processorMap["addNoteFriend"] = &datanodeServiceProcessorAddNoteFriend{handler: handler}
-	self70.processorMap["moveToNewGroup"] = &datanodeServiceProcessorMoveToNewGroup{handler: handler}
-	self70.processorMap["removeFriend"] = &datanodeServiceProcessorRemoveFriend{handler: handler}
-	self70.processorMap["likesCount"] = &datanodeServiceProcessorLikesCount{handler: handler}
-	self70.processorMap["likesAdd"] = &datanodeServiceProcessorLikesAdd{handler: handler}
-	self70.processorMap["likesList"] = &datanodeServiceProcessorLikesList{handler: handler}
-	self70.processorMap["updateNote"] = &datanodeServiceProcessorUpdateNote{handler: handler}
-	self70.processorMap["noteMetaList"] = &datanodeServiceProcessorNoteMetaList{handler: handler}
-	self70.processorMap["noteListCount"] = &datanodeServiceProcessorNoteListCount{handler: handler}
-	self70.processorMap["noteData"] = &datanodeServiceProcessorNoteData{handler: handler}
-	self70.processorMap["noteHtml"] = &datanodeServiceProcessorNoteHtml{handler: handler}
-	self70.processorMap["momentsCount"] = &datanodeServiceProcessorMomentsCount{handler: handler}
-	self70.processorMap["momentsAdd"] = &datanodeServiceProcessorMomentsAdd{handler: handler}
-	self70.processorMap["momentsList"] = &datanodeServiceProcessorMomentsList{handler: handler}
-	self70.processorMap["fileDirOne"] = &datanodeServiceProcessorFileDirOne{handler: handler}
-	self70.processorMap["fileDirAdd"] = &datanodeServiceProcessorFileDirAdd{handler: handler}
-	self70.processorMap["addFile"] = &datanodeServiceProcessorAddFile{handler: handler}
-	self70.processorMap["yunSaveAttr"] = &datanodeServiceProcessorYunSaveAttr{handler: handler}
-	self70.processorMap["thumbnail"] = &datanodeServiceProcessorThumbnail{handler: handler}
-	self70.processorMap["setKeyValue"] = &datanodeServiceProcessorSetKeyValue{handler: handler}
-	self70.processorMap["getKeyValue"] = &datanodeServiceProcessorGetKeyValue{handler: handler}
-	return self70
+	self130 := &DatanodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self130.processorMap["createUser"] = &datanodeServiceProcessorCreateUser{handler: handler}
+	self130.processorMap["userInfo"] = &datanodeServiceProcessorUserInfo{handler: handler}
+	self130.processorMap["searchUser"] = &datanodeServiceProcessorSearchUser{handler: handler}
+	self130.processorMap["updateUser"] = &datanodeServiceProcessorUpdateUser{handler: handler}
+	self130.processorMap["addFriends"] = &datanodeServiceProcessorAddFriends{handler: handler}
+	self130.processorMap["agreeFriends"] = &datanodeServiceProcessorAgreeFriends{handler: handler}
+	self130.processorMap["friendsList"] = &datanodeServiceProcessorFriendsList{handler: handler}
+	self130.processorMap["createGroup"] = &datanodeServiceProcessorCreateGroup{handler: handler}
+	self130.processorMap["renameGroup"] = &datanodeServiceProcessorRenameGroup{handler: handler}
+	self130.processorMap["addNoteFriend"] = &datanodeServiceProcessorAddNoteFriend{handler: handler}
+	self130.processorMap["moveToNewGroup"] = &datanodeServiceProcessorMoveToNewGroup{handler: handler}
+	self130.processorMap["removeFriend"] = &datanodeServiceProcessorRemoveFriend{handler: handler}
+	self130.processorMap["likesCount"] = &datanodeServiceProcessorLikesCount{handler: handler}
+	self130.processorMap["likesAdd"] = &datanodeServiceProcessorLikesAdd{handler: handler}
+	self130.processorMap["likesList"] = &datanodeServiceProcessorLikesList{handler: handler}
+	self130.processorMap["updateNote"] = &datanodeServiceProcessorUpdateNote{handler: handler}
+	self130.processorMap["noteMetaList"] = &datanodeServiceProcessorNoteMetaList{handler: handler}
+	self130.processorMap["noteListCount"] = &datanodeServiceProcessorNoteListCount{handler: handler}
+	self130.processorMap["noteData"] = &datanodeServiceProcessorNoteData{handler: handler}
+	self130.processorMap["noteHtml"] = &datanodeServiceProcessorNoteHtml{handler: handler}
+	self130.processorMap["momentsCount"] = &datanodeServiceProcessorMomentsCount{handler: handler}
+	self130.processorMap["momentsAdd"] = &datanodeServiceProcessorMomentsAdd{handler: handler}
+	self130.processorMap["momentsList"] = &datanodeServiceProcessorMomentsList{handler: handler}
+	self130.processorMap["fileDirOne"] = &datanodeServiceProcessorFileDirOne{handler: handler}
+	self130.processorMap["fileDirAdd"] = &datanodeServiceProcessorFileDirAdd{handler: handler}
+	self130.processorMap["addFile"] = &datanodeServiceProcessorAddFile{handler: handler}
+	self130.processorMap["yunSaveAttr"] = &datanodeServiceProcessorYunSaveAttr{handler: handler}
+	self130.processorMap["thumbnail"] = &datanodeServiceProcessorThumbnail{handler: handler}
+	self130.processorMap["setKeyValue"] = &datanodeServiceProcessorSetKeyValue{handler: handler}
+	self130.processorMap["getKeyValue"] = &datanodeServiceProcessorGetKeyValue{handler: handler}
+	return self130
 }
 
 func (p *DatanodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -11602,12 +13731,12 @@ func (p *DatanodeServiceProcessor) Process(ctx context.Context, iprot, oprot thr
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x71 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x131 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x71.Write(oprot)
+	x131.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x71
+	return false, x131
 
 }
 
@@ -13658,11 +15787,11 @@ func (p *DatanodeServiceSearchUserResult) ReadField0(iprot thrift.TProtocol) err
 	tSlice := make([]*User, 0, size)
 	p.Success = tSlice
 	for i := 0; i < size; i++ {
-		_elem72 := &User{}
-		if err := _elem72.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem72), err)
+		_elem132 := &User{}
+		if err := _elem132.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem132), err)
 		}
-		p.Success = append(p.Success, _elem72)
+		p.Success = append(p.Success, _elem132)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
