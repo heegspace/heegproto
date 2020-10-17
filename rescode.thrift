@@ -21,4 +21,9 @@ enum code {
     CODE_RATE   = 10003,    // 请求频率太高
     CODE_LIMIT  = 10004,    // 验证码码达到限制
     CODE_TYPE_ERR = 10005,  // 不支持的类型
+
+    CODE_NODE_ERROR   = 9000, // 验证码服务异常
+    CODE_NODE_NOINIT  = 9001, // 验证码服务没有初始化
+    DATA_NODE_ERROR   = 9002, // 数据服务异常
+    DATA_NODE_NOINIT  = 9003, // 数据服务没有初始化
 }

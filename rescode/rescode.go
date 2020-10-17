@@ -24,22 +24,26 @@ var _ = bytes.Equal
 type Code int64
 
 const (
-	Code_SUCCESS       Code = 0
-	Code_ERROR         Code = 1
-	Code_DB_ERROR      Code = 2
-	Code_AUTH_ERR      Code = 3
-	Code_MOBILE_ERR    Code = 4
-	Code_EMAIL_ERR     Code = 5
-	Code_PARAM_ERR     Code = 99
-	Code_EXISTS        Code = 100
-	Code_IS_SELF       Code = 101
-	Code_NOT_EXISTS    Code = 400
-	Code_SEND_CODE_ERR Code = 10000
-	Code_CODE_ERROR    Code = 10001
-	Code_CODE_EXPIRE   Code = 10002
-	Code_CODE_RATE     Code = 10003
-	Code_CODE_LIMIT    Code = 10004
-	Code_CODE_TYPE_ERR Code = 10005
+	Code_SUCCESS          Code = 0
+	Code_ERROR            Code = 1
+	Code_DB_ERROR         Code = 2
+	Code_AUTH_ERR         Code = 3
+	Code_MOBILE_ERR       Code = 4
+	Code_EMAIL_ERR        Code = 5
+	Code_PARAM_ERR        Code = 99
+	Code_EXISTS           Code = 100
+	Code_IS_SELF          Code = 101
+	Code_NOT_EXISTS       Code = 400
+	Code_SEND_CODE_ERR    Code = 10000
+	Code_CODE_ERROR       Code = 10001
+	Code_CODE_EXPIRE      Code = 10002
+	Code_CODE_RATE        Code = 10003
+	Code_CODE_LIMIT       Code = 10004
+	Code_CODE_TYPE_ERR    Code = 10005
+	Code_CODE_NODE_ERROR  Code = 9000
+	Code_CODE_NODE_NOINIT Code = 9001
+	Code_DATA_NODE_ERROR  Code = 9002
+	Code_DATA_NODE_NOINIT Code = 9003
 )
 
 func (p Code) String() string {
@@ -76,6 +80,14 @@ func (p Code) String() string {
 		return "CODE_LIMIT"
 	case Code_CODE_TYPE_ERR:
 		return "CODE_TYPE_ERR"
+	case Code_CODE_NODE_ERROR:
+		return "CODE_NODE_ERROR"
+	case Code_CODE_NODE_NOINIT:
+		return "CODE_NODE_NOINIT"
+	case Code_DATA_NODE_ERROR:
+		return "DATA_NODE_ERROR"
+	case Code_DATA_NODE_NOINIT:
+		return "DATA_NODE_NOINIT"
 	}
 	return "<UNSET>"
 }
@@ -114,6 +126,14 @@ func CodeFromString(s string) (Code, error) {
 		return Code_CODE_LIMIT, nil
 	case "CODE_TYPE_ERR":
 		return Code_CODE_TYPE_ERR, nil
+	case "CODE_NODE_ERROR":
+		return Code_CODE_NODE_ERROR, nil
+	case "CODE_NODE_NOINIT":
+		return Code_CODE_NODE_NOINIT, nil
+	case "DATA_NODE_ERROR":
+		return Code_DATA_NODE_ERROR, nil
+	case "DATA_NODE_NOINIT":
+		return Code_DATA_NODE_NOINIT, nil
 	}
 	return Code(0), fmt.Errorf("not a valid Code string")
 }
