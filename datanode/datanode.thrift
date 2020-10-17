@@ -30,7 +30,7 @@ struct user{
     20:string   attention,
     21:string   update_at,
     22:i64      vip,
-    23:double  coin
+    23:double   coin
 }
 
 struct user_info_req {
@@ -45,7 +45,11 @@ struct new_user_req {
     4:i32       role,     
     5:string    invitor,
     6:string    source,
-    7:map<string,string> extra,
+    7:string    contactor,
+    8:string    email,
+    9:string    brand_name,
+    10:string   company_name,
+    11:map<string,string> extra,
 }
 
 struct search_user_req {

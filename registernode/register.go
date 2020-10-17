@@ -880,6 +880,7 @@ func (p *NormalUserRes) String() string {
 //  - CompanyName
 //  - Policy
 //  - Invitor
+//  - Attention
 //  - Extra
 type CooperatorUserReq struct {
 	Auth        *Authorize        `thrift:"auth,1" db:"auth" json:"auth"`
@@ -892,7 +893,8 @@ type CooperatorUserReq struct {
 	CompanyName string            `thrift:"company_name,8" db:"company_name" json:"company_name"`
 	Policy      bool              `thrift:"policy,9" db:"policy" json:"policy"`
 	Invitor     string            `thrift:"invitor,10" db:"invitor" json:"invitor"`
-	Extra       map[string]string `thrift:"extra,11" db:"extra" json:"extra"`
+	Attention   string            `thrift:"attention,11" db:"attention" json:"attention"`
+	Extra       map[string]string `thrift:"extra,12" db:"extra" json:"extra"`
 }
 
 func NewCooperatorUserReq() *CooperatorUserReq {
@@ -942,6 +944,10 @@ func (p *CooperatorUserReq) GetPolicy() bool {
 
 func (p *CooperatorUserReq) GetInvitor() string {
 	return p.Invitor
+}
+
+func (p *CooperatorUserReq) GetAttention() string {
+	return p.Attention
 }
 
 func (p *CooperatorUserReq) GetExtra() map[string]string {
@@ -1066,8 +1072,18 @@ func (p *CooperatorUserReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 11:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField11(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 12:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField12(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -1180,6 +1196,15 @@ func (p *CooperatorUserReq) ReadField10(iprot thrift.TProtocol) error {
 }
 
 func (p *CooperatorUserReq) ReadField11(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 11: ", err)
+	} else {
+		p.Attention = v
+	}
+	return nil
+}
+
+func (p *CooperatorUserReq) ReadField12(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -1243,6 +1268,9 @@ func (p *CooperatorUserReq) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField11(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField12(oprot); err != nil {
 			return err
 		}
 	}
@@ -1386,8 +1414,21 @@ func (p *CooperatorUserReq) writeField10(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *CooperatorUserReq) writeField11(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 11); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 11:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("attention", thrift.STRING, 11); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 11:attention: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Attention)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.attention (11) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 11:attention: ", p), err)
+	}
+	return err
+}
+
+func (p *CooperatorUserReq) writeField12(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 12); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 12:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -1404,7 +1445,7 @@ func (p *CooperatorUserReq) writeField11(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 11:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 12:extra: ", p), err)
 	}
 	return err
 }
