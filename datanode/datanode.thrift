@@ -2,6 +2,10 @@ namespace go datanode
 
 include "../rescode.thrift"
 
+enum Role {
+    NORMAL  = 0,
+    COOPERATOR = 1,
+}
 
 struct user{
     1:string    uid,
@@ -40,7 +44,8 @@ struct new_user_req {
     3:string    client_ip,
     4:i32       role,     
     5:string    invitor,
-    6:map<string,string> extra,
+    6:string    source,
+    7:map<string,string> extra,
 }
 
 struct search_user_req {

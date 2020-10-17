@@ -6,6 +6,8 @@ package datanode
 import (
 	"bytes"
 	"context"
+	"database/sql/driver"
+	"errors"
 	"fmt"
 	"reflect"
 
@@ -21,6 +23,64 @@ var _ = reflect.DeepEqual
 var _ = bytes.Equal
 
 var _ = rescode.GoUnusedProtection__
+
+type Role int64
+
+const (
+	Role_NORMAL     Role = 0
+	Role_COOPERATOR Role = 1
+)
+
+func (p Role) String() string {
+	switch p {
+	case Role_NORMAL:
+		return "NORMAL"
+	case Role_COOPERATOR:
+		return "COOPERATOR"
+	}
+	return "<UNSET>"
+}
+
+func RoleFromString(s string) (Role, error) {
+	switch s {
+	case "NORMAL":
+		return Role_NORMAL, nil
+	case "COOPERATOR":
+		return Role_COOPERATOR, nil
+	}
+	return Role(0), fmt.Errorf("not a valid Role string")
+}
+
+func RolePtr(v Role) *Role { return &v }
+
+func (p Role) MarshalText() ([]byte, error) {
+	return []byte(p.String()), nil
+}
+
+func (p *Role) UnmarshalText(text []byte) error {
+	q, err := RoleFromString(string(text))
+	if err != nil {
+		return err
+	}
+	*p = q
+	return nil
+}
+
+func (p *Role) Scan(value interface{}) error {
+	v, ok := value.(int64)
+	if !ok {
+		return errors.New("Scan value is not int64")
+	}
+	*p = Role(v)
+	return nil
+}
+
+func (p *Role) Value() (driver.Value, error) {
+	if p == nil {
+		return nil, nil
+	}
+	return int64(*p), nil
+}
 
 // Attributes:
 //  - UID
@@ -1199,6 +1259,7 @@ func (p *UserInfoReq) String() string {
 //  - ClientIP
 //  - Role
 //  - Invitor
+//  - Source
 //  - Extra
 type NewUserReq_ struct {
 	Account  string            `thrift:"account,1" db:"account" json:"account"`
@@ -1206,7 +1267,8 @@ type NewUserReq_ struct {
 	ClientIP string            `thrift:"client_ip,3" db:"client_ip" json:"client_ip"`
 	Role     int32             `thrift:"role,4" db:"role" json:"role"`
 	Invitor  string            `thrift:"invitor,5" db:"invitor" json:"invitor"`
-	Extra    map[string]string `thrift:"extra,6" db:"extra" json:"extra"`
+	Source   string            `thrift:"source,6" db:"source" json:"source"`
+	Extra    map[string]string `thrift:"extra,7" db:"extra" json:"extra"`
 }
 
 func NewNewUserReq_() *NewUserReq_ {
@@ -1231,6 +1293,10 @@ func (p *NewUserReq_) GetRole() int32 {
 
 func (p *NewUserReq_) GetInvitor() string {
 	return p.Invitor
+}
+
+func (p *NewUserReq_) GetSource() string {
+	return p.Source
 }
 
 func (p *NewUserReq_) GetExtra() map[string]string {
@@ -1301,8 +1367,18 @@ func (p *NewUserReq_) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 6:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField6(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 7:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField7(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -1371,6 +1447,15 @@ func (p *NewUserReq_) ReadField5(iprot thrift.TProtocol) error {
 }
 
 func (p *NewUserReq_) ReadField6(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 6: ", err)
+	} else {
+		p.Source = v
+	}
+	return nil
+}
+
+func (p *NewUserReq_) ReadField7(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -1419,6 +1504,9 @@ func (p *NewUserReq_) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField6(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField7(oprot); err != nil {
 			return err
 		}
 	}
@@ -1497,8 +1585,21 @@ func (p *NewUserReq_) writeField5(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *NewUserReq_) writeField6(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 6); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("source", thrift.STRING, 6); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:source: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Source)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.source (6) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:source: ", p), err)
+	}
+	return err
+}
+
+func (p *NewUserReq_) writeField7(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 7); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -1515,7 +1616,7 @@ func (p *NewUserReq_) writeField6(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 7:extra: ", p), err)
 	}
 	return err
 }
