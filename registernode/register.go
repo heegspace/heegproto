@@ -879,8 +879,8 @@ func (p *NormalUserRes) String() string {
 //  - BrandName
 //  - CompanyName
 //  - Policy
+//  - Source
 //  - Invitor
-//  - Attention
 //  - Extra
 type CooperatorUserReq struct {
 	Auth        *Authorize        `thrift:"auth,1" db:"auth" json:"auth"`
@@ -892,8 +892,8 @@ type CooperatorUserReq struct {
 	BrandName   string            `thrift:"brand_name,7" db:"brand_name" json:"brand_name"`
 	CompanyName string            `thrift:"company_name,8" db:"company_name" json:"company_name"`
 	Policy      bool              `thrift:"policy,9" db:"policy" json:"policy"`
-	Invitor     string            `thrift:"invitor,10" db:"invitor" json:"invitor"`
-	Attention   string            `thrift:"attention,11" db:"attention" json:"attention"`
+	Source      string            `thrift:"source,10" db:"source" json:"source"`
+	Invitor     string            `thrift:"invitor,11" db:"invitor" json:"invitor"`
 	Extra       map[string]string `thrift:"extra,12" db:"extra" json:"extra"`
 }
 
@@ -942,12 +942,12 @@ func (p *CooperatorUserReq) GetPolicy() bool {
 	return p.Policy
 }
 
-func (p *CooperatorUserReq) GetInvitor() string {
-	return p.Invitor
+func (p *CooperatorUserReq) GetSource() string {
+	return p.Source
 }
 
-func (p *CooperatorUserReq) GetAttention() string {
-	return p.Attention
+func (p *CooperatorUserReq) GetInvitor() string {
+	return p.Invitor
 }
 
 func (p *CooperatorUserReq) GetExtra() map[string]string {
@@ -1190,7 +1190,7 @@ func (p *CooperatorUserReq) ReadField10(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 10: ", err)
 	} else {
-		p.Invitor = v
+		p.Source = v
 	}
 	return nil
 }
@@ -1199,7 +1199,7 @@ func (p *CooperatorUserReq) ReadField11(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 11: ", err)
 	} else {
-		p.Attention = v
+		p.Invitor = v
 	}
 	return nil
 }
@@ -1401,27 +1401,27 @@ func (p *CooperatorUserReq) writeField9(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *CooperatorUserReq) writeField10(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("invitor", thrift.STRING, 10); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 10:invitor: ", p), err)
+	if err := oprot.WriteFieldBegin("source", thrift.STRING, 10); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 10:source: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Invitor)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.invitor (10) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Source)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.source (10) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 10:invitor: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 10:source: ", p), err)
 	}
 	return err
 }
 
 func (p *CooperatorUserReq) writeField11(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("attention", thrift.STRING, 11); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 11:attention: ", p), err)
+	if err := oprot.WriteFieldBegin("invitor", thrift.STRING, 11); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 11:invitor: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Attention)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.attention (11) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Invitor)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.invitor (11) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 11:attention: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 11:invitor: ", p), err)
 	}
 	return err
 }

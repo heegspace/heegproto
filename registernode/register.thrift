@@ -35,8 +35,8 @@ struct cooperator_user_req {
     7:string    brand_name, 
     8:string    company_name,
     9:bool      policy,
-    10:string    invitor,
-    11:string   attention,
+    10:string    source,
+    11:string    invitor,
     12:map<string,string> extra,
 }
 
