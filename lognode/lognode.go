@@ -158,6 +158,8 @@ func (p *LogDesc) Value() (driver.Value, error) {
 // Attributes:
 //  - Level
 //  - Desc
+//  - ServerName
+//  - IP
 //  - Func
 //  - Timestamp
 //  - Status
@@ -165,14 +167,16 @@ func (p *LogDesc) Value() (driver.Value, error) {
 //  - Res
 //  - Extra
 type CallLogReq struct {
-	Level     LogLevel          `thrift:"level,1" db:"level" json:"level"`
-	Desc      LogDesc           `thrift:"desc,2" db:"desc" json:"desc"`
-	Func      string            `thrift:"func,3" db:"func" json:"func"`
-	Timestamp string            `thrift:"timestamp,4" db:"timestamp" json:"timestamp"`
-	Status    string            `thrift:"status,5" db:"status" json:"status"`
-	Req       string            `thrift:"req,6" db:"req" json:"req"`
-	Res       string            `thrift:"res,7" db:"res" json:"res"`
-	Extra     map[string]string `thrift:"extra,8" db:"extra" json:"extra"`
+	Level      LogLevel          `thrift:"level,1" db:"level" json:"level"`
+	Desc       LogDesc           `thrift:"desc,2" db:"desc" json:"desc"`
+	ServerName string            `thrift:"server_name,3" db:"server_name" json:"server_name"`
+	IP         string            `thrift:"ip,4" db:"ip" json:"ip"`
+	Func       string            `thrift:"func,5" db:"func" json:"func"`
+	Timestamp  string            `thrift:"timestamp,6" db:"timestamp" json:"timestamp"`
+	Status     string            `thrift:"status,7" db:"status" json:"status"`
+	Req        string            `thrift:"req,8" db:"req" json:"req"`
+	Res        string            `thrift:"res,9" db:"res" json:"res"`
+	Extra      map[string]string `thrift:"extra,10" db:"extra" json:"extra"`
 }
 
 func NewCallLogReq() *CallLogReq {
@@ -185,6 +189,14 @@ func (p *CallLogReq) GetLevel() LogLevel {
 
 func (p *CallLogReq) GetDesc() LogDesc {
 	return p.Desc
+}
+
+func (p *CallLogReq) GetServerName() string {
+	return p.ServerName
+}
+
+func (p *CallLogReq) GetIP() string {
+	return p.IP
 }
 
 func (p *CallLogReq) GetFunc() string {
@@ -295,8 +307,28 @@ func (p *CallLogReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 8:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField8(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 9:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField9(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 10:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField10(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -343,7 +375,7 @@ func (p *CallLogReq) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 3: ", err)
 	} else {
-		p.Func = v
+		p.ServerName = v
 	}
 	return nil
 }
@@ -352,7 +384,7 @@ func (p *CallLogReq) ReadField4(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 4: ", err)
 	} else {
-		p.Timestamp = v
+		p.IP = v
 	}
 	return nil
 }
@@ -361,7 +393,7 @@ func (p *CallLogReq) ReadField5(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 5: ", err)
 	} else {
-		p.Status = v
+		p.Func = v
 	}
 	return nil
 }
@@ -370,7 +402,7 @@ func (p *CallLogReq) ReadField6(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 6: ", err)
 	} else {
-		p.Req = v
+		p.Timestamp = v
 	}
 	return nil
 }
@@ -379,12 +411,30 @@ func (p *CallLogReq) ReadField7(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 7: ", err)
 	} else {
-		p.Res = v
+		p.Status = v
 	}
 	return nil
 }
 
 func (p *CallLogReq) ReadField8(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 8: ", err)
+	} else {
+		p.Req = v
+	}
+	return nil
+}
+
+func (p *CallLogReq) ReadField9(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 9: ", err)
+	} else {
+		p.Res = v
+	}
+	return nil
+}
+
+func (p *CallLogReq) ReadField10(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -441,6 +491,12 @@ func (p *CallLogReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField8(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField9(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField10(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -478,73 +534,99 @@ func (p *CallLogReq) writeField2(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *CallLogReq) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("func", thrift.STRING, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:func: ", p), err)
+	if err := oprot.WriteFieldBegin("server_name", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:server_name: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Func)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.func (3) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.ServerName)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.server_name (3) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:func: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:server_name: ", p), err)
 	}
 	return err
 }
 
 func (p *CallLogReq) writeField4(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("timestamp", thrift.STRING, 4); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:timestamp: ", p), err)
+	if err := oprot.WriteFieldBegin("ip", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:ip: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Timestamp)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.timestamp (4) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.IP)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.ip (4) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:timestamp: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:ip: ", p), err)
 	}
 	return err
 }
 
 func (p *CallLogReq) writeField5(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("status", thrift.STRING, 5); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:status: ", p), err)
+	if err := oprot.WriteFieldBegin("func", thrift.STRING, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:func: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Status)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.status (5) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Func)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.func (5) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:status: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:func: ", p), err)
 	}
 	return err
 }
 
 func (p *CallLogReq) writeField6(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("req", thrift.STRING, 6); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:req: ", p), err)
+	if err := oprot.WriteFieldBegin("timestamp", thrift.STRING, 6); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:timestamp: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Req)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.req (6) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Timestamp)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.timestamp (6) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:req: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:timestamp: ", p), err)
 	}
 	return err
 }
 
 func (p *CallLogReq) writeField7(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("res", thrift.STRING, 7); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:res: ", p), err)
+	if err := oprot.WriteFieldBegin("status", thrift.STRING, 7); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:status: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Res)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.res (7) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Status)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.status (7) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 7:res: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 7:status: ", p), err)
 	}
 	return err
 }
 
 func (p *CallLogReq) writeField8(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 8); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 8:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("req", thrift.STRING, 8); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 8:req: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Req)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.req (8) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 8:req: ", p), err)
+	}
+	return err
+}
+
+func (p *CallLogReq) writeField9(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("res", thrift.STRING, 9); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 9:res: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Res)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.res (9) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 9:res: ", p), err)
+	}
+	return err
+}
+
+func (p *CallLogReq) writeField10(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 10); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 10:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -561,7 +643,7 @@ func (p *CallLogReq) writeField8(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 8:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 10:extra: ", p), err)
 	}
 	return err
 }
@@ -576,17 +658,21 @@ func (p *CallLogReq) String() string {
 // Attributes:
 //  - Level
 //  - Desc
+//  - ServerName
+//  - IP
 //  - Timestamp
 //  - Func
 //  - Info
 //  - Extra
 type LogReq struct {
-	Level     LogLevel          `thrift:"level,1" db:"level" json:"level"`
-	Desc      LogDesc           `thrift:"desc,2" db:"desc" json:"desc"`
-	Timestamp string            `thrift:"timestamp,3" db:"timestamp" json:"timestamp"`
-	Func      string            `thrift:"func,4" db:"func" json:"func"`
-	Info      string            `thrift:"info,5" db:"info" json:"info"`
-	Extra     map[string]string `thrift:"extra,6" db:"extra" json:"extra"`
+	Level      LogLevel          `thrift:"level,1" db:"level" json:"level"`
+	Desc       LogDesc           `thrift:"desc,2" db:"desc" json:"desc"`
+	ServerName string            `thrift:"server_name,3" db:"server_name" json:"server_name"`
+	IP         string            `thrift:"ip,4" db:"ip" json:"ip"`
+	Timestamp  string            `thrift:"timestamp,5" db:"timestamp" json:"timestamp"`
+	Func       string            `thrift:"func,6" db:"func" json:"func"`
+	Info       string            `thrift:"info,7" db:"info" json:"info"`
+	Extra      map[string]string `thrift:"extra,8" db:"extra" json:"extra"`
 }
 
 func NewLogReq() *LogReq {
@@ -599,6 +685,14 @@ func (p *LogReq) GetLevel() LogLevel {
 
 func (p *LogReq) GetDesc() LogDesc {
 	return p.Desc
+}
+
+func (p *LogReq) GetServerName() string {
+	return p.ServerName
+}
+
+func (p *LogReq) GetIP() string {
+	return p.IP
 }
 
 func (p *LogReq) GetTimestamp() string {
@@ -681,8 +775,28 @@ func (p *LogReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 6:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField6(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 7:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField7(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 8:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField8(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -729,7 +843,7 @@ func (p *LogReq) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 3: ", err)
 	} else {
-		p.Timestamp = v
+		p.ServerName = v
 	}
 	return nil
 }
@@ -738,7 +852,7 @@ func (p *LogReq) ReadField4(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 4: ", err)
 	} else {
-		p.Func = v
+		p.IP = v
 	}
 	return nil
 }
@@ -747,12 +861,30 @@ func (p *LogReq) ReadField5(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 5: ", err)
 	} else {
-		p.Info = v
+		p.Timestamp = v
 	}
 	return nil
 }
 
 func (p *LogReq) ReadField6(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 6: ", err)
+	} else {
+		p.Func = v
+	}
+	return nil
+}
+
+func (p *LogReq) ReadField7(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 7: ", err)
+	} else {
+		p.Info = v
+	}
+	return nil
+}
+
+func (p *LogReq) ReadField8(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -803,6 +935,12 @@ func (p *LogReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField6(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField7(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField8(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -840,47 +978,73 @@ func (p *LogReq) writeField2(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *LogReq) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("timestamp", thrift.STRING, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:timestamp: ", p), err)
+	if err := oprot.WriteFieldBegin("server_name", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:server_name: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Timestamp)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.timestamp (3) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.ServerName)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.server_name (3) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:timestamp: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:server_name: ", p), err)
 	}
 	return err
 }
 
 func (p *LogReq) writeField4(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("func", thrift.STRING, 4); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:func: ", p), err)
+	if err := oprot.WriteFieldBegin("ip", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:ip: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Func)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.func (4) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.IP)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.ip (4) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:func: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:ip: ", p), err)
 	}
 	return err
 }
 
 func (p *LogReq) writeField5(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("info", thrift.STRING, 5); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:info: ", p), err)
+	if err := oprot.WriteFieldBegin("timestamp", thrift.STRING, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:timestamp: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Info)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.info (5) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Timestamp)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.timestamp (5) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:info: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:timestamp: ", p), err)
 	}
 	return err
 }
 
 func (p *LogReq) writeField6(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 6); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("func", thrift.STRING, 6); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:func: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Func)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.func (6) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:func: ", p), err)
+	}
+	return err
+}
+
+func (p *LogReq) writeField7(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("info", thrift.STRING, 7); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:info: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Info)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.info (7) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 7:info: ", p), err)
+	}
+	return err
+}
+
+func (p *LogReq) writeField8(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 8); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 8:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -897,7 +1061,7 @@ func (p *LogReq) writeField6(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 8:extra: ", p), err)
 	}
 	return err
 }

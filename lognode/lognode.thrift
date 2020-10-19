@@ -18,21 +18,25 @@ enum log_desc {
 struct call_log_req {
     1:log_level level,
     2:log_desc  desc,
-    3:string    func,
-    4:string    timestamp,
-    5:string    status,
-    6:string    req,
-    7:string    res,
-    8:map<string,string> extra,
+    3:string    server_name,
+    4:string    ip,
+    5:string    func,
+    6:string    timestamp,
+    7:string    status,
+    8:string    req,
+    9:string    res,
+    10:map<string,string> extra,
 }
 
 struct log_req {
     1:log_level             level,
     2:log_desc              desc,
-    3:string                timestamp,
-    4:string                func,
-    5:string                info,
-    6:map<string,string>    extra, 
+    3:string                server_name,
+    4:string                ip,
+    5:string                timestamp,
+    6:string                func,
+    7:string                info,
+    8:map<string,string>    extra, 
 }
 
 service lognode_service {
