@@ -239,7 +239,7 @@ struct note_meta {
 }
 
 struct update_note_req {
-    1:string    nid,
+    1:string    uid,
     2:string    data,
     3:string    html,
     4:map<string,string> extra,

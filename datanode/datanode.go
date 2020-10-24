@@ -8503,12 +8503,12 @@ func (p *NoteMeta) String() string {
 }
 
 // Attributes:
-//  - Nid
+//  - UID
 //  - Data
 //  - HTML
 //  - Extra
 type UpdateNoteReq struct {
-	Nid   string            `thrift:"nid,1" db:"nid" json:"nid"`
+	UID   string            `thrift:"uid,1" db:"uid" json:"uid"`
 	Data  string            `thrift:"data,2" db:"data" json:"data"`
 	HTML  string            `thrift:"html,3" db:"html" json:"html"`
 	Extra map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
@@ -8518,8 +8518,8 @@ func NewUpdateNoteReq() *UpdateNoteReq {
 	return &UpdateNoteReq{}
 }
 
-func (p *UpdateNoteReq) GetNid() string {
-	return p.Nid
+func (p *UpdateNoteReq) GetUID() string {
+	return p.UID
 }
 
 func (p *UpdateNoteReq) GetData() string {
@@ -8606,7 +8606,7 @@ func (p *UpdateNoteReq) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
-		p.Nid = v
+		p.UID = v
 	}
 	return nil
 }
@@ -8685,14 +8685,14 @@ func (p *UpdateNoteReq) Write(oprot thrift.TProtocol) error {
 }
 
 func (p *UpdateNoteReq) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("nid", thrift.STRING, 1); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:nid: ", p), err)
+	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Nid)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.nid (1) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:nid: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err)
 	}
 	return err
 }
