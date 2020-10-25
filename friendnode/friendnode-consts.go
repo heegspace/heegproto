@@ -3,14 +3,14 @@
 
 package friendnode
 
-import(
+import (
 	"bytes"
 	"context"
-	"reflect"
 	"fmt"
-	"github.com/apache/thrift/lib/go/thrift"
-	"heegproto/rescode"
+	"reflect"
 
+	"github.com/heegspace/heegproto/rescode"
+	"github.com/heegspace/thrift"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -24,4 +24,3 @@ var _ = rescode.GoUnusedProtection__
 
 func init() {
 }
-

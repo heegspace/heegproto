@@ -169,8 +169,9 @@ struct rename_group_res {
 }
 
 struct add_friend_note_req {
-    1:string            note,
-    2:map<string,string> extra,
+    1:string            uid,
+    2:string            note,
+    3:map<string,string> extra,
 }
 
 struct add_friend_note_res {
