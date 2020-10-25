@@ -3397,14 +3397,16 @@ func (p *RenameGroupRes) String() string {
 
 // Attributes:
 //  - Auth
+//  - Suid
 //  - UID
 //  - Note
 //  - Extra
 type AddFriendNoteReq struct {
 	Auth  *Authorize        `thrift:"auth,1" db:"auth" json:"auth"`
-	UID   string            `thrift:"uid,2" db:"uid" json:"uid"`
-	Note  string            `thrift:"note,3" db:"note" json:"note"`
-	Extra map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
+	Suid  string            `thrift:"suid,2" db:"suid" json:"suid"`
+	UID   string            `thrift:"uid,3" db:"uid" json:"uid"`
+	Note  string            `thrift:"note,4" db:"note" json:"note"`
+	Extra map[string]string `thrift:"extra,5" db:"extra" json:"extra"`
 }
 
 func NewAddFriendNoteReq() *AddFriendNoteReq {
@@ -3418,6 +3420,10 @@ func (p *AddFriendNoteReq) GetAuth() *Authorize {
 		return AddFriendNoteReq_Auth_DEFAULT
 	}
 	return p.Auth
+}
+
+func (p *AddFriendNoteReq) GetSuid() string {
+	return p.Suid
 }
 
 func (p *AddFriendNoteReq) GetUID() string {
@@ -3480,8 +3486,18 @@ func (p *AddFriendNoteReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 4:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField5(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -3516,7 +3532,7 @@ func (p *AddFriendNoteReq) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
-		p.UID = v
+		p.Suid = v
 	}
 	return nil
 }
@@ -3525,12 +3541,21 @@ func (p *AddFriendNoteReq) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 3: ", err)
 	} else {
-		p.Note = v
+		p.UID = v
 	}
 	return nil
 }
 
 func (p *AddFriendNoteReq) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.Note = v
+	}
+	return nil
+}
+
+func (p *AddFriendNoteReq) ReadField5(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -3575,6 +3600,9 @@ func (p *AddFriendNoteReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -3599,34 +3627,47 @@ func (p *AddFriendNoteReq) writeField1(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *AddFriendNoteReq) writeField2(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 2); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:uid: ", p), err)
+	if err := oprot.WriteFieldBegin("suid", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:suid: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.UID)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.uid (2) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Suid)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.suid (2) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:uid: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:suid: ", p), err)
 	}
 	return err
 }
 
 func (p *AddFriendNoteReq) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("note", thrift.STRING, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:note: ", p), err)
+	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:uid: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Note)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.note (3) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (3) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:note: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:uid: ", p), err)
 	}
 	return err
 }
 
 func (p *AddFriendNoteReq) writeField4(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("note", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:note: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Note)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.note (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:note: ", p), err)
+	}
+	return err
+}
+
+func (p *AddFriendNoteReq) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -3643,7 +3684,7 @@ func (p *AddFriendNoteReq) writeField4(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:extra: ", p), err)
 	}
 	return err
 }

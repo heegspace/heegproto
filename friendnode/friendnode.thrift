@@ -98,9 +98,10 @@ struct rename_group_res {
 
 struct add_friend_note_req {
     1:authorize         auth,
-    2:string            uid,
-    3:string            note,
-    4:map<string,string> extra,
+    2:string            suid,
+    3:string            uid,
+    4:string            note,
+    5:map<string,string> extra,
 }
 
 struct add_friend_note_res {
