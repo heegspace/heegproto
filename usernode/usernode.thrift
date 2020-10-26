@@ -33,25 +33,38 @@ struct user_obj {
     23:double   coin
 }
 
-struct update_user_req {
+struct update_username_req {
     1:authorize auth,
     2:string uid,
-    3:string user_name,
-    4:string brithday,
-    5:string card_id,
-    6:string address,
-    7:string nick_name,
-    8:string avatar,
-    9:string attention,
-    10:string   login_at,
-    11:string   login_ip,
-    12:string   last_at,
-    13:i16      status,
-    14:string   email,
-    15:string   update_at,
-    16:string   contact_name,
-    17:string   brand_name,
-    18:string   company_name,
+    3:string user_name
+    19:map<string,string> extra,
+}
+
+struct update_brithday_req {
+    1:authorize auth,
+    2:string uid,
+    3:string brithday
+    19:map<string,string> extra,
+}
+
+struct update_cardid_req {
+    1:authorize auth,
+    2:string uid,
+    3:string card_id
+    19:map<string,string> extra,
+}
+
+struct update_avatar_req {
+    1:authorize auth,
+    2:string uid,
+    3:string card_id
+    19:map<string,string> extra,
+}
+
+struct update_attention_req {
+    1:authorize auth,
+    2:string uid,
+    3:string card_id
     19:map<string,string> extra,
 }
 
@@ -75,8 +88,20 @@ struct user_info_res {
 }
 
 service usernode_service {
-    // 更新用户数据
-    update_user_res update_user(1:update_user_req req),
+    // 更新用户名
+    update_user_res update_username(1:update_username_req req),
+
+    // 更新生日
+    update_user_res update_brithday(1:update_brithday_req req),
+
+    // 更新身份证号
+    update_user_res update_cardid(1:update_cardid_req req),
+
+    // 更新头像信息
+    update_user_res update_avatar(1:update_avatar_req req),
+
+    // 更新关注对象
+    update_user_res update_attention(1:update_attention_req req),
 
     // 获取用户信息
     user_info_res user_info(1:user_info_req req), 
