@@ -1215,26 +1215,25 @@ func (p *UserObj) String() string {
 //  - CompanyName
 //  - Extra
 type UpdateUserReq struct {
-	Auth      *Authorize `thrift:"auth,1" db:"auth" json:"auth"`
-	UID       string     `thrift:"uid,2" db:"uid" json:"uid"`
-	UserName  string     `thrift:"user_name,3" db:"user_name" json:"user_name"`
-	Brithday  string     `thrift:"brithday,4" db:"brithday" json:"brithday"`
-	CardID    string     `thrift:"card_id,5" db:"card_id" json:"card_id"`
-	Address   string     `thrift:"address,6" db:"address" json:"address"`
-	NickName  string     `thrift:"nick_name,7" db:"nick_name" json:"nick_name"`
-	Avatar    string     `thrift:"avatar,8" db:"avatar" json:"avatar"`
-	Attention string     `thrift:"attention,9" db:"attention" json:"attention"`
-	LoginAt   string     `thrift:"login_at,10" db:"login_at" json:"login_at"`
-	LoginIP   string     `thrift:"login_ip,11" db:"login_ip" json:"login_ip"`
-	LastAt    string     `thrift:"last_at,12" db:"last_at" json:"last_at"`
-	Status    int16      `thrift:"status,13" db:"status" json:"status"`
-	Email     string     `thrift:"email,14" db:"email" json:"email"`
-	// unused field # 15
+	Auth        *Authorize        `thrift:"auth,1" db:"auth" json:"auth"`
+	UID         string            `thrift:"uid,2" db:"uid" json:"uid"`
+	UserName    string            `thrift:"user_name,3" db:"user_name" json:"user_name"`
+	Brithday    string            `thrift:"brithday,4" db:"brithday" json:"brithday"`
+	CardID      string            `thrift:"card_id,5" db:"card_id" json:"card_id"`
+	Address     string            `thrift:"address,6" db:"address" json:"address"`
+	NickName    string            `thrift:"nick_name,7" db:"nick_name" json:"nick_name"`
+	Avatar      string            `thrift:"avatar,8" db:"avatar" json:"avatar"`
+	Attention   string            `thrift:"attention,9" db:"attention" json:"attention"`
+	LoginAt     string            `thrift:"login_at,10" db:"login_at" json:"login_at"`
+	LoginIP     string            `thrift:"login_ip,11" db:"login_ip" json:"login_ip"`
+	LastAt      string            `thrift:"last_at,12" db:"last_at" json:"last_at"`
+	Status      int16             `thrift:"status,13" db:"status" json:"status"`
+	Email       string            `thrift:"email,14" db:"email" json:"email"`
+	UpdateAt    string            `thrift:"update_at,15" db:"update_at" json:"update_at"`
 	ContactName string            `thrift:"contact_name,16" db:"contact_name" json:"contact_name"`
 	BrandName   string            `thrift:"brand_name,17" db:"brand_name" json:"brand_name"`
 	CompanyName string            `thrift:"company_name,18" db:"company_name" json:"company_name"`
 	Extra       map[string]string `thrift:"extra,19" db:"extra" json:"extra"`
-	UpdateAt    string            `thrift:"update_at,20" db:"update_at" json:"update_at"`
 }
 
 func NewUpdateUserReq() *UpdateUserReq {
@@ -1479,9 +1478,9 @@ func (p *UpdateUserReq) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
-		case 20:
+		case 15:
 			if fieldTypeId == thrift.STRING {
-				if err := p.ReadField20(iprot); err != nil {
+				if err := p.ReadField15(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -1669,9 +1668,9 @@ func (p *UpdateUserReq) ReadField14(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateUserReq) ReadField20(iprot thrift.TProtocol) error {
+func (p *UpdateUserReq) ReadField15(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
-		return thrift.PrependError("error reading field 20: ", err)
+		return thrift.PrependError("error reading field 15: ", err)
 	} else {
 		p.UpdateAt = v
 	}
@@ -1780,6 +1779,9 @@ func (p *UpdateUserReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField14(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField15(oprot); err != nil {
+			return err
+		}
 		if err := p.writeField16(oprot); err != nil {
 			return err
 		}
@@ -1790,9 +1792,6 @@ func (p *UpdateUserReq) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField19(oprot); err != nil {
-			return err
-		}
-		if err := p.writeField20(oprot); err != nil {
 			return err
 		}
 	}
@@ -1987,6 +1986,19 @@ func (p *UpdateUserReq) writeField14(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
+func (p *UpdateUserReq) writeField15(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("update_at", thrift.STRING, 15); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 15:update_at: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.UpdateAt)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.update_at (15) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 15:update_at: ", p), err)
+	}
+	return err
+}
+
 func (p *UpdateUserReq) writeField16(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("contact_name", thrift.STRING, 16); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 16:contact_name: ", p), err)
@@ -2046,19 +2058,6 @@ func (p *UpdateUserReq) writeField19(oprot thrift.TProtocol) (err error) {
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 19:extra: ", p), err)
-	}
-	return err
-}
-
-func (p *UpdateUserReq) writeField20(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("update_at", thrift.STRING, 20); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 20:update_at: ", p), err)
-	}
-	if err := oprot.WriteString(string(p.UpdateAt)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.update_at (20) field write error: ", p), err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 20:update_at: ", p), err)
 	}
 	return err
 }

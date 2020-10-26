@@ -48,7 +48,7 @@ struct update_user_req {
     12:string   last_at,
     13:i16      status,
     14:string   email,
-    20:string   update_at,
+    15:string   update_at,
     16:string   contact_name,
     17:string   brand_name,
     18:string   company_name,
@@ -75,7 +75,9 @@ struct user_info_res {
 }
 
 service usernode_service {
+    // 更新用户数据
     update_user_res update_user(1:update_user_req req),
 
+    // 获取用户信息
     user_info_res user_info(1:user_info_req req), 
 }
