@@ -1980,12 +1980,12 @@ func (p *UpdateCardidReq) String() string {
 // Attributes:
 //  - Auth
 //  - UID
-//  - CardID
+//  - Avatar
 //  - Extra
 type UpdateAvatarReq struct {
 	Auth   *Authorize `thrift:"auth,1" db:"auth" json:"auth"`
 	UID    string     `thrift:"uid,2" db:"uid" json:"uid"`
-	CardID string     `thrift:"card_id,3" db:"card_id" json:"card_id"`
+	Avatar string     `thrift:"avatar,3" db:"avatar" json:"avatar"`
 	// unused fields # 4 to 18
 	Extra map[string]string `thrift:"extra,19" db:"extra" json:"extra"`
 }
@@ -2007,8 +2007,8 @@ func (p *UpdateAvatarReq) GetUID() string {
 	return p.UID
 }
 
-func (p *UpdateAvatarReq) GetCardID() string {
-	return p.CardID
+func (p *UpdateAvatarReq) GetAvatar() string {
+	return p.Avatar
 }
 
 func (p *UpdateAvatarReq) GetExtra() map[string]string {
@@ -2108,7 +2108,7 @@ func (p *UpdateAvatarReq) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 3: ", err)
 	} else {
-		p.CardID = v
+		p.Avatar = v
 	}
 	return nil
 }
@@ -2195,14 +2195,14 @@ func (p *UpdateAvatarReq) writeField2(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *UpdateAvatarReq) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("card_id", thrift.STRING, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:card_id: ", p), err)
+	if err := oprot.WriteFieldBegin("avatar", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:avatar: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.CardID)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.card_id (3) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Avatar)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.avatar (3) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:card_id: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:avatar: ", p), err)
 	}
 	return err
 }
@@ -2241,12 +2241,12 @@ func (p *UpdateAvatarReq) String() string {
 // Attributes:
 //  - Auth
 //  - UID
-//  - CardID
+//  - Attention
 //  - Extra
 type UpdateAttentionReq struct {
-	Auth   *Authorize `thrift:"auth,1" db:"auth" json:"auth"`
-	UID    string     `thrift:"uid,2" db:"uid" json:"uid"`
-	CardID string     `thrift:"card_id,3" db:"card_id" json:"card_id"`
+	Auth      *Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	UID       string     `thrift:"uid,2" db:"uid" json:"uid"`
+	Attention string     `thrift:"attention,3" db:"attention" json:"attention"`
 	// unused fields # 4 to 18
 	Extra map[string]string `thrift:"extra,19" db:"extra" json:"extra"`
 }
@@ -2268,8 +2268,8 @@ func (p *UpdateAttentionReq) GetUID() string {
 	return p.UID
 }
 
-func (p *UpdateAttentionReq) GetCardID() string {
-	return p.CardID
+func (p *UpdateAttentionReq) GetAttention() string {
+	return p.Attention
 }
 
 func (p *UpdateAttentionReq) GetExtra() map[string]string {
@@ -2369,7 +2369,7 @@ func (p *UpdateAttentionReq) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 3: ", err)
 	} else {
-		p.CardID = v
+		p.Attention = v
 	}
 	return nil
 }
@@ -2456,14 +2456,14 @@ func (p *UpdateAttentionReq) writeField2(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *UpdateAttentionReq) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("card_id", thrift.STRING, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:card_id: ", p), err)
+	if err := oprot.WriteFieldBegin("attention", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:attention: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.CardID)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.card_id (3) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Attention)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.attention (3) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:card_id: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:attention: ", p), err)
 	}
 	return err
 }

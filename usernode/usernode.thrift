@@ -57,14 +57,14 @@ struct update_cardid_req {
 struct update_avatar_req {
     1:authorize auth,
     2:string uid,
-    3:string card_id
+    3:string avatar
     19:map<string,string> extra,
 }
 
 struct update_attention_req {
     1:authorize auth,
     2:string uid,
-    3:string card_id
+    3:string attention
     19:map<string,string> extra,
 }
 
