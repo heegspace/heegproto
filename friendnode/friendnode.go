@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"reflect"
 
+	"github.com/heegspace/heegproto/common"
 	"github.com/heegspace/heegproto/rescode"
 	"github.com/heegspace/thrift"
 )
@@ -21,217 +22,7 @@ var _ = reflect.DeepEqual
 var _ = bytes.Equal
 
 var _ = rescode.GoUnusedProtection__
-
-// Attributes:
-//  - Key
-//  - Value
-//  - Extra
-type Authorize struct {
-	Key   string            `thrift:"key,1" db:"key" json:"key"`
-	Value string            `thrift:"value,2" db:"value" json:"value"`
-	Extra map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
-}
-
-func NewAuthorize() *Authorize {
-	return &Authorize{}
-}
-
-func (p *Authorize) GetKey() string {
-	return p.Key
-}
-
-func (p *Authorize) GetValue() string {
-	return p.Value
-}
-
-func (p *Authorize) GetExtra() map[string]string {
-	return p.Extra
-}
-func (p *Authorize) Read(iprot thrift.TProtocol) error {
-	if _, err := iprot.ReadStructBegin(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
-	}
-
-	for {
-		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
-		if err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
-		}
-		if fieldTypeId == thrift.STOP {
-			break
-		}
-		switch fieldId {
-		case 1:
-			if fieldTypeId == thrift.STRING {
-				if err := p.ReadField1(iprot); err != nil {
-					return err
-				}
-			} else {
-				if err := iprot.Skip(fieldTypeId); err != nil {
-					return err
-				}
-			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				if err := p.ReadField2(iprot); err != nil {
-					return err
-				}
-			} else {
-				if err := iprot.Skip(fieldTypeId); err != nil {
-					return err
-				}
-			}
-		case 3:
-			if fieldTypeId == thrift.MAP {
-				if err := p.ReadField3(iprot); err != nil {
-					return err
-				}
-			} else {
-				if err := iprot.Skip(fieldTypeId); err != nil {
-					return err
-				}
-			}
-		default:
-			if err := iprot.Skip(fieldTypeId); err != nil {
-				return err
-			}
-		}
-		if err := iprot.ReadFieldEnd(); err != nil {
-			return err
-		}
-	}
-	if err := iprot.ReadStructEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
-	}
-	return nil
-}
-
-func (p *Authorize) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return thrift.PrependError("error reading field 1: ", err)
-	} else {
-		p.Key = v
-	}
-	return nil
-}
-
-func (p *Authorize) ReadField2(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return thrift.PrependError("error reading field 2: ", err)
-	} else {
-		p.Value = v
-	}
-	return nil
-}
-
-func (p *Authorize) ReadField3(iprot thrift.TProtocol) error {
-	_, _, size, err := iprot.ReadMapBegin()
-	if err != nil {
-		return thrift.PrependError("error reading map begin: ", err)
-	}
-	tMap := make(map[string]string, size)
-	p.Extra = tMap
-	for i := 0; i < size; i++ {
-		var _key0 string
-		if v, err := iprot.ReadString(); err != nil {
-			return thrift.PrependError("error reading field 0: ", err)
-		} else {
-			_key0 = v
-		}
-		var _val1 string
-		if v, err := iprot.ReadString(); err != nil {
-			return thrift.PrependError("error reading field 0: ", err)
-		} else {
-			_val1 = v
-		}
-		p.Extra[_key0] = _val1
-	}
-	if err := iprot.ReadMapEnd(); err != nil {
-		return thrift.PrependError("error reading map end: ", err)
-	}
-	return nil
-}
-
-func (p *Authorize) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("authorize"); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
-	}
-	if p != nil {
-		if err := p.writeField1(oprot); err != nil {
-			return err
-		}
-		if err := p.writeField2(oprot); err != nil {
-			return err
-		}
-		if err := p.writeField3(oprot); err != nil {
-			return err
-		}
-	}
-	if err := oprot.WriteFieldStop(); err != nil {
-		return thrift.PrependError("write field stop error: ", err)
-	}
-	if err := oprot.WriteStructEnd(); err != nil {
-		return thrift.PrependError("write struct stop error: ", err)
-	}
-	return nil
-}
-
-func (p *Authorize) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("key", thrift.STRING, 1); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:key: ", p), err)
-	}
-	if err := oprot.WriteString(string(p.Key)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.key (1) field write error: ", p), err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:key: ", p), err)
-	}
-	return err
-}
-
-func (p *Authorize) writeField2(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("value", thrift.STRING, 2); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:value: ", p), err)
-	}
-	if err := oprot.WriteString(string(p.Value)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.value (2) field write error: ", p), err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:value: ", p), err)
-	}
-	return err
-}
-
-func (p *Authorize) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
-	}
-	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
-		return thrift.PrependError("error writing map begin: ", err)
-	}
-	for k, v := range p.Extra {
-		if err := oprot.WriteString(string(k)); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
-		}
-		if err := oprot.WriteString(string(v)); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
-		}
-	}
-	if err := oprot.WriteMapEnd(); err != nil {
-		return thrift.PrependError("error writing map end: ", err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
-	}
-	return err
-}
-
-func (p *Authorize) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("Authorize(%+v)", *p)
-}
+var _ = common.GoUnusedProtection__
 
 // Attributes:
 //  - Auth
@@ -239,7 +30,7 @@ func (p *Authorize) String() string {
 //  - Phone
 //  - Extra
 type AddFriendReq struct {
-	Auth  *Authorize        `thrift:"auth,1" db:"auth" json:"auth"`
+	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
 	UID   string            `thrift:"uid,2" db:"uid" json:"uid"`
 	Phone string            `thrift:"phone,3" db:"phone" json:"phone"`
 	Extra map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
@@ -249,9 +40,9 @@ func NewAddFriendReq() *AddFriendReq {
 	return &AddFriendReq{}
 }
 
-var AddFriendReq_Auth_DEFAULT *Authorize
+var AddFriendReq_Auth_DEFAULT *common.Authorize
 
-func (p *AddFriendReq) GetAuth() *Authorize {
+func (p *AddFriendReq) GetAuth() *common.Authorize {
 	if !p.IsSetAuth() {
 		return AddFriendReq_Auth_DEFAULT
 	}
@@ -343,7 +134,7 @@ func (p *AddFriendReq) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *AddFriendReq) ReadField1(iprot thrift.TProtocol) error {
-	p.Auth = &Authorize{}
+	p.Auth = &common.Authorize{}
 	if err := p.Auth.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
 	}
@@ -376,19 +167,19 @@ func (p *AddFriendReq) ReadField4(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key2 string
+		var _key0 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key2 = v
+			_key0 = v
 		}
-		var _val3 string
+		var _val1 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val3 = v
+			_val1 = v
 		}
-		p.Extra[_key2] = _val3
+		p.Extra[_key0] = _val1
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -604,19 +395,19 @@ func (p *AddFriendRes) ReadField3(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key4 string
+		var _key2 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key4 = v
+			_key2 = v
 		}
-		var _val5 string
+		var _val3 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val5 = v
+			_val3 = v
 		}
-		p.Extra[_key4] = _val5
+		p.Extra[_key2] = _val3
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -711,7 +502,7 @@ func (p *AddFriendRes) String() string {
 //  - UID
 //  - Extra
 type AgreeFriendReq struct {
-	Auth  *Authorize        `thrift:"auth,1" db:"auth" json:"auth"`
+	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
 	Suid  string            `thrift:"suid,2" db:"suid" json:"suid"`
 	UID   string            `thrift:"uid,3" db:"uid" json:"uid"`
 	Extra map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
@@ -721,9 +512,9 @@ func NewAgreeFriendReq() *AgreeFriendReq {
 	return &AgreeFriendReq{}
 }
 
-var AgreeFriendReq_Auth_DEFAULT *Authorize
+var AgreeFriendReq_Auth_DEFAULT *common.Authorize
 
-func (p *AgreeFriendReq) GetAuth() *Authorize {
+func (p *AgreeFriendReq) GetAuth() *common.Authorize {
 	if !p.IsSetAuth() {
 		return AgreeFriendReq_Auth_DEFAULT
 	}
@@ -815,7 +606,7 @@ func (p *AgreeFriendReq) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *AgreeFriendReq) ReadField1(iprot thrift.TProtocol) error {
-	p.Auth = &Authorize{}
+	p.Auth = &common.Authorize{}
 	if err := p.Auth.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
 	}
@@ -848,19 +639,19 @@ func (p *AgreeFriendReq) ReadField4(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key6 string
+		var _key4 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key6 = v
+			_key4 = v
 		}
-		var _val7 string
+		var _val5 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val7 = v
+			_val5 = v
 		}
-		p.Extra[_key6] = _val7
+		p.Extra[_key4] = _val5
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -1076,19 +867,19 @@ func (p *AgreeFriendRes) ReadField3(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key8 string
+		var _key6 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key8 = v
+			_key6 = v
 		}
-		var _val9 string
+		var _val7 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val9 = v
+			_val7 = v
 		}
-		p.Extra[_key8] = _val9
+		p.Extra[_key6] = _val7
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -1181,17 +972,17 @@ func (p *AgreeFriendRes) String() string {
 //  - Auth
 //  - UID
 type FriendListReq struct {
-	Auth *Authorize `thrift:"auth,1" db:"auth" json:"auth"`
-	UID  string     `thrift:"uid,2" db:"uid" json:"uid"`
+	Auth *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	UID  string            `thrift:"uid,2" db:"uid" json:"uid"`
 }
 
 func NewFriendListReq() *FriendListReq {
 	return &FriendListReq{}
 }
 
-var FriendListReq_Auth_DEFAULT *Authorize
+var FriendListReq_Auth_DEFAULT *common.Authorize
 
-func (p *FriendListReq) GetAuth() *Authorize {
+func (p *FriendListReq) GetAuth() *common.Authorize {
 	if !p.IsSetAuth() {
 		return FriendListReq_Auth_DEFAULT
 	}
@@ -1255,7 +1046,7 @@ func (p *FriendListReq) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *FriendListReq) ReadField1(iprot thrift.TProtocol) error {
-	p.Auth = &Authorize{}
+	p.Auth = &common.Authorize{}
 	if err := p.Auth.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
 	}
@@ -1780,11 +1571,11 @@ func (p *Group) ReadField3(iprot thrift.TProtocol) error {
 	tSlice := make([]*FriendItem, 0, size)
 	p.Lists = tSlice
 	for i := 0; i < size; i++ {
-		_elem10 := &FriendItem{}
-		if err := _elem10.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem10), err)
+		_elem8 := &FriendItem{}
+		if err := _elem8.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem8), err)
 		}
-		p.Lists = append(p.Lists, _elem10)
+		p.Lists = append(p.Lists, _elem8)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
@@ -1987,11 +1778,11 @@ func (p *Friend) ReadField2(iprot thrift.TProtocol) error {
 	tSlice := make([]*Group, 0, size)
 	p.Data = tSlice
 	for i := 0; i < size; i++ {
-		_elem11 := &Group{}
-		if err := _elem11.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem11), err)
+		_elem9 := &Group{}
+		if err := _elem9.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem9), err)
 		}
-		p.Data = append(p.Data, _elem11)
+		p.Data = append(p.Data, _elem9)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
@@ -2007,11 +1798,11 @@ func (p *Friend) ReadField3(iprot thrift.TProtocol) error {
 	tSlice := make([]*FriendItem, 0, size)
 	p.Invite = tSlice
 	for i := 0; i < size; i++ {
-		_elem12 := &FriendItem{}
-		if err := _elem12.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem12), err)
+		_elem10 := &FriendItem{}
+		if err := _elem10.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem10), err)
 		}
-		p.Invite = append(p.Invite, _elem12)
+		p.Invite = append(p.Invite, _elem10)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
@@ -2027,11 +1818,11 @@ func (p *Friend) ReadField4(iprot thrift.TProtocol) error {
 	tSlice := make([]*FriendItem, 0, size)
 	p.Blacks = tSlice
 	for i := 0; i < size; i++ {
-		_elem13 := &FriendItem{}
-		if err := _elem13.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem13), err)
+		_elem11 := &FriendItem{}
+		if err := _elem11.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem11), err)
 		}
-		p.Blacks = append(p.Blacks, _elem13)
+		p.Blacks = append(p.Blacks, _elem11)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
@@ -2293,19 +2084,19 @@ func (p *FriendListRes) ReadField4(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key14 string
+		var _key12 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key14 = v
+			_key12 = v
 		}
-		var _val15 string
+		var _val13 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val15 = v
+			_val13 = v
 		}
-		p.Extra[_key14] = _val15
+		p.Extra[_key12] = _val13
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -2416,7 +2207,7 @@ func (p *FriendListRes) String() string {
 //  - Name
 //  - Extra
 type CreateGroupReq struct {
-	Auth  *Authorize        `thrift:"auth,1" db:"auth" json:"auth"`
+	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
 	UID   string            `thrift:"uid,2" db:"uid" json:"uid"`
 	Name  string            `thrift:"name,3" db:"name" json:"name"`
 	Extra map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
@@ -2426,9 +2217,9 @@ func NewCreateGroupReq() *CreateGroupReq {
 	return &CreateGroupReq{}
 }
 
-var CreateGroupReq_Auth_DEFAULT *Authorize
+var CreateGroupReq_Auth_DEFAULT *common.Authorize
 
-func (p *CreateGroupReq) GetAuth() *Authorize {
+func (p *CreateGroupReq) GetAuth() *common.Authorize {
 	if !p.IsSetAuth() {
 		return CreateGroupReq_Auth_DEFAULT
 	}
@@ -2520,7 +2311,7 @@ func (p *CreateGroupReq) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *CreateGroupReq) ReadField1(iprot thrift.TProtocol) error {
-	p.Auth = &Authorize{}
+	p.Auth = &common.Authorize{}
 	if err := p.Auth.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
 	}
@@ -2553,19 +2344,19 @@ func (p *CreateGroupReq) ReadField4(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key16 string
+		var _key14 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key16 = v
+			_key14 = v
 		}
-		var _val17 string
+		var _val15 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val17 = v
+			_val15 = v
 		}
-		p.Extra[_key16] = _val17
+		p.Extra[_key14] = _val15
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -2781,19 +2572,19 @@ func (p *CreateGroupRes) ReadField3(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key18 string
+		var _key16 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key18 = v
+			_key16 = v
 		}
-		var _val19 string
+		var _val17 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val19 = v
+			_val17 = v
 		}
-		p.Extra[_key18] = _val19
+		p.Extra[_key16] = _val17
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -2889,7 +2680,7 @@ func (p *CreateGroupRes) String() string {
 //  - NewName_
 //  - Extra
 type RenameGroupReq struct {
-	Auth     *Authorize        `thrift:"auth,1" db:"auth" json:"auth"`
+	Auth     *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
 	UID      string            `thrift:"uid,2" db:"uid" json:"uid"`
 	OldName  string            `thrift:"old_name,3" db:"old_name" json:"old_name"`
 	NewName_ string            `thrift:"new_name,4" db:"new_name" json:"new_name"`
@@ -2900,9 +2691,9 @@ func NewRenameGroupReq() *RenameGroupReq {
 	return &RenameGroupReq{}
 }
 
-var RenameGroupReq_Auth_DEFAULT *Authorize
+var RenameGroupReq_Auth_DEFAULT *common.Authorize
 
-func (p *RenameGroupReq) GetAuth() *Authorize {
+func (p *RenameGroupReq) GetAuth() *common.Authorize {
 	if !p.IsSetAuth() {
 		return RenameGroupReq_Auth_DEFAULT
 	}
@@ -3008,7 +2799,7 @@ func (p *RenameGroupReq) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *RenameGroupReq) ReadField1(iprot thrift.TProtocol) error {
-	p.Auth = &Authorize{}
+	p.Auth = &common.Authorize{}
 	if err := p.Auth.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
 	}
@@ -3050,19 +2841,19 @@ func (p *RenameGroupReq) ReadField5(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key20 string
+		var _key18 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key20 = v
+			_key18 = v
 		}
-		var _val21 string
+		var _val19 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val21 = v
+			_val19 = v
 		}
-		p.Extra[_key20] = _val21
+		p.Extra[_key18] = _val19
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -3294,19 +3085,19 @@ func (p *RenameGroupRes) ReadField3(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key22 string
+		var _key20 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key22 = v
+			_key20 = v
 		}
-		var _val23 string
+		var _val21 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val23 = v
+			_val21 = v
 		}
-		p.Extra[_key22] = _val23
+		p.Extra[_key20] = _val21
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -3402,7 +3193,7 @@ func (p *RenameGroupRes) String() string {
 //  - Note
 //  - Extra
 type AddFriendNoteReq struct {
-	Auth  *Authorize        `thrift:"auth,1" db:"auth" json:"auth"`
+	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
 	Suid  string            `thrift:"suid,2" db:"suid" json:"suid"`
 	UID   string            `thrift:"uid,3" db:"uid" json:"uid"`
 	Note  string            `thrift:"note,4" db:"note" json:"note"`
@@ -3413,9 +3204,9 @@ func NewAddFriendNoteReq() *AddFriendNoteReq {
 	return &AddFriendNoteReq{}
 }
 
-var AddFriendNoteReq_Auth_DEFAULT *Authorize
+var AddFriendNoteReq_Auth_DEFAULT *common.Authorize
 
-func (p *AddFriendNoteReq) GetAuth() *Authorize {
+func (p *AddFriendNoteReq) GetAuth() *common.Authorize {
 	if !p.IsSetAuth() {
 		return AddFriendNoteReq_Auth_DEFAULT
 	}
@@ -3521,7 +3312,7 @@ func (p *AddFriendNoteReq) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *AddFriendNoteReq) ReadField1(iprot thrift.TProtocol) error {
-	p.Auth = &Authorize{}
+	p.Auth = &common.Authorize{}
 	if err := p.Auth.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
 	}
@@ -3563,19 +3354,19 @@ func (p *AddFriendNoteReq) ReadField5(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key24 string
+		var _key22 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key24 = v
+			_key22 = v
 		}
-		var _val25 string
+		var _val23 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val25 = v
+			_val23 = v
 		}
-		p.Extra[_key24] = _val25
+		p.Extra[_key22] = _val23
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -3807,19 +3598,19 @@ func (p *AddFriendNoteRes) ReadField3(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key26 string
+		var _key24 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key26 = v
+			_key24 = v
 		}
-		var _val27 string
+		var _val25 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val27 = v
+			_val25 = v
 		}
-		p.Extra[_key26] = _val27
+		p.Extra[_key24] = _val25
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -3915,7 +3706,7 @@ func (p *AddFriendNoteRes) String() string {
 //  - Group
 //  - Extra
 type MoveGroupReq struct {
-	Auth  *Authorize        `thrift:"auth,1" db:"auth" json:"auth"`
+	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
 	Suid  string            `thrift:"suid,2" db:"suid" json:"suid"`
 	UID   string            `thrift:"uid,3" db:"uid" json:"uid"`
 	Group string            `thrift:"group,4" db:"group" json:"group"`
@@ -3926,9 +3717,9 @@ func NewMoveGroupReq() *MoveGroupReq {
 	return &MoveGroupReq{}
 }
 
-var MoveGroupReq_Auth_DEFAULT *Authorize
+var MoveGroupReq_Auth_DEFAULT *common.Authorize
 
-func (p *MoveGroupReq) GetAuth() *Authorize {
+func (p *MoveGroupReq) GetAuth() *common.Authorize {
 	if !p.IsSetAuth() {
 		return MoveGroupReq_Auth_DEFAULT
 	}
@@ -4034,7 +3825,7 @@ func (p *MoveGroupReq) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *MoveGroupReq) ReadField1(iprot thrift.TProtocol) error {
-	p.Auth = &Authorize{}
+	p.Auth = &common.Authorize{}
 	if err := p.Auth.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
 	}
@@ -4076,19 +3867,19 @@ func (p *MoveGroupReq) ReadField5(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key28 string
+		var _key26 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key28 = v
+			_key26 = v
 		}
-		var _val29 string
+		var _val27 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val29 = v
+			_val27 = v
 		}
-		p.Extra[_key28] = _val29
+		p.Extra[_key26] = _val27
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -4320,19 +4111,19 @@ func (p *MoveGroupRes) ReadField3(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key30 string
+		var _key28 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key30 = v
+			_key28 = v
 		}
-		var _val31 string
+		var _val29 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val31 = v
+			_val29 = v
 		}
-		p.Extra[_key30] = _val31
+		p.Extra[_key28] = _val29
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -4427,7 +4218,7 @@ func (p *MoveGroupRes) String() string {
 //  - UID
 //  - Extra
 type RemoveFriendReq struct {
-	Auth  *Authorize        `thrift:"auth,1" db:"auth" json:"auth"`
+	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
 	Suid  string            `thrift:"suid,2" db:"suid" json:"suid"`
 	UID   string            `thrift:"uid,3" db:"uid" json:"uid"`
 	Extra map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
@@ -4437,9 +4228,9 @@ func NewRemoveFriendReq() *RemoveFriendReq {
 	return &RemoveFriendReq{}
 }
 
-var RemoveFriendReq_Auth_DEFAULT *Authorize
+var RemoveFriendReq_Auth_DEFAULT *common.Authorize
 
-func (p *RemoveFriendReq) GetAuth() *Authorize {
+func (p *RemoveFriendReq) GetAuth() *common.Authorize {
 	if !p.IsSetAuth() {
 		return RemoveFriendReq_Auth_DEFAULT
 	}
@@ -4531,7 +4322,7 @@ func (p *RemoveFriendReq) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *RemoveFriendReq) ReadField1(iprot thrift.TProtocol) error {
-	p.Auth = &Authorize{}
+	p.Auth = &common.Authorize{}
 	if err := p.Auth.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
 	}
@@ -4564,19 +4355,19 @@ func (p *RemoveFriendReq) ReadField4(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key32 string
+		var _key30 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key32 = v
+			_key30 = v
 		}
-		var _val33 string
+		var _val31 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val33 = v
+			_val31 = v
 		}
-		p.Extra[_key32] = _val33
+		p.Extra[_key30] = _val31
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -4792,19 +4583,19 @@ func (p *RemoveFriendRes) ReadField3(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key34 string
+		var _key32 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key34 = v
+			_key32 = v
 		}
-		var _val35 string
+		var _val33 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val35 = v
+			_val33 = v
 		}
-		p.Extra[_key34] = _val35
+		p.Extra[_key32] = _val33
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -4949,10 +4740,22 @@ func (p *FriendnodeServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Req
 func (p *FriendnodeServiceClient) AddFriends(ctx context.Context, req *AddFriendReq) (r *AddFriendRes, err error) {
-	var _args36 FriendnodeServiceAddFriendsArgs
+	var _args34 FriendnodeServiceAddFriendsArgs
+	_args34.Req = req
+	var _result35 FriendnodeServiceAddFriendsResult
+	if err = p.Client_().Call(ctx, "addFriends", &_args34, &_result35); err != nil {
+		return
+	}
+	return _result35.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *FriendnodeServiceClient) AgreeFriends(ctx context.Context, req *AgreeFriendReq) (r *AgreeFriendRes, err error) {
+	var _args36 FriendnodeServiceAgreeFriendsArgs
 	_args36.Req = req
-	var _result37 FriendnodeServiceAddFriendsResult
-	if err = p.Client_().Call(ctx, "addFriends", &_args36, &_result37); err != nil {
+	var _result37 FriendnodeServiceAgreeFriendsResult
+	if err = p.Client_().Call(ctx, "agreeFriends", &_args36, &_result37); err != nil {
 		return
 	}
 	return _result37.GetSuccess(), nil
@@ -4960,11 +4763,11 @@ func (p *FriendnodeServiceClient) AddFriends(ctx context.Context, req *AddFriend
 
 // Parameters:
 //  - Req
-func (p *FriendnodeServiceClient) AgreeFriends(ctx context.Context, req *AgreeFriendReq) (r *AgreeFriendRes, err error) {
-	var _args38 FriendnodeServiceAgreeFriendsArgs
+func (p *FriendnodeServiceClient) FriendsList(ctx context.Context, req *FriendListReq) (r *FriendListRes, err error) {
+	var _args38 FriendnodeServiceFriendsListArgs
 	_args38.Req = req
-	var _result39 FriendnodeServiceAgreeFriendsResult
-	if err = p.Client_().Call(ctx, "agreeFriends", &_args38, &_result39); err != nil {
+	var _result39 FriendnodeServiceFriendsListResult
+	if err = p.Client_().Call(ctx, "friendsList", &_args38, &_result39); err != nil {
 		return
 	}
 	return _result39.GetSuccess(), nil
@@ -4972,11 +4775,11 @@ func (p *FriendnodeServiceClient) AgreeFriends(ctx context.Context, req *AgreeFr
 
 // Parameters:
 //  - Req
-func (p *FriendnodeServiceClient) FriendsList(ctx context.Context, req *FriendListReq) (r *FriendListRes, err error) {
-	var _args40 FriendnodeServiceFriendsListArgs
+func (p *FriendnodeServiceClient) CreateGroup(ctx context.Context, req *CreateGroupReq) (r *CreateGroupRes, err error) {
+	var _args40 FriendnodeServiceCreateGroupArgs
 	_args40.Req = req
-	var _result41 FriendnodeServiceFriendsListResult
-	if err = p.Client_().Call(ctx, "friendsList", &_args40, &_result41); err != nil {
+	var _result41 FriendnodeServiceCreateGroupResult
+	if err = p.Client_().Call(ctx, "createGroup", &_args40, &_result41); err != nil {
 		return
 	}
 	return _result41.GetSuccess(), nil
@@ -4984,11 +4787,11 @@ func (p *FriendnodeServiceClient) FriendsList(ctx context.Context, req *FriendLi
 
 // Parameters:
 //  - Req
-func (p *FriendnodeServiceClient) CreateGroup(ctx context.Context, req *CreateGroupReq) (r *CreateGroupRes, err error) {
-	var _args42 FriendnodeServiceCreateGroupArgs
+func (p *FriendnodeServiceClient) RenameGroup(ctx context.Context, req *RenameGroupReq) (r *RenameGroupRes, err error) {
+	var _args42 FriendnodeServiceRenameGroupArgs
 	_args42.Req = req
-	var _result43 FriendnodeServiceCreateGroupResult
-	if err = p.Client_().Call(ctx, "createGroup", &_args42, &_result43); err != nil {
+	var _result43 FriendnodeServiceRenameGroupResult
+	if err = p.Client_().Call(ctx, "renameGroup", &_args42, &_result43); err != nil {
 		return
 	}
 	return _result43.GetSuccess(), nil
@@ -4996,11 +4799,11 @@ func (p *FriendnodeServiceClient) CreateGroup(ctx context.Context, req *CreateGr
 
 // Parameters:
 //  - Req
-func (p *FriendnodeServiceClient) RenameGroup(ctx context.Context, req *RenameGroupReq) (r *RenameGroupRes, err error) {
-	var _args44 FriendnodeServiceRenameGroupArgs
+func (p *FriendnodeServiceClient) AddNoteFriend(ctx context.Context, req *AddFriendNoteReq) (r *AddFriendNoteRes, err error) {
+	var _args44 FriendnodeServiceAddNoteFriendArgs
 	_args44.Req = req
-	var _result45 FriendnodeServiceRenameGroupResult
-	if err = p.Client_().Call(ctx, "renameGroup", &_args44, &_result45); err != nil {
+	var _result45 FriendnodeServiceAddNoteFriendResult
+	if err = p.Client_().Call(ctx, "addNoteFriend", &_args44, &_result45); err != nil {
 		return
 	}
 	return _result45.GetSuccess(), nil
@@ -5008,11 +4811,11 @@ func (p *FriendnodeServiceClient) RenameGroup(ctx context.Context, req *RenameGr
 
 // Parameters:
 //  - Req
-func (p *FriendnodeServiceClient) AddNoteFriend(ctx context.Context, req *AddFriendNoteReq) (r *AddFriendNoteRes, err error) {
-	var _args46 FriendnodeServiceAddNoteFriendArgs
+func (p *FriendnodeServiceClient) MoveToNewGroup(ctx context.Context, req *MoveGroupReq) (r *MoveGroupRes, err error) {
+	var _args46 FriendnodeServiceMoveToNewGroupArgs
 	_args46.Req = req
-	var _result47 FriendnodeServiceAddNoteFriendResult
-	if err = p.Client_().Call(ctx, "addNoteFriend", &_args46, &_result47); err != nil {
+	var _result47 FriendnodeServiceMoveToNewGroupResult
+	if err = p.Client_().Call(ctx, "moveToNewGroup", &_args46, &_result47); err != nil {
 		return
 	}
 	return _result47.GetSuccess(), nil
@@ -5020,26 +4823,14 @@ func (p *FriendnodeServiceClient) AddNoteFriend(ctx context.Context, req *AddFri
 
 // Parameters:
 //  - Req
-func (p *FriendnodeServiceClient) MoveToNewGroup(ctx context.Context, req *MoveGroupReq) (r *MoveGroupRes, err error) {
-	var _args48 FriendnodeServiceMoveToNewGroupArgs
+func (p *FriendnodeServiceClient) RemoveFriend(ctx context.Context, req *RemoveFriendReq) (r *RemoveFriendRes, err error) {
+	var _args48 FriendnodeServiceRemoveFriendArgs
 	_args48.Req = req
-	var _result49 FriendnodeServiceMoveToNewGroupResult
-	if err = p.Client_().Call(ctx, "moveToNewGroup", &_args48, &_result49); err != nil {
+	var _result49 FriendnodeServiceRemoveFriendResult
+	if err = p.Client_().Call(ctx, "removeFriend", &_args48, &_result49); err != nil {
 		return
 	}
 	return _result49.GetSuccess(), nil
-}
-
-// Parameters:
-//  - Req
-func (p *FriendnodeServiceClient) RemoveFriend(ctx context.Context, req *RemoveFriendReq) (r *RemoveFriendRes, err error) {
-	var _args50 FriendnodeServiceRemoveFriendArgs
-	_args50.Req = req
-	var _result51 FriendnodeServiceRemoveFriendResult
-	if err = p.Client_().Call(ctx, "removeFriend", &_args50, &_result51); err != nil {
-		return
-	}
-	return _result51.GetSuccess(), nil
 }
 
 type FriendnodeServiceProcessor struct {
@@ -5062,16 +4853,16 @@ func (p *FriendnodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessor
 
 func NewFriendnodeServiceProcessor(handler FriendnodeService) *FriendnodeServiceProcessor {
 
-	self52 := &FriendnodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self52.processorMap["addFriends"] = &friendnodeServiceProcessorAddFriends{handler: handler}
-	self52.processorMap["agreeFriends"] = &friendnodeServiceProcessorAgreeFriends{handler: handler}
-	self52.processorMap["friendsList"] = &friendnodeServiceProcessorFriendsList{handler: handler}
-	self52.processorMap["createGroup"] = &friendnodeServiceProcessorCreateGroup{handler: handler}
-	self52.processorMap["renameGroup"] = &friendnodeServiceProcessorRenameGroup{handler: handler}
-	self52.processorMap["addNoteFriend"] = &friendnodeServiceProcessorAddNoteFriend{handler: handler}
-	self52.processorMap["moveToNewGroup"] = &friendnodeServiceProcessorMoveToNewGroup{handler: handler}
-	self52.processorMap["removeFriend"] = &friendnodeServiceProcessorRemoveFriend{handler: handler}
-	return self52
+	self50 := &FriendnodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self50.processorMap["addFriends"] = &friendnodeServiceProcessorAddFriends{handler: handler}
+	self50.processorMap["agreeFriends"] = &friendnodeServiceProcessorAgreeFriends{handler: handler}
+	self50.processorMap["friendsList"] = &friendnodeServiceProcessorFriendsList{handler: handler}
+	self50.processorMap["createGroup"] = &friendnodeServiceProcessorCreateGroup{handler: handler}
+	self50.processorMap["renameGroup"] = &friendnodeServiceProcessorRenameGroup{handler: handler}
+	self50.processorMap["addNoteFriend"] = &friendnodeServiceProcessorAddNoteFriend{handler: handler}
+	self50.processorMap["moveToNewGroup"] = &friendnodeServiceProcessorMoveToNewGroup{handler: handler}
+	self50.processorMap["removeFriend"] = &friendnodeServiceProcessorRemoveFriend{handler: handler}
+	return self50
 }
 
 func (p *FriendnodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -5084,12 +4875,12 @@ func (p *FriendnodeServiceProcessor) Process(ctx context.Context, iprot, oprot t
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x53 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x51 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x53.Write(oprot)
+	x51.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x53
+	return false, x51
 
 }
 

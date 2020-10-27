@@ -1,4 +1,4 @@
-namespace go heegproto.rescode
+namespace go rescode
 
 enum code {
     SUCCESS =   0,      // 成功

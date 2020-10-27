@@ -1,15 +1,10 @@
 namespace go likenode
 
-include "../rescode.thrift"
-
-struct authorize {
-    1:string    key,
-    2:string    value,
-    3:map<string,string> extra,
-}
+include "../rescode/rescode.thrift"
+include "../common/common.thrift"
 
 struct likes_count_req {
-    1:authorize     auth,
+    1:common.authorize     auth,
     2:string        uid,
     3:string        mid,
 }
@@ -22,7 +17,7 @@ struct likes_count_res {
 }
 
 struct likes_add_req {
-    1:authorize     auth,
+    1:common.authorize     auth,
     2:string        uid,
     3:string        mid,
 }
@@ -34,7 +29,7 @@ struct likes_add_res {
 }
 
 struct likes_list_req {
-    1:authorize     auth,
+    1:common.authorize     auth,
     2:string        uid,
     3:string        mid,
     4:i32           page,

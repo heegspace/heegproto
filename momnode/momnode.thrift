@@ -1,15 +1,10 @@
 namespace go momnode
 
-include "../rescode.thrift"
-
-struct authorize {
-    1:string    key,
-    2:string    value,
-    3:map<string,string> extra,
-}
+include "../rescode/rescode.thrift"
+include "../common/common.thrift"
 
 struct moments_count_req {
-    1:authorize     auth,
+    1:common.authorize     auth,
     2:string        uid,
 }
 
@@ -34,7 +29,7 @@ struct moments {
 }
 
 struct add_moments_req {
-    1:authorize     auth,
+    1:common.authorize     auth,
     2:string        uid,
     3:moments       moments,
     4:map<string,string> extra,
@@ -47,7 +42,7 @@ struct add_moments_res {
 }
 
 struct moments_list_req {
-    1:authorize     auth,
+    1:common.authorize     auth,
     2:string        uid,
     3:i32           page,
     4:i32           size,

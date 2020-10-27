@@ -1,12 +1,7 @@
 namespace go notenode
 
-include "../rescode.thrift"
-
-struct authorize {
-    1:string    key,
-    2:string    value,
-    3:map<string,string> extra,
-}
+include "../rescode/rescode.thrift"
+include "../common/common.thrift"
 
 struct note_item {
     1:string                nid,
@@ -26,7 +21,7 @@ struct note_meta {
 }
 
 struct update_note_req {
-    1:authorize             auth,
+    1:common.authorize             auth,
     2:string                uid,
     3:note_item             note,
     5:map<string,string>    extra,
@@ -40,7 +35,7 @@ struct note_meta_res {
 }
  
 struct note_meta_list_req {
-    1:authorize             auth,
+    1:common.authorize             auth,
     2:string                uid,
     3:i32                   page,
     4:i32                   size,
@@ -55,7 +50,7 @@ struct note_meta_list_res {
 }
 
 struct note_list_count_req {
-    1:authorize             auth,
+    1:common.authorize             auth,
     2:string                uid,
     3:map<string,string>    extra,
 }
@@ -68,7 +63,7 @@ struct note_list_count_res {
 }
 
 struct note_data_req {
-    1:authorize             auth,
+    1:common.authorize             auth,
     2:string                uid,
     3:string                nid,
     4:map<string,string>    extra,
@@ -82,7 +77,7 @@ struct note_data_res {
 }
 
 struct note_html_req {
-    1:authorize             auth,
+    1:common.authorize             auth,
     2:string                uid,
     3:string                nid,
     4:map<string,string>    extra,

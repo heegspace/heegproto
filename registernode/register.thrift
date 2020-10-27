@@ -1,15 +1,11 @@
 namespace go registernode
 
-include "../rescode.thrift"
+include "../rescode/rescode.thrift"
+include "../common/common.thrift"
 
-struct authorize {
-    1:string    key,
-    2:string    value,
-    3:map<string,string> extra,
-}
 
 struct normal_user_req {
-    1:authorize auth,
+    1:common.authorize auth,
     2:string    account,
     3:string    passwd,
     4:string    code,
@@ -26,7 +22,7 @@ struct normal_user_res {
 }
 
 struct cooperator_user_req {
-    1:authorize auth,
+    1:common.authorize auth,
     2:string    account,
     3:string    passwd,
     4:string    code,  

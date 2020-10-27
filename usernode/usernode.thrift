@@ -1,12 +1,7 @@
 namespace go usernode
 
-include "../rescode.thrift"
-
-struct authorize {
-    1:string    key,
-    2:string    value,
-    3:map<string,string> extra,
-}
+include "../rescode/rescode.thrift"
+include "../common/common.thrift"
 
 struct user_obj {
     1:string    uid,
@@ -34,35 +29,35 @@ struct user_obj {
 }
 
 struct update_username_req {
-    1:authorize auth,
+    1:common.authorize auth,
     2:string uid,
     3:string user_name
     19:map<string,string> extra,
 }
 
 struct update_brithday_req {
-    1:authorize auth,
+    1:common.authorize auth,
     2:string uid,
     3:string brithday
     19:map<string,string> extra,
 }
 
 struct update_cardid_req {
-    1:authorize auth,
+    1:common.authorize auth,
     2:string uid,
     3:string card_id
     19:map<string,string> extra,
 }
 
 struct update_avatar_req {
-    1:authorize auth,
+    1:common.authorize auth,
     2:string uid,
     3:string avatar
     19:map<string,string> extra,
 }
 
 struct update_attention_req {
-    1:authorize auth,
+    1:common.authorize auth,
     2:string uid,
     3:string attention
     19:map<string,string> extra,
@@ -75,7 +70,7 @@ struct update_user_res {
 }
 
 struct user_info_req {
-    1:authorize auth,
+    1:common.authorize auth,
     2:string    uid,
     3:map<string,string> extra,
 }

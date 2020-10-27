@@ -1,9 +1,9 @@
 namespace go s2sname
 
-include "../rescode.thrift"
+include "../rescode/rescode.thrift"
 
 enum Const {
-    Expired  = 30, // 超时时间
+    Expired  = 5, // 超时时间
 }
 
 struct s2sname {

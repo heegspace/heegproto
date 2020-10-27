@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"reflect"
 
+	"github.com/heegspace/heegproto/common"
 	"github.com/heegspace/heegproto/rescode"
 	"github.com/heegspace/thrift"
 )
@@ -21,217 +22,7 @@ var _ = reflect.DeepEqual
 var _ = bytes.Equal
 
 var _ = rescode.GoUnusedProtection__
-
-// Attributes:
-//  - Key
-//  - Value
-//  - Extra
-type Authorize struct {
-	Key   string            `thrift:"key,1" db:"key" json:"key"`
-	Value string            `thrift:"value,2" db:"value" json:"value"`
-	Extra map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
-}
-
-func NewAuthorize() *Authorize {
-	return &Authorize{}
-}
-
-func (p *Authorize) GetKey() string {
-	return p.Key
-}
-
-func (p *Authorize) GetValue() string {
-	return p.Value
-}
-
-func (p *Authorize) GetExtra() map[string]string {
-	return p.Extra
-}
-func (p *Authorize) Read(iprot thrift.TProtocol) error {
-	if _, err := iprot.ReadStructBegin(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
-	}
-
-	for {
-		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
-		if err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
-		}
-		if fieldTypeId == thrift.STOP {
-			break
-		}
-		switch fieldId {
-		case 1:
-			if fieldTypeId == thrift.STRING {
-				if err := p.ReadField1(iprot); err != nil {
-					return err
-				}
-			} else {
-				if err := iprot.Skip(fieldTypeId); err != nil {
-					return err
-				}
-			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				if err := p.ReadField2(iprot); err != nil {
-					return err
-				}
-			} else {
-				if err := iprot.Skip(fieldTypeId); err != nil {
-					return err
-				}
-			}
-		case 3:
-			if fieldTypeId == thrift.MAP {
-				if err := p.ReadField3(iprot); err != nil {
-					return err
-				}
-			} else {
-				if err := iprot.Skip(fieldTypeId); err != nil {
-					return err
-				}
-			}
-		default:
-			if err := iprot.Skip(fieldTypeId); err != nil {
-				return err
-			}
-		}
-		if err := iprot.ReadFieldEnd(); err != nil {
-			return err
-		}
-	}
-	if err := iprot.ReadStructEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
-	}
-	return nil
-}
-
-func (p *Authorize) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return thrift.PrependError("error reading field 1: ", err)
-	} else {
-		p.Key = v
-	}
-	return nil
-}
-
-func (p *Authorize) ReadField2(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return thrift.PrependError("error reading field 2: ", err)
-	} else {
-		p.Value = v
-	}
-	return nil
-}
-
-func (p *Authorize) ReadField3(iprot thrift.TProtocol) error {
-	_, _, size, err := iprot.ReadMapBegin()
-	if err != nil {
-		return thrift.PrependError("error reading map begin: ", err)
-	}
-	tMap := make(map[string]string, size)
-	p.Extra = tMap
-	for i := 0; i < size; i++ {
-		var _key0 string
-		if v, err := iprot.ReadString(); err != nil {
-			return thrift.PrependError("error reading field 0: ", err)
-		} else {
-			_key0 = v
-		}
-		var _val1 string
-		if v, err := iprot.ReadString(); err != nil {
-			return thrift.PrependError("error reading field 0: ", err)
-		} else {
-			_val1 = v
-		}
-		p.Extra[_key0] = _val1
-	}
-	if err := iprot.ReadMapEnd(); err != nil {
-		return thrift.PrependError("error reading map end: ", err)
-	}
-	return nil
-}
-
-func (p *Authorize) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("authorize"); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
-	}
-	if p != nil {
-		if err := p.writeField1(oprot); err != nil {
-			return err
-		}
-		if err := p.writeField2(oprot); err != nil {
-			return err
-		}
-		if err := p.writeField3(oprot); err != nil {
-			return err
-		}
-	}
-	if err := oprot.WriteFieldStop(); err != nil {
-		return thrift.PrependError("write field stop error: ", err)
-	}
-	if err := oprot.WriteStructEnd(); err != nil {
-		return thrift.PrependError("write struct stop error: ", err)
-	}
-	return nil
-}
-
-func (p *Authorize) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("key", thrift.STRING, 1); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:key: ", p), err)
-	}
-	if err := oprot.WriteString(string(p.Key)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.key (1) field write error: ", p), err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:key: ", p), err)
-	}
-	return err
-}
-
-func (p *Authorize) writeField2(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("value", thrift.STRING, 2); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:value: ", p), err)
-	}
-	if err := oprot.WriteString(string(p.Value)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.value (2) field write error: ", p), err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:value: ", p), err)
-	}
-	return err
-}
-
-func (p *Authorize) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
-	}
-	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
-		return thrift.PrependError("error writing map begin: ", err)
-	}
-	for k, v := range p.Extra {
-		if err := oprot.WriteString(string(k)); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
-		}
-		if err := oprot.WriteString(string(v)); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
-		}
-	}
-	if err := oprot.WriteMapEnd(); err != nil {
-		return thrift.PrependError("error writing map end: ", err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
-	}
-	return err
-}
-
-func (p *Authorize) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("Authorize(%+v)", *p)
-}
+var _ = common.GoUnusedProtection__
 
 // Attributes:
 //  - UID
@@ -1200,9 +991,9 @@ func (p *UserObj) String() string {
 //  - UserName
 //  - Extra
 type UpdateUsernameReq struct {
-	Auth     *Authorize `thrift:"auth,1" db:"auth" json:"auth"`
-	UID      string     `thrift:"uid,2" db:"uid" json:"uid"`
-	UserName string     `thrift:"user_name,3" db:"user_name" json:"user_name"`
+	Auth     *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	UID      string            `thrift:"uid,2" db:"uid" json:"uid"`
+	UserName string            `thrift:"user_name,3" db:"user_name" json:"user_name"`
 	// unused fields # 4 to 18
 	Extra map[string]string `thrift:"extra,19" db:"extra" json:"extra"`
 }
@@ -1211,9 +1002,9 @@ func NewUpdateUsernameReq() *UpdateUsernameReq {
 	return &UpdateUsernameReq{}
 }
 
-var UpdateUsernameReq_Auth_DEFAULT *Authorize
+var UpdateUsernameReq_Auth_DEFAULT *common.Authorize
 
-func (p *UpdateUsernameReq) GetAuth() *Authorize {
+func (p *UpdateUsernameReq) GetAuth() *common.Authorize {
 	if !p.IsSetAuth() {
 		return UpdateUsernameReq_Auth_DEFAULT
 	}
@@ -1305,7 +1096,7 @@ func (p *UpdateUsernameReq) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *UpdateUsernameReq) ReadField1(iprot thrift.TProtocol) error {
-	p.Auth = &Authorize{}
+	p.Auth = &common.Authorize{}
 	if err := p.Auth.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
 	}
@@ -1338,19 +1129,19 @@ func (p *UpdateUsernameReq) ReadField19(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key2 string
+		var _key0 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key2 = v
+			_key0 = v
 		}
-		var _val3 string
+		var _val1 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val3 = v
+			_val1 = v
 		}
-		p.Extra[_key2] = _val3
+		p.Extra[_key0] = _val1
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -1461,9 +1252,9 @@ func (p *UpdateUsernameReq) String() string {
 //  - Brithday
 //  - Extra
 type UpdateBrithdayReq struct {
-	Auth     *Authorize `thrift:"auth,1" db:"auth" json:"auth"`
-	UID      string     `thrift:"uid,2" db:"uid" json:"uid"`
-	Brithday string     `thrift:"brithday,3" db:"brithday" json:"brithday"`
+	Auth     *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	UID      string            `thrift:"uid,2" db:"uid" json:"uid"`
+	Brithday string            `thrift:"brithday,3" db:"brithday" json:"brithday"`
 	// unused fields # 4 to 18
 	Extra map[string]string `thrift:"extra,19" db:"extra" json:"extra"`
 }
@@ -1472,9 +1263,9 @@ func NewUpdateBrithdayReq() *UpdateBrithdayReq {
 	return &UpdateBrithdayReq{}
 }
 
-var UpdateBrithdayReq_Auth_DEFAULT *Authorize
+var UpdateBrithdayReq_Auth_DEFAULT *common.Authorize
 
-func (p *UpdateBrithdayReq) GetAuth() *Authorize {
+func (p *UpdateBrithdayReq) GetAuth() *common.Authorize {
 	if !p.IsSetAuth() {
 		return UpdateBrithdayReq_Auth_DEFAULT
 	}
@@ -1566,7 +1357,7 @@ func (p *UpdateBrithdayReq) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *UpdateBrithdayReq) ReadField1(iprot thrift.TProtocol) error {
-	p.Auth = &Authorize{}
+	p.Auth = &common.Authorize{}
 	if err := p.Auth.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
 	}
@@ -1599,19 +1390,19 @@ func (p *UpdateBrithdayReq) ReadField19(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key4 string
+		var _key2 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key4 = v
+			_key2 = v
 		}
-		var _val5 string
+		var _val3 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val5 = v
+			_val3 = v
 		}
-		p.Extra[_key4] = _val5
+		p.Extra[_key2] = _val3
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -1722,9 +1513,9 @@ func (p *UpdateBrithdayReq) String() string {
 //  - CardID
 //  - Extra
 type UpdateCardidReq struct {
-	Auth   *Authorize `thrift:"auth,1" db:"auth" json:"auth"`
-	UID    string     `thrift:"uid,2" db:"uid" json:"uid"`
-	CardID string     `thrift:"card_id,3" db:"card_id" json:"card_id"`
+	Auth   *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	UID    string            `thrift:"uid,2" db:"uid" json:"uid"`
+	CardID string            `thrift:"card_id,3" db:"card_id" json:"card_id"`
 	// unused fields # 4 to 18
 	Extra map[string]string `thrift:"extra,19" db:"extra" json:"extra"`
 }
@@ -1733,9 +1524,9 @@ func NewUpdateCardidReq() *UpdateCardidReq {
 	return &UpdateCardidReq{}
 }
 
-var UpdateCardidReq_Auth_DEFAULT *Authorize
+var UpdateCardidReq_Auth_DEFAULT *common.Authorize
 
-func (p *UpdateCardidReq) GetAuth() *Authorize {
+func (p *UpdateCardidReq) GetAuth() *common.Authorize {
 	if !p.IsSetAuth() {
 		return UpdateCardidReq_Auth_DEFAULT
 	}
@@ -1827,7 +1618,7 @@ func (p *UpdateCardidReq) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *UpdateCardidReq) ReadField1(iprot thrift.TProtocol) error {
-	p.Auth = &Authorize{}
+	p.Auth = &common.Authorize{}
 	if err := p.Auth.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
 	}
@@ -1860,19 +1651,19 @@ func (p *UpdateCardidReq) ReadField19(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key6 string
+		var _key4 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key6 = v
+			_key4 = v
 		}
-		var _val7 string
+		var _val5 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val7 = v
+			_val5 = v
 		}
-		p.Extra[_key6] = _val7
+		p.Extra[_key4] = _val5
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -1983,9 +1774,9 @@ func (p *UpdateCardidReq) String() string {
 //  - Avatar
 //  - Extra
 type UpdateAvatarReq struct {
-	Auth   *Authorize `thrift:"auth,1" db:"auth" json:"auth"`
-	UID    string     `thrift:"uid,2" db:"uid" json:"uid"`
-	Avatar string     `thrift:"avatar,3" db:"avatar" json:"avatar"`
+	Auth   *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	UID    string            `thrift:"uid,2" db:"uid" json:"uid"`
+	Avatar string            `thrift:"avatar,3" db:"avatar" json:"avatar"`
 	// unused fields # 4 to 18
 	Extra map[string]string `thrift:"extra,19" db:"extra" json:"extra"`
 }
@@ -1994,9 +1785,9 @@ func NewUpdateAvatarReq() *UpdateAvatarReq {
 	return &UpdateAvatarReq{}
 }
 
-var UpdateAvatarReq_Auth_DEFAULT *Authorize
+var UpdateAvatarReq_Auth_DEFAULT *common.Authorize
 
-func (p *UpdateAvatarReq) GetAuth() *Authorize {
+func (p *UpdateAvatarReq) GetAuth() *common.Authorize {
 	if !p.IsSetAuth() {
 		return UpdateAvatarReq_Auth_DEFAULT
 	}
@@ -2088,7 +1879,7 @@ func (p *UpdateAvatarReq) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *UpdateAvatarReq) ReadField1(iprot thrift.TProtocol) error {
-	p.Auth = &Authorize{}
+	p.Auth = &common.Authorize{}
 	if err := p.Auth.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
 	}
@@ -2121,19 +1912,19 @@ func (p *UpdateAvatarReq) ReadField19(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key8 string
+		var _key6 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key8 = v
+			_key6 = v
 		}
-		var _val9 string
+		var _val7 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val9 = v
+			_val7 = v
 		}
-		p.Extra[_key8] = _val9
+		p.Extra[_key6] = _val7
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -2244,9 +2035,9 @@ func (p *UpdateAvatarReq) String() string {
 //  - Attention
 //  - Extra
 type UpdateAttentionReq struct {
-	Auth      *Authorize `thrift:"auth,1" db:"auth" json:"auth"`
-	UID       string     `thrift:"uid,2" db:"uid" json:"uid"`
-	Attention string     `thrift:"attention,3" db:"attention" json:"attention"`
+	Auth      *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	UID       string            `thrift:"uid,2" db:"uid" json:"uid"`
+	Attention string            `thrift:"attention,3" db:"attention" json:"attention"`
 	// unused fields # 4 to 18
 	Extra map[string]string `thrift:"extra,19" db:"extra" json:"extra"`
 }
@@ -2255,9 +2046,9 @@ func NewUpdateAttentionReq() *UpdateAttentionReq {
 	return &UpdateAttentionReq{}
 }
 
-var UpdateAttentionReq_Auth_DEFAULT *Authorize
+var UpdateAttentionReq_Auth_DEFAULT *common.Authorize
 
-func (p *UpdateAttentionReq) GetAuth() *Authorize {
+func (p *UpdateAttentionReq) GetAuth() *common.Authorize {
 	if !p.IsSetAuth() {
 		return UpdateAttentionReq_Auth_DEFAULT
 	}
@@ -2349,7 +2140,7 @@ func (p *UpdateAttentionReq) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *UpdateAttentionReq) ReadField1(iprot thrift.TProtocol) error {
-	p.Auth = &Authorize{}
+	p.Auth = &common.Authorize{}
 	if err := p.Auth.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
 	}
@@ -2382,19 +2173,19 @@ func (p *UpdateAttentionReq) ReadField19(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key10 string
+		var _key8 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key10 = v
+			_key8 = v
 		}
-		var _val11 string
+		var _val9 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val11 = v
+			_val9 = v
 		}
-		p.Extra[_key10] = _val11
+		p.Extra[_key8] = _val9
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -2610,19 +2401,19 @@ func (p *UpdateUserRes) ReadField3(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key12 string
+		var _key10 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key12 = v
+			_key10 = v
 		}
-		var _val13 string
+		var _val11 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val13 = v
+			_val11 = v
 		}
-		p.Extra[_key12] = _val13
+		p.Extra[_key10] = _val11
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -2716,7 +2507,7 @@ func (p *UpdateUserRes) String() string {
 //  - UID
 //  - Extra
 type UserInfoReq struct {
-	Auth  *Authorize        `thrift:"auth,1" db:"auth" json:"auth"`
+	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
 	UID   string            `thrift:"uid,2" db:"uid" json:"uid"`
 	Extra map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
@@ -2725,9 +2516,9 @@ func NewUserInfoReq() *UserInfoReq {
 	return &UserInfoReq{}
 }
 
-var UserInfoReq_Auth_DEFAULT *Authorize
+var UserInfoReq_Auth_DEFAULT *common.Authorize
 
-func (p *UserInfoReq) GetAuth() *Authorize {
+func (p *UserInfoReq) GetAuth() *common.Authorize {
 	if !p.IsSetAuth() {
 		return UserInfoReq_Auth_DEFAULT
 	}
@@ -2805,7 +2596,7 @@ func (p *UserInfoReq) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *UserInfoReq) ReadField1(iprot thrift.TProtocol) error {
-	p.Auth = &Authorize{}
+	p.Auth = &common.Authorize{}
 	if err := p.Auth.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
 	}
@@ -2829,19 +2620,19 @@ func (p *UserInfoReq) ReadField3(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key14 string
+		var _key12 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key14 = v
+			_key12 = v
 		}
-		var _val15 string
+		var _val13 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val15 = v
+			_val13 = v
 		}
-		p.Extra[_key14] = _val15
+		p.Extra[_key12] = _val13
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -3074,19 +2865,19 @@ func (p *UserInfoRes) ReadField4(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key16 string
+		var _key14 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key16 = v
+			_key14 = v
 		}
-		var _val17 string
+		var _val15 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val17 = v
+			_val15 = v
 		}
-		p.Extra[_key16] = _val17
+		p.Extra[_key14] = _val15
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -3241,10 +3032,22 @@ func (p *UsernodeServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Req
 func (p *UsernodeServiceClient) UpdateUsername(ctx context.Context, req *UpdateUsernameReq) (r *UpdateUserRes, err error) {
-	var _args18 UsernodeServiceUpdateUsernameArgs
+	var _args16 UsernodeServiceUpdateUsernameArgs
+	_args16.Req = req
+	var _result17 UsernodeServiceUpdateUsernameResult
+	if err = p.Client_().Call(ctx, "update_username", &_args16, &_result17); err != nil {
+		return
+	}
+	return _result17.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *UsernodeServiceClient) UpdateBrithday(ctx context.Context, req *UpdateBrithdayReq) (r *UpdateUserRes, err error) {
+	var _args18 UsernodeServiceUpdateBrithdayArgs
 	_args18.Req = req
-	var _result19 UsernodeServiceUpdateUsernameResult
-	if err = p.Client_().Call(ctx, "update_username", &_args18, &_result19); err != nil {
+	var _result19 UsernodeServiceUpdateBrithdayResult
+	if err = p.Client_().Call(ctx, "update_brithday", &_args18, &_result19); err != nil {
 		return
 	}
 	return _result19.GetSuccess(), nil
@@ -3252,11 +3055,11 @@ func (p *UsernodeServiceClient) UpdateUsername(ctx context.Context, req *UpdateU
 
 // Parameters:
 //  - Req
-func (p *UsernodeServiceClient) UpdateBrithday(ctx context.Context, req *UpdateBrithdayReq) (r *UpdateUserRes, err error) {
-	var _args20 UsernodeServiceUpdateBrithdayArgs
+func (p *UsernodeServiceClient) UpdateCardid(ctx context.Context, req *UpdateCardidReq) (r *UpdateUserRes, err error) {
+	var _args20 UsernodeServiceUpdateCardidArgs
 	_args20.Req = req
-	var _result21 UsernodeServiceUpdateBrithdayResult
-	if err = p.Client_().Call(ctx, "update_brithday", &_args20, &_result21); err != nil {
+	var _result21 UsernodeServiceUpdateCardidResult
+	if err = p.Client_().Call(ctx, "update_cardid", &_args20, &_result21); err != nil {
 		return
 	}
 	return _result21.GetSuccess(), nil
@@ -3264,11 +3067,11 @@ func (p *UsernodeServiceClient) UpdateBrithday(ctx context.Context, req *UpdateB
 
 // Parameters:
 //  - Req
-func (p *UsernodeServiceClient) UpdateCardid(ctx context.Context, req *UpdateCardidReq) (r *UpdateUserRes, err error) {
-	var _args22 UsernodeServiceUpdateCardidArgs
+func (p *UsernodeServiceClient) UpdateAvatar(ctx context.Context, req *UpdateAvatarReq) (r *UpdateUserRes, err error) {
+	var _args22 UsernodeServiceUpdateAvatarArgs
 	_args22.Req = req
-	var _result23 UsernodeServiceUpdateCardidResult
-	if err = p.Client_().Call(ctx, "update_cardid", &_args22, &_result23); err != nil {
+	var _result23 UsernodeServiceUpdateAvatarResult
+	if err = p.Client_().Call(ctx, "update_avatar", &_args22, &_result23); err != nil {
 		return
 	}
 	return _result23.GetSuccess(), nil
@@ -3276,11 +3079,11 @@ func (p *UsernodeServiceClient) UpdateCardid(ctx context.Context, req *UpdateCar
 
 // Parameters:
 //  - Req
-func (p *UsernodeServiceClient) UpdateAvatar(ctx context.Context, req *UpdateAvatarReq) (r *UpdateUserRes, err error) {
-	var _args24 UsernodeServiceUpdateAvatarArgs
+func (p *UsernodeServiceClient) UpdateAttention(ctx context.Context, req *UpdateAttentionReq) (r *UpdateUserRes, err error) {
+	var _args24 UsernodeServiceUpdateAttentionArgs
 	_args24.Req = req
-	var _result25 UsernodeServiceUpdateAvatarResult
-	if err = p.Client_().Call(ctx, "update_avatar", &_args24, &_result25); err != nil {
+	var _result25 UsernodeServiceUpdateAttentionResult
+	if err = p.Client_().Call(ctx, "update_attention", &_args24, &_result25); err != nil {
 		return
 	}
 	return _result25.GetSuccess(), nil
@@ -3288,26 +3091,14 @@ func (p *UsernodeServiceClient) UpdateAvatar(ctx context.Context, req *UpdateAva
 
 // Parameters:
 //  - Req
-func (p *UsernodeServiceClient) UpdateAttention(ctx context.Context, req *UpdateAttentionReq) (r *UpdateUserRes, err error) {
-	var _args26 UsernodeServiceUpdateAttentionArgs
+func (p *UsernodeServiceClient) UserInfo(ctx context.Context, req *UserInfoReq) (r *UserInfoRes, err error) {
+	var _args26 UsernodeServiceUserInfoArgs
 	_args26.Req = req
-	var _result27 UsernodeServiceUpdateAttentionResult
-	if err = p.Client_().Call(ctx, "update_attention", &_args26, &_result27); err != nil {
+	var _result27 UsernodeServiceUserInfoResult
+	if err = p.Client_().Call(ctx, "user_info", &_args26, &_result27); err != nil {
 		return
 	}
 	return _result27.GetSuccess(), nil
-}
-
-// Parameters:
-//  - Req
-func (p *UsernodeServiceClient) UserInfo(ctx context.Context, req *UserInfoReq) (r *UserInfoRes, err error) {
-	var _args28 UsernodeServiceUserInfoArgs
-	_args28.Req = req
-	var _result29 UsernodeServiceUserInfoResult
-	if err = p.Client_().Call(ctx, "user_info", &_args28, &_result29); err != nil {
-		return
-	}
-	return _result29.GetSuccess(), nil
 }
 
 type UsernodeServiceProcessor struct {
@@ -3330,14 +3121,14 @@ func (p *UsernodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFu
 
 func NewUsernodeServiceProcessor(handler UsernodeService) *UsernodeServiceProcessor {
 
-	self30 := &UsernodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self30.processorMap["update_username"] = &usernodeServiceProcessorUpdateUsername{handler: handler}
-	self30.processorMap["update_brithday"] = &usernodeServiceProcessorUpdateBrithday{handler: handler}
-	self30.processorMap["update_cardid"] = &usernodeServiceProcessorUpdateCardid{handler: handler}
-	self30.processorMap["update_avatar"] = &usernodeServiceProcessorUpdateAvatar{handler: handler}
-	self30.processorMap["update_attention"] = &usernodeServiceProcessorUpdateAttention{handler: handler}
-	self30.processorMap["user_info"] = &usernodeServiceProcessorUserInfo{handler: handler}
-	return self30
+	self28 := &UsernodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self28.processorMap["update_username"] = &usernodeServiceProcessorUpdateUsername{handler: handler}
+	self28.processorMap["update_brithday"] = &usernodeServiceProcessorUpdateBrithday{handler: handler}
+	self28.processorMap["update_cardid"] = &usernodeServiceProcessorUpdateCardid{handler: handler}
+	self28.processorMap["update_avatar"] = &usernodeServiceProcessorUpdateAvatar{handler: handler}
+	self28.processorMap["update_attention"] = &usernodeServiceProcessorUpdateAttention{handler: handler}
+	self28.processorMap["user_info"] = &usernodeServiceProcessorUserInfo{handler: handler}
+	return self28
 }
 
 func (p *UsernodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -3350,12 +3141,12 @@ func (p *UsernodeServiceProcessor) Process(ctx context.Context, iprot, oprot thr
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x31 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x29 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x31.Write(oprot)
+	x29.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x31
+	return false, x29
 
 }
 

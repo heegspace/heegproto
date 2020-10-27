@@ -1,6 +1,7 @@
 namespace go codenode
 
-include "../rescode.thrift"
+include "../rescode/rescode.thrift"
+include "../common/common.thrift"
 
 enum code_type {
     UID         = 0,
@@ -9,14 +10,8 @@ enum code_type {
     EMAIL       = 3,
 }
 
-struct authorize {
-    1:string    key,
-    2:string    value,
-    3:map<string,string> extra,
-}
-
 struct code_req {
-    1:authorize             auth,
+    1:common.authorize      auth,
     2:string                desc,
     3:code_type             type,
     4:map<string,string>    extra,
@@ -30,7 +25,7 @@ struct code_res {
 }
 
 struct verify_code_req {
-    1:authorize             auth,
+    1:common.authorize      auth,
     2:string                desc,
     4:string                code,
     5:map<string,string>    extra,

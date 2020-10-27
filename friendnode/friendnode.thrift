@@ -1,15 +1,10 @@
 namespace go friendnode
 
-include "../rescode.thrift"
-
-struct authorize {
-    1:string    key,
-    2:string    value,
-    3:map<string,string> extra,
-}
+include "../rescode/rescode.thrift"
+include "../common/common.thrift"
 
 struct add_friend_req {
-    1:authorize auth,
+    1:common.authorize auth,
     2:string    uid,
     3:string    phone,
     4:map<string,string> extra,
@@ -22,7 +17,7 @@ struct add_friend_res {
 }
 
 struct agree_friend_req {
-    1:authorize     auth,
+    1:common.authorize     auth,
     2:string        suid, // 用户id
     3:string        uid,
     4:map<string,string> extra,
@@ -35,7 +30,7 @@ struct agree_friend_res {
 }
 
 struct friend_list_req {
-    1:authorize     auth,
+    1:common.authorize     auth,
     2:string        uid,
 }
 
@@ -70,7 +65,7 @@ struct friend_list_res {
 }
 
 struct create_group_req {
-    1:authorize     auth,
+    1:common.authorize     auth,
     2:string        uid,
     3:string        name,
     4:map<string,string> extra,
@@ -83,7 +78,7 @@ struct create_group_res {
 }
 
 struct rename_group_req {
-    1:authorize     auth,
+    1:common.authorize     auth,
     2:string        uid,
     3:string    old_name,
     4:string    new_name,
@@ -97,7 +92,7 @@ struct rename_group_res {
 }
 
 struct add_friend_note_req {
-    1:authorize         auth,
+    1:common.authorize         auth,
     2:string            suid,
     3:string            uid,
     4:string            note,
@@ -111,7 +106,7 @@ struct add_friend_note_res {
 }
 
 struct move_group_req {
-    1:authorize             auth,
+    1:common.authorize             auth,
     2:string                suid,
     3:string                uid,
     4:string                group,
@@ -125,7 +120,7 @@ struct move_group_res {
 }
 
 struct remove_friend_req {
-    1:authorize         auth,
+    1:common.authorize         auth,
     2:string            suid,
     3:string            uid,
     4:map<string,string> extra,

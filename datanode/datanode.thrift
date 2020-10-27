@@ -1,6 +1,6 @@
 namespace go datanode
 
-include "../rescode.thrift"
+include "../rescode/rescode.thrift"
 
 enum Role {
     NORMAL  = 0,
