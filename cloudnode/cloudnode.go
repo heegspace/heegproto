@@ -293,7 +293,7 @@ func (p *DirReq) String() string {
 //  - CreateAt
 //  - UpdateAt
 //  - Extra
-type FileItem struct {
+type DirItem struct {
 	Name     string `thrift:"name,1" db:"name" json:"name"`
 	Type     int32  `thrift:"type,2" db:"type" json:"type"`
 	Path     string `thrift:"path,3" db:"path" json:"path"`
@@ -304,42 +304,42 @@ type FileItem struct {
 	Extra    string `thrift:"extra,8" db:"extra" json:"extra"`
 }
 
-func NewFileItem() *FileItem {
-	return &FileItem{}
+func NewDirItem() *DirItem {
+	return &DirItem{}
 }
 
-func (p *FileItem) GetName() string {
+func (p *DirItem) GetName() string {
 	return p.Name
 }
 
-func (p *FileItem) GetType() int32 {
+func (p *DirItem) GetType() int32 {
 	return p.Type
 }
 
-func (p *FileItem) GetPath() string {
+func (p *DirItem) GetPath() string {
 	return p.Path
 }
 
-func (p *FileItem) GetSize() int64 {
+func (p *DirItem) GetSize() int64 {
 	return p.Size
 }
 
-func (p *FileItem) GetURL() string {
+func (p *DirItem) GetURL() string {
 	return p.URL
 }
 
-func (p *FileItem) GetCreateAt() int64 {
+func (p *DirItem) GetCreateAt() int64 {
 	return p.CreateAt
 }
 
-func (p *FileItem) GetUpdateAt() int64 {
+func (p *DirItem) GetUpdateAt() int64 {
 	return p.UpdateAt
 }
 
-func (p *FileItem) GetExtra() string {
+func (p *DirItem) GetExtra() string {
 	return p.Extra
 }
-func (p *FileItem) Read(iprot thrift.TProtocol) error {
+func (p *DirItem) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -448,7 +448,7 @@ func (p *FileItem) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *FileItem) ReadField1(iprot thrift.TProtocol) error {
+func (p *DirItem) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
@@ -457,7 +457,7 @@ func (p *FileItem) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *FileItem) ReadField2(iprot thrift.TProtocol) error {
+func (p *DirItem) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
@@ -466,7 +466,7 @@ func (p *FileItem) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *FileItem) ReadField3(iprot thrift.TProtocol) error {
+func (p *DirItem) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 3: ", err)
 	} else {
@@ -475,7 +475,7 @@ func (p *FileItem) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *FileItem) ReadField4(iprot thrift.TProtocol) error {
+func (p *DirItem) ReadField4(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI64(); err != nil {
 		return thrift.PrependError("error reading field 4: ", err)
 	} else {
@@ -484,7 +484,7 @@ func (p *FileItem) ReadField4(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *FileItem) ReadField5(iprot thrift.TProtocol) error {
+func (p *DirItem) ReadField5(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 5: ", err)
 	} else {
@@ -493,7 +493,7 @@ func (p *FileItem) ReadField5(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *FileItem) ReadField6(iprot thrift.TProtocol) error {
+func (p *DirItem) ReadField6(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI64(); err != nil {
 		return thrift.PrependError("error reading field 6: ", err)
 	} else {
@@ -502,7 +502,7 @@ func (p *FileItem) ReadField6(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *FileItem) ReadField7(iprot thrift.TProtocol) error {
+func (p *DirItem) ReadField7(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI64(); err != nil {
 		return thrift.PrependError("error reading field 7: ", err)
 	} else {
@@ -511,7 +511,7 @@ func (p *FileItem) ReadField7(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *FileItem) ReadField8(iprot thrift.TProtocol) error {
+func (p *DirItem) ReadField8(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 8: ", err)
 	} else {
@@ -520,8 +520,8 @@ func (p *FileItem) ReadField8(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *FileItem) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("FileItem"); err != nil {
+func (p *DirItem) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("dir_item"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -559,7 +559,7 @@ func (p *FileItem) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *FileItem) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *DirItem) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("name", thrift.STRING, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:name: ", p), err)
 	}
@@ -572,7 +572,7 @@ func (p *FileItem) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *FileItem) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *DirItem) writeField2(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("type", thrift.I32, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:type: ", p), err)
 	}
@@ -585,7 +585,7 @@ func (p *FileItem) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *FileItem) writeField3(oprot thrift.TProtocol) (err error) {
+func (p *DirItem) writeField3(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("path", thrift.STRING, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:path: ", p), err)
 	}
@@ -598,7 +598,7 @@ func (p *FileItem) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *FileItem) writeField4(oprot thrift.TProtocol) (err error) {
+func (p *DirItem) writeField4(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("size", thrift.I64, 4); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:size: ", p), err)
 	}
@@ -611,7 +611,7 @@ func (p *FileItem) writeField4(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *FileItem) writeField5(oprot thrift.TProtocol) (err error) {
+func (p *DirItem) writeField5(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("url", thrift.STRING, 5); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:url: ", p), err)
 	}
@@ -624,7 +624,7 @@ func (p *FileItem) writeField5(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *FileItem) writeField6(oprot thrift.TProtocol) (err error) {
+func (p *DirItem) writeField6(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("create_at", thrift.I64, 6); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:create_at: ", p), err)
 	}
@@ -637,7 +637,7 @@ func (p *FileItem) writeField6(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *FileItem) writeField7(oprot thrift.TProtocol) (err error) {
+func (p *DirItem) writeField7(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("update_at", thrift.I64, 7); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:update_at: ", p), err)
 	}
@@ -650,7 +650,7 @@ func (p *FileItem) writeField7(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *FileItem) writeField8(oprot thrift.TProtocol) (err error) {
+func (p *DirItem) writeField8(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("extra", thrift.STRING, 8); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 8:extra: ", p), err)
 	}
@@ -663,11 +663,11 @@ func (p *FileItem) writeField8(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *FileItem) String() string {
+func (p *DirItem) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("FileItem(%+v)", *p)
+	return fmt.Sprintf("DirItem(%+v)", *p)
 }
 
 // Attributes:
@@ -678,7 +678,7 @@ func (p *FileItem) String() string {
 type DirRes struct {
 	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
 	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
-	Dirs    []*FileItem       `thrift:"dirs,3" db:"dirs" json:"dirs"`
+	Dirs    []*DirItem        `thrift:"dirs,3" db:"dirs" json:"dirs"`
 	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
@@ -694,7 +694,7 @@ func (p *DirRes) GetResmsg() string {
 	return p.Resmsg
 }
 
-func (p *DirRes) GetDirs() []*FileItem {
+func (p *DirRes) GetDirs() []*DirItem {
 	return p.Dirs
 }
 
@@ -794,10 +794,10 @@ func (p *DirRes) ReadField3(iprot thrift.TProtocol) error {
 	if err != nil {
 		return thrift.PrependError("error reading list begin: ", err)
 	}
-	tSlice := make([]*FileItem, 0, size)
+	tSlice := make([]*DirItem, 0, size)
 	p.Dirs = tSlice
 	for i := 0; i < size; i++ {
-		_elem2 := &FileItem{}
+		_elem2 := &DirItem{}
 		if err := _elem2.Read(iprot); err != nil {
 			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem2), err)
 		}

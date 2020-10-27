@@ -10,7 +10,7 @@ struct dir_req {
     4:map<string,string>    extra,
 }
 
-struct FileItem {
+struct dir_item {
     1:string    name,
     2:i32       type,
     3:string    path,
@@ -24,7 +24,7 @@ struct FileItem {
 struct dir_res {
     1:rescode.code          rescode,
     2:string                resmsg,
-    3:list<FileItem>        dirs,
+    3:list<dir_item>        dirs,
     4:map<string,string>    extra,
 }
 
