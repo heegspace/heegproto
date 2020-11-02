@@ -1,6 +1,7 @@
 namespace go datanode
 
 include "../rescode/rescode.thrift"
+include "../common/common.thrift"
 
 enum Role {
     NORMAL  = 0,
@@ -387,6 +388,55 @@ struct get_keyvalue_res {
     3:string        value,
 }
 
+struct version_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:list<common.version_item> versions,
+    4:map<string,string> extra,
+}
+
+struct subject_name_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:string             name,
+    4:map<string,string> extra,
+}
+
+struct chapter_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:list<common.chapter_item> chapters,
+    4:map<string,string> extra,
+}
+
+struct source_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:list<common.source_item>  sources,
+    4:map<string,string> extra,
+}
+
+struct tixing_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:list<common.tixing_item>  tixings,
+    4:map<string,string> extra,
+}
+
+struct timu_count_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:i32                count,
+    4:map<string,string> extra,
+}
+
+struct timu_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:list<common.timu_item>    timus,
+    4:map<string,string> extra,
+}
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -462,4 +512,21 @@ service datanode_service {
     set_keyvalue_res setKeyValue(1:set_keyvalue_req req),
     // 获取缓存
     get_keyvalue_res getKeyValue(1:get_keyvalue_req req),
+
+
+    // --------------- 试题相关 -------------------//
+    // 获取版本
+    version_res question_version(1:common.question_query req),
+    // 获取章节
+    chapter_res question_chapter(1:common.question_query req),
+    // 科目名
+    subject_name_res  subject_name(1:string req),
+    // 获取来源
+    source_res question_source(1:common.question_query req),
+    // 获取题型
+    tixing_res question_tixing(1:common.question_query req),
+    // 获取题目数量
+    timu_count_res question_timu_count(1:common.question_query req),
+    // 请求题目
+    timu_res question_timu(1:common.question_query req),
 }
