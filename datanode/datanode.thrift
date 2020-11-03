@@ -402,10 +402,16 @@ struct subject_name_res {
     4:map<string,string> extra,
 }
 
+struct chapter_res_item {
+    1:string    uid,
+    2:string    title,
+    3:list<common.chapter_item> childs,
+}
+
 struct chapter_res {
-    1:rescode.code       rescode,
-    2:string             resmsg,
-    3:list<common.chapter_item> chapters,
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:list<chapter_res_item> chapters,
     4:map<string,string> extra,
 }
 
