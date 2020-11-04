@@ -443,6 +443,84 @@ struct timu_res {
     4:map<string,string> extra,
 }
 
+struct collect_req {
+    1:string    cid,
+    2:i64       op,
+}
+
+struct collect_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:map<string,string> extra,
+}
+
+struct collect_list_req {
+    1:string    uid,
+    2:i32       page,
+    3:i32       size,
+}
+
+struct collect_list_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:list<common.timu_item>    timus,
+    4:map<string,string> extra,
+}
+
+struct modify_req {
+    1:string            uid,
+    2:string            tid,
+    3:common.question   timu,
+}
+
+struct modify_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:map<string,string> extra, 
+}
+
+struct modify_list_req {
+    1:string    uid,
+    2:i32       page,
+    3:i32       size,
+}
+
+struct modify_list_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:list<common.modify_item>    timus,
+    4:map<string,string> extra,
+}
+
+struct modify_count_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:i32                count,
+    4:map<string,string> extra, 
+}
+
+struct modify_cancel_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:i32                count,
+    4:map<string,string> extra, 
+}
+
+struct search_req {
+    1:string    keyword,
+    2:i32       page,
+    3:i32       size,
+}
+
+struct search_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:i64                       timestamp,
+    4:common.search_hits_total         total,
+    5:list<common.search_hits_item>    hits,
+    6:map<string,string> extra, 
+}
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -534,5 +612,19 @@ service datanode_service {
     // 获取题目数量
     timu_count_res question_timu_count(1:common.question_query req),
     // 请求题目
-    timu_res question_timu(1:common.question_query req),
+    timu_res question_timu(1:string uid, 2:common.question_query req),
+    // 收藏试题
+    collect_res collect_timu(1:string uid, 2:collect_req req),
+    // 获取收藏列表
+    collect_list_res query_collect_timu(1:collect_list_req req),
+    // 纠错试题（包含更新或添加）
+    modify_res modify_question(1:modify_req req),
+    // 获取个人纠错的试题
+    modify_list_res modify_list(1:modify_list_req req),
+    // 获取个人纠错的试题的数量
+    modify_count_res modify_count(1:string uid),
+    // 取消纠错试题
+    modify_cancel_res modify_cancel(1:string tid),
+
+
 }
