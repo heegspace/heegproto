@@ -625,6 +625,6 @@ service datanode_service {
     modify_count_res modify_count(1:string uid),
     // 取消纠错试题
     modify_cancel_res modify_cancel(1:string tid),
-
-
+    // 搜索试题
+    search_res on_search(1:search_req req),
 }

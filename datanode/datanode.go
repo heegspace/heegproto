@@ -18356,6 +18356,9 @@ type DatanodeService interface {
 	// Parameters:
 	//  - Tid
 	ModifyCancel(ctx context.Context, tid string) (r *ModifyCancelRes, err error)
+	// Parameters:
+	//  - Req
+	OnSearch(ctx context.Context, req *SearchReq) (r *SearchRes, err error)
 }
 
 type DatanodeServiceClient struct {
@@ -18950,6 +18953,18 @@ func (p *DatanodeServiceClient) ModifyCancel(ctx context.Context, tid string) (r
 	return _result192.GetSuccess(), nil
 }
 
+// Parameters:
+//  - Req
+func (p *DatanodeServiceClient) OnSearch(ctx context.Context, req *SearchReq) (r *SearchRes, err error) {
+	var _args193 DatanodeServiceOnSearchArgs
+	_args193.Req = req
+	var _result194 DatanodeServiceOnSearchResult
+	if err = p.Client_().Call(ctx, "on_search", &_args193, &_result194); err != nil {
+		return
+	}
+	return _result194.GetSuccess(), nil
+}
+
 type DatanodeServiceProcessor struct {
 	processorMap map[string]thrift.TProcessorFunction
 	handler      DatanodeService
@@ -18970,51 +18985,52 @@ func (p *DatanodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFu
 
 func NewDatanodeServiceProcessor(handler DatanodeService) *DatanodeServiceProcessor {
 
-	self193 := &DatanodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self193.processorMap["createUser"] = &datanodeServiceProcessorCreateUser{handler: handler}
-	self193.processorMap["userInfo"] = &datanodeServiceProcessorUserInfo{handler: handler}
-	self193.processorMap["searchUser"] = &datanodeServiceProcessorSearchUser{handler: handler}
-	self193.processorMap["updateUser"] = &datanodeServiceProcessorUpdateUser{handler: handler}
-	self193.processorMap["addFriends"] = &datanodeServiceProcessorAddFriends{handler: handler}
-	self193.processorMap["agreeFriends"] = &datanodeServiceProcessorAgreeFriends{handler: handler}
-	self193.processorMap["friendsList"] = &datanodeServiceProcessorFriendsList{handler: handler}
-	self193.processorMap["createGroup"] = &datanodeServiceProcessorCreateGroup{handler: handler}
-	self193.processorMap["renameGroup"] = &datanodeServiceProcessorRenameGroup{handler: handler}
-	self193.processorMap["addNoteFriend"] = &datanodeServiceProcessorAddNoteFriend{handler: handler}
-	self193.processorMap["moveToNewGroup"] = &datanodeServiceProcessorMoveToNewGroup{handler: handler}
-	self193.processorMap["removeFriend"] = &datanodeServiceProcessorRemoveFriend{handler: handler}
-	self193.processorMap["likesCount"] = &datanodeServiceProcessorLikesCount{handler: handler}
-	self193.processorMap["likesAdd"] = &datanodeServiceProcessorLikesAdd{handler: handler}
-	self193.processorMap["likesList"] = &datanodeServiceProcessorLikesList{handler: handler}
-	self193.processorMap["updateNote"] = &datanodeServiceProcessorUpdateNote{handler: handler}
-	self193.processorMap["noteMetaList"] = &datanodeServiceProcessorNoteMetaList{handler: handler}
-	self193.processorMap["noteListCount"] = &datanodeServiceProcessorNoteListCount{handler: handler}
-	self193.processorMap["noteData"] = &datanodeServiceProcessorNoteData{handler: handler}
-	self193.processorMap["noteHtml"] = &datanodeServiceProcessorNoteHtml{handler: handler}
-	self193.processorMap["momentsCount"] = &datanodeServiceProcessorMomentsCount{handler: handler}
-	self193.processorMap["momentsAdd"] = &datanodeServiceProcessorMomentsAdd{handler: handler}
-	self193.processorMap["momentsList"] = &datanodeServiceProcessorMomentsList{handler: handler}
-	self193.processorMap["fileDirOne"] = &datanodeServiceProcessorFileDirOne{handler: handler}
-	self193.processorMap["fileDirAdd"] = &datanodeServiceProcessorFileDirAdd{handler: handler}
-	self193.processorMap["addFile"] = &datanodeServiceProcessorAddFile{handler: handler}
-	self193.processorMap["yunSaveAttr"] = &datanodeServiceProcessorYunSaveAttr{handler: handler}
-	self193.processorMap["thumbnail"] = &datanodeServiceProcessorThumbnail{handler: handler}
-	self193.processorMap["setKeyValue"] = &datanodeServiceProcessorSetKeyValue{handler: handler}
-	self193.processorMap["getKeyValue"] = &datanodeServiceProcessorGetKeyValue{handler: handler}
-	self193.processorMap["question_version"] = &datanodeServiceProcessorQuestionVersion{handler: handler}
-	self193.processorMap["question_chapter"] = &datanodeServiceProcessorQuestionChapter{handler: handler}
-	self193.processorMap["subject_name"] = &datanodeServiceProcessorSubjectName{handler: handler}
-	self193.processorMap["question_source"] = &datanodeServiceProcessorQuestionSource{handler: handler}
-	self193.processorMap["question_tixing"] = &datanodeServiceProcessorQuestionTixing{handler: handler}
-	self193.processorMap["question_timu_count"] = &datanodeServiceProcessorQuestionTimuCount{handler: handler}
-	self193.processorMap["question_timu"] = &datanodeServiceProcessorQuestionTimu{handler: handler}
-	self193.processorMap["collect_timu"] = &datanodeServiceProcessorCollectTimu{handler: handler}
-	self193.processorMap["query_collect_timu"] = &datanodeServiceProcessorQueryCollectTimu{handler: handler}
-	self193.processorMap["modify_question"] = &datanodeServiceProcessorModifyQuestion{handler: handler}
-	self193.processorMap["modify_list"] = &datanodeServiceProcessorModifyList{handler: handler}
-	self193.processorMap["modify_count"] = &datanodeServiceProcessorModifyCount{handler: handler}
-	self193.processorMap["modify_cancel"] = &datanodeServiceProcessorModifyCancel{handler: handler}
-	return self193
+	self195 := &DatanodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self195.processorMap["createUser"] = &datanodeServiceProcessorCreateUser{handler: handler}
+	self195.processorMap["userInfo"] = &datanodeServiceProcessorUserInfo{handler: handler}
+	self195.processorMap["searchUser"] = &datanodeServiceProcessorSearchUser{handler: handler}
+	self195.processorMap["updateUser"] = &datanodeServiceProcessorUpdateUser{handler: handler}
+	self195.processorMap["addFriends"] = &datanodeServiceProcessorAddFriends{handler: handler}
+	self195.processorMap["agreeFriends"] = &datanodeServiceProcessorAgreeFriends{handler: handler}
+	self195.processorMap["friendsList"] = &datanodeServiceProcessorFriendsList{handler: handler}
+	self195.processorMap["createGroup"] = &datanodeServiceProcessorCreateGroup{handler: handler}
+	self195.processorMap["renameGroup"] = &datanodeServiceProcessorRenameGroup{handler: handler}
+	self195.processorMap["addNoteFriend"] = &datanodeServiceProcessorAddNoteFriend{handler: handler}
+	self195.processorMap["moveToNewGroup"] = &datanodeServiceProcessorMoveToNewGroup{handler: handler}
+	self195.processorMap["removeFriend"] = &datanodeServiceProcessorRemoveFriend{handler: handler}
+	self195.processorMap["likesCount"] = &datanodeServiceProcessorLikesCount{handler: handler}
+	self195.processorMap["likesAdd"] = &datanodeServiceProcessorLikesAdd{handler: handler}
+	self195.processorMap["likesList"] = &datanodeServiceProcessorLikesList{handler: handler}
+	self195.processorMap["updateNote"] = &datanodeServiceProcessorUpdateNote{handler: handler}
+	self195.processorMap["noteMetaList"] = &datanodeServiceProcessorNoteMetaList{handler: handler}
+	self195.processorMap["noteListCount"] = &datanodeServiceProcessorNoteListCount{handler: handler}
+	self195.processorMap["noteData"] = &datanodeServiceProcessorNoteData{handler: handler}
+	self195.processorMap["noteHtml"] = &datanodeServiceProcessorNoteHtml{handler: handler}
+	self195.processorMap["momentsCount"] = &datanodeServiceProcessorMomentsCount{handler: handler}
+	self195.processorMap["momentsAdd"] = &datanodeServiceProcessorMomentsAdd{handler: handler}
+	self195.processorMap["momentsList"] = &datanodeServiceProcessorMomentsList{handler: handler}
+	self195.processorMap["fileDirOne"] = &datanodeServiceProcessorFileDirOne{handler: handler}
+	self195.processorMap["fileDirAdd"] = &datanodeServiceProcessorFileDirAdd{handler: handler}
+	self195.processorMap["addFile"] = &datanodeServiceProcessorAddFile{handler: handler}
+	self195.processorMap["yunSaveAttr"] = &datanodeServiceProcessorYunSaveAttr{handler: handler}
+	self195.processorMap["thumbnail"] = &datanodeServiceProcessorThumbnail{handler: handler}
+	self195.processorMap["setKeyValue"] = &datanodeServiceProcessorSetKeyValue{handler: handler}
+	self195.processorMap["getKeyValue"] = &datanodeServiceProcessorGetKeyValue{handler: handler}
+	self195.processorMap["question_version"] = &datanodeServiceProcessorQuestionVersion{handler: handler}
+	self195.processorMap["question_chapter"] = &datanodeServiceProcessorQuestionChapter{handler: handler}
+	self195.processorMap["subject_name"] = &datanodeServiceProcessorSubjectName{handler: handler}
+	self195.processorMap["question_source"] = &datanodeServiceProcessorQuestionSource{handler: handler}
+	self195.processorMap["question_tixing"] = &datanodeServiceProcessorQuestionTixing{handler: handler}
+	self195.processorMap["question_timu_count"] = &datanodeServiceProcessorQuestionTimuCount{handler: handler}
+	self195.processorMap["question_timu"] = &datanodeServiceProcessorQuestionTimu{handler: handler}
+	self195.processorMap["collect_timu"] = &datanodeServiceProcessorCollectTimu{handler: handler}
+	self195.processorMap["query_collect_timu"] = &datanodeServiceProcessorQueryCollectTimu{handler: handler}
+	self195.processorMap["modify_question"] = &datanodeServiceProcessorModifyQuestion{handler: handler}
+	self195.processorMap["modify_list"] = &datanodeServiceProcessorModifyList{handler: handler}
+	self195.processorMap["modify_count"] = &datanodeServiceProcessorModifyCount{handler: handler}
+	self195.processorMap["modify_cancel"] = &datanodeServiceProcessorModifyCancel{handler: handler}
+	self195.processorMap["on_search"] = &datanodeServiceProcessorOnSearch{handler: handler}
+	return self195
 }
 
 func (p *DatanodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -19027,12 +19043,12 @@ func (p *DatanodeServiceProcessor) Process(ctx context.Context, iprot, oprot thr
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x194 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x196 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x194.Write(oprot)
+	x196.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x194
+	return false, x196
 
 }
 
@@ -21100,6 +21116,54 @@ func (p *datanodeServiceProcessorModifyCancel) Process(ctx context.Context, seqI
 	return true, err
 }
 
+type datanodeServiceProcessorOnSearch struct {
+	handler DatanodeService
+}
+
+func (p *datanodeServiceProcessorOnSearch) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := DatanodeServiceOnSearchArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("on_search", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	result := DatanodeServiceOnSearchResult{}
+	var retval *SearchRes
+	var err2 error
+	if retval, err2 = p.handler.OnSearch(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing on_search: "+err2.Error())
+		oprot.WriteMessageBegin("on_search", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("on_search", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
 // HELPER FUNCTIONS AND STRUCTURES
 
 // Attributes:
@@ -21707,11 +21771,11 @@ func (p *DatanodeServiceSearchUserResult) ReadField0(iprot thrift.TProtocol) err
 	tSlice := make([]*User, 0, size)
 	p.Success = tSlice
 	for i := 0; i < size; i++ {
-		_elem195 := &User{}
-		if err := _elem195.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem195), err)
+		_elem197 := &User{}
+		if err := _elem197.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem197), err)
 		}
-		p.Success = append(p.Success, _elem195)
+		p.Success = append(p.Success, _elem197)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
@@ -31302,4 +31366,220 @@ func (p *DatanodeServiceModifyCancelResult) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("DatanodeServiceModifyCancelResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type DatanodeServiceOnSearchArgs struct {
+	Req *SearchReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewDatanodeServiceOnSearchArgs() *DatanodeServiceOnSearchArgs {
+	return &DatanodeServiceOnSearchArgs{}
+}
+
+var DatanodeServiceOnSearchArgs_Req_DEFAULT *SearchReq
+
+func (p *DatanodeServiceOnSearchArgs) GetReq() *SearchReq {
+	if !p.IsSetReq() {
+		return DatanodeServiceOnSearchArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *DatanodeServiceOnSearchArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DatanodeServiceOnSearchArgs) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceOnSearchArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &SearchReq{}
+	if err := p.Req.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceOnSearchArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("on_search_args"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceOnSearchArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+	}
+	return err
+}
+
+func (p *DatanodeServiceOnSearchArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DatanodeServiceOnSearchArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type DatanodeServiceOnSearchResult struct {
+	Success *SearchRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewDatanodeServiceOnSearchResult() *DatanodeServiceOnSearchResult {
+	return &DatanodeServiceOnSearchResult{}
+}
+
+var DatanodeServiceOnSearchResult_Success_DEFAULT *SearchRes
+
+func (p *DatanodeServiceOnSearchResult) GetSuccess() *SearchRes {
+	if !p.IsSetSuccess() {
+		return DatanodeServiceOnSearchResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *DatanodeServiceOnSearchResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DatanodeServiceOnSearchResult) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField0(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceOnSearchResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &SearchRes{}
+	if err := p.Success.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceOnSearchResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("on_search_result"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField0(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceOnSearchResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+		}
+		if err := oprot.WriteFieldEnd(); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err)
+		}
+	}
+	return err
+}
+
+func (p *DatanodeServiceOnSearchResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DatanodeServiceOnSearchResult(%+v)", *p)
 }

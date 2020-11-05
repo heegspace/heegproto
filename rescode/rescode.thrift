@@ -14,6 +14,8 @@ enum code {
 
 
     NOT_EXISTS = 400,    // 不存在
+    
+    NOT_DATA = 404,      // 没有数据
 
     SEND_CODE_ERR = 10000,  // 发送验证码错误
     CODE_ERROR  = 10001,    // 验证码错误
