@@ -515,7 +515,7 @@ struct search_req {
 struct search_res {
     1:rescode.code              rescode,
     2:string                    resmsg,
-    3:i64                       timestamp,
+    3:double                    timestamp,
     4:common.search_hits_total         total,
     5:list<common.search_hits_item>    hits,
     6:map<string,string> extra, 

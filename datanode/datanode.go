@@ -17849,7 +17849,7 @@ func (p *SearchReq) String() string {
 type SearchRes struct {
 	Rescode   rescode.Code             `thrift:"rescode,1" db:"rescode" json:"rescode"`
 	Resmsg    string                   `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
-	Timestamp int64                    `thrift:"timestamp,3" db:"timestamp" json:"timestamp"`
+	Timestamp float64                  `thrift:"timestamp,3" db:"timestamp" json:"timestamp"`
 	Total     *common.SearchHitsTotal  `thrift:"total,4" db:"total" json:"total"`
 	Hits      []*common.SearchHitsItem `thrift:"hits,5" db:"hits" json:"hits"`
 	Extra     map[string]string        `thrift:"extra,6" db:"extra" json:"extra"`
@@ -17867,7 +17867,7 @@ func (p *SearchRes) GetResmsg() string {
 	return p.Resmsg
 }
 
-func (p *SearchRes) GetTimestamp() int64 {
+func (p *SearchRes) GetTimestamp() float64 {
 	return p.Timestamp
 }
 
@@ -17926,7 +17926,7 @@ func (p *SearchRes) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 3:
-			if fieldTypeId == thrift.I64 {
+			if fieldTypeId == thrift.DOUBLE {
 				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
@@ -18000,7 +18000,7 @@ func (p *SearchRes) ReadField2(iprot thrift.TProtocol) error {
 }
 
 func (p *SearchRes) ReadField3(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadI64(); err != nil {
+	if v, err := iprot.ReadDouble(); err != nil {
 		return thrift.PrependError("error reading field 3: ", err)
 	} else {
 		p.Timestamp = v
@@ -18124,10 +18124,10 @@ func (p *SearchRes) writeField2(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *SearchRes) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("timestamp", thrift.I64, 3); err != nil {
+	if err := oprot.WriteFieldBegin("timestamp", thrift.DOUBLE, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:timestamp: ", p), err)
 	}
-	if err := oprot.WriteI64(int64(p.Timestamp)); err != nil {
+	if err := oprot.WriteDouble(float64(p.Timestamp)); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T.timestamp (3) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
