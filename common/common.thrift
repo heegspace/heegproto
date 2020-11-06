@@ -198,7 +198,7 @@ struct grade_subject {
     5:list<grade_item>  subjects,
 }
 
-struct scholl_roll {
+struct school_roll {
     1:string    uid,
     2:i64       index,
     3:string    name,

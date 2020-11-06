@@ -7054,33 +7054,33 @@ func (p *GradeSubject) String() string {
 //  - Index
 //  - Name
 //  - CreateAt
-type SchollRoll struct {
+type SchoolRoll struct {
 	UID      string `thrift:"uid,1" db:"uid" json:"uid"`
 	Index    int64  `thrift:"index,2" db:"index" json:"index"`
 	Name     string `thrift:"name,3" db:"name" json:"name"`
 	CreateAt string `thrift:"create_at,4" db:"create_at" json:"create_at"`
 }
 
-func NewSchollRoll() *SchollRoll {
-	return &SchollRoll{}
+func NewSchoolRoll() *SchoolRoll {
+	return &SchoolRoll{}
 }
 
-func (p *SchollRoll) GetUID() string {
+func (p *SchoolRoll) GetUID() string {
 	return p.UID
 }
 
-func (p *SchollRoll) GetIndex() int64 {
+func (p *SchoolRoll) GetIndex() int64 {
 	return p.Index
 }
 
-func (p *SchollRoll) GetName() string {
+func (p *SchoolRoll) GetName() string {
 	return p.Name
 }
 
-func (p *SchollRoll) GetCreateAt() string {
+func (p *SchoolRoll) GetCreateAt() string {
 	return p.CreateAt
 }
-func (p *SchollRoll) Read(iprot thrift.TProtocol) error {
+func (p *SchoolRoll) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -7149,7 +7149,7 @@ func (p *SchollRoll) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *SchollRoll) ReadField1(iprot thrift.TProtocol) error {
+func (p *SchoolRoll) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
@@ -7158,7 +7158,7 @@ func (p *SchollRoll) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *SchollRoll) ReadField2(iprot thrift.TProtocol) error {
+func (p *SchoolRoll) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI64(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
@@ -7167,7 +7167,7 @@ func (p *SchollRoll) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *SchollRoll) ReadField3(iprot thrift.TProtocol) error {
+func (p *SchoolRoll) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 3: ", err)
 	} else {
@@ -7176,7 +7176,7 @@ func (p *SchollRoll) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *SchollRoll) ReadField4(iprot thrift.TProtocol) error {
+func (p *SchoolRoll) ReadField4(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 4: ", err)
 	} else {
@@ -7185,8 +7185,8 @@ func (p *SchollRoll) ReadField4(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *SchollRoll) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("scholl_roll"); err != nil {
+func (p *SchoolRoll) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("school_roll"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -7212,7 +7212,7 @@ func (p *SchollRoll) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *SchollRoll) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *SchoolRoll) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
 	}
@@ -7225,7 +7225,7 @@ func (p *SchollRoll) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *SchollRoll) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *SchoolRoll) writeField2(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("index", thrift.I64, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:index: ", p), err)
 	}
@@ -7238,7 +7238,7 @@ func (p *SchollRoll) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *SchollRoll) writeField3(oprot thrift.TProtocol) (err error) {
+func (p *SchoolRoll) writeField3(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("name", thrift.STRING, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:name: ", p), err)
 	}
@@ -7251,7 +7251,7 @@ func (p *SchollRoll) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *SchollRoll) writeField4(oprot thrift.TProtocol) (err error) {
+func (p *SchoolRoll) writeField4(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("create_at", thrift.STRING, 4); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:create_at: ", p), err)
 	}
@@ -7264,11 +7264,11 @@ func (p *SchollRoll) writeField4(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *SchollRoll) String() string {
+func (p *SchoolRoll) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("SchollRoll(%+v)", *p)
+	return fmt.Sprintf("SchoolRoll(%+v)", *p)
 }
 
 // Attributes:
