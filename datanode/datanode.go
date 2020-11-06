@@ -19084,10 +19084,10 @@ func (p *GradeCateListRes) String() string {
 //  - Lists
 //  - Extra
 type HomeBlackDataRes struct {
-	Rescode rescode.Code          `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Resmsg  string                `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
-	Lists   []*common.SearchTopic `thrift:"lists,3" db:"lists" json:"lists"`
-	Extra   map[string]string     `thrift:"extra,4" db:"extra" json:"extra"`
+	Rescode rescode.Code           `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string                 `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Lists   []*common.SchoolStatic `thrift:"lists,3" db:"lists" json:"lists"`
+	Extra   map[string]string      `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewHomeBlackDataRes() *HomeBlackDataRes {
@@ -19102,7 +19102,7 @@ func (p *HomeBlackDataRes) GetResmsg() string {
 	return p.Resmsg
 }
 
-func (p *HomeBlackDataRes) GetLists() []*common.SearchTopic {
+func (p *HomeBlackDataRes) GetLists() []*common.SchoolStatic {
 	return p.Lists
 }
 
@@ -19202,10 +19202,10 @@ func (p *HomeBlackDataRes) ReadField3(iprot thrift.TProtocol) error {
 	if err != nil {
 		return thrift.PrependError("error reading list begin: ", err)
 	}
-	tSlice := make([]*common.SearchTopic, 0, size)
+	tSlice := make([]*common.SchoolStatic, 0, size)
 	p.Lists = tSlice
 	for i := 0; i < size; i++ {
-		_elem114 := &common.SearchTopic{}
+		_elem114 := &common.SchoolStatic{}
 		if err := _elem114.Read(iprot); err != nil {
 			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem114), err)
 		}

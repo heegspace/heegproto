@@ -549,7 +549,7 @@ struct grade_cate_list_res {
 struct home_black_data_res {
     1:rescode.code              rescode,
     2:string                    resmsg,
-    3:list<common.search_topic> lists,
+    3:list<common.school_static> lists,
     4:map<string,string>        extra,
 }
 
