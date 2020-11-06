@@ -585,7 +585,7 @@ struct school_roll_list_req {
 struct school_roll_list_res {
     1:rescode.code              rescode,
     2:string                    resmsg,
-    3:list<common.scholl_roll>  lists,
+    3:list<common.school_roll>  lists,
     4:map<string,string>        extra,
 }
 
@@ -731,7 +731,7 @@ service datanode_service {
     // 获取学籍对应的年级+科目
     grade_subject_res grade_subject(1:grade_subject_req req),
     // 添加学级信息
-    school_roll_add_res school_roll_add(1:common.scholl_roll req),
+    school_roll_add_res school_roll_add(1:common.school_roll req),
     // 获取年级总数
     school_roll_count_res school_roll_count(),
     // 获取年级列表信息
