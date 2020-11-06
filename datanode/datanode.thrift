@@ -585,7 +585,7 @@ struct school_roll_list_req {
 struct school_roll_list_res {
     1:rescode.code              rescode,
     2:string                    resmsg,
-    3:list<common.scholl_roll>  count,
+    3:list<common.scholl_roll>  lists,
     4:map<string,string>        extra,
 }
 
