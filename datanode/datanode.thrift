@@ -609,7 +609,7 @@ struct subject_cate_list_req {
 struct subject_cate_list_res {
     1:rescode.code              rescode,
     2:string                    resmsg,
-    3:list<common.subject_cate>  count,
+    3:list<common.subject_cate>  lists,
     4:map<string,string>        extra,
 }
 
