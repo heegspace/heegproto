@@ -165,3 +165,52 @@ struct search_topic {
     3:search_shards shards,
     4:search_hits   hits,
 }
+
+struct grade_cate {
+    1:string    uid,
+    2:string    roll_id,
+    3:i64       sort,
+    4:string    name,
+    5:string    create_at,
+}
+
+struct school_static {
+    1:i64           type,
+    2:string        title,
+    3:list<string>  content,
+    4:string        href,
+    5:string        target,
+}
+
+struct grade_item {
+    1:string    uid,
+    2:string    name,
+    3:i64       sort,
+    4:string    href,
+    5:string    heritid,
+}
+
+struct grade_subject {
+    1:string            roll_uid,
+    2:string            grade_uid,
+    3:string            grade_name,
+    4:i64               sort,
+    5:list<grade_item>  subjects,
+}
+
+struct scholl_roll {
+    1:string    uid,
+    2:i64       index,
+    3:string    name,
+    4:string    create_at,
+}
+
+struct subject_cate {
+    1:string    uid,
+    2:string    roll_id,
+    3:string    grade_id,
+    4:string    subject,
+    5:i64       sort,
+    6:string    href,
+    7:string    create_at,
+}

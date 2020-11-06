@@ -5956,3 +5956,1662 @@ func (p *SearchTopic) String() string {
 	}
 	return fmt.Sprintf("SearchTopic(%+v)", *p)
 }
+
+// Attributes:
+//  - UID
+//  - RollID
+//  - Sort
+//  - Name
+//  - CreateAt
+type GradeCate struct {
+	UID      string `thrift:"uid,1" db:"uid" json:"uid"`
+	RollID   string `thrift:"roll_id,2" db:"roll_id" json:"roll_id"`
+	Sort     int64  `thrift:"sort,3" db:"sort" json:"sort"`
+	Name     string `thrift:"name,4" db:"name" json:"name"`
+	CreateAt string `thrift:"create_at,5" db:"create_at" json:"create_at"`
+}
+
+func NewGradeCate() *GradeCate {
+	return &GradeCate{}
+}
+
+func (p *GradeCate) GetUID() string {
+	return p.UID
+}
+
+func (p *GradeCate) GetRollID() string {
+	return p.RollID
+}
+
+func (p *GradeCate) GetSort() int64 {
+	return p.Sort
+}
+
+func (p *GradeCate) GetName() string {
+	return p.Name
+}
+
+func (p *GradeCate) GetCreateAt() string {
+	return p.CreateAt
+}
+func (p *GradeCate) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *GradeCate) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
+func (p *GradeCate) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.RollID = v
+	}
+	return nil
+}
+
+func (p *GradeCate) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Sort = v
+	}
+	return nil
+}
+
+func (p *GradeCate) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.Name = v
+	}
+	return nil
+}
+
+func (p *GradeCate) ReadField5(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 5: ", err)
+	} else {
+		p.CreateAt = v
+	}
+	return nil
+}
+
+func (p *GradeCate) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("grade_cate"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *GradeCate) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *GradeCate) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("roll_id", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:roll_id: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.RollID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.roll_id (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:roll_id: ", p), err)
+	}
+	return err
+}
+
+func (p *GradeCate) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("sort", thrift.I64, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:sort: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.Sort)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.sort (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:sort: ", p), err)
+	}
+	return err
+}
+
+func (p *GradeCate) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("name", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:name: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Name)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.name (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:name: ", p), err)
+	}
+	return err
+}
+
+func (p *GradeCate) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("create_at", thrift.STRING, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:create_at: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.CreateAt)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.create_at (5) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:create_at: ", p), err)
+	}
+	return err
+}
+
+func (p *GradeCate) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("GradeCate(%+v)", *p)
+}
+
+// Attributes:
+//  - Type
+//  - Title
+//  - Content
+//  - Href
+//  - Target
+type SchoolStatic struct {
+	Type    int64    `thrift:"type,1" db:"type" json:"type"`
+	Title   string   `thrift:"title,2" db:"title" json:"title"`
+	Content []string `thrift:"content,3" db:"content" json:"content"`
+	Href    string   `thrift:"href,4" db:"href" json:"href"`
+	Target  string   `thrift:"target,5" db:"target" json:"target"`
+}
+
+func NewSchoolStatic() *SchoolStatic {
+	return &SchoolStatic{}
+}
+
+func (p *SchoolStatic) GetType() int64 {
+	return p.Type
+}
+
+func (p *SchoolStatic) GetTitle() string {
+	return p.Title
+}
+
+func (p *SchoolStatic) GetContent() []string {
+	return p.Content
+}
+
+func (p *SchoolStatic) GetHref() string {
+	return p.Href
+}
+
+func (p *SchoolStatic) GetTarget() string {
+	return p.Target
+}
+func (p *SchoolStatic) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.LIST {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *SchoolStatic) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.Type = v
+	}
+	return nil
+}
+
+func (p *SchoolStatic) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Title = v
+	}
+	return nil
+}
+
+func (p *SchoolStatic) ReadField3(iprot thrift.TProtocol) error {
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
+		return thrift.PrependError("error reading list begin: ", err)
+	}
+	tSlice := make([]string, 0, size)
+	p.Content = tSlice
+	for i := 0; i < size; i++ {
+		var _elem11 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_elem11 = v
+		}
+		p.Content = append(p.Content, _elem11)
+	}
+	if err := iprot.ReadListEnd(); err != nil {
+		return thrift.PrependError("error reading list end: ", err)
+	}
+	return nil
+}
+
+func (p *SchoolStatic) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.Href = v
+	}
+	return nil
+}
+
+func (p *SchoolStatic) ReadField5(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 5: ", err)
+	} else {
+		p.Target = v
+	}
+	return nil
+}
+
+func (p *SchoolStatic) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("school_static"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *SchoolStatic) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("type", thrift.I64, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:type: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.Type)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.type (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:type: ", p), err)
+	}
+	return err
+}
+
+func (p *SchoolStatic) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("title", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:title: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Title)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.title (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:title: ", p), err)
+	}
+	return err
+}
+
+func (p *SchoolStatic) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("content", thrift.LIST, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:content: ", p), err)
+	}
+	if err := oprot.WriteListBegin(thrift.STRING, len(p.Content)); err != nil {
+		return thrift.PrependError("error writing list begin: ", err)
+	}
+	for _, v := range p.Content {
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteListEnd(); err != nil {
+		return thrift.PrependError("error writing list end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:content: ", p), err)
+	}
+	return err
+}
+
+func (p *SchoolStatic) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("href", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:href: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Href)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.href (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:href: ", p), err)
+	}
+	return err
+}
+
+func (p *SchoolStatic) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("target", thrift.STRING, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:target: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Target)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.target (5) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:target: ", p), err)
+	}
+	return err
+}
+
+func (p *SchoolStatic) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SchoolStatic(%+v)", *p)
+}
+
+// Attributes:
+//  - UID
+//  - Name
+//  - Sort
+//  - Href
+//  - Heritid
+type GradeItem struct {
+	UID     string `thrift:"uid,1" db:"uid" json:"uid"`
+	Name    string `thrift:"name,2" db:"name" json:"name"`
+	Sort    int64  `thrift:"sort,3" db:"sort" json:"sort"`
+	Href    string `thrift:"href,4" db:"href" json:"href"`
+	Heritid string `thrift:"heritid,5" db:"heritid" json:"heritid"`
+}
+
+func NewGradeItem() *GradeItem {
+	return &GradeItem{}
+}
+
+func (p *GradeItem) GetUID() string {
+	return p.UID
+}
+
+func (p *GradeItem) GetName() string {
+	return p.Name
+}
+
+func (p *GradeItem) GetSort() int64 {
+	return p.Sort
+}
+
+func (p *GradeItem) GetHref() string {
+	return p.Href
+}
+
+func (p *GradeItem) GetHeritid() string {
+	return p.Heritid
+}
+func (p *GradeItem) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *GradeItem) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
+func (p *GradeItem) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Name = v
+	}
+	return nil
+}
+
+func (p *GradeItem) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Sort = v
+	}
+	return nil
+}
+
+func (p *GradeItem) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.Href = v
+	}
+	return nil
+}
+
+func (p *GradeItem) ReadField5(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 5: ", err)
+	} else {
+		p.Heritid = v
+	}
+	return nil
+}
+
+func (p *GradeItem) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("grade_item"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *GradeItem) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *GradeItem) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("name", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:name: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Name)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.name (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:name: ", p), err)
+	}
+	return err
+}
+
+func (p *GradeItem) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("sort", thrift.I64, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:sort: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.Sort)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.sort (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:sort: ", p), err)
+	}
+	return err
+}
+
+func (p *GradeItem) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("href", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:href: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Href)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.href (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:href: ", p), err)
+	}
+	return err
+}
+
+func (p *GradeItem) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("heritid", thrift.STRING, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:heritid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Heritid)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.heritid (5) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:heritid: ", p), err)
+	}
+	return err
+}
+
+func (p *GradeItem) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("GradeItem(%+v)", *p)
+}
+
+// Attributes:
+//  - RollUID
+//  - GradeUID
+//  - GradeName
+//  - Sort
+//  - Subjects
+type GradeSubject struct {
+	RollUID   string       `thrift:"roll_uid,1" db:"roll_uid" json:"roll_uid"`
+	GradeUID  string       `thrift:"grade_uid,2" db:"grade_uid" json:"grade_uid"`
+	GradeName string       `thrift:"grade_name,3" db:"grade_name" json:"grade_name"`
+	Sort      int64        `thrift:"sort,4" db:"sort" json:"sort"`
+	Subjects  []*GradeItem `thrift:"subjects,5" db:"subjects" json:"subjects"`
+}
+
+func NewGradeSubject() *GradeSubject {
+	return &GradeSubject{}
+}
+
+func (p *GradeSubject) GetRollUID() string {
+	return p.RollUID
+}
+
+func (p *GradeSubject) GetGradeUID() string {
+	return p.GradeUID
+}
+
+func (p *GradeSubject) GetGradeName() string {
+	return p.GradeName
+}
+
+func (p *GradeSubject) GetSort() int64 {
+	return p.Sort
+}
+
+func (p *GradeSubject) GetSubjects() []*GradeItem {
+	return p.Subjects
+}
+func (p *GradeSubject) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.LIST {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *GradeSubject) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.RollUID = v
+	}
+	return nil
+}
+
+func (p *GradeSubject) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.GradeUID = v
+	}
+	return nil
+}
+
+func (p *GradeSubject) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.GradeName = v
+	}
+	return nil
+}
+
+func (p *GradeSubject) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.Sort = v
+	}
+	return nil
+}
+
+func (p *GradeSubject) ReadField5(iprot thrift.TProtocol) error {
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
+		return thrift.PrependError("error reading list begin: ", err)
+	}
+	tSlice := make([]*GradeItem, 0, size)
+	p.Subjects = tSlice
+	for i := 0; i < size; i++ {
+		_elem12 := &GradeItem{}
+		if err := _elem12.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem12), err)
+		}
+		p.Subjects = append(p.Subjects, _elem12)
+	}
+	if err := iprot.ReadListEnd(); err != nil {
+		return thrift.PrependError("error reading list end: ", err)
+	}
+	return nil
+}
+
+func (p *GradeSubject) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("grade_subject"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *GradeSubject) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("roll_uid", thrift.STRING, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:roll_uid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.RollUID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.roll_uid (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:roll_uid: ", p), err)
+	}
+	return err
+}
+
+func (p *GradeSubject) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("grade_uid", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:grade_uid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.GradeUID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.grade_uid (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:grade_uid: ", p), err)
+	}
+	return err
+}
+
+func (p *GradeSubject) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("grade_name", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:grade_name: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.GradeName)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.grade_name (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:grade_name: ", p), err)
+	}
+	return err
+}
+
+func (p *GradeSubject) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("sort", thrift.I64, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:sort: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.Sort)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.sort (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:sort: ", p), err)
+	}
+	return err
+}
+
+func (p *GradeSubject) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("subjects", thrift.LIST, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:subjects: ", p), err)
+	}
+	if err := oprot.WriteListBegin(thrift.STRUCT, len(p.Subjects)); err != nil {
+		return thrift.PrependError("error writing list begin: ", err)
+	}
+	for _, v := range p.Subjects {
+		if err := v.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", v), err)
+		}
+	}
+	if err := oprot.WriteListEnd(); err != nil {
+		return thrift.PrependError("error writing list end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:subjects: ", p), err)
+	}
+	return err
+}
+
+func (p *GradeSubject) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("GradeSubject(%+v)", *p)
+}
+
+// Attributes:
+//  - UID
+//  - Index
+//  - Name
+//  - CreateAt
+type SchollRoll struct {
+	UID      string `thrift:"uid,1" db:"uid" json:"uid"`
+	Index    int64  `thrift:"index,2" db:"index" json:"index"`
+	Name     string `thrift:"name,3" db:"name" json:"name"`
+	CreateAt string `thrift:"create_at,4" db:"create_at" json:"create_at"`
+}
+
+func NewSchollRoll() *SchollRoll {
+	return &SchollRoll{}
+}
+
+func (p *SchollRoll) GetUID() string {
+	return p.UID
+}
+
+func (p *SchollRoll) GetIndex() int64 {
+	return p.Index
+}
+
+func (p *SchollRoll) GetName() string {
+	return p.Name
+}
+
+func (p *SchollRoll) GetCreateAt() string {
+	return p.CreateAt
+}
+func (p *SchollRoll) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *SchollRoll) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
+func (p *SchollRoll) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Index = v
+	}
+	return nil
+}
+
+func (p *SchollRoll) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Name = v
+	}
+	return nil
+}
+
+func (p *SchollRoll) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.CreateAt = v
+	}
+	return nil
+}
+
+func (p *SchollRoll) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("scholl_roll"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *SchollRoll) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *SchollRoll) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("index", thrift.I64, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:index: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.Index)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.index (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:index: ", p), err)
+	}
+	return err
+}
+
+func (p *SchollRoll) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("name", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:name: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Name)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.name (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:name: ", p), err)
+	}
+	return err
+}
+
+func (p *SchollRoll) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("create_at", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:create_at: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.CreateAt)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.create_at (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:create_at: ", p), err)
+	}
+	return err
+}
+
+func (p *SchollRoll) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SchollRoll(%+v)", *p)
+}
+
+// Attributes:
+//  - UID
+//  - RollID
+//  - GradeID
+//  - Subject
+//  - Sort
+//  - Href
+//  - CreateAt
+type SubjectCate struct {
+	UID      string `thrift:"uid,1" db:"uid" json:"uid"`
+	RollID   string `thrift:"roll_id,2" db:"roll_id" json:"roll_id"`
+	GradeID  string `thrift:"grade_id,3" db:"grade_id" json:"grade_id"`
+	Subject  string `thrift:"subject,4" db:"subject" json:"subject"`
+	Sort     int64  `thrift:"sort,5" db:"sort" json:"sort"`
+	Href     string `thrift:"href,6" db:"href" json:"href"`
+	CreateAt string `thrift:"create_at,7" db:"create_at" json:"create_at"`
+}
+
+func NewSubjectCate() *SubjectCate {
+	return &SubjectCate{}
+}
+
+func (p *SubjectCate) GetUID() string {
+	return p.UID
+}
+
+func (p *SubjectCate) GetRollID() string {
+	return p.RollID
+}
+
+func (p *SubjectCate) GetGradeID() string {
+	return p.GradeID
+}
+
+func (p *SubjectCate) GetSubject() string {
+	return p.Subject
+}
+
+func (p *SubjectCate) GetSort() int64 {
+	return p.Sort
+}
+
+func (p *SubjectCate) GetHref() string {
+	return p.Href
+}
+
+func (p *SubjectCate) GetCreateAt() string {
+	return p.CreateAt
+}
+func (p *SubjectCate) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 6:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField6(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 7:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField7(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *SubjectCate) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
+func (p *SubjectCate) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.RollID = v
+	}
+	return nil
+}
+
+func (p *SubjectCate) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.GradeID = v
+	}
+	return nil
+}
+
+func (p *SubjectCate) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.Subject = v
+	}
+	return nil
+}
+
+func (p *SubjectCate) ReadField5(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 5: ", err)
+	} else {
+		p.Sort = v
+	}
+	return nil
+}
+
+func (p *SubjectCate) ReadField6(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 6: ", err)
+	} else {
+		p.Href = v
+	}
+	return nil
+}
+
+func (p *SubjectCate) ReadField7(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 7: ", err)
+	} else {
+		p.CreateAt = v
+	}
+	return nil
+}
+
+func (p *SubjectCate) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("subject_cate"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField6(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField7(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *SubjectCate) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *SubjectCate) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("roll_id", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:roll_id: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.RollID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.roll_id (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:roll_id: ", p), err)
+	}
+	return err
+}
+
+func (p *SubjectCate) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("grade_id", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:grade_id: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.GradeID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.grade_id (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:grade_id: ", p), err)
+	}
+	return err
+}
+
+func (p *SubjectCate) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("subject", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:subject: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Subject)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.subject (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:subject: ", p), err)
+	}
+	return err
+}
+
+func (p *SubjectCate) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("sort", thrift.I64, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:sort: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.Sort)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.sort (5) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:sort: ", p), err)
+	}
+	return err
+}
+
+func (p *SubjectCate) writeField6(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("href", thrift.STRING, 6); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:href: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Href)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.href (6) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:href: ", p), err)
+	}
+	return err
+}
+
+func (p *SubjectCate) writeField7(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("create_at", thrift.STRING, 7); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:create_at: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.CreateAt)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.create_at (7) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 7:create_at: ", p), err)
+	}
+	return err
+}
+
+func (p *SubjectCate) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SubjectCate(%+v)", *p)
+}

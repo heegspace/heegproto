@@ -521,6 +521,98 @@ struct search_res {
     6:map<string,string> extra, 
 }
 
+struct add_grade_cate_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+}
+
+struct grade_cate_count_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+    3:i64               count,
+    4:map<string,string> extra,
+}
+
+struct grade_cate_list_req {
+    1:i32       page,
+    2:i32       size,
+    3:map<string,string> extra,
+}
+
+struct grade_cate_list_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:list<common.grade_cate>   lists,
+    4:map<string,string>        extra,
+}
+
+struct home_black_data_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:list<common.search_topic> lists,
+    4:map<string,string>        extra,
+}
+
+struct grade_subject_req {
+    1:i32       index,
+    2:map<string,string> extra,
+}
+
+struct grade_subject_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:list<common.grade_subject> lists,
+    4:map<string,string>        extra,
+}
+
+struct school_roll_add_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+}
+
+struct school_roll_count_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+    3:i64               count,
+}
+
+struct school_roll_list_req {
+    1:i32   page,
+    2:i32   size,
+    3:map<string,string> extra,
+}
+
+struct school_roll_list_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:list<common.scholl_roll>  count,
+    4:map<string,string>        extra,
+}
+
+struct subject_cate_add_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+}
+
+struct subject_cate_count_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+    3:i64               count,
+}
+
+struct subject_cate_list_req {
+    1:i32   page,
+    2:i32   size,
+    3:map<string,string> extra,
+}
+
+struct subject_cate_list_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:list<common.subject_cate>  count,
+    4:map<string,string>        extra,
+}
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -627,4 +719,27 @@ service datanode_service {
     modify_cancel_res modify_cancel(1:string tid),
     // 搜索试题
     search_res on_search(1:search_req req),
+
+    // 添加年纪信息
+    add_grade_cate_res grade_cate_add(1:common.grade_cate req),
+    // 获取年纪总数
+    grade_cate_count_res grade_cate_count(),
+    // 获取年级信息
+    grade_cate_list_res grade_cate_list(1:grade_cate_list_req req),
+    // 获取主页最新动态统计信息
+    home_black_data_res home_black_data(),
+    // 获取学籍对应的年级+科目
+    grade_subject_res grade_subject(1:grade_subject_req req),
+    // 添加学级信息
+    school_roll_add_res school_roll_add(1:common.scholl_roll req),
+    // 获取年级总数
+    school_roll_count_res school_roll_count(),
+    // 获取年级列表信息
+    school_roll_list_res school_list(1:school_roll_list_req req),
+    // 添加科目信息
+    subject_cate_add_res subject_cate_add(1:common.subject_cate req),
+    // 获取科目总数
+    subject_cate_count_res subject_cate_count(),
+    // 获取科目列表
+    subject_cate_list_res subject_cate_list(1:subject_cate_list_req req),
 }
