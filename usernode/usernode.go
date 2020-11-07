@@ -994,8 +994,7 @@ type UpdateUsernameReq struct {
 	Auth     *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
 	UID      string            `thrift:"uid,2" db:"uid" json:"uid"`
 	UserName string            `thrift:"user_name,3" db:"user_name" json:"user_name"`
-	// unused fields # 4 to 18
-	Extra map[string]string `thrift:"extra,19" db:"extra" json:"extra"`
+	Extra    map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewUpdateUsernameReq() *UpdateUsernameReq {
@@ -1070,9 +1069,9 @@ func (p *UpdateUsernameReq) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
-		case 19:
+		case 4:
 			if fieldTypeId == thrift.MAP {
-				if err := p.ReadField19(iprot); err != nil {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -1121,7 +1120,7 @@ func (p *UpdateUsernameReq) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateUsernameReq) ReadField19(iprot thrift.TProtocol) error {
+func (p *UpdateUsernameReq) ReadField4(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -1163,7 +1162,7 @@ func (p *UpdateUsernameReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
-		if err := p.writeField19(oprot); err != nil {
+		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
 	}
@@ -1215,9 +1214,9 @@ func (p *UpdateUsernameReq) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateUsernameReq) writeField19(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 19); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 19:extra: ", p), err)
+func (p *UpdateUsernameReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -1234,7 +1233,7 @@ func (p *UpdateUsernameReq) writeField19(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 19:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
 	}
 	return err
 }
@@ -1255,8 +1254,7 @@ type UpdateBrithdayReq struct {
 	Auth     *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
 	UID      string            `thrift:"uid,2" db:"uid" json:"uid"`
 	Brithday string            `thrift:"brithday,3" db:"brithday" json:"brithday"`
-	// unused fields # 4 to 18
-	Extra map[string]string `thrift:"extra,19" db:"extra" json:"extra"`
+	Extra    map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewUpdateBrithdayReq() *UpdateBrithdayReq {
@@ -1331,9 +1329,9 @@ func (p *UpdateBrithdayReq) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
-		case 19:
+		case 4:
 			if fieldTypeId == thrift.MAP {
-				if err := p.ReadField19(iprot); err != nil {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -1382,7 +1380,7 @@ func (p *UpdateBrithdayReq) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateBrithdayReq) ReadField19(iprot thrift.TProtocol) error {
+func (p *UpdateBrithdayReq) ReadField4(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -1424,7 +1422,7 @@ func (p *UpdateBrithdayReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
-		if err := p.writeField19(oprot); err != nil {
+		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
 	}
@@ -1476,9 +1474,9 @@ func (p *UpdateBrithdayReq) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateBrithdayReq) writeField19(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 19); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 19:extra: ", p), err)
+func (p *UpdateBrithdayReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -1495,7 +1493,7 @@ func (p *UpdateBrithdayReq) writeField19(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 19:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
 	}
 	return err
 }
@@ -1516,8 +1514,7 @@ type UpdateCardidReq struct {
 	Auth   *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
 	UID    string            `thrift:"uid,2" db:"uid" json:"uid"`
 	CardID string            `thrift:"card_id,3" db:"card_id" json:"card_id"`
-	// unused fields # 4 to 18
-	Extra map[string]string `thrift:"extra,19" db:"extra" json:"extra"`
+	Extra  map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewUpdateCardidReq() *UpdateCardidReq {
@@ -1592,9 +1589,9 @@ func (p *UpdateCardidReq) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
-		case 19:
+		case 4:
 			if fieldTypeId == thrift.MAP {
-				if err := p.ReadField19(iprot); err != nil {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -1643,7 +1640,7 @@ func (p *UpdateCardidReq) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateCardidReq) ReadField19(iprot thrift.TProtocol) error {
+func (p *UpdateCardidReq) ReadField4(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -1685,7 +1682,7 @@ func (p *UpdateCardidReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
-		if err := p.writeField19(oprot); err != nil {
+		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
 	}
@@ -1737,9 +1734,9 @@ func (p *UpdateCardidReq) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateCardidReq) writeField19(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 19); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 19:extra: ", p), err)
+func (p *UpdateCardidReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -1756,7 +1753,7 @@ func (p *UpdateCardidReq) writeField19(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 19:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
 	}
 	return err
 }
@@ -1777,8 +1774,7 @@ type UpdateAvatarReq struct {
 	Auth   *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
 	UID    string            `thrift:"uid,2" db:"uid" json:"uid"`
 	Avatar string            `thrift:"avatar,3" db:"avatar" json:"avatar"`
-	// unused fields # 4 to 18
-	Extra map[string]string `thrift:"extra,19" db:"extra" json:"extra"`
+	Extra  map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewUpdateAvatarReq() *UpdateAvatarReq {
@@ -1853,9 +1849,9 @@ func (p *UpdateAvatarReq) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
-		case 19:
+		case 4:
 			if fieldTypeId == thrift.MAP {
-				if err := p.ReadField19(iprot); err != nil {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -1904,7 +1900,7 @@ func (p *UpdateAvatarReq) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateAvatarReq) ReadField19(iprot thrift.TProtocol) error {
+func (p *UpdateAvatarReq) ReadField4(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -1946,7 +1942,7 @@ func (p *UpdateAvatarReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
-		if err := p.writeField19(oprot); err != nil {
+		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
 	}
@@ -1998,9 +1994,9 @@ func (p *UpdateAvatarReq) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateAvatarReq) writeField19(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 19); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 19:extra: ", p), err)
+func (p *UpdateAvatarReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -2017,7 +2013,7 @@ func (p *UpdateAvatarReq) writeField19(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 19:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
 	}
 	return err
 }
@@ -2038,8 +2034,7 @@ type UpdateAttentionReq struct {
 	Auth      *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
 	UID       string            `thrift:"uid,2" db:"uid" json:"uid"`
 	Attention string            `thrift:"attention,3" db:"attention" json:"attention"`
-	// unused fields # 4 to 18
-	Extra map[string]string `thrift:"extra,19" db:"extra" json:"extra"`
+	Extra     map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewUpdateAttentionReq() *UpdateAttentionReq {
@@ -2114,9 +2109,9 @@ func (p *UpdateAttentionReq) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
-		case 19:
+		case 4:
 			if fieldTypeId == thrift.MAP {
-				if err := p.ReadField19(iprot); err != nil {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -2165,7 +2160,7 @@ func (p *UpdateAttentionReq) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateAttentionReq) ReadField19(iprot thrift.TProtocol) error {
+func (p *UpdateAttentionReq) ReadField4(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -2207,7 +2202,7 @@ func (p *UpdateAttentionReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
-		if err := p.writeField19(oprot); err != nil {
+		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
 	}
@@ -2259,9 +2254,9 @@ func (p *UpdateAttentionReq) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateAttentionReq) writeField19(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 19); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 19:extra: ", p), err)
+func (p *UpdateAttentionReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -2278,7 +2273,7 @@ func (p *UpdateAttentionReq) writeField19(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 19:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
 	}
 	return err
 }

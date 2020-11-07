@@ -32,35 +32,35 @@ struct update_username_req {
     1:common.authorize auth,
     2:string uid,
     3:string user_name
-    19:map<string,string> extra,
+    4:map<string,string> extra,
 }
 
 struct update_brithday_req {
     1:common.authorize auth,
     2:string uid,
     3:string brithday
-    19:map<string,string> extra,
+    4:map<string,string> extra,
 }
 
 struct update_cardid_req {
     1:common.authorize auth,
     2:string uid,
     3:string card_id
-    19:map<string,string> extra,
+    4:map<string,string> extra,
 }
 
 struct update_avatar_req {
     1:common.authorize auth,
     2:string uid,
     3:string avatar
-    19:map<string,string> extra,
+    4:map<string,string> extra,
 }
 
 struct update_attention_req {
     1:common.authorize auth,
     2:string uid,
     3:string attention
-    19:map<string,string> extra,
+    4:map<string,string> extra,
 }
 
 struct update_user_res {
