@@ -502,8 +502,7 @@ struct modify_count_res {
 struct modify_cancel_res {
     1:rescode.code       rescode,
     2:string             resmsg,
-    3:i32                count,
-    4:map<string,string> extra, 
+    3:map<string,string> extra, 
 }
 
 struct search_req {
