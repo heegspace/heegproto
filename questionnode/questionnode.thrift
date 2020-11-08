@@ -93,7 +93,8 @@ struct school_roll_count_req {
 struct school_roll_count_res {
     1:rescode.code          rescode,
     2:string                resmsg,
-    3:map<string,string>    extra,
+    3:i32                   count,
+    4:map<string,string>    extra,
 }
 
 struct school_list_req {
@@ -252,7 +253,7 @@ struct question_timu_req {
 struct question_timu_res {
     1:rescode.code          rescode,
     2:string                resmsg,
-    3:list<common.timu_item> tixings,
+    3:list<common.timu_item> timus,
     4:map<string,string>    extra,
 }
 
@@ -380,7 +381,7 @@ service questionnode_service {
     // 获取题目
     question_timu_res question_timu(1:question_timu_req req),
     // 收藏题目
-    collect_timu_res collection_timu(1:collect_timu_req req),
+    collect_timu_res collect_timu(1:collect_timu_req req),
     // 获取收藏的题目
     query_collect_timu_res query_collect_timu(1:query_collect_timu_req req),
     // 纠错试题
