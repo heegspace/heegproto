@@ -82,6 +82,20 @@ struct attr_res {
     4:map<string,string>    extra,
 }
 
+struct thumbnail_req {
+    1:common.authorize      auth,
+    2:string                uid,
+    3:string                path,
+    4:map<string,string>    extra,
+}
+
+struct thumbnail_res {
+    1:rescode.code  rescode,
+    2:string        resmsg,
+    3:string        thumb,
+    4:map<string,string> extra,
+}
+
 service cloudnode_service {
     // 获取目录
     dir_res   dir(1:dir_req req), 
@@ -94,4 +108,7 @@ service cloudnode_service {
 
     // 云存储属性
     attr_res attr(1:attr_req req),
+
+    // 获取缩略图
+    thumbnail_res thumbnail(1:thumbnail_req req),
 }

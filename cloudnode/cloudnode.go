@@ -2859,6 +2859,519 @@ func (p *AttrRes) String() string {
 	return fmt.Sprintf("AttrRes(%+v)", *p)
 }
 
+// Attributes:
+//  - Auth
+//  - UID
+//  - Path
+//  - Extra
+type ThumbnailReq struct {
+	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	UID   string            `thrift:"uid,2" db:"uid" json:"uid"`
+	Path  string            `thrift:"path,3" db:"path" json:"path"`
+	Extra map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
+}
+
+func NewThumbnailReq() *ThumbnailReq {
+	return &ThumbnailReq{}
+}
+
+var ThumbnailReq_Auth_DEFAULT *common.Authorize
+
+func (p *ThumbnailReq) GetAuth() *common.Authorize {
+	if !p.IsSetAuth() {
+		return ThumbnailReq_Auth_DEFAULT
+	}
+	return p.Auth
+}
+
+func (p *ThumbnailReq) GetUID() string {
+	return p.UID
+}
+
+func (p *ThumbnailReq) GetPath() string {
+	return p.Path
+}
+
+func (p *ThumbnailReq) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *ThumbnailReq) IsSetAuth() bool {
+	return p.Auth != nil
+}
+
+func (p *ThumbnailReq) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *ThumbnailReq) ReadField1(iprot thrift.TProtocol) error {
+	p.Auth = &common.Authorize{}
+	if err := p.Auth.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
+	}
+	return nil
+}
+
+func (p *ThumbnailReq) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
+func (p *ThumbnailReq) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Path = v
+	}
+	return nil
+}
+
+func (p *ThumbnailReq) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key17 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key17 = v
+		}
+		var _val18 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val18 = v
+		}
+		p.Extra[_key17] = _val18
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *ThumbnailReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("thumbnail_req"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *ThumbnailReq) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("auth", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:auth: ", p), err)
+	}
+	if err := p.Auth.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Auth), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:auth: ", p), err)
+	}
+	return err
+}
+
+func (p *ThumbnailReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:uid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *ThumbnailReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("path", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:path: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Path)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.path (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:path: ", p), err)
+	}
+	return err
+}
+
+func (p *ThumbnailReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *ThumbnailReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ThumbnailReq(%+v)", *p)
+}
+
+// Attributes:
+//  - Rescode
+//  - Resmsg
+//  - Thumb
+//  - Extra
+type ThumbnailRes struct {
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Thumb   string            `thrift:"thumb,3" db:"thumb" json:"thumb"`
+	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
+}
+
+func NewThumbnailRes() *ThumbnailRes {
+	return &ThumbnailRes{}
+}
+
+func (p *ThumbnailRes) GetRescode() rescode.Code {
+	return p.Rescode
+}
+
+func (p *ThumbnailRes) GetResmsg() string {
+	return p.Resmsg
+}
+
+func (p *ThumbnailRes) GetThumb() string {
+	return p.Thumb
+}
+
+func (p *ThumbnailRes) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *ThumbnailRes) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *ThumbnailRes) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		temp := rescode.Code(v)
+		p.Rescode = temp
+	}
+	return nil
+}
+
+func (p *ThumbnailRes) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Resmsg = v
+	}
+	return nil
+}
+
+func (p *ThumbnailRes) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Thumb = v
+	}
+	return nil
+}
+
+func (p *ThumbnailRes) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key19 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key19 = v
+		}
+		var _val20 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val20 = v
+		}
+		p.Extra[_key19] = _val20
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *ThumbnailRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("thumbnail_res"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *ThumbnailRes) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Rescode)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.rescode (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:rescode: ", p), err)
+	}
+	return err
+}
+
+func (p *ThumbnailRes) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err)
+	}
+	return err
+}
+
+func (p *ThumbnailRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("thumb", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:thumb: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Thumb)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.thumb (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:thumb: ", p), err)
+	}
+	return err
+}
+
+func (p *ThumbnailRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *ThumbnailRes) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ThumbnailRes(%+v)", *p)
+}
+
 type CloudnodeService interface {
 	// Parameters:
 	//  - Req
@@ -2872,6 +3385,9 @@ type CloudnodeService interface {
 	// Parameters:
 	//  - Req
 	Attr(ctx context.Context, req *AttrReq) (r *AttrRes, err error)
+	// Parameters:
+	//  - Req
+	Thumbnail(ctx context.Context, req *ThumbnailReq) (r *ThumbnailRes, err error)
 }
 
 type CloudnodeServiceClient struct {
@@ -2903,34 +3419,10 @@ func (p *CloudnodeServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Req
 func (p *CloudnodeServiceClient) Dir(ctx context.Context, req *DirReq) (r *DirRes, err error) {
-	var _args17 CloudnodeServiceDirArgs
-	_args17.Req = req
-	var _result18 CloudnodeServiceDirResult
-	if err = p.Client_().Call(ctx, "dir", &_args17, &_result18); err != nil {
-		return
-	}
-	return _result18.GetSuccess(), nil
-}
-
-// Parameters:
-//  - Req
-func (p *CloudnodeServiceClient) AddDir(ctx context.Context, req *AddDirReq) (r *AddDirRes, err error) {
-	var _args19 CloudnodeServiceAddDirArgs
-	_args19.Req = req
-	var _result20 CloudnodeServiceAddDirResult
-	if err = p.Client_().Call(ctx, "add_dir", &_args19, &_result20); err != nil {
-		return
-	}
-	return _result20.GetSuccess(), nil
-}
-
-// Parameters:
-//  - Req
-func (p *CloudnodeServiceClient) AddFile(ctx context.Context, req *AddFileReq) (r *AddFileRes, err error) {
-	var _args21 CloudnodeServiceAddFileArgs
+	var _args21 CloudnodeServiceDirArgs
 	_args21.Req = req
-	var _result22 CloudnodeServiceAddFileResult
-	if err = p.Client_().Call(ctx, "add_file", &_args21, &_result22); err != nil {
+	var _result22 CloudnodeServiceDirResult
+	if err = p.Client_().Call(ctx, "dir", &_args21, &_result22); err != nil {
 		return
 	}
 	return _result22.GetSuccess(), nil
@@ -2938,14 +3430,50 @@ func (p *CloudnodeServiceClient) AddFile(ctx context.Context, req *AddFileReq) (
 
 // Parameters:
 //  - Req
-func (p *CloudnodeServiceClient) Attr(ctx context.Context, req *AttrReq) (r *AttrRes, err error) {
-	var _args23 CloudnodeServiceAttrArgs
+func (p *CloudnodeServiceClient) AddDir(ctx context.Context, req *AddDirReq) (r *AddDirRes, err error) {
+	var _args23 CloudnodeServiceAddDirArgs
 	_args23.Req = req
-	var _result24 CloudnodeServiceAttrResult
-	if err = p.Client_().Call(ctx, "attr", &_args23, &_result24); err != nil {
+	var _result24 CloudnodeServiceAddDirResult
+	if err = p.Client_().Call(ctx, "add_dir", &_args23, &_result24); err != nil {
 		return
 	}
 	return _result24.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *CloudnodeServiceClient) AddFile(ctx context.Context, req *AddFileReq) (r *AddFileRes, err error) {
+	var _args25 CloudnodeServiceAddFileArgs
+	_args25.Req = req
+	var _result26 CloudnodeServiceAddFileResult
+	if err = p.Client_().Call(ctx, "add_file", &_args25, &_result26); err != nil {
+		return
+	}
+	return _result26.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *CloudnodeServiceClient) Attr(ctx context.Context, req *AttrReq) (r *AttrRes, err error) {
+	var _args27 CloudnodeServiceAttrArgs
+	_args27.Req = req
+	var _result28 CloudnodeServiceAttrResult
+	if err = p.Client_().Call(ctx, "attr", &_args27, &_result28); err != nil {
+		return
+	}
+	return _result28.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *CloudnodeServiceClient) Thumbnail(ctx context.Context, req *ThumbnailReq) (r *ThumbnailRes, err error) {
+	var _args29 CloudnodeServiceThumbnailArgs
+	_args29.Req = req
+	var _result30 CloudnodeServiceThumbnailResult
+	if err = p.Client_().Call(ctx, "thumbnail", &_args29, &_result30); err != nil {
+		return
+	}
+	return _result30.GetSuccess(), nil
 }
 
 type CloudnodeServiceProcessor struct {
@@ -2968,12 +3496,13 @@ func (p *CloudnodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorF
 
 func NewCloudnodeServiceProcessor(handler CloudnodeService) *CloudnodeServiceProcessor {
 
-	self25 := &CloudnodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self25.processorMap["dir"] = &cloudnodeServiceProcessorDir{handler: handler}
-	self25.processorMap["add_dir"] = &cloudnodeServiceProcessorAddDir{handler: handler}
-	self25.processorMap["add_file"] = &cloudnodeServiceProcessorAddFile{handler: handler}
-	self25.processorMap["attr"] = &cloudnodeServiceProcessorAttr{handler: handler}
-	return self25
+	self31 := &CloudnodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self31.processorMap["dir"] = &cloudnodeServiceProcessorDir{handler: handler}
+	self31.processorMap["add_dir"] = &cloudnodeServiceProcessorAddDir{handler: handler}
+	self31.processorMap["add_file"] = &cloudnodeServiceProcessorAddFile{handler: handler}
+	self31.processorMap["attr"] = &cloudnodeServiceProcessorAttr{handler: handler}
+	self31.processorMap["thumbnail"] = &cloudnodeServiceProcessorThumbnail{handler: handler}
+	return self31
 }
 
 func (p *CloudnodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -2986,12 +3515,12 @@ func (p *CloudnodeServiceProcessor) Process(ctx context.Context, iprot, oprot th
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x26 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x32 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x26.Write(oprot)
+	x32.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x26
+	return false, x32
 
 }
 
@@ -3170,6 +3699,54 @@ func (p *cloudnodeServiceProcessorAttr) Process(ctx context.Context, seqId int32
 		result.Success = retval
 	}
 	if err2 = oprot.WriteMessageBegin("attr", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type cloudnodeServiceProcessorThumbnail struct {
+	handler CloudnodeService
+}
+
+func (p *cloudnodeServiceProcessorThumbnail) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := CloudnodeServiceThumbnailArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("thumbnail", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	result := CloudnodeServiceThumbnailResult{}
+	var retval *ThumbnailRes
+	var err2 error
+	if retval, err2 = p.handler.Thumbnail(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing thumbnail: "+err2.Error())
+		oprot.WriteMessageBegin("thumbnail", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("thumbnail", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -4051,4 +4628,220 @@ func (p *CloudnodeServiceAttrResult) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("CloudnodeServiceAttrResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type CloudnodeServiceThumbnailArgs struct {
+	Req *ThumbnailReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewCloudnodeServiceThumbnailArgs() *CloudnodeServiceThumbnailArgs {
+	return &CloudnodeServiceThumbnailArgs{}
+}
+
+var CloudnodeServiceThumbnailArgs_Req_DEFAULT *ThumbnailReq
+
+func (p *CloudnodeServiceThumbnailArgs) GetReq() *ThumbnailReq {
+	if !p.IsSetReq() {
+		return CloudnodeServiceThumbnailArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *CloudnodeServiceThumbnailArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CloudnodeServiceThumbnailArgs) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *CloudnodeServiceThumbnailArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &ThumbnailReq{}
+	if err := p.Req.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+	}
+	return nil
+}
+
+func (p *CloudnodeServiceThumbnailArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("thumbnail_args"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *CloudnodeServiceThumbnailArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+	}
+	return err
+}
+
+func (p *CloudnodeServiceThumbnailArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CloudnodeServiceThumbnailArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type CloudnodeServiceThumbnailResult struct {
+	Success *ThumbnailRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewCloudnodeServiceThumbnailResult() *CloudnodeServiceThumbnailResult {
+	return &CloudnodeServiceThumbnailResult{}
+}
+
+var CloudnodeServiceThumbnailResult_Success_DEFAULT *ThumbnailRes
+
+func (p *CloudnodeServiceThumbnailResult) GetSuccess() *ThumbnailRes {
+	if !p.IsSetSuccess() {
+		return CloudnodeServiceThumbnailResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *CloudnodeServiceThumbnailResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CloudnodeServiceThumbnailResult) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField0(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *CloudnodeServiceThumbnailResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &ThumbnailRes{}
+	if err := p.Success.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+	}
+	return nil
+}
+
+func (p *CloudnodeServiceThumbnailResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("thumbnail_result"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField0(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *CloudnodeServiceThumbnailResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+		}
+		if err := oprot.WriteFieldEnd(); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err)
+		}
+	}
+	return err
+}
+
+func (p *CloudnodeServiceThumbnailResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CloudnodeServiceThumbnailResult(%+v)", *p)
 }
