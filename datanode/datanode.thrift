@@ -4,8 +4,11 @@ include "../rescode/rescode.thrift"
 include "../common/common.thrift"
 
 enum Role {
-    NORMAL  = 0,
-    COOPERATOR = 1,
+    NORMAL          = 0,        // 普通用户
+    COOPERATOR      = 1,        // 企业用户
+
+    STAFFOR         = 98,       // 员工同事
+    SUPEROR         = 99,       // 超级用户
 }
 
 struct user{
