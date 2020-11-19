@@ -391,6 +391,15 @@ struct get_keyvalue_res {
     3:string        value,
 }
 
+struct del_keyvalue_req {
+    1:string        key,
+}
+
+struct del_keyvalue_res {
+    1:rescode.code  rescode,
+    2:string        resmsg,
+}
+
 struct version_res {
     1:rescode.code       rescode,
     2:string             resmsg,
@@ -690,6 +699,8 @@ service datanode_service {
     set_keyvalue_res setKeyValue(1:set_keyvalue_req req),
     // 获取缓存
     get_keyvalue_res getKeyValue(1:get_keyvalue_req req),
+    // 删除
+    del_keyvalue_res delKeyValue(1:del_keyvalue_req req),
 
 
     // --------------- 试题相关 -------------------//
