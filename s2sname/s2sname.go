@@ -27,7 +27,7 @@ var _ = rescode.GoUnusedProtection__
 type Const int64
 
 const (
-	Const_Expired Const = 30
+	Const_Expired Const = 5
 )
 
 func (p Const) String() string {
@@ -1408,6 +1408,291 @@ func (p *HeartRes) String() string {
 	return fmt.Sprintf("HeartRes(%+v)", *p)
 }
 
+type S2sinfoReq struct {
+}
+
+func NewS2sinfoReq() *S2sinfoReq {
+	return &S2sinfoReq{}
+}
+
+func (p *S2sinfoReq) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		if err := iprot.Skip(fieldTypeId); err != nil {
+			return err
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *S2sinfoReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("s2sinfo_req"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *S2sinfoReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("S2sinfoReq(%+v)", *p)
+}
+
+// Attributes:
+//  - Rescode
+//  - Resmsg
+//  - S2sinfo
+type S2sinfoRes struct {
+	Rescode rescode.Code          `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string                `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	S2sinfo map[string][]*S2sname `thrift:"s2sinfo,3" db:"s2sinfo" json:"s2sinfo"`
+}
+
+func NewS2sinfoRes() *S2sinfoRes {
+	return &S2sinfoRes{}
+}
+
+func (p *S2sinfoRes) GetRescode() rescode.Code {
+	return p.Rescode
+}
+
+func (p *S2sinfoRes) GetResmsg() string {
+	return p.Resmsg
+}
+
+func (p *S2sinfoRes) GetS2sinfo() map[string][]*S2sname {
+	return p.S2sinfo
+}
+func (p *S2sinfoRes) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *S2sinfoRes) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		temp := rescode.Code(v)
+		p.Rescode = temp
+	}
+	return nil
+}
+
+func (p *S2sinfoRes) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Resmsg = v
+	}
+	return nil
+}
+
+func (p *S2sinfoRes) ReadField3(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string][]*S2sname, size)
+	p.S2sinfo = tMap
+	for i := 0; i < size; i++ {
+		var _key1 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key1 = v
+		}
+		_, size, err := iprot.ReadListBegin()
+		if err != nil {
+			return thrift.PrependError("error reading list begin: ", err)
+		}
+		tSlice := make([]*S2sname, 0, size)
+		_val2 := tSlice
+		for i := 0; i < size; i++ {
+			_elem3 := &S2sname{}
+			if err := _elem3.Read(iprot); err != nil {
+				return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem3), err)
+			}
+			_val2 = append(_val2, _elem3)
+		}
+		if err := iprot.ReadListEnd(); err != nil {
+			return thrift.PrependError("error reading list end: ", err)
+		}
+		p.S2sinfo[_key1] = _val2
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *S2sinfoRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("s2sinfo_res"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *S2sinfoRes) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Rescode)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.rescode (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:rescode: ", p), err)
+	}
+	return err
+}
+
+func (p *S2sinfoRes) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err)
+	}
+	return err
+}
+
+func (p *S2sinfoRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("s2sinfo", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:s2sinfo: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.LIST, len(p.S2sinfo)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.S2sinfo {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteListBegin(thrift.STRUCT, len(v)); err != nil {
+			return thrift.PrependError("error writing list begin: ", err)
+		}
+		for _, v := range v {
+			if err := v.Write(oprot); err != nil {
+				return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", v), err)
+			}
+		}
+		if err := oprot.WriteListEnd(); err != nil {
+			return thrift.PrependError("error writing list end: ", err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:s2sinfo: ", p), err)
+	}
+	return err
+}
+
+func (p *S2sinfoRes) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("S2sinfoRes(%+v)", *p)
+}
+
 type S2snameService interface {
 	// Parameters:
 	//  - Req
@@ -1422,6 +1707,9 @@ type S2snameService interface {
 	// Parameters:
 	//  - Req
 	Heart(ctx context.Context, req *HeartReq) (r *HeartRes, err error)
+	// Parameters:
+	//  - Req
+	S2sinfo(ctx context.Context, req *S2sinfoReq) (r *S2sinfoRes, err error)
 }
 
 type S2snameServiceClient struct {
@@ -1453,58 +1741,70 @@ func (p *S2snameServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Req
 func (p *S2snameServiceClient) RegisterS2sname(ctx context.Context, req *RegisterReq) (r *RegisterRes, err error) {
-	var _args1 S2snameServiceRegisterS2snameArgs
-	_args1.Req = req
-	var _result2 S2snameServiceRegisterS2snameResult
-	if err = p.Client_().Call(ctx, "registerS2sname", &_args1, &_result2); err != nil {
+	var _args4 S2snameServiceRegisterS2snameArgs
+	_args4.Req = req
+	var _result5 S2snameServiceRegisterS2snameResult
+	if err = p.Client_().Call(ctx, "registerS2sname", &_args4, &_result5); err != nil {
 		return
 	}
-	return _result2.GetSuccess(), nil
+	return _result5.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *S2snameServiceClient) UpdateS2sname(ctx context.Context, req *UpdateReq) (r *UpdateRes, err error) {
-	var _args3 S2snameServiceUpdateS2snameArgs
-	_args3.Req = req
-	var _result4 S2snameServiceUpdateS2snameResult
-	if err = p.Client_().Call(ctx, "updateS2sname", &_args3, &_result4); err != nil {
+	var _args6 S2snameServiceUpdateS2snameArgs
+	_args6.Req = req
+	var _result7 S2snameServiceUpdateS2snameResult
+	if err = p.Client_().Call(ctx, "updateS2sname", &_args6, &_result7); err != nil {
 		return
 	}
-	return _result4.GetSuccess(), nil
+	return _result7.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *S2snameServiceClient) FetchS2sname(ctx context.Context, req string) (r *FetchRes, err error) {
-	var _args5 S2snameServiceFetchS2snameArgs
-	_args5.Req = req
-	var _result6 S2snameServiceFetchS2snameResult
-	if err = p.Client_().Call(ctx, "fetchS2sname", &_args5, &_result6); err != nil {
+	var _args8 S2snameServiceFetchS2snameArgs
+	_args8.Req = req
+	var _result9 S2snameServiceFetchS2snameResult
+	if err = p.Client_().Call(ctx, "fetchS2sname", &_args8, &_result9); err != nil {
 		return
 	}
-	return _result6.GetSuccess(), nil
+	return _result9.GetSuccess(), nil
 }
 
 func (p *S2snameServiceClient) FetchS2snames(ctx context.Context) (r *FetchRes, err error) {
-	var _args7 S2snameServiceFetchS2snamesArgs
-	var _result8 S2snameServiceFetchS2snamesResult
-	if err = p.Client_().Call(ctx, "fetchS2snames", &_args7, &_result8); err != nil {
+	var _args10 S2snameServiceFetchS2snamesArgs
+	var _result11 S2snameServiceFetchS2snamesResult
+	if err = p.Client_().Call(ctx, "fetchS2snames", &_args10, &_result11); err != nil {
 		return
 	}
-	return _result8.GetSuccess(), nil
+	return _result11.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *S2snameServiceClient) Heart(ctx context.Context, req *HeartReq) (r *HeartRes, err error) {
-	var _args9 S2snameServiceHeartArgs
-	_args9.Req = req
-	var _result10 S2snameServiceHeartResult
-	if err = p.Client_().Call(ctx, "heart", &_args9, &_result10); err != nil {
+	var _args12 S2snameServiceHeartArgs
+	_args12.Req = req
+	var _result13 S2snameServiceHeartResult
+	if err = p.Client_().Call(ctx, "heart", &_args12, &_result13); err != nil {
 		return
 	}
-	return _result10.GetSuccess(), nil
+	return _result13.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *S2snameServiceClient) S2sinfo(ctx context.Context, req *S2sinfoReq) (r *S2sinfoRes, err error) {
+	var _args14 S2snameServiceS2sinfoArgs
+	_args14.Req = req
+	var _result15 S2snameServiceS2sinfoResult
+	if err = p.Client_().Call(ctx, "s2sinfo", &_args14, &_result15); err != nil {
+		return
+	}
+	return _result15.GetSuccess(), nil
 }
 
 type S2snameServiceProcessor struct {
@@ -1527,13 +1827,14 @@ func (p *S2snameServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFun
 
 func NewS2snameServiceProcessor(handler S2snameService) *S2snameServiceProcessor {
 
-	self11 := &S2snameServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self11.processorMap["registerS2sname"] = &s2snameServiceProcessorRegisterS2sname{handler: handler}
-	self11.processorMap["updateS2sname"] = &s2snameServiceProcessorUpdateS2sname{handler: handler}
-	self11.processorMap["fetchS2sname"] = &s2snameServiceProcessorFetchS2sname{handler: handler}
-	self11.processorMap["fetchS2snames"] = &s2snameServiceProcessorFetchS2snames{handler: handler}
-	self11.processorMap["heart"] = &s2snameServiceProcessorHeart{handler: handler}
-	return self11
+	self16 := &S2snameServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self16.processorMap["registerS2sname"] = &s2snameServiceProcessorRegisterS2sname{handler: handler}
+	self16.processorMap["updateS2sname"] = &s2snameServiceProcessorUpdateS2sname{handler: handler}
+	self16.processorMap["fetchS2sname"] = &s2snameServiceProcessorFetchS2sname{handler: handler}
+	self16.processorMap["fetchS2snames"] = &s2snameServiceProcessorFetchS2snames{handler: handler}
+	self16.processorMap["heart"] = &s2snameServiceProcessorHeart{handler: handler}
+	self16.processorMap["s2sinfo"] = &s2snameServiceProcessorS2sinfo{handler: handler}
+	return self16
 }
 
 func (p *S2snameServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -1546,12 +1847,12 @@ func (p *S2snameServiceProcessor) Process(ctx context.Context, iprot, oprot thri
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x12 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x17 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x12.Write(oprot)
+	x17.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x12
+	return false, x17
 
 }
 
@@ -1778,6 +2079,54 @@ func (p *s2snameServiceProcessorHeart) Process(ctx context.Context, seqId int32,
 		result.Success = retval
 	}
 	if err2 = oprot.WriteMessageBegin("heart", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type s2snameServiceProcessorS2sinfo struct {
+	handler S2snameService
+}
+
+func (p *s2snameServiceProcessorS2sinfo) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := S2snameServiceS2sinfoArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("s2sinfo", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	result := S2snameServiceS2sinfoResult{}
+	var retval *S2sinfoRes
+	var err2 error
+	if retval, err2 = p.handler.S2sinfo(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing s2sinfo: "+err2.Error())
+		oprot.WriteMessageBegin("s2sinfo", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("s2sinfo", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -2815,4 +3164,220 @@ func (p *S2snameServiceHeartResult) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("S2snameServiceHeartResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type S2snameServiceS2sinfoArgs struct {
+	Req *S2sinfoReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewS2snameServiceS2sinfoArgs() *S2snameServiceS2sinfoArgs {
+	return &S2snameServiceS2sinfoArgs{}
+}
+
+var S2snameServiceS2sinfoArgs_Req_DEFAULT *S2sinfoReq
+
+func (p *S2snameServiceS2sinfoArgs) GetReq() *S2sinfoReq {
+	if !p.IsSetReq() {
+		return S2snameServiceS2sinfoArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *S2snameServiceS2sinfoArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *S2snameServiceS2sinfoArgs) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *S2snameServiceS2sinfoArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &S2sinfoReq{}
+	if err := p.Req.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+	}
+	return nil
+}
+
+func (p *S2snameServiceS2sinfoArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("s2sinfo_args"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *S2snameServiceS2sinfoArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+	}
+	return err
+}
+
+func (p *S2snameServiceS2sinfoArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("S2snameServiceS2sinfoArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type S2snameServiceS2sinfoResult struct {
+	Success *S2sinfoRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewS2snameServiceS2sinfoResult() *S2snameServiceS2sinfoResult {
+	return &S2snameServiceS2sinfoResult{}
+}
+
+var S2snameServiceS2sinfoResult_Success_DEFAULT *S2sinfoRes
+
+func (p *S2snameServiceS2sinfoResult) GetSuccess() *S2sinfoRes {
+	if !p.IsSetSuccess() {
+		return S2snameServiceS2sinfoResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *S2snameServiceS2sinfoResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *S2snameServiceS2sinfoResult) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField0(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *S2snameServiceS2sinfoResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &S2sinfoRes{}
+	if err := p.Success.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+	}
+	return nil
+}
+
+func (p *S2snameServiceS2sinfoResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("s2sinfo_result"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField0(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *S2snameServiceS2sinfoResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+		}
+		if err := oprot.WriteFieldEnd(); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err)
+		}
+	}
+	return err
+}
+
+func (p *S2snameServiceS2sinfoResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("S2snameServiceS2sinfoResult(%+v)", *p)
 }

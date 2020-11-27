@@ -50,6 +50,16 @@ struct heart_res {
     2:string    resmsg,
 }
 
+struct s2sinfo_req {
+
+}
+
+struct s2sinfo_res {
+    1:rescode.code                  rescode,
+    2:string                        resmsg,
+    3:map<string, list<s2sname>>    s2sinfo,
+}
+
 service s2sname_service {
     // 注册s2s服务
     register_res registerS2sname(1:register_req req),
@@ -65,4 +75,7 @@ service s2sname_service {
 
     // 服务心跳包，用于更新服务的状态
     heart_res heart(1:heart_req req),
+
+    // 获取所有的s2sname信息
+    s2sinfo_res s2sinfo(1:s2sinfo_req req),
 }
