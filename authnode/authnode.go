@@ -808,37 +808,37 @@ func (p *AdminRoleRes) String() string {
 //  - Token
 //  - Auth
 //  - Extra
-type CoorRoleReq struct {
+type CooperRoleReq struct {
 	Token string            `thrift:"token,1" db:"token" json:"token"`
 	Auth  *common.Authorize `thrift:"auth,2" db:"auth" json:"auth"`
 	Extra map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
-func NewCoorRoleReq() *CoorRoleReq {
-	return &CoorRoleReq{}
+func NewCooperRoleReq() *CooperRoleReq {
+	return &CooperRoleReq{}
 }
 
-func (p *CoorRoleReq) GetToken() string {
+func (p *CooperRoleReq) GetToken() string {
 	return p.Token
 }
 
-var CoorRoleReq_Auth_DEFAULT *common.Authorize
+var CooperRoleReq_Auth_DEFAULT *common.Authorize
 
-func (p *CoorRoleReq) GetAuth() *common.Authorize {
+func (p *CooperRoleReq) GetAuth() *common.Authorize {
 	if !p.IsSetAuth() {
-		return CoorRoleReq_Auth_DEFAULT
+		return CooperRoleReq_Auth_DEFAULT
 	}
 	return p.Auth
 }
 
-func (p *CoorRoleReq) GetExtra() map[string]string {
+func (p *CooperRoleReq) GetExtra() map[string]string {
 	return p.Extra
 }
-func (p *CoorRoleReq) IsSetAuth() bool {
+func (p *CooperRoleReq) IsSetAuth() bool {
 	return p.Auth != nil
 }
 
-func (p *CoorRoleReq) Read(iprot thrift.TProtocol) error {
+func (p *CooperRoleReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -897,7 +897,7 @@ func (p *CoorRoleReq) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *CoorRoleReq) ReadField1(iprot thrift.TProtocol) error {
+func (p *CooperRoleReq) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
@@ -906,7 +906,7 @@ func (p *CoorRoleReq) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *CoorRoleReq) ReadField2(iprot thrift.TProtocol) error {
+func (p *CooperRoleReq) ReadField2(iprot thrift.TProtocol) error {
 	p.Auth = &common.Authorize{}
 	if err := p.Auth.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
@@ -914,7 +914,7 @@ func (p *CoorRoleReq) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *CoorRoleReq) ReadField3(iprot thrift.TProtocol) error {
+func (p *CooperRoleReq) ReadField3(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -942,8 +942,8 @@ func (p *CoorRoleReq) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *CoorRoleReq) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("coor_role_req"); err != nil {
+func (p *CooperRoleReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("cooper_role_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -966,7 +966,7 @@ func (p *CoorRoleReq) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *CoorRoleReq) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *CooperRoleReq) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("token", thrift.STRING, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:token: ", p), err)
 	}
@@ -979,7 +979,7 @@ func (p *CoorRoleReq) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *CoorRoleReq) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *CooperRoleReq) writeField2(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("auth", thrift.STRUCT, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:auth: ", p), err)
 	}
@@ -992,7 +992,7 @@ func (p *CoorRoleReq) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *CoorRoleReq) writeField3(oprot thrift.TProtocol) (err error) {
+func (p *CooperRoleReq) writeField3(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
 	}
@@ -1016,33 +1016,33 @@ func (p *CoorRoleReq) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *CoorRoleReq) String() string {
+func (p *CooperRoleReq) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("CoorRoleReq(%+v)", *p)
+	return fmt.Sprintf("CooperRoleReq(%+v)", *p)
 }
 
 // Attributes:
 //  - Rescode
 //  - Extra
-type CoorRoleRes struct {
+type CooperRoleRes struct {
 	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
 	Extra   map[string]string `thrift:"extra,2" db:"extra" json:"extra"`
 }
 
-func NewCoorRoleRes() *CoorRoleRes {
-	return &CoorRoleRes{}
+func NewCooperRoleRes() *CooperRoleRes {
+	return &CooperRoleRes{}
 }
 
-func (p *CoorRoleRes) GetRescode() rescode.Code {
+func (p *CooperRoleRes) GetRescode() rescode.Code {
 	return p.Rescode
 }
 
-func (p *CoorRoleRes) GetExtra() map[string]string {
+func (p *CooperRoleRes) GetExtra() map[string]string {
 	return p.Extra
 }
-func (p *CoorRoleRes) Read(iprot thrift.TProtocol) error {
+func (p *CooperRoleRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -1091,7 +1091,7 @@ func (p *CoorRoleRes) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *CoorRoleRes) ReadField1(iprot thrift.TProtocol) error {
+func (p *CooperRoleRes) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
@@ -1101,7 +1101,7 @@ func (p *CoorRoleRes) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *CoorRoleRes) ReadField2(iprot thrift.TProtocol) error {
+func (p *CooperRoleRes) ReadField2(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -1129,8 +1129,8 @@ func (p *CoorRoleRes) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *CoorRoleRes) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("coor_role_res"); err != nil {
+func (p *CooperRoleRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("cooper_role_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -1150,7 +1150,7 @@ func (p *CoorRoleRes) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *CoorRoleRes) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *CooperRoleRes) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
 	}
@@ -1163,7 +1163,7 @@ func (p *CoorRoleRes) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *CoorRoleRes) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *CooperRoleRes) writeField2(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:extra: ", p), err)
 	}
@@ -1187,17 +1187,23 @@ func (p *CoorRoleRes) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *CoorRoleRes) String() string {
+func (p *CooperRoleRes) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("CoorRoleRes(%+v)", *p)
+	return fmt.Sprintf("CooperRoleRes(%+v)", *p)
 }
 
 type AuthnodeService interface {
 	// Parameters:
 	//  - Req
 	VerifyToken(ctx context.Context, req *VerifyTokenReq) (r *VerifyTokenRes, err error)
+	// Parameters:
+	//  - Req
+	AdminRole(ctx context.Context, req *AdminRoleReq) (r *AdminRoleRes, err error)
+	// Parameters:
+	//  - Req
+	CooperRole(ctx context.Context, req *CooperRoleReq) (r *CooperRoleRes, err error)
 }
 
 type AuthnodeServiceClient struct {
@@ -1238,6 +1244,30 @@ func (p *AuthnodeServiceClient) VerifyToken(ctx context.Context, req *VerifyToke
 	return _result13.GetSuccess(), nil
 }
 
+// Parameters:
+//  - Req
+func (p *AuthnodeServiceClient) AdminRole(ctx context.Context, req *AdminRoleReq) (r *AdminRoleRes, err error) {
+	var _args14 AuthnodeServiceAdminRoleArgs
+	_args14.Req = req
+	var _result15 AuthnodeServiceAdminRoleResult
+	if err = p.Client_().Call(ctx, "admin_role", &_args14, &_result15); err != nil {
+		return
+	}
+	return _result15.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *AuthnodeServiceClient) CooperRole(ctx context.Context, req *CooperRoleReq) (r *CooperRoleRes, err error) {
+	var _args16 AuthnodeServiceCooperRoleArgs
+	_args16.Req = req
+	var _result17 AuthnodeServiceCooperRoleResult
+	if err = p.Client_().Call(ctx, "cooper_role", &_args16, &_result17); err != nil {
+		return
+	}
+	return _result17.GetSuccess(), nil
+}
+
 type AuthnodeServiceProcessor struct {
 	processorMap map[string]thrift.TProcessorFunction
 	handler      AuthnodeService
@@ -1258,9 +1288,11 @@ func (p *AuthnodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFu
 
 func NewAuthnodeServiceProcessor(handler AuthnodeService) *AuthnodeServiceProcessor {
 
-	self14 := &AuthnodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self14.processorMap["verify_token"] = &authnodeServiceProcessorVerifyToken{handler: handler}
-	return self14
+	self18 := &AuthnodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self18.processorMap["verify_token"] = &authnodeServiceProcessorVerifyToken{handler: handler}
+	self18.processorMap["admin_role"] = &authnodeServiceProcessorAdminRole{handler: handler}
+	self18.processorMap["cooper_role"] = &authnodeServiceProcessorCooperRole{handler: handler}
+	return self18
 }
 
 func (p *AuthnodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -1273,12 +1305,12 @@ func (p *AuthnodeServiceProcessor) Process(ctx context.Context, iprot, oprot thr
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x15 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x19 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x15.Write(oprot)
+	x19.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x15
+	return false, x19
 
 }
 
@@ -1313,6 +1345,102 @@ func (p *authnodeServiceProcessorVerifyToken) Process(ctx context.Context, seqId
 		result.Success = retval
 	}
 	if err2 = oprot.WriteMessageBegin("verify_token", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type authnodeServiceProcessorAdminRole struct {
+	handler AuthnodeService
+}
+
+func (p *authnodeServiceProcessorAdminRole) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := AuthnodeServiceAdminRoleArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("admin_role", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	result := AuthnodeServiceAdminRoleResult{}
+	var retval *AdminRoleRes
+	var err2 error
+	if retval, err2 = p.handler.AdminRole(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing admin_role: "+err2.Error())
+		oprot.WriteMessageBegin("admin_role", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("admin_role", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type authnodeServiceProcessorCooperRole struct {
+	handler AuthnodeService
+}
+
+func (p *authnodeServiceProcessorCooperRole) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := AuthnodeServiceCooperRoleArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("cooper_role", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	result := AuthnodeServiceCooperRoleResult{}
+	var retval *CooperRoleRes
+	var err2 error
+	if retval, err2 = p.handler.CooperRole(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing cooper_role: "+err2.Error())
+		oprot.WriteMessageBegin("cooper_role", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("cooper_role", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -1546,4 +1674,436 @@ func (p *AuthnodeServiceVerifyTokenResult) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("AuthnodeServiceVerifyTokenResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type AuthnodeServiceAdminRoleArgs struct {
+	Req *AdminRoleReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewAuthnodeServiceAdminRoleArgs() *AuthnodeServiceAdminRoleArgs {
+	return &AuthnodeServiceAdminRoleArgs{}
+}
+
+var AuthnodeServiceAdminRoleArgs_Req_DEFAULT *AdminRoleReq
+
+func (p *AuthnodeServiceAdminRoleArgs) GetReq() *AdminRoleReq {
+	if !p.IsSetReq() {
+		return AuthnodeServiceAdminRoleArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *AuthnodeServiceAdminRoleArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *AuthnodeServiceAdminRoleArgs) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *AuthnodeServiceAdminRoleArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &AdminRoleReq{}
+	if err := p.Req.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+	}
+	return nil
+}
+
+func (p *AuthnodeServiceAdminRoleArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("admin_role_args"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *AuthnodeServiceAdminRoleArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+	}
+	return err
+}
+
+func (p *AuthnodeServiceAdminRoleArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("AuthnodeServiceAdminRoleArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type AuthnodeServiceAdminRoleResult struct {
+	Success *AdminRoleRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewAuthnodeServiceAdminRoleResult() *AuthnodeServiceAdminRoleResult {
+	return &AuthnodeServiceAdminRoleResult{}
+}
+
+var AuthnodeServiceAdminRoleResult_Success_DEFAULT *AdminRoleRes
+
+func (p *AuthnodeServiceAdminRoleResult) GetSuccess() *AdminRoleRes {
+	if !p.IsSetSuccess() {
+		return AuthnodeServiceAdminRoleResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *AuthnodeServiceAdminRoleResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *AuthnodeServiceAdminRoleResult) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField0(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *AuthnodeServiceAdminRoleResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &AdminRoleRes{}
+	if err := p.Success.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+	}
+	return nil
+}
+
+func (p *AuthnodeServiceAdminRoleResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("admin_role_result"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField0(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *AuthnodeServiceAdminRoleResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+		}
+		if err := oprot.WriteFieldEnd(); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err)
+		}
+	}
+	return err
+}
+
+func (p *AuthnodeServiceAdminRoleResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("AuthnodeServiceAdminRoleResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type AuthnodeServiceCooperRoleArgs struct {
+	Req *CooperRoleReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewAuthnodeServiceCooperRoleArgs() *AuthnodeServiceCooperRoleArgs {
+	return &AuthnodeServiceCooperRoleArgs{}
+}
+
+var AuthnodeServiceCooperRoleArgs_Req_DEFAULT *CooperRoleReq
+
+func (p *AuthnodeServiceCooperRoleArgs) GetReq() *CooperRoleReq {
+	if !p.IsSetReq() {
+		return AuthnodeServiceCooperRoleArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *AuthnodeServiceCooperRoleArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *AuthnodeServiceCooperRoleArgs) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *AuthnodeServiceCooperRoleArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &CooperRoleReq{}
+	if err := p.Req.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+	}
+	return nil
+}
+
+func (p *AuthnodeServiceCooperRoleArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("cooper_role_args"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *AuthnodeServiceCooperRoleArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+	}
+	return err
+}
+
+func (p *AuthnodeServiceCooperRoleArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("AuthnodeServiceCooperRoleArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type AuthnodeServiceCooperRoleResult struct {
+	Success *CooperRoleRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewAuthnodeServiceCooperRoleResult() *AuthnodeServiceCooperRoleResult {
+	return &AuthnodeServiceCooperRoleResult{}
+}
+
+var AuthnodeServiceCooperRoleResult_Success_DEFAULT *CooperRoleRes
+
+func (p *AuthnodeServiceCooperRoleResult) GetSuccess() *CooperRoleRes {
+	if !p.IsSetSuccess() {
+		return AuthnodeServiceCooperRoleResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *AuthnodeServiceCooperRoleResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *AuthnodeServiceCooperRoleResult) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField0(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *AuthnodeServiceCooperRoleResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &CooperRoleRes{}
+	if err := p.Success.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+	}
+	return nil
+}
+
+func (p *AuthnodeServiceCooperRoleResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("cooper_role_result"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField0(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *AuthnodeServiceCooperRoleResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+		}
+		if err := oprot.WriteFieldEnd(); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err)
+		}
+	}
+	return err
+}
+
+func (p *AuthnodeServiceCooperRoleResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("AuthnodeServiceCooperRoleResult(%+v)", *p)
 }
