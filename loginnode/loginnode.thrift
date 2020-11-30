@@ -38,6 +38,16 @@ struct refresh_res {
     4:map<string,string>    extra;
 }
 
+struct verify_token_req {
+    1:string                cookie;
+    2:map<string,string>    extra;
+}
+
+struct verify_token_res {
+    1:rescode.code          rescode,
+    2:map<string,string>    extra;
+}
+
 service loginnode_service {
     // 登录
     login_res login(1:login_req req);
@@ -45,4 +55,6 @@ service loginnode_service {
     logout_res logout(1:logout_req req);
     // 刷新
     refresh_res refresh(1:refresh_req req);
+    // 验证token
+    verify_token_res verify_token(1:verify_token_req req);
 }
