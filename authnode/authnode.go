@@ -26,10 +26,12 @@ var _ = common.GoUnusedProtection__
 
 // Attributes:
 //  - Token
+//  - Auth
 //  - Extra
 type VerifyTokenReq struct {
 	Token string            `thrift:"token,1" db:"token" json:"token"`
-	Extra map[string]string `thrift:"extra,2" db:"extra" json:"extra"`
+	Auth  *common.Authorize `thrift:"auth,2" db:"auth" json:"auth"`
+	Extra map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
 func NewVerifyTokenReq() *VerifyTokenReq {
@@ -40,9 +42,22 @@ func (p *VerifyTokenReq) GetToken() string {
 	return p.Token
 }
 
+var VerifyTokenReq_Auth_DEFAULT *common.Authorize
+
+func (p *VerifyTokenReq) GetAuth() *common.Authorize {
+	if !p.IsSetAuth() {
+		return VerifyTokenReq_Auth_DEFAULT
+	}
+	return p.Auth
+}
+
 func (p *VerifyTokenReq) GetExtra() map[string]string {
 	return p.Extra
 }
+func (p *VerifyTokenReq) IsSetAuth() bool {
+	return p.Auth != nil
+}
+
 func (p *VerifyTokenReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
@@ -68,8 +83,18 @@ func (p *VerifyTokenReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 2:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.STRUCT {
 				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -102,6 +127,14 @@ func (p *VerifyTokenReq) ReadField1(iprot thrift.TProtocol) error {
 }
 
 func (p *VerifyTokenReq) ReadField2(iprot thrift.TProtocol) error {
+	p.Auth = &common.Authorize{}
+	if err := p.Auth.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
+	}
+	return nil
+}
+
+func (p *VerifyTokenReq) ReadField3(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -140,6 +173,9 @@ func (p *VerifyTokenReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField2(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -164,8 +200,21 @@ func (p *VerifyTokenReq) writeField1(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *VerifyTokenReq) writeField2(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 2); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("auth", thrift.STRUCT, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:auth: ", p), err)
+	}
+	if err := p.Auth.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Auth), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:auth: ", p), err)
+	}
+	return err
+}
+
+func (p *VerifyTokenReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -182,7 +231,7 @@ func (p *VerifyTokenReq) writeField2(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
 	}
 	return err
 }
@@ -367,10 +416,12 @@ func (p *VerifyTokenRes) String() string {
 
 // Attributes:
 //  - Token
+//  - Auth
 //  - Extra
 type AdminRoleReq struct {
 	Token string            `thrift:"token,1" db:"token" json:"token"`
-	Extra map[string]string `thrift:"extra,2" db:"extra" json:"extra"`
+	Auth  *common.Authorize `thrift:"auth,2" db:"auth" json:"auth"`
+	Extra map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
 func NewAdminRoleReq() *AdminRoleReq {
@@ -381,9 +432,22 @@ func (p *AdminRoleReq) GetToken() string {
 	return p.Token
 }
 
+var AdminRoleReq_Auth_DEFAULT *common.Authorize
+
+func (p *AdminRoleReq) GetAuth() *common.Authorize {
+	if !p.IsSetAuth() {
+		return AdminRoleReq_Auth_DEFAULT
+	}
+	return p.Auth
+}
+
 func (p *AdminRoleReq) GetExtra() map[string]string {
 	return p.Extra
 }
+func (p *AdminRoleReq) IsSetAuth() bool {
+	return p.Auth != nil
+}
+
 func (p *AdminRoleReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
@@ -409,8 +473,18 @@ func (p *AdminRoleReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 2:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.STRUCT {
 				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -443,6 +517,14 @@ func (p *AdminRoleReq) ReadField1(iprot thrift.TProtocol) error {
 }
 
 func (p *AdminRoleReq) ReadField2(iprot thrift.TProtocol) error {
+	p.Auth = &common.Authorize{}
+	if err := p.Auth.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
+	}
+	return nil
+}
+
+func (p *AdminRoleReq) ReadField3(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -481,6 +563,9 @@ func (p *AdminRoleReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField2(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -505,8 +590,21 @@ func (p *AdminRoleReq) writeField1(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *AdminRoleReq) writeField2(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 2); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("auth", thrift.STRUCT, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:auth: ", p), err)
+	}
+	if err := p.Auth.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Auth), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:auth: ", p), err)
+	}
+	return err
+}
+
+func (p *AdminRoleReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -523,7 +621,7 @@ func (p *AdminRoleReq) writeField2(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
 	}
 	return err
 }
@@ -708,10 +806,12 @@ func (p *AdminRoleRes) String() string {
 
 // Attributes:
 //  - Token
+//  - Auth
 //  - Extra
 type CoorRoleReq struct {
 	Token string            `thrift:"token,1" db:"token" json:"token"`
-	Extra map[string]string `thrift:"extra,2" db:"extra" json:"extra"`
+	Auth  *common.Authorize `thrift:"auth,2" db:"auth" json:"auth"`
+	Extra map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
 func NewCoorRoleReq() *CoorRoleReq {
@@ -722,9 +822,22 @@ func (p *CoorRoleReq) GetToken() string {
 	return p.Token
 }
 
+var CoorRoleReq_Auth_DEFAULT *common.Authorize
+
+func (p *CoorRoleReq) GetAuth() *common.Authorize {
+	if !p.IsSetAuth() {
+		return CoorRoleReq_Auth_DEFAULT
+	}
+	return p.Auth
+}
+
 func (p *CoorRoleReq) GetExtra() map[string]string {
 	return p.Extra
 }
+func (p *CoorRoleReq) IsSetAuth() bool {
+	return p.Auth != nil
+}
+
 func (p *CoorRoleReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
@@ -750,8 +863,18 @@ func (p *CoorRoleReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 2:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.STRUCT {
 				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -784,6 +907,14 @@ func (p *CoorRoleReq) ReadField1(iprot thrift.TProtocol) error {
 }
 
 func (p *CoorRoleReq) ReadField2(iprot thrift.TProtocol) error {
+	p.Auth = &common.Authorize{}
+	if err := p.Auth.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
+	}
+	return nil
+}
+
+func (p *CoorRoleReq) ReadField3(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -822,6 +953,9 @@ func (p *CoorRoleReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField2(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -846,8 +980,21 @@ func (p *CoorRoleReq) writeField1(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *CoorRoleReq) writeField2(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 2); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("auth", thrift.STRUCT, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:auth: ", p), err)
+	}
+	if err := p.Auth.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Auth), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:auth: ", p), err)
+	}
+	return err
+}
+
+func (p *CoorRoleReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -864,7 +1011,7 @@ func (p *CoorRoleReq) writeField2(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
 	}
 	return err
 }
