@@ -116,7 +116,7 @@ type User struct {
 	Role    int64   `thrift:"role,7" db:"role" json:"role"`
 	Vip     int64   `thrift:"vip,8" db:"vip" json:"vip"`
 	Coin    float64 `thrift:"coin,9" db:"coin" json:"coin"`
-	RegIP   int32   `thrift:"reg_ip,10" db:"reg_ip" json:"reg_ip"`
+	RegIP   int64   `thrift:"reg_ip,10" db:"reg_ip" json:"reg_ip"`
 	RegAt   string  `thrift:"reg_at,11" db:"reg_at" json:"reg_at"`
 }
 
@@ -160,7 +160,7 @@ func (p *User) GetCoin() float64 {
 	return p.Coin
 }
 
-func (p *User) GetRegIP() int32 {
+func (p *User) GetRegIP() int64 {
 	return p.RegIP
 }
 
@@ -272,7 +272,7 @@ func (p *User) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 10:
-			if fieldTypeId == thrift.I32 {
+			if fieldTypeId == thrift.I64 {
 				if err := p.ReadField10(iprot); err != nil {
 					return err
 				}
@@ -388,7 +388,7 @@ func (p *User) ReadField9(iprot thrift.TProtocol) error {
 }
 
 func (p *User) ReadField10(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadI32(); err != nil {
+	if v, err := iprot.ReadI64(); err != nil {
 		return thrift.PrependError("error reading field 10: ", err)
 	} else {
 		p.RegIP = v
@@ -571,10 +571,10 @@ func (p *User) writeField9(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *User) writeField10(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("reg_ip", thrift.I32, 10); err != nil {
+	if err := oprot.WriteFieldBegin("reg_ip", thrift.I64, 10); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 10:reg_ip: ", p), err)
 	}
-	if err := oprot.WriteI32(int32(p.RegIP)); err != nil {
+	if err := oprot.WriteI64(int64(p.RegIP)); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T.reg_ip (10) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
@@ -782,18 +782,19 @@ func (p *UserInfoReq) String() string {
 //  - Source
 //  - Contactor
 //  - Email
+//  - RegIP
 //  - Extra
 type NewUserReq_ struct {
-	Account   string `thrift:"account,1" db:"account" json:"account"`
-	PassWd    string `thrift:"pass_wd,2" db:"pass_wd" json:"pass_wd"`
-	ClientIP  string `thrift:"client_ip,3" db:"client_ip" json:"client_ip"`
-	Role      int32  `thrift:"role,4" db:"role" json:"role"`
-	Invitor   string `thrift:"invitor,5" db:"invitor" json:"invitor"`
-	Source    string `thrift:"source,6" db:"source" json:"source"`
-	Contactor string `thrift:"contactor,7" db:"contactor" json:"contactor"`
-	Email     string `thrift:"email,8" db:"email" json:"email"`
-	// unused fields # 9 to 10
-	Extra map[string]string `thrift:"extra,11" db:"extra" json:"extra"`
+	Account   string            `thrift:"account,1" db:"account" json:"account"`
+	PassWd    string            `thrift:"pass_wd,2" db:"pass_wd" json:"pass_wd"`
+	ClientIP  string            `thrift:"client_ip,3" db:"client_ip" json:"client_ip"`
+	Role      int32             `thrift:"role,4" db:"role" json:"role"`
+	Invitor   string            `thrift:"invitor,5" db:"invitor" json:"invitor"`
+	Source    string            `thrift:"source,6" db:"source" json:"source"`
+	Contactor string            `thrift:"contactor,7" db:"contactor" json:"contactor"`
+	Email     string            `thrift:"email,8" db:"email" json:"email"`
+	RegIP     int64             `thrift:"reg_ip,9" db:"reg_ip" json:"reg_ip"`
+	Extra     map[string]string `thrift:"extra,10" db:"extra" json:"extra"`
 }
 
 func NewNewUserReq_() *NewUserReq_ {
@@ -830,6 +831,10 @@ func (p *NewUserReq_) GetContactor() string {
 
 func (p *NewUserReq_) GetEmail() string {
 	return p.Email
+}
+
+func (p *NewUserReq_) GetRegIP() int64 {
+	return p.RegIP
 }
 
 func (p *NewUserReq_) GetExtra() map[string]string {
@@ -929,9 +934,19 @@ func (p *NewUserReq_) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
-		case 11:
+		case 9:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField9(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 10:
 			if fieldTypeId == thrift.MAP {
-				if err := p.ReadField11(iprot); err != nil {
+				if err := p.ReadField10(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -1026,7 +1041,16 @@ func (p *NewUserReq_) ReadField8(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *NewUserReq_) ReadField11(iprot thrift.TProtocol) error {
+func (p *NewUserReq_) ReadField9(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 9: ", err)
+	} else {
+		p.RegIP = v
+	}
+	return nil
+}
+
+func (p *NewUserReq_) ReadField10(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -1083,7 +1107,10 @@ func (p *NewUserReq_) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField8(oprot); err != nil {
 			return err
 		}
-		if err := p.writeField11(oprot); err != nil {
+		if err := p.writeField9(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField10(oprot); err != nil {
 			return err
 		}
 	}
@@ -1200,9 +1227,22 @@ func (p *NewUserReq_) writeField8(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *NewUserReq_) writeField11(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 11); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 11:extra: ", p), err)
+func (p *NewUserReq_) writeField9(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("reg_ip", thrift.I64, 9); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 9:reg_ip: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.RegIP)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.reg_ip (9) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 9:reg_ip: ", p), err)
+	}
+	return err
+}
+
+func (p *NewUserReq_) writeField10(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 10); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 10:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -1219,7 +1259,7 @@ func (p *NewUserReq_) writeField11(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 11:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 10:extra: ", p), err)
 	}
 	return err
 }

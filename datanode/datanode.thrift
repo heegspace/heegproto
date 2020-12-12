@@ -21,7 +21,7 @@ struct user{
     7:i64      role,
     8:i64      vip,
     9:double   coin,
-    10:i32      reg_ip,
+    10:i64      reg_ip,
     11:string  reg_at,
 }
 
@@ -39,7 +39,8 @@ struct new_user_req {
     6:string    source,
     7:string    contactor,
     8:string    email,
-    11:map<string,string> extra,
+    9:i64       reg_ip;
+    10:map<string,string> extra,
 }
 
 struct search_user_req {
