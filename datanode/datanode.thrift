@@ -12,33 +12,20 @@ enum Role {
 }
 
 struct user{
-    1:string    uid,
-    2:string    account,
-    3:string    pass_wd,
-    4:string    user_name,
-    5:string    brithday,
-    6:string    card_id,
-    7:string    address,
-    8:string    nick_name,
-    9:string    avatar,
-    10:string   phone,
-    11:string   login_at,
-    12:string   login_ip,
-    13:string   last_at,
-    14:i16      status,
-    15:i64      role,
-    16:string   email,
-    17:string   contact_name,
-    18:string   brand_name,
-    19:string   company_name,
-    20:string   attention,
-    21:string   update_at,
-    22:i64      vip,
-    23:double   coin
+    1:i64       uid,
+    2:string   phone,
+    3:string   email,
+    4:string    account,
+    5:string    pass_wd,
+    6:i16      status,
+    7:i64      role,
+    8:i64      vip,
+    9:double   coin
+    10:string  reg_at;
 }
 
 struct user_info_req {
-    1:string    uid,
+    1:i64    uid,
     2:map<string,string> extra,
 }
 
@@ -51,14 +38,12 @@ struct new_user_req {
     6:string    source,
     7:string    contactor,
     8:string    email,
-    9:string    brand_name,
-    10:string   company_name,
     11:map<string,string> extra,
 }
 
 struct search_user_req {
-    1:list<string>      uids,
-    2:string            user_name,
+    1:list<i64>         uids,
+    2:string            account,
     3:string            phone,
     4:string            email,
     5:map<string,string> extra,
@@ -72,28 +57,15 @@ struct user_res {
 }
 
 struct update_req {
-    1:string    uid,
-    2:string    pass_wd,
-    3:string    user_name,
-    4:string    brithday,
-    5:string    card_id,
-    6:string    address,
-    7:string    nick_name,
-    8:string    avatar,
-    9:string    phone,
-    10:string   login_at,
-    11:string   login_ip,
-    12:string   last_at,
-    13:i16      status,
-    14:i64      role,
-    15:string   email,
-    16:string   contact_name,
-    17:string   brand_name,
-    18:string   company_name,
-    19:string   attention,
-    20:string   update_at,
-    21:i64      vip,
-    22:double   coin,
+    1:i64        uid,
+    2:string   phone,
+    3:string   email,
+    4:string    account,
+    5:string    pass_wd,
+    6:i16      status,
+    7:i64      role,
+    8:i64      vip,
+    9:double   coin
     23:map<string,string> extra,
 }
 
@@ -109,7 +81,7 @@ struct add_friend_res {
 }
 
 struct agree_friend_req {
-    1:string   uid,
+    1:i64               uid,
     2:map<string,string> extra,
 }
 
@@ -120,7 +92,7 @@ struct agree_friend_res {
 }
 
 struct friend_item {
-    1:string    uid,
+    1:i64       uid,
     2:string    note,
     3:string    account,
     4:string    nick_name,
@@ -173,7 +145,7 @@ struct rename_group_res {
 }
 
 struct add_friend_note_req {
-    1:string            uid,
+    1:i64                uid,
     2:string            note,
     3:map<string,string> extra,
 }
@@ -185,8 +157,8 @@ struct add_friend_note_res {
 }
 
 struct move_group_req {
-    1:string    uid,
-    2:string    group,
+    1:i64                uid,
+    2:string            group,
     3:map<string,string> extra,
 }
 
@@ -197,7 +169,7 @@ struct move_group_res {
 }
 
 struct remove_friend_req {
-    1:string            uid,
+    1:i64               uid,
     2:map<string,string> extra,
 }
 
@@ -221,7 +193,7 @@ struct likes_add_res {
 }
 
 struct likes {
-    1:string            uid,
+    1:i64               uid,
     2:i64               create_at,
 }
 
@@ -233,8 +205,8 @@ struct likes_list_res {
 }
 
 struct note_meta {
-    1:string uid,
-    2:string user_id,
+    1:i64       uid,
+    2:i64   user_id,
     3:string title,
     4:string thumb,
     5:string desc,
@@ -244,7 +216,7 @@ struct note_meta {
 }
 
 struct update_note_req {
-    1:string    uid,
+    1:i64       uid,
     2:string    data,
     3:string    html,
     4:map<string,string> extra,
@@ -253,7 +225,7 @@ struct update_note_req {
 struct note_meta_res {
     1:rescode.code      rescode,
     2:string            resmsg,
-    3:note_meta      meta,
+    3:note_meta         meta,
     4:map<string,string> extra,
 }
 
@@ -267,7 +239,7 @@ struct note_meta_list_res {
 struct note_list_count_res {
     1:rescode.code      rescode,
     2:string            resmsg,
-    3:i32      count,
+    3:i32               count,
     4:map<string,string> extra,
 }
 
@@ -298,9 +270,9 @@ struct extra {
 }
 
 struct moments {
-    1:i32   id,
-    2:string mid,
-    3:string text,
+    1:i64       id,
+    2:string    mid,
+    3:string    text,
     4:list<extra> extra,
     5:i32 create_at,
 }
@@ -415,8 +387,8 @@ struct subject_name_res {
 }
 
 struct chapter_res_item {
-    1:string    uid,
-    2:string    title,
+    1:string                    uid,
+    2:string                    title,
     3:list<common.chapter_item> childs,
 }
 
@@ -467,7 +439,7 @@ struct collect_res {
 }
 
 struct collect_list_req {
-    1:string    uid,
+    1:i64       uid,
     2:i32       page,
     3:i32       size,
 }
@@ -480,7 +452,7 @@ struct collect_list_res {
 }
 
 struct modify_req {
-    1:string            uid,
+    1:i64               uid,
     2:string            tid,
     3:common.question   timu,
 }
@@ -492,7 +464,7 @@ struct modify_res {
 }
 
 struct modify_list_req {
-    1:string    uid,
+    1:i64       uid,
     2:i32       page,
     3:i32       size,
 }
@@ -524,9 +496,9 @@ struct search_req {
 }
 
 struct search_res {
-    1:rescode.code              rescode,
-    2:string                    resmsg,
-    3:double                    timestamp,
+    1:rescode.code                  rescode,
+    2:string                        resmsg,
+    3:double                        timestamp,
     4:common.search_hits_total         total,
     5:list<common.search_hits_item>    hits,
     6:map<string,string> extra, 
@@ -565,7 +537,7 @@ struct home_black_data_res {
 }
 
 struct grade_subject_req {
-    1:i32       index,
+    1:i32               index,
     2:map<string,string> extra,
 }
 
@@ -637,62 +609,62 @@ service datanode_service {
 
     // --------------- 好友接口 ----------- //
     // 添加好友
-    add_friend_res addFriends(1:string uid,2:add_friend_req req),
+    add_friend_res addFriends(1:i64 uid,2:add_friend_req req),
     // 同意好友
-    agree_friend_res agreeFriends(1:string uid,2:agree_friend_req req),
+    agree_friend_res agreeFriends(1:i64 uid,2:agree_friend_req req),
     //  请求好友列表
-    friend_res friendsList(1:string uid, 2:string uid2),
+    friend_res friendsList(1:i64 uid, 2:i64 uid2),
     // 添加组
-    create_group_res createGroup(1:string uid,2:create_group_req req),
+    create_group_res createGroup(1:i64 uid,2:create_group_req req),
     // 重命名组
-    rename_group_res renameGroup(1:string uid,2:rename_group_req req),
+    rename_group_res renameGroup(1:i64 uid,2:rename_group_req req),
     // 添加好友备注
-    add_friend_note_res addNoteFriend(1:string uid,2:add_friend_note_req req),
+    add_friend_note_res addNoteFriend(1:i64 uid,2:add_friend_note_req req),
     // 移动到新的组
-    move_group_res moveToNewGroup(1:string uid,2:move_group_req req),
+    move_group_res moveToNewGroup(1:i64 uid,2:move_group_req req),
     // 删除好友
-    remove_friend_res removeFriend(1:string uid,2:remove_friend_req req),
+    remove_friend_res removeFriend(1:i64 uid,2:remove_friend_req req),
 
     // ----------------- 点赞 --------------- //
     // 获取点赞的数量
     likes_count_res likesCount(1:string mid),
     // 添加点赞
-    likes_add_res likesAdd(1:string mid,2:string uid),
+    likes_add_res likesAdd(1:string mid,2:i64 uid),
     // 获取点赞列表
     likes_list_res likesList(1:string mid,2:i32 page, 3:i32 size),
 
     // ----------------- 笔记 ----------------// 
     //更新或者添加笔记信息
-    note_meta_res updateNote(1:string uid, 2:update_note_req req),
+    note_meta_res updateNote(1:i64 uid, 2:update_note_req req),
     // 获取笔记列表
-    note_meta_list_res noteMetaList(1:string uid, 2:i32 page, 3:i32 size),
+    note_meta_list_res noteMetaList(1:i64 uid, 2:i32 page, 3:i32 size),
     // 获取用户笔记数量
-    note_list_count_res noteListCount(1:string uid),
+    note_list_count_res noteListCount(1:i64 uid),
     // 获取笔记数据列
-    note_data_res noteData(1:string uid, 2:string nid),
+    note_data_res noteData(1:i64 uid, 2:string nid),
     // 获取笔记html数据
-    note_html_res noteHtml(1:string uid, 2:string nid),
+    note_html_res noteHtml(1:i64 uid, 2:string nid),
 
     // ---------------- 动态 --------------- //
     // 获取动态的数量
-    moments_count_res momentsCount(1:string uid),
+    moments_count_res momentsCount(1:i64 uid),
     // 添加动态
-    add_moments_res momentsAdd(1:string uid, 2:moments moments),
+    add_moments_res momentsAdd(1:i64 uid, 2:moments moments),
     // 获取动态列表
-    moments_list_res momentsList(1:string uid, 2:i32 page, 3:i32 size),
+    moments_list_res momentsList(1:i64 uid, 2:i32 page, 3:i32 size),
 
     // ---------------- 文件 ------------------//
     // 获取目录,目录之间的/替换成-
-    file_dir_res fileDirOne(1:string uid, 2:string path),
+    file_dir_res fileDirOne(1:i64 uid, 2:string path),
     // 添加目录
-    add_dir_res fileDirAdd(1:string uid, 2:add_dir_req req),
+    add_dir_res fileDirAdd(1:i64 uid, 2:add_dir_req req),
     // 添加文件
-    add_file_res addFile(1:string uid, 2:add_file_req req),
+    add_file_res addFile(1:i64 uid, 2:add_file_req req),
     // 获取云盘属性，容量和文件数量
-    file_attr_res yunSaveAttr(1:string uid),
+    file_attr_res yunSaveAttr(1:i64 uid),
 
     // 获取图像缩略图
-    thumbnail_res thumbnail(1:string uid, 2:string path)
+    thumbnail_res thumbnail(1:i64 uid, 2:string path)
 
     // ------------- key-value ----------------//
     // 设置缓存
@@ -717,9 +689,9 @@ service datanode_service {
     // 获取题目数量
     timu_count_res question_timu_count(1:common.question_query req),
     // 请求题目
-    timu_res question_timu(1:string uid, 2:common.question_query req),
+    timu_res question_timu(1:i64 uid, 2:common.question_query req),
     // 收藏试题
-    collect_res collect_timu(1:string uid, 2:collect_req req),
+    collect_res collect_timu(1:i64 uid, 2:collect_req req),
     // 获取收藏列表
     collect_list_res query_collect_timu(1:collect_list_req req),
     // 纠错试题（包含更新或添加）
@@ -727,7 +699,7 @@ service datanode_service {
     // 获取个人纠错的试题
     modify_list_res modify_list(1:modify_list_req req),
     // 获取个人纠错的试题的数量
-    modify_count_res modify_count(1:string uid),
+    modify_count_res modify_count(1:i64 uid),
     // 取消纠错试题
     modify_cancel_res modify_cancel(1:string tid),
     // 搜索试题

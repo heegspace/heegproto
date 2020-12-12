@@ -5,7 +5,7 @@ include "../common/common.thrift"
 
 struct grade_cate_add_req {
     1:common.authorize auth,
-    2:string uid,
+    2:i64               uid,
     3:common.grade_cate grade,
     4:map<string,string> extra,
 }
@@ -18,7 +18,7 @@ struct grade_cate_add_res {
 
 struct grade_cate_count_req {
     1:common.authorize auth,
-    2:string uid,
+    2:i64               uid,
     3:map<string,string> extra,
 }
 
@@ -31,7 +31,7 @@ struct grade_cate_count_res {
 
 struct grade_cate_list_req {
     1:common.authorize auth,
-    2:string uid,
+    2:i64   uid,
     3:i32   page,
     4:i32   size,
     5:map<string,string> extra,
@@ -46,7 +46,7 @@ struct grade_cate_list_res {
 
 struct home_black_data_req {
     1:common.authorize auth,
-    2:string uid,
+    2:i64               uid,
     3:map<string,string> extra,
 }
 
@@ -59,7 +59,7 @@ struct home_black_data_res {
 
 struct grade_subject_req {
     1:common.authorize auth,
-    2:string uid,
+    2:i64   uid,
     3:i32    index,
     4:map<string,string> extra,
 }
@@ -73,7 +73,7 @@ struct grade_subject_res {
 
 struct school_roll_add_req {
     1:common.authorize auth,
-    2:string uid,
+    2:i64 uid,
     3:common.school_roll roll,
     4:map<string,string> extra,
 }
@@ -86,7 +86,7 @@ struct school_roll_add_res {
 
 struct school_roll_count_req {
     1:common.authorize auth,
-    2:string uid,
+    2:i64 uid,
     3:map<string,string> extra,
 }
 
@@ -99,7 +99,7 @@ struct school_roll_count_res {
 
 struct school_list_req {
     1:common.authorize auth,
-    2:string    uid,
+    2:i64       uid,
     3:i32       page,
     4:i32       size,
     5:map<string,string> extra,
@@ -114,7 +114,7 @@ struct school_list_res {
 
 struct subject_cate_add_req {
     1:common.authorize auth,
-    2:string    uid,
+    2:i64    uid,
     3:common.subject_cate subject,
     4:map<string,string> extra,
 }
@@ -127,7 +127,7 @@ struct subject_cate_add_res {
 
 struct subject_cate_count_req {
     1:common.authorize auth,
-    2:string    uid,
+    2:i64    uid,
     3:map<string,string> extra,
 }
 
@@ -140,7 +140,7 @@ struct subject_cate_count_res {
 
 struct subejct_cate_list_req {
     1:common.authorize auth,
-    2:string    uid,
+    2:i64       uid,
     3:i32       page,
     4:i32       size,
     5:map<string,string> extra,
@@ -155,7 +155,7 @@ struct subject_cate_list_res {
 
 struct question_version_req {
     1:common.authorize auth,
-    2:string    uid,
+    2:i64    uid,
     3:common.question_query query,
     4:map<string,string> extra,
 }
@@ -169,13 +169,13 @@ struct question_version_res {
 
 struct question_chapter_req {
     1:common.authorize auth,
-    2:string    uid,
+    2:i64    uid,
     3:common.question_query query,
     4:map<string,string> extra,
 }
 
 struct chapter_res_item {
-    1:string    uid,
+    1:i64       uid,
     2:string    title,
     3:list<common.chapter_item> childs,
 }
@@ -189,7 +189,7 @@ struct question_chapter_res {
 
 struct subject_name_req {
     1:common.authorize auth,
-    2:string    uid,
+    2:i64       uid,
     3:string    param,
     4:map<string,string> extra,
 }
@@ -203,7 +203,7 @@ struct subject_name_res {
 
 struct question_source_req {
     1:common.authorize auth,
-    2:string    uid,
+    2:i64    uid,
     3:common.question_query query,
     4:map<string,string> extra,
 }
@@ -217,7 +217,7 @@ struct question_source_res {
 
 struct question_tixing_req {
     1:common.authorize auth,
-    2:string    uid,
+    2:i64    uid,
     3:common.question_query query,
     4:map<string,string> extra,
 }
@@ -231,7 +231,7 @@ struct question_tixing_res {
 
 struct question_timu_count_req {
     1:common.authorize auth,
-    2:string    uid,
+    2:i64    uid,
     3:common.question_query query,
     4:map<string,string> extra,
 }
@@ -245,7 +245,7 @@ struct question_timu_count_res {
 
 struct question_timu_req {
     1:common.authorize auth,
-    2:string    uid,
+    2:i64    uid,
     3:common.question_query query,
     4:map<string,string> extra,
 }
@@ -259,7 +259,7 @@ struct question_timu_res {
 
 struct collect_timu_req {
     1:common.authorize auth,
-    2:string    uid,
+    2:i64       uid,
     3:string    cid,
     4:i64       op,
     5:map<string,string> extra,
@@ -273,7 +273,7 @@ struct collect_timu_res {
 
 struct query_collect_timu_req {
     1:common.authorize auth,
-    2:string    uid,
+    2:i64       uid,
     3:i32       page,
     4:i32       size,
     5:map<string,string> extra,
@@ -288,7 +288,7 @@ struct query_collect_timu_res {
 
 struct modify_question_req {
     1:common.authorize auth,
-    2:string    uid,
+    2:i64       uid,
     3:string    tid,
     4:common.question timu,
     5:map<string,string> extra,
@@ -302,7 +302,7 @@ struct modify_question_res {
 
 struct modify_list_req {
     1:common.authorize auth,
-    2:string    uid,
+    2:i64       uid,
     3:i32       page,
     4:i32       size,
     5:map<string,string> extra,
@@ -317,7 +317,7 @@ struct modify_list_res {
 
 struct modify_count_req {
     1:common.authorize auth,
-    2:string    uid,
+    2:i64    uid,
     3:map<string,string> extra,
 }
 
@@ -330,7 +330,7 @@ struct modify_count_res {
 
 struct modify_cancel_req {
     1:common.authorize auth,
-    2:string    uid,
+    2:i64       uid,
     3:string    tid
     4:map<string,string> extra,
 }

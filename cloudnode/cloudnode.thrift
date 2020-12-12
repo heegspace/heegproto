@@ -5,7 +5,7 @@ include "../common/common.thrift"
 
 struct dir_req {
     1:common.authorize      auth,
-    2:string                uid,
+    2:i64                   uid,
     3:string                path,
     4:map<string,string>    extra,
 }
@@ -30,7 +30,7 @@ struct dir_res {
 
 struct add_dir_req {
     1:common.authorize      auth,
-    2:string                uid,
+    2:i64                   uid,
     3:string                parent,
     4:string                name,
     5:map<string,string>    extra, 
@@ -53,7 +53,7 @@ struct file_item {
 
 struct add_file_req {
     1:common.authorize      auth,
-    2:string                uid,
+    2:i64                   uid,
     3:file_item             files,
     4:map<string,string>    extra,
 }
@@ -66,7 +66,7 @@ struct add_file_res {
 
 struct attr_req {
     1:common.authorize      auth,
-    2:string                uid,
+    2:i64                   uid,
     3:map<string,string>    extra,
 }
 
@@ -84,7 +84,7 @@ struct attr_res {
 
 struct thumbnail_req {
     1:common.authorize      auth,
-    2:string                uid,
+    2:i64                   uid,
     3:string                path,
     4:map<string,string>    extra,
 }

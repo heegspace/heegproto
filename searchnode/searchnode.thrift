@@ -5,7 +5,7 @@ include "../common/common.thrift"
 
 struct search_question_req {
     1:common.authorize auth,
-    2:string uid,
+    2:i64   uid,
     3:string keyword,
     4:i32    page,
     5:i32   size,

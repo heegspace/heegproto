@@ -119,7 +119,7 @@ struct modify_meta {
 
 struct modify_item {
     1:i64       id,
-    2:string    userid,
+    2:i64       userid,
     3:string    ti_mu_id,
     4:question  source,
     5:question  data,
@@ -183,7 +183,7 @@ struct school_static {
 }
 
 struct grade_item {
-    1:string    uid,
+    1:i64       uid,
     2:string    name,
     3:i64       sort,
     4:string    href,
@@ -199,14 +199,14 @@ struct grade_subject {
 }
 
 struct school_roll {
-    1:string    uid,
+    1:i64       uid,
     2:i64       index,
     3:string    name,
     4:string    create_at,
 }
 
 struct subject_cate {
-    1:string    uid,
+    1:i64       uid,
     2:string    roll_id,
     3:string    grade_id,
     4:string    subject,

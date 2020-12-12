@@ -4,14 +4,14 @@ include "../rescode/rescode.thrift"
 include "../common/common.thrift"
 
 struct note_item {
-    1:string                nid,
+    1:i64                   nid,
     2:string                data,
     3:string                html,
 }
 
 struct note_meta {
-    1:string uid,
-    2:string user_id,
+    1:i64 uid,
+    2:i64 user_id,
     3:string title,
     4:string thumb,
     5:string desc,
@@ -22,7 +22,7 @@ struct note_meta {
 
 struct update_note_req {
     1:common.authorize             auth,
-    2:string                uid,
+    2:i64                   uid,
     3:note_item             note,
     5:map<string,string>    extra,
 }
@@ -30,13 +30,13 @@ struct update_note_req {
 struct note_meta_res {
     1:rescode.code      rescode,
     2:string            resmsg,
-    3:note_meta      meta,
+    3:note_meta         meta,
     4:map<string,string> extra,
 }
  
 struct note_meta_list_req {
     1:common.authorize             auth,
-    2:string                uid,
+    2:i64                   uid,
     3:i32                   page,
     4:i32                   size,
     5:map<string,string> extra,
@@ -51,7 +51,7 @@ struct note_meta_list_res {
 
 struct note_list_count_req {
     1:common.authorize             auth,
-    2:string                uid,
+    2:i64                   uid,
     3:map<string,string>    extra,
 }
 
@@ -64,8 +64,8 @@ struct note_list_count_res {
 
 struct note_data_req {
     1:common.authorize             auth,
-    2:string                uid,
-    3:string                nid,
+    2:i64                uid,
+    3:i64                nid,
     4:map<string,string>    extra,
 }
 
@@ -78,8 +78,8 @@ struct note_data_res {
 
 struct note_html_req {
     1:common.authorize             auth,
-    2:string                uid,
-    3:string                nid,
+    2:i64                uid,
+    3:i64                nid,
     4:map<string,string>    extra,
 }
 

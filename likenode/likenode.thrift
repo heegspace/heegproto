@@ -5,8 +5,8 @@ include "../common/common.thrift"
 
 struct likes_count_req {
     1:common.authorize     auth,
-    2:string        uid,
-    3:string        mid,
+    2:i64                   uid,
+    3:string                mid,
 }
 
 struct likes_count_res {
@@ -18,8 +18,8 @@ struct likes_count_res {
 
 struct likes_add_req {
     1:common.authorize     auth,
-    2:string        uid,
-    3:string        mid,
+    2:i64                   uid,
+    3:string                mid,
 }
 
 struct likes_add_res {
@@ -30,14 +30,14 @@ struct likes_add_res {
 
 struct likes_list_req {
     1:common.authorize     auth,
-    2:string        uid,
-    3:string        mid,
+    2:i64                   uid,
+    3:string                   mid,
     4:i32           page,
     5:i32           size,
 }
 
 struct likes {
-    1:string            uid,
+    1:i64               uid,
     2:i64               create_at,
 }
 

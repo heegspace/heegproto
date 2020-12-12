@@ -28,12 +28,10 @@ struct cooperator_user_req {
     4:string    code,  
     5:string    contactor,  // 联系人
     6:string    email,
-    7:string    brand_name, 
-    8:string    company_name,
-    9:bool      policy,
-    10:string    source,
-    11:string    invitor,
-    12:map<string,string> extra,
+    7:bool      policy,
+    8:string    source,
+    9:string    invitor,
+    10:map<string,string> extra,
 }
 
 struct cooperator_user_res {

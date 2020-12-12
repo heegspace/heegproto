@@ -5,7 +5,7 @@ include "../common/common.thrift"
 
 struct moments_count_req {
     1:common.authorize     auth,
-    2:string        uid,
+    2:i64        uid,
 }
 
 struct moments_count_res {
@@ -22,7 +22,7 @@ struct extra {
 
 struct moments {
     1:i32   id,
-    2:string mid,
+    2:i64   mid,
     3:string text,
     4:list<extra> extra,
     5:i32 create_at,
@@ -30,8 +30,8 @@ struct moments {
 
 struct add_moments_req {
     1:common.authorize     auth,
-    2:string        uid,
-    3:moments       moments,
+    2:i64                   uid,
+    3:moments               moments,
     4:map<string,string> extra,
 }
 
@@ -43,7 +43,7 @@ struct add_moments_res {
 
 struct moments_list_req {
     1:common.authorize     auth,
-    2:string        uid,
+    2:i64                uid,
     3:i32           page,
     4:i32           size,
 }

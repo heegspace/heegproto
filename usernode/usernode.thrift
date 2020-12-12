@@ -4,61 +4,49 @@ include "../rescode/rescode.thrift"
 include "../common/common.thrift"
 
 struct user_obj {
-    1:string    uid,
-    2:string    account,
-    4:string    user_name,
-    5:string    brithday,
-    6:string    card_id,
-    7:string    address,
-    8:string    nick_name,
-    9:string    avatar,
-    10:string   phone,
-    11:string   login_at,
-    12:string   login_ip,
-    13:string   last_at,
-    14:i16      status,
-    15:i64      role,
-    16:string   email,
-    17:string   contact_name,
-    18:string   brand_name,
-    19:string   company_name,
-    20:string   attention,
-    21:string   update_at,
-    22:i64      vip,
-    23:double   coin
+    1:i64       uid,
+    2:string   phone,
+    3:string   email,
+    4:string    account,
+    5:string    pass_wd,
+    6:i16      status,
+    7:i64      role,
+    8:i64      vip,
+    9:double   coin
+    10:string  reg_at;
 }
 
 struct update_username_req {
     1:common.authorize auth,
-    2:string uid,
+    2:i64 uid,
     3:string user_name
     4:map<string,string> extra,
 }
 
 struct update_brithday_req {
     1:common.authorize auth,
-    2:string uid,
+    2:i64 uid,
     3:string brithday
     4:map<string,string> extra,
 }
 
 struct update_cardid_req {
     1:common.authorize auth,
-    2:string uid,
+    2:i64 uid,
     3:string card_id
     4:map<string,string> extra,
 }
 
 struct update_avatar_req {
     1:common.authorize auth,
-    2:string uid,
+    2:i64 uid,
     3:string avatar
     4:map<string,string> extra,
 }
 
 struct update_attention_req {
     1:common.authorize auth,
-    2:string uid,
+    2:i64 uid,
     3:string attention
     4:map<string,string> extra,
 }
@@ -71,7 +59,7 @@ struct update_user_res {
 
 struct user_info_req {
     1:common.authorize auth,
-    2:string    uid,
+    2:i64    uid,
     3:map<string,string> extra,
 }
 

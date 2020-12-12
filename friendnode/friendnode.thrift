@@ -5,8 +5,8 @@ include "../common/common.thrift"
 
 struct add_friend_req {
     1:common.authorize auth,
-    2:string    uid,
-    3:string    phone,
+    2:i64               uid,
+    3:string            phone,
     4:map<string,string> extra,
 }
 
@@ -18,8 +18,8 @@ struct add_friend_res {
 
 struct agree_friend_req {
     1:common.authorize     auth,
-    2:string        suid, // 用户id
-    3:string        uid,
+    2:i64                   suid, // 用户id
+    3:i64                   uid,
     4:map<string,string> extra,
 }
 
@@ -31,11 +31,11 @@ struct agree_friend_res {
 
 struct friend_list_req {
     1:common.authorize     auth,
-    2:string        uid,
+    2:i64                   uid,
 }
 
 struct friend_item {
-    1:string    uid,
+    1:i64       uid,
     2:string    note,
     3:string    account,
     4:string    nick_name,
@@ -66,8 +66,8 @@ struct friend_list_res {
 
 struct create_group_req {
     1:common.authorize     auth,
-    2:string        uid,
-    3:string        name,
+    2:i64                   uid,
+    3:string                name,
     4:map<string,string> extra,
 }
 
@@ -79,9 +79,9 @@ struct create_group_res {
 
 struct rename_group_req {
     1:common.authorize     auth,
-    2:string        uid,
-    3:string    old_name,
-    4:string    new_name,
+    2:i64                   uid,
+    3:string                old_name,
+    4:string                new_name,
     5:map<string,string> extra,
 }
 
@@ -93,9 +93,9 @@ struct rename_group_res {
 
 struct add_friend_note_req {
     1:common.authorize         auth,
-    2:string            suid,
-    3:string            uid,
-    4:string            note,
+    2:i64                   suid,
+    3:i64                   uid,
+    4:string                note,
     5:map<string,string> extra,
 }
 
@@ -107,10 +107,10 @@ struct add_friend_note_res {
 
 struct move_group_req {
     1:common.authorize             auth,
-    2:string                suid,
-    3:string                uid,
-    4:string                group,
-    5:map<string,string>    extra,
+    2:i64                       suid,
+    3:i64                       uid,
+    4:string                    group,
+    5:map<string,string>        extra,
 }
 
 struct move_group_res {
@@ -121,8 +121,8 @@ struct move_group_res {
 
 struct remove_friend_req {
     1:common.authorize         auth,
-    2:string            suid,
-    3:string            uid,
+    2:i64                   suid,
+    3:i64                   uid,
     4:map<string,string> extra,
 }
 
