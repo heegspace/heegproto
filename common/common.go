@@ -6511,7 +6511,7 @@ func (p *SchoolStatic) String() string {
 //  - Href
 //  - Heritid
 type GradeItem struct {
-	UID     int64  `thrift:"uid,1" db:"uid" json:"uid"`
+	UID     string `thrift:"uid,1" db:"uid" json:"uid"`
 	Name    string `thrift:"name,2" db:"name" json:"name"`
 	Sort    int64  `thrift:"sort,3" db:"sort" json:"sort"`
 	Href    string `thrift:"href,4" db:"href" json:"href"`
@@ -6522,7 +6522,7 @@ func NewGradeItem() *GradeItem {
 	return &GradeItem{}
 }
 
-func (p *GradeItem) GetUID() int64 {
+func (p *GradeItem) GetUID() string {
 	return p.UID
 }
 
@@ -6556,7 +6556,7 @@ func (p *GradeItem) Read(iprot thrift.TProtocol) error {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.I64 {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
 					return err
 				}
@@ -6621,7 +6621,7 @@ func (p *GradeItem) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *GradeItem) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadI64(); err != nil {
+	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
 		p.UID = v
@@ -6696,10 +6696,10 @@ func (p *GradeItem) Write(oprot thrift.TProtocol) error {
 }
 
 func (p *GradeItem) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("uid", thrift.I64, 1); err != nil {
+	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
 	}
-	if err := oprot.WriteI64(int64(p.UID)); err != nil {
+	if err := oprot.WriteString(string(p.UID)); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
@@ -7055,7 +7055,7 @@ func (p *GradeSubject) String() string {
 //  - Name
 //  - CreateAt
 type SchoolRoll struct {
-	UID      int64  `thrift:"uid,1" db:"uid" json:"uid"`
+	UID      string `thrift:"uid,1" db:"uid" json:"uid"`
 	Index    int64  `thrift:"index,2" db:"index" json:"index"`
 	Name     string `thrift:"name,3" db:"name" json:"name"`
 	CreateAt string `thrift:"create_at,4" db:"create_at" json:"create_at"`
@@ -7065,7 +7065,7 @@ func NewSchoolRoll() *SchoolRoll {
 	return &SchoolRoll{}
 }
 
-func (p *SchoolRoll) GetUID() int64 {
+func (p *SchoolRoll) GetUID() string {
 	return p.UID
 }
 
@@ -7095,7 +7095,7 @@ func (p *SchoolRoll) Read(iprot thrift.TProtocol) error {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.I64 {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
 					return err
 				}
@@ -7150,7 +7150,7 @@ func (p *SchoolRoll) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *SchoolRoll) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadI64(); err != nil {
+	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
 		p.UID = v
@@ -7213,10 +7213,10 @@ func (p *SchoolRoll) Write(oprot thrift.TProtocol) error {
 }
 
 func (p *SchoolRoll) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("uid", thrift.I64, 1); err != nil {
+	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
 	}
-	if err := oprot.WriteI64(int64(p.UID)); err != nil {
+	if err := oprot.WriteString(string(p.UID)); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
@@ -7280,7 +7280,7 @@ func (p *SchoolRoll) String() string {
 //  - Href
 //  - CreateAt
 type SubjectCate struct {
-	UID      int64  `thrift:"uid,1" db:"uid" json:"uid"`
+	UID      string `thrift:"uid,1" db:"uid" json:"uid"`
 	RollID   string `thrift:"roll_id,2" db:"roll_id" json:"roll_id"`
 	GradeID  string `thrift:"grade_id,3" db:"grade_id" json:"grade_id"`
 	Subject  string `thrift:"subject,4" db:"subject" json:"subject"`
@@ -7293,7 +7293,7 @@ func NewSubjectCate() *SubjectCate {
 	return &SubjectCate{}
 }
 
-func (p *SubjectCate) GetUID() int64 {
+func (p *SubjectCate) GetUID() string {
 	return p.UID
 }
 
@@ -7335,7 +7335,7 @@ func (p *SubjectCate) Read(iprot thrift.TProtocol) error {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.I64 {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
 					return err
 				}
@@ -7420,7 +7420,7 @@ func (p *SubjectCate) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *SubjectCate) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadI64(); err != nil {
+	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
 		p.UID = v
@@ -7519,10 +7519,10 @@ func (p *SubjectCate) Write(oprot thrift.TProtocol) error {
 }
 
 func (p *SubjectCate) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("uid", thrift.I64, 1); err != nil {
+	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
 	}
-	if err := oprot.WriteI64(int64(p.UID)); err != nil {
+	if err := oprot.WriteString(string(p.UID)); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
