@@ -20539,11 +20539,11 @@ type DatanodeService interface {
 	// Parameters:
 	//  - UID
 	//  - Nid
-	NoteData(ctx context.Context, uid int64, nid string) (r *NoteDataRes, err error)
+	NoteData(ctx context.Context, uid int64, nid int64) (r *NoteDataRes, err error)
 	// Parameters:
 	//  - UID
 	//  - Nid
-	NoteHtml(ctx context.Context, uid int64, nid string) (r *NoteHTMLRes, err error)
+	NoteHtml(ctx context.Context, uid int64, nid int64) (r *NoteHTMLRes, err error)
 	// Parameters:
 	//  - UID
 	MomentsCount(ctx context.Context, uid int64) (r *MomentsCountRes, err error)
@@ -20928,7 +20928,7 @@ func (p *DatanodeServiceClient) NoteListCount(ctx context.Context, uid int64) (r
 // Parameters:
 //  - UID
 //  - Nid
-func (p *DatanodeServiceClient) NoteData(ctx context.Context, uid int64, nid string) (r *NoteDataRes, err error) {
+func (p *DatanodeServiceClient) NoteData(ctx context.Context, uid int64, nid int64) (r *NoteDataRes, err error) {
 	var _args168 DatanodeServiceNoteDataArgs
 	_args168.UID = uid
 	_args168.Nid = nid
@@ -20942,7 +20942,7 @@ func (p *DatanodeServiceClient) NoteData(ctx context.Context, uid int64, nid str
 // Parameters:
 //  - UID
 //  - Nid
-func (p *DatanodeServiceClient) NoteHtml(ctx context.Context, uid int64, nid string) (r *NoteHTMLRes, err error) {
+func (p *DatanodeServiceClient) NoteHtml(ctx context.Context, uid int64, nid int64) (r *NoteHTMLRes, err error) {
 	var _args170 DatanodeServiceNoteHtmlArgs
 	_args170.UID = uid
 	_args170.Nid = nid
@@ -28615,8 +28615,8 @@ func (p *DatanodeServiceNoteListCountResult) String() string {
 //  - UID
 //  - Nid
 type DatanodeServiceNoteDataArgs struct {
-	UID int64  `thrift:"uid,1" db:"uid" json:"uid"`
-	Nid string `thrift:"nid,2" db:"nid" json:"nid"`
+	UID int64 `thrift:"uid,1" db:"uid" json:"uid"`
+	Nid int64 `thrift:"nid,2" db:"nid" json:"nid"`
 }
 
 func NewDatanodeServiceNoteDataArgs() *DatanodeServiceNoteDataArgs {
@@ -28627,7 +28627,7 @@ func (p *DatanodeServiceNoteDataArgs) GetUID() int64 {
 	return p.UID
 }
 
-func (p *DatanodeServiceNoteDataArgs) GetNid() string {
+func (p *DatanodeServiceNoteDataArgs) GetNid() int64 {
 	return p.Nid
 }
 func (p *DatanodeServiceNoteDataArgs) Read(iprot thrift.TProtocol) error {
@@ -28655,7 +28655,7 @@ func (p *DatanodeServiceNoteDataArgs) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 2:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I64 {
 				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
@@ -28689,7 +28689,7 @@ func (p *DatanodeServiceNoteDataArgs) ReadField1(iprot thrift.TProtocol) error {
 }
 
 func (p *DatanodeServiceNoteDataArgs) ReadField2(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
+	if v, err := iprot.ReadI64(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
 		p.Nid = v
@@ -28732,10 +28732,10 @@ func (p *DatanodeServiceNoteDataArgs) writeField1(oprot thrift.TProtocol) (err e
 }
 
 func (p *DatanodeServiceNoteDataArgs) writeField2(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("nid", thrift.STRING, 2); err != nil {
+	if err := oprot.WriteFieldBegin("nid", thrift.I64, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:nid: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Nid)); err != nil {
+	if err := oprot.WriteI64(int64(p.Nid)); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T.nid (2) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
@@ -28864,8 +28864,8 @@ func (p *DatanodeServiceNoteDataResult) String() string {
 //  - UID
 //  - Nid
 type DatanodeServiceNoteHtmlArgs struct {
-	UID int64  `thrift:"uid,1" db:"uid" json:"uid"`
-	Nid string `thrift:"nid,2" db:"nid" json:"nid"`
+	UID int64 `thrift:"uid,1" db:"uid" json:"uid"`
+	Nid int64 `thrift:"nid,2" db:"nid" json:"nid"`
 }
 
 func NewDatanodeServiceNoteHtmlArgs() *DatanodeServiceNoteHtmlArgs {
@@ -28876,7 +28876,7 @@ func (p *DatanodeServiceNoteHtmlArgs) GetUID() int64 {
 	return p.UID
 }
 
-func (p *DatanodeServiceNoteHtmlArgs) GetNid() string {
+func (p *DatanodeServiceNoteHtmlArgs) GetNid() int64 {
 	return p.Nid
 }
 func (p *DatanodeServiceNoteHtmlArgs) Read(iprot thrift.TProtocol) error {
@@ -28904,7 +28904,7 @@ func (p *DatanodeServiceNoteHtmlArgs) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 2:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I64 {
 				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
@@ -28938,7 +28938,7 @@ func (p *DatanodeServiceNoteHtmlArgs) ReadField1(iprot thrift.TProtocol) error {
 }
 
 func (p *DatanodeServiceNoteHtmlArgs) ReadField2(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
+	if v, err := iprot.ReadI64(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
 		p.Nid = v
@@ -28981,10 +28981,10 @@ func (p *DatanodeServiceNoteHtmlArgs) writeField1(oprot thrift.TProtocol) (err e
 }
 
 func (p *DatanodeServiceNoteHtmlArgs) writeField2(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("nid", thrift.STRING, 2); err != nil {
+	if err := oprot.WriteFieldBegin("nid", thrift.I64, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:nid: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Nid)); err != nil {
+	if err := oprot.WriteI64(int64(p.Nid)); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T.nid (2) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {

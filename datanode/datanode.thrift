@@ -641,9 +641,9 @@ service datanode_service {
     // 获取用户笔记数量
     note_list_count_res noteListCount(1:i64 uid),
     // 获取笔记数据列
-    note_data_res noteData(1:i64 uid, 2:string nid),
+    note_data_res noteData(1:i64 uid, 2:i64 nid),
     // 获取笔记html数据
-    note_html_res noteHtml(1:i64 uid, 2:string nid),
+    note_html_res noteHtml(1:i64 uid, 2:i64 nid),
 
     // ---------------- 动态 --------------- //
     // 获取动态的数量
