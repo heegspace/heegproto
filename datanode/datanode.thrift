@@ -20,8 +20,9 @@ struct user{
     6:i16      status,
     7:i64      role,
     8:i64      vip,
-    9:double   coin
-    10:string  reg_at;
+    9:double   coin,
+    10:i32      reg_ip,
+    11:string  reg_at,
 }
 
 struct user_info_req {
