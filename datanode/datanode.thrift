@@ -694,6 +694,7 @@ service datanode_service {
 
     // 用户
     add_user_attention_res add_user_attention(1:add_user_attention_req req),
+    del_user_attention_res del_user_attention(1:del_user_attention_req req),
     get_user_attention_res get_user_attention(1:get_user_attention_req reg),
 
 
