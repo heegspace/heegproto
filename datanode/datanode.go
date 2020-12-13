@@ -23342,8 +23342,8 @@ type DatanodeService interface {
 	//  - Req
 	DelUserAttention(ctx context.Context, req *DelUserAttentionReq) (r *DelUserAttentionRes, err error)
 	// Parameters:
-	//  - Reg
-	GetUserAttention(ctx context.Context, reg *GetUserAttentionReq) (r *GetUserAttentionRes, err error)
+	//  - Req
+	GetUserAttention(ctx context.Context, req *GetUserAttentionReq) (r *GetUserAttentionRes, err error)
 	// Parameters:
 	//  - UID
 	//  - Req
@@ -23654,10 +23654,10 @@ func (p *DatanodeServiceClient) DelUserAttention(ctx context.Context, req *DelUs
 }
 
 // Parameters:
-//  - Reg
-func (p *DatanodeServiceClient) GetUserAttention(ctx context.Context, reg *GetUserAttentionReq) (r *GetUserAttentionRes, err error) {
+//  - Req
+func (p *DatanodeServiceClient) GetUserAttention(ctx context.Context, req *GetUserAttentionReq) (r *GetUserAttentionRes, err error) {
 	var _args176 DatanodeServiceGetUserAttentionArgs
-	_args176.Reg = reg
+	_args176.Req = req
 	var _result177 DatanodeServiceGetUserAttentionResult
 	if err = p.Client_().Call(ctx, "get_user_attention", &_args176, &_result177); err != nil {
 		return
@@ -24884,7 +24884,7 @@ func (p *datanodeServiceProcessorGetUserAttention) Process(ctx context.Context, 
 	result := DatanodeServiceGetUserAttentionResult{}
 	var retval *GetUserAttentionRes
 	var err2 error
-	if retval, err2 = p.handler.GetUserAttention(ctx, args.Reg); err2 != nil {
+	if retval, err2 = p.handler.GetUserAttention(ctx, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing get_user_attention: "+err2.Error())
 		oprot.WriteMessageBegin("get_user_attention", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
@@ -29372,25 +29372,25 @@ func (p *DatanodeServiceDelUserAttentionResult) String() string {
 }
 
 // Attributes:
-//  - Reg
+//  - Req
 type DatanodeServiceGetUserAttentionArgs struct {
-	Reg *GetUserAttentionReq `thrift:"reg,1" db:"reg" json:"reg"`
+	Req *GetUserAttentionReq `thrift:"req,1" db:"req" json:"req"`
 }
 
 func NewDatanodeServiceGetUserAttentionArgs() *DatanodeServiceGetUserAttentionArgs {
 	return &DatanodeServiceGetUserAttentionArgs{}
 }
 
-var DatanodeServiceGetUserAttentionArgs_Reg_DEFAULT *GetUserAttentionReq
+var DatanodeServiceGetUserAttentionArgs_Req_DEFAULT *GetUserAttentionReq
 
-func (p *DatanodeServiceGetUserAttentionArgs) GetReg() *GetUserAttentionReq {
-	if !p.IsSetReg() {
-		return DatanodeServiceGetUserAttentionArgs_Reg_DEFAULT
+func (p *DatanodeServiceGetUserAttentionArgs) GetReq() *GetUserAttentionReq {
+	if !p.IsSetReq() {
+		return DatanodeServiceGetUserAttentionArgs_Req_DEFAULT
 	}
-	return p.Reg
+	return p.Req
 }
-func (p *DatanodeServiceGetUserAttentionArgs) IsSetReg() bool {
-	return p.Reg != nil
+func (p *DatanodeServiceGetUserAttentionArgs) IsSetReq() bool {
+	return p.Req != nil
 }
 
 func (p *DatanodeServiceGetUserAttentionArgs) Read(iprot thrift.TProtocol) error {
@@ -29433,9 +29433,9 @@ func (p *DatanodeServiceGetUserAttentionArgs) Read(iprot thrift.TProtocol) error
 }
 
 func (p *DatanodeServiceGetUserAttentionArgs) ReadField1(iprot thrift.TProtocol) error {
-	p.Reg = &GetUserAttentionReq{}
-	if err := p.Reg.Read(iprot); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Reg), err)
+	p.Req = &GetUserAttentionReq{}
+	if err := p.Req.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
 	}
 	return nil
 }
@@ -29459,14 +29459,14 @@ func (p *DatanodeServiceGetUserAttentionArgs) Write(oprot thrift.TProtocol) erro
 }
 
 func (p *DatanodeServiceGetUserAttentionArgs) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("reg", thrift.STRUCT, 1); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:reg: ", p), err)
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
 	}
-	if err := p.Reg.Write(oprot); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Reg), err)
+	if err := p.Req.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:reg: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
 	}
 	return err
 }
