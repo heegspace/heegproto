@@ -33,14 +33,13 @@ struct user_info_req {
 struct new_user_req {
     1:string    account,
     2:string    pass_wd,
-    3:string    client_ip,
-    4:i32       role,     
-    5:string    invitor,
-    6:string    source,
-    7:string    contactor,
-    8:string    email,
-    9:i64       reg_ip;
-    10:map<string,string> extra,
+    3:i32       role,     
+    4:string    invitor,
+    5:string    source,
+    6:string    contactor,
+    7:string    email,
+    8:i64       reg_ip;
+    9:map<string,string> extra,
 }
 
 struct search_user_req {
@@ -598,6 +597,85 @@ struct subject_cate_list_res {
     4:map<string,string>        extra,
 }
 
+struct attention_item {
+    1:i64       id,
+    2:string    name,
+    3:string    desc,
+    4:i64       create_at,
+}
+
+struct add_attention_req {
+    1:attention_item        item,
+    2:map<string,string>    extra,
+}
+
+struct add_attention_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:map<string,string>        extra,
+}
+
+struct del_attention_req {
+    1:i64                   aid,
+    2:map<string,string>    extra,
+}
+
+struct del_attention_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:map<string,string>        extra,
+}
+
+struct get_attention_req {
+    1:i64           aid,
+    2:i32           page,
+    3:i32           size,
+    4:map<string,string> extra,
+}
+
+struct get_attention_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:list<attention_item>      lists,
+    4:map<string,string>        extra,
+}
+
+struct add_user_attention_req {
+    1:i64           aid,
+    2:i64           uid,
+    3:map<string,string> extra,
+}
+
+struct add_user_attention_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:map<string,string>        extra,
+}
+
+struct get_user_attention_req {
+    1:i64                   uid,
+    2:map<string,string>    extra,
+}
+
+struct get_user_attention_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:list<attention_item>      lists,
+    4:map<string,string>        extra,
+}
+
+struct del_user_attention_req {
+    1:i64           aid,
+    2:i64           uid,
+    3:map<string,string> extra,
+}
+
+struct del_user_attention_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:map<string,string>        extra,
+}
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -608,6 +686,16 @@ service datanode_service {
     list<user> searchUser(1:search_user_req req),
     // 更新用户信息
     user_res updateUser(1:update_req req),
+
+    // 关注对象操作
+    add_attention_res add_attention(1:add_attention_req req),
+    del_attention_res del_attention(1:del_attention_req req),
+    get_attention_res get_attention(1:get_attention_req req),
+
+    // 用户
+    add_user_attention_res add_user_attention(1:add_user_attention_req req),
+    get_user_attention_res get_user_attention(1:get_user_attention_req reg),
+
 
     // --------------- 好友接口 ----------- //
     // 添加好友

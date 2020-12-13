@@ -46,9 +46,10 @@ struct update_avatar_req {
 
 struct update_attention_req {
     1:common.authorize auth,
-    2:i64 uid,
-    3:string attention
-    4:map<string,string> extra,
+    2:i64               uid,
+    3:i32               op, // 0:添加;1:删除
+    4:list<i64>         aid,
+    5:map<string,string> extra,
 }
 
 struct update_user_res {
