@@ -10,11 +10,18 @@ enum code_type {
     EMAIL       = 3,
 }
 
+// 请求验证码的操作类型
+enum operate_type {
+    REGISTER    = 101,  // 注册请求
+    LOGIN       = 101,  // 登录请求
+}
+
 struct code_req {
     1:common.authorize      auth,
     2:string                desc,
     3:code_type             type,
-    4:map<string,string>    extra,
+    4:operate_type         optype,
+    5:map<string,string>    extra,
 }
 
 struct code_res {
@@ -28,7 +35,8 @@ struct verify_code_req {
     1:common.authorize      auth,
     2:string                desc,
     4:string                code,
-    5:map<string,string>    extra,
+    5:operate_type         optype,
+    6:map<string,string>    extra,
 }
 
 struct verify_code_res {

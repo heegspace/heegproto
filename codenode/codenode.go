@@ -94,16 +94,76 @@ func (p *CodeType) Value() (driver.Value, error) {
 	return int64(*p), nil
 }
 
+type OperateType int64
+
+const (
+	OperateType_REGISTER OperateType = 101
+	OperateType_LOGIN    OperateType = 101
+)
+
+func (p OperateType) String() string {
+	switch p {
+	case OperateType_REGISTER:
+		return "REGISTER"
+	case OperateType_LOGIN:
+		return "LOGIN"
+	}
+	return "<UNSET>"
+}
+
+func OperateTypeFromString(s string) (OperateType, error) {
+	switch s {
+	case "REGISTER":
+		return OperateType_REGISTER, nil
+	case "LOGIN":
+		return OperateType_LOGIN, nil
+	}
+	return OperateType(0), fmt.Errorf("not a valid OperateType string")
+}
+
+func OperateTypePtr(v OperateType) *OperateType { return &v }
+
+func (p OperateType) MarshalText() ([]byte, error) {
+	return []byte(p.String()), nil
+}
+
+func (p *OperateType) UnmarshalText(text []byte) error {
+	q, err := OperateTypeFromString(string(text))
+	if err != nil {
+		return err
+	}
+	*p = q
+	return nil
+}
+
+func (p *OperateType) Scan(value interface{}) error {
+	v, ok := value.(int64)
+	if !ok {
+		return errors.New("Scan value is not int64")
+	}
+	*p = OperateType(v)
+	return nil
+}
+
+func (p *OperateType) Value() (driver.Value, error) {
+	if p == nil {
+		return nil, nil
+	}
+	return int64(*p), nil
+}
+
 // Attributes:
 //  - Auth
 //  - Desc
 //  - Type
+//  - Optype
 //  - Extra
 type CodeReq struct {
-	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
-	Desc  string            `thrift:"desc,2" db:"desc" json:"desc"`
-	Type  CodeType          `thrift:"type,3" db:"type" json:"type"`
-	Extra map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
+	Auth   *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	Desc   string            `thrift:"desc,2" db:"desc" json:"desc"`
+	Type   CodeType          `thrift:"type,3" db:"type" json:"type"`
+	Optype OperateType       `thrift:"optype,4" db:"optype" json:"optype"`
+	Extra  map[string]string `thrift:"extra,5" db:"extra" json:"extra"`
 }
 
 func NewCodeReq() *CodeReq {
@@ -125,6 +185,10 @@ func (p *CodeReq) GetDesc() string {
 
 func (p *CodeReq) GetType() CodeType {
 	return p.Type
+}
+
+func (p *CodeReq) GetOptype() OperateType {
+	return p.Optype
 }
 
 func (p *CodeReq) GetExtra() map[string]string {
@@ -179,8 +243,18 @@ func (p *CodeReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 4:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.I32 {
 				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField5(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -231,6 +305,16 @@ func (p *CodeReq) ReadField3(iprot thrift.TProtocol) error {
 }
 
 func (p *CodeReq) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		temp := OperateType(v)
+		p.Optype = temp
+	}
+	return nil
+}
+
+func (p *CodeReq) ReadField5(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -273,6 +357,9 @@ func (p *CodeReq) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
 			return err
 		}
 	}
@@ -325,8 +412,21 @@ func (p *CodeReq) writeField3(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *CodeReq) writeField4(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("optype", thrift.I32, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:optype: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Optype)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.optype (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:optype: ", p), err)
+	}
+	return err
+}
+
+func (p *CodeReq) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -343,7 +443,7 @@ func (p *CodeReq) writeField4(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:extra: ", p), err)
 	}
 	return err
 }
@@ -612,13 +712,15 @@ func (p *CodeRes) String() string {
 //  - Auth
 //  - Desc
 //  - Code
+//  - Optype
 //  - Extra
 type VerifyCodeReq struct {
 	Auth *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
 	Desc string            `thrift:"desc,2" db:"desc" json:"desc"`
 	// unused field # 3
-	Code  string            `thrift:"code,4" db:"code" json:"code"`
-	Extra map[string]string `thrift:"extra,5" db:"extra" json:"extra"`
+	Code   string            `thrift:"code,4" db:"code" json:"code"`
+	Optype OperateType       `thrift:"optype,5" db:"optype" json:"optype"`
+	Extra  map[string]string `thrift:"extra,6" db:"extra" json:"extra"`
 }
 
 func NewVerifyCodeReq() *VerifyCodeReq {
@@ -640,6 +742,10 @@ func (p *VerifyCodeReq) GetDesc() string {
 
 func (p *VerifyCodeReq) GetCode() string {
 	return p.Code
+}
+
+func (p *VerifyCodeReq) GetOptype() OperateType {
+	return p.Optype
 }
 
 func (p *VerifyCodeReq) GetExtra() map[string]string {
@@ -694,8 +800,18 @@ func (p *VerifyCodeReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 5:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.I32 {
 				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 6:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField6(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -745,6 +861,16 @@ func (p *VerifyCodeReq) ReadField4(iprot thrift.TProtocol) error {
 }
 
 func (p *VerifyCodeReq) ReadField5(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 5: ", err)
+	} else {
+		temp := OperateType(v)
+		p.Optype = temp
+	}
+	return nil
+}
+
+func (p *VerifyCodeReq) ReadField6(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -787,6 +913,9 @@ func (p *VerifyCodeReq) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField6(oprot); err != nil {
 			return err
 		}
 	}
@@ -839,8 +968,21 @@ func (p *VerifyCodeReq) writeField4(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *VerifyCodeReq) writeField5(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 5); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("optype", thrift.I32, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:optype: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Optype)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.optype (5) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:optype: ", p), err)
+	}
+	return err
+}
+
+func (p *VerifyCodeReq) writeField6(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 6); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -857,7 +999,7 @@ func (p *VerifyCodeReq) writeField5(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:extra: ", p), err)
 	}
 	return err
 }
