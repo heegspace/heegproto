@@ -13,7 +13,7 @@ enum code_type {
 // 请求验证码的操作类型
 enum operate_type {
     REGISTER    = 101,  // 注册请求
-    LOGIN       = 101,  // 登录请求
+    LOGIN       = 102,  // 登录请求
 }
 
 struct code_req {

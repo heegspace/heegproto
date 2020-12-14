@@ -98,7 +98,7 @@ type OperateType int64
 
 const (
 	OperateType_REGISTER OperateType = 101
-	OperateType_LOGIN    OperateType = 101
+	OperateType_LOGIN    OperateType = 102
 )
 
 func (p OperateType) String() string {
