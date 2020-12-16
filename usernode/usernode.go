@@ -6,6 +6,8 @@ package usernode
 import (
 	"bytes"
 	"context"
+	"database/sql/driver"
+	"errors"
 	"fmt"
 	"reflect"
 
@@ -23,6 +25,64 @@ var _ = bytes.Equal
 
 var _ = rescode.GoUnusedProtection__
 var _ = common.GoUnusedProtection__
+
+type AttentionOpType int64
+
+const (
+	AttentionOpType_ADD_ATTENTION AttentionOpType = 1
+	AttentionOpType_DEL_ATTENTION AttentionOpType = 2
+)
+
+func (p AttentionOpType) String() string {
+	switch p {
+	case AttentionOpType_ADD_ATTENTION:
+		return "ADD_ATTENTION"
+	case AttentionOpType_DEL_ATTENTION:
+		return "DEL_ATTENTION"
+	}
+	return "<UNSET>"
+}
+
+func AttentionOpTypeFromString(s string) (AttentionOpType, error) {
+	switch s {
+	case "ADD_ATTENTION":
+		return AttentionOpType_ADD_ATTENTION, nil
+	case "DEL_ATTENTION":
+		return AttentionOpType_DEL_ATTENTION, nil
+	}
+	return AttentionOpType(0), fmt.Errorf("not a valid AttentionOpType string")
+}
+
+func AttentionOpTypePtr(v AttentionOpType) *AttentionOpType { return &v }
+
+func (p AttentionOpType) MarshalText() ([]byte, error) {
+	return []byte(p.String()), nil
+}
+
+func (p *AttentionOpType) UnmarshalText(text []byte) error {
+	q, err := AttentionOpTypeFromString(string(text))
+	if err != nil {
+		return err
+	}
+	*p = q
+	return nil
+}
+
+func (p *AttentionOpType) Scan(value interface{}) error {
+	v, ok := value.(int64)
+	if !ok {
+		return errors.New("Scan value is not int64")
+	}
+	*p = AttentionOpType(v)
+	return nil
+}
+
+func (p *AttentionOpType) Value() (driver.Value, error) {
+	if p == nil {
+		return nil, nil
+	}
+	return int64(*p), nil
+}
 
 // Attributes:
 //  - UID
@@ -1541,7 +1601,7 @@ func (p *UpdateAvatarReq) String() string {
 type UpdateAttentionReq struct {
 	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
 	UID   int64             `thrift:"uid,2" db:"uid" json:"uid"`
-	Op    int32             `thrift:"op,3" db:"op" json:"op"`
+	Op    AttentionOpType   `thrift:"op,3" db:"op" json:"op"`
 	Aid   []int64           `thrift:"aid,4" db:"aid" json:"aid"`
 	Extra map[string]string `thrift:"extra,5" db:"extra" json:"extra"`
 }
@@ -1563,7 +1623,7 @@ func (p *UpdateAttentionReq) GetUID() int64 {
 	return p.UID
 }
 
-func (p *UpdateAttentionReq) GetOp() int32 {
+func (p *UpdateAttentionReq) GetOp() AttentionOpType {
 	return p.Op
 }
 
@@ -1678,7 +1738,8 @@ func (p *UpdateAttentionReq) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return thrift.PrependError("error reading field 3: ", err)
 	} else {
-		p.Op = v
+		temp := AttentionOpType(v)
+		p.Op = temp
 	}
 	return nil
 }

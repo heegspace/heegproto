@@ -3,6 +3,11 @@ namespace go usernode
 include "../rescode/rescode.thrift"
 include "../common/common.thrift"
 
+enum attention_op_type {
+    ADD_ATTENTION = 1;
+    DEL_ATTENTION = 2;
+}
+
 struct user_obj {
     1:i64       uid,
     2:string   phone,
@@ -47,7 +52,7 @@ struct update_avatar_req {
 struct update_attention_req {
     1:common.authorize auth,
     2:i64               uid,
-    3:i32               op, // 0:添加;1:删除
+    3:attention_op_type op, // 0:添加;1:删除
     4:list<i64>         aid,
     5:map<string,string> extra,
 }
