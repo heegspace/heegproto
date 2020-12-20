@@ -6435,7 +6435,7 @@ func (p *QuestionChapterReq) String() string {
 //  - Title
 //  - Childs
 type ChapterResItem struct {
-	UID    int64                 `thrift:"uid,1" db:"uid" json:"uid"`
+	UID    string                `thrift:"uid,1" db:"uid" json:"uid"`
 	Title  string                `thrift:"title,2" db:"title" json:"title"`
 	Childs []*common.ChapterItem `thrift:"childs,3" db:"childs" json:"childs"`
 }
@@ -6444,7 +6444,7 @@ func NewChapterResItem() *ChapterResItem {
 	return &ChapterResItem{}
 }
 
-func (p *ChapterResItem) GetUID() int64 {
+func (p *ChapterResItem) GetUID() string {
 	return p.UID
 }
 
@@ -6470,7 +6470,7 @@ func (p *ChapterResItem) Read(iprot thrift.TProtocol) error {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.I64 {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
 					return err
 				}
@@ -6515,7 +6515,7 @@ func (p *ChapterResItem) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *ChapterResItem) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadI64(); err != nil {
+	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
 		p.UID = v
@@ -6577,10 +6577,10 @@ func (p *ChapterResItem) Write(oprot thrift.TProtocol) error {
 }
 
 func (p *ChapterResItem) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("uid", thrift.I64, 1); err != nil {
+	if err := oprot.WriteFieldBegin("uid", thrift.STRING, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
 	}
-	if err := oprot.WriteI64(int64(p.UID)); err != nil {
+	if err := oprot.WriteString(string(p.UID)); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {

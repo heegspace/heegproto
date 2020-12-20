@@ -175,7 +175,7 @@ struct question_chapter_req {
 }
 
 struct chapter_res_item {
-    1:i64       uid,
+    1:string       uid,
     2:string    title,
     3:list<common.chapter_item> childs,
 }
