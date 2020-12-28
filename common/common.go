@@ -249,23 +249,23 @@ func (p *Authorize) String() string {
 //  - Size
 //  - Extra
 type QuestionQuery struct {
-	RollID      string            `thrift:"roll_id,1" db:"roll_id" json:"roll_id"`
-	RollName    string            `thrift:"roll_name,2" db:"roll_name" json:"roll_name"`
-	GradeID     string            `thrift:"grade_id,3" db:"grade_id" json:"grade_id"`
-	GradeName   string            `thrift:"grade_name,4" db:"grade_name" json:"grade_name"`
-	SubjectID   string            `thrift:"subject_id,5" db:"subject_id" json:"subject_id"`
-	SubjectName string            `thrift:"subject_name,6" db:"subject_name" json:"subject_name"`
-	VersionID   string            `thrift:"version_id,7" db:"version_id" json:"version_id"`
-	VersionName string            `thrift:"version_name,8" db:"version_name" json:"version_name"`
-	ChapterID   string            `thrift:"chapter_id,9" db:"chapter_id" json:"chapter_id"`
-	ChapterName string            `thrift:"chapter_name,10" db:"chapter_name" json:"chapter_name"`
-	TiXingID    string            `thrift:"ti_xing_id,11" db:"ti_xing_id" json:"ti_xing_id"`
-	TiXingName  string            `thrift:"ti_xing_name,12" db:"ti_xing_name" json:"ti_xing_name"`
-	SourceID    string            `thrift:"source_id,13" db:"source_id" json:"source_id"`
-	SourceName  string            `thrift:"source_name,14" db:"source_name" json:"source_name"`
-	Page        int32             `thrift:"page,15" db:"page" json:"page"`
-	Size        int32             `thrift:"size,16" db:"size" json:"size"`
-	Extra       map[string]string `thrift:"extra,17" db:"extra" json:"extra"`
+	RollID      string            `thrift:"roll_id,1" form:"roll_id" json:"roll_id"`
+	RollName    string            `thrift:"roll_name,2" form:"roll_name" json:"roll_id"`
+	GradeID     string            `thrift:"grade_id,3" form:"grade_id" json:"roll_id"`
+	GradeName   string            `thrift:"grade_name,4" form:"grade_name" json:"roll_id"`
+	SubjectID   string            `thrift:"subject_id,5" form:"subject_id" json:"roll_id"`
+	SubjectName string            `thrift:"subject_name,6" form:"subject_name" json:"roll_id"`
+	VersionID   string            `thrift:"version_id,7" form:"version_id" json:"roll_id"`
+	VersionName string            `thrift:"version_name,8" form:"version_name" json:"roll_id"`
+	ChapterID   string            `thrift:"chapter_id,9" form:"chapter_id" json:"roll_id"`
+	ChapterName string            `thrift:"chapter_name,10" form:"chapter_name" json:"roll_id"`
+	TiXingID    string            `thrift:"ti_xing_id,11" form:"ti_xing_id" json:"roll_id"`
+	TiXingName  string            `thrift:"ti_xing_name,12" form:"ti_xing_name" json:"roll_id"`
+	SourceID    string            `thrift:"source_id,13" form:"source_id" json:"roll_id"`
+	SourceName  string            `thrift:"source_name,14" form:"source_name" json:"roll_id"`
+	Page        int32             `thrift:"page,15" form:"page" json:"roll_id"`
+	Size        int32             `thrift:"size,16" form:"size" json:"roll_id"`
+	Extra       map[string]string `thrift:"extra,17" form:"extra" json:"roll_id"`
 }
 
 func NewQuestionQuery() *QuestionQuery {
