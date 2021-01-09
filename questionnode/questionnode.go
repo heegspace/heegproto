@@ -7,11 +7,10 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"reflect"
-
 	"github.com/heegspace/heegproto/common"
 	"github.com/heegspace/heegproto/rescode"
 	"github.com/heegspace/thrift"
+	"reflect"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -1552,11 +1551,13 @@ func (p *GradeCateListRes) String() string {
 // Attributes:
 //  - Auth
 //  - UID
+//  - School
 //  - Extra
 type HomeBlackDataReq struct {
-	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
-	UID   int64             `thrift:"uid,2" db:"uid" json:"uid"`
-	Extra map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
+	Auth   *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	UID    int64             `thrift:"uid,2" db:"uid" json:"uid"`
+	School int16             `thrift:"school,3" db:"school" json:"school"`
+	Extra  map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewHomeBlackDataReq() *HomeBlackDataReq {
@@ -1574,6 +1575,10 @@ func (p *HomeBlackDataReq) GetAuth() *common.Authorize {
 
 func (p *HomeBlackDataReq) GetUID() int64 {
 	return p.UID
+}
+
+func (p *HomeBlackDataReq) GetSchool() int16 {
+	return p.School
 }
 
 func (p *HomeBlackDataReq) GetExtra() map[string]string {
@@ -1618,8 +1623,18 @@ func (p *HomeBlackDataReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 3:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.I16 {
 				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -1660,6 +1675,15 @@ func (p *HomeBlackDataReq) ReadField2(iprot thrift.TProtocol) error {
 }
 
 func (p *HomeBlackDataReq) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI16(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.School = v
+	}
+	return nil
+}
+
+func (p *HomeBlackDataReq) ReadField4(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -1701,6 +1725,9 @@ func (p *HomeBlackDataReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -1738,8 +1765,21 @@ func (p *HomeBlackDataReq) writeField2(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *HomeBlackDataReq) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("school", thrift.I16, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:school: ", p), err)
+	}
+	if err := oprot.WriteI16(int16(p.School)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.school (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:school: ", p), err)
+	}
+	return err
+}
+
+func (p *HomeBlackDataReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -1756,7 +1796,7 @@ func (p *HomeBlackDataReq) writeField3(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
 	}
 	return err
 }

@@ -47,7 +47,8 @@ struct grade_cate_list_res {
 struct home_black_data_req {
     1:common.authorize auth,
     2:i64               uid,
-    3:map<string,string> extra,
+    3:i16               school;
+    4:map<string,string> extra,
 }
 
 struct home_black_data_res {

@@ -32,6 +32,7 @@ struct agree_friend_res {
 struct friend_list_req {
     1:common.authorize     auth,
     2:i64                   uid,
+    3:map<string,string> extra,
 }
 
 struct friend_item {
