@@ -1018,12 +1018,14 @@ func (p *LoginByCodeRes) String() string {
 //  - Appid
 //  - Openid
 //  - Unionid
+//  - AccessToken
 //  - Extra
 type LoginWechatReq struct {
-	Appid   string            `thrift:"appid,1" db:"appid" json:"appid"`
-	Openid  string            `thrift:"openid,2" db:"openid" json:"openid"`
-	Unionid string            `thrift:"unionid,3" db:"unionid" json:"unionid"`
-	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
+	Appid       string            `thrift:"appid,1" db:"appid" json:"appid"`
+	Openid      string            `thrift:"openid,2" db:"openid" json:"openid"`
+	Unionid     string            `thrift:"unionid,3" db:"unionid" json:"unionid"`
+	AccessToken string            `thrift:"access_token,4" db:"access_token" json:"access_token"`
+	Extra       map[string]string `thrift:"extra,5" db:"extra" json:"extra"`
 }
 
 func NewLoginWechatReq() *LoginWechatReq {
@@ -1040,6 +1042,10 @@ func (p *LoginWechatReq) GetOpenid() string {
 
 func (p *LoginWechatReq) GetUnionid() string {
 	return p.Unionid
+}
+
+func (p *LoginWechatReq) GetAccessToken() string {
+	return p.AccessToken
 }
 
 func (p *LoginWechatReq) GetExtra() map[string]string {
@@ -1090,8 +1096,18 @@ func (p *LoginWechatReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 4:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField5(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -1142,6 +1158,15 @@ func (p *LoginWechatReq) ReadField3(iprot thrift.TProtocol) error {
 }
 
 func (p *LoginWechatReq) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.AccessToken = v
+	}
+	return nil
+}
+
+func (p *LoginWechatReq) ReadField5(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -1184,6 +1209,9 @@ func (p *LoginWechatReq) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
 			return err
 		}
 	}
@@ -1236,8 +1264,21 @@ func (p *LoginWechatReq) writeField3(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *LoginWechatReq) writeField4(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("access_token", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:access_token: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.AccessToken)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.access_token (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:access_token: ", p), err)
+	}
+	return err
+}
+
+func (p *LoginWechatReq) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -1254,7 +1295,7 @@ func (p *LoginWechatReq) writeField4(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:extra: ", p), err)
 	}
 	return err
 }
