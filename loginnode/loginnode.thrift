@@ -2,6 +2,12 @@ namespace go loginnode
 
 include "../rescode/rescode.thrift"
 
+enum from_platom {
+    FROM_LOCAL      = 0,     // 自己平台
+    FROM_WECHAT     = 1001,    // 微信平台
+    FROM_ALIPAY     = 2002,    // 支付宝平台
+}
+
 struct login_req {
     1:string                account;
     2:string                passwd;
@@ -29,9 +35,10 @@ struct login_by_code_res {
 }
 
 struct login_wechat_req {
-    1:string                account;
-    2:string                wid;
-    3:map<string,string>    extra;
+    1:string                appid;
+    2:string                openid;
+    3:string                unionid;
+    4:map<string,string>    extra;
 }
 
 struct login_wechat_res {

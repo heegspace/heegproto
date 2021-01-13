@@ -6,11 +6,12 @@ package loginnode
 import (
 	"bytes"
 	"context"
+	"database/sql/driver"
+	"errors"
 	"fmt"
-	"reflect"
-
 	"github.com/heegspace/heegproto/rescode"
 	"github.com/heegspace/thrift"
+	"reflect"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -21,6 +22,69 @@ var _ = reflect.DeepEqual
 var _ = bytes.Equal
 
 var _ = rescode.GoUnusedProtection__
+
+type FromPlatom int64
+
+const (
+	FromPlatom_FROM_LOCAL  FromPlatom = 0
+	FromPlatom_FROM_WECHAT FromPlatom = 1001
+	FromPlatom_FROM_ALIPAY FromPlatom = 2002
+)
+
+func (p FromPlatom) String() string {
+	switch p {
+	case FromPlatom_FROM_LOCAL:
+		return "FROM_LOCAL"
+	case FromPlatom_FROM_WECHAT:
+		return "FROM_WECHAT"
+	case FromPlatom_FROM_ALIPAY:
+		return "FROM_ALIPAY"
+	}
+	return "<UNSET>"
+}
+
+func FromPlatomFromString(s string) (FromPlatom, error) {
+	switch s {
+	case "FROM_LOCAL":
+		return FromPlatom_FROM_LOCAL, nil
+	case "FROM_WECHAT":
+		return FromPlatom_FROM_WECHAT, nil
+	case "FROM_ALIPAY":
+		return FromPlatom_FROM_ALIPAY, nil
+	}
+	return FromPlatom(0), fmt.Errorf("not a valid FromPlatom string")
+}
+
+func FromPlatomPtr(v FromPlatom) *FromPlatom { return &v }
+
+func (p FromPlatom) MarshalText() ([]byte, error) {
+	return []byte(p.String()), nil
+}
+
+func (p *FromPlatom) UnmarshalText(text []byte) error {
+	q, err := FromPlatomFromString(string(text))
+	if err != nil {
+		return err
+	}
+	*p = q
+	return nil
+}
+
+func (p *FromPlatom) Scan(value interface{}) error {
+	v, ok := value.(int64)
+	if !ok {
+		return errors.New("Scan value is not int64")
+	}
+	*p = FromPlatom(v)
+	return nil
+}
+
+func (p *FromPlatom) Value() (driver.Value, error) {
+	if p == nil {
+		return nil, nil
+	}
+	return int64(*p), nil
+}
 
 // Attributes:
 //  - Account
@@ -951,25 +1015,31 @@ func (p *LoginByCodeRes) String() string {
 }
 
 // Attributes:
-//  - Account
-//  - Wid
+//  - Appid
+//  - Openid
+//  - Unionid
 //  - Extra
 type LoginWechatReq struct {
-	Account string            `thrift:"account,1" db:"account" json:"account"`
-	Wid     string            `thrift:"wid,2" db:"wid" json:"wid"`
-	Extra   map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
+	Appid   string            `thrift:"appid,1" db:"appid" json:"appid"`
+	Openid  string            `thrift:"openid,2" db:"openid" json:"openid"`
+	Unionid string            `thrift:"unionid,3" db:"unionid" json:"unionid"`
+	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewLoginWechatReq() *LoginWechatReq {
 	return &LoginWechatReq{}
 }
 
-func (p *LoginWechatReq) GetAccount() string {
-	return p.Account
+func (p *LoginWechatReq) GetAppid() string {
+	return p.Appid
 }
 
-func (p *LoginWechatReq) GetWid() string {
-	return p.Wid
+func (p *LoginWechatReq) GetOpenid() string {
+	return p.Openid
+}
+
+func (p *LoginWechatReq) GetUnionid() string {
+	return p.Unionid
 }
 
 func (p *LoginWechatReq) GetExtra() map[string]string {
@@ -1010,8 +1080,18 @@ func (p *LoginWechatReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 3:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -1038,7 +1118,7 @@ func (p *LoginWechatReq) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
-		p.Account = v
+		p.Appid = v
 	}
 	return nil
 }
@@ -1047,12 +1127,21 @@ func (p *LoginWechatReq) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
-		p.Wid = v
+		p.Openid = v
 	}
 	return nil
 }
 
 func (p *LoginWechatReq) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Unionid = v
+	}
+	return nil
+}
+
+func (p *LoginWechatReq) ReadField4(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -1094,6 +1183,9 @@ func (p *LoginWechatReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -1105,34 +1197,47 @@ func (p *LoginWechatReq) Write(oprot thrift.TProtocol) error {
 }
 
 func (p *LoginWechatReq) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("account", thrift.STRING, 1); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:account: ", p), err)
+	if err := oprot.WriteFieldBegin("appid", thrift.STRING, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:appid: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Account)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.account (1) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Appid)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.appid (1) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:account: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:appid: ", p), err)
 	}
 	return err
 }
 
 func (p *LoginWechatReq) writeField2(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("wid", thrift.STRING, 2); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:wid: ", p), err)
+	if err := oprot.WriteFieldBegin("openid", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:openid: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Wid)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.wid (2) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Openid)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.openid (2) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:wid: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:openid: ", p), err)
 	}
 	return err
 }
 
 func (p *LoginWechatReq) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("unionid", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:unionid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Unionid)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.unionid (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:unionid: ", p), err)
+	}
+	return err
+}
+
+func (p *LoginWechatReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -1149,7 +1254,7 @@ func (p *LoginWechatReq) writeField3(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
 	}
 	return err
 }
