@@ -24,30 +24,31 @@ var _ = bytes.Equal
 type Code int64
 
 const (
-	Code_SUCCESS            Code = 0
-	Code_ERROR              Code = 1
-	Code_DB_ERROR           Code = 2
-	Code_AUTH_ERR           Code = 3
-	Code_MOBILE_ERR         Code = 4
-	Code_EMAIL_ERR          Code = 5
-	Code_PARAM_ERR          Code = 99
-	Code_EXISTS             Code = 100
-	Code_IS_SELF            Code = 101
-	Code_NOT_EXISTS         Code = 400
-	Code_NOT_DATA           Code = 404
-	Code_SEND_CODE_ERR      Code = 10000
-	Code_CODE_ERROR         Code = 10001
-	Code_CODE_EXPIRE        Code = 10002
-	Code_CODE_RATE          Code = 10003
-	Code_CODE_LIMIT         Code = 10004
-	Code_CODE_TYPE_ERR      Code = 10005
-	Code_CODE_NODE_ERROR    Code = 9000
-	Code_CODE_NODE_NOINIT   Code = 9001
-	Code_DATA_NODE_ERROR    Code = 9002
-	Code_DATA_NODE_NOINIT   Code = 9003
-	Code_DARTY_NODE_ERROR   Code = 9004
-	Code_DARTY_NODE_NOINIT  Code = 9005
-	Code_WECHAT_LOGIN_ERROR Code = 10001
+	Code_SUCCESS              Code = 0
+	Code_ERROR                Code = 1
+	Code_DB_ERROR             Code = 2
+	Code_AUTH_ERR             Code = 3
+	Code_MOBILE_ERR           Code = 4
+	Code_EMAIL_ERR            Code = 5
+	Code_PARAM_ERR            Code = 99
+	Code_EXISTS               Code = 100
+	Code_IS_SELF              Code = 101
+	Code_NOT_EXISTS           Code = 400
+	Code_NOT_DATA             Code = 404
+	Code_SEND_CODE_ERR        Code = 10000
+	Code_CODE_ERROR           Code = 10001
+	Code_CODE_EXPIRE          Code = 10002
+	Code_CODE_RATE            Code = 10003
+	Code_CODE_LIMIT           Code = 10004
+	Code_CODE_TYPE_ERR        Code = 10005
+	Code_CODE_NODE_ERROR      Code = 9000
+	Code_CODE_NODE_NOINIT     Code = 9001
+	Code_DATA_NODE_ERROR      Code = 9002
+	Code_DATA_NODE_NOINIT     Code = 9003
+	Code_DARTY_NODE_ERROR     Code = 9004
+	Code_DARTY_NODE_NOINIT    Code = 9005
+	Code_WECHAT_LOGIN_ERROR   Code = 30001
+	Code_WECHAT_TOKEN_TIMEOUT Code = 30002
 )
 
 func (p Code) String() string {
@@ -100,6 +101,8 @@ func (p Code) String() string {
 		return "DARTY_NODE_NOINIT"
 	case Code_WECHAT_LOGIN_ERROR:
 		return "WECHAT_LOGIN_ERROR"
+	case Code_WECHAT_TOKEN_TIMEOUT:
+		return "WECHAT_TOKEN_TIMEOUT"
 	}
 	return "<UNSET>"
 }
@@ -154,6 +157,8 @@ func CodeFromString(s string) (Code, error) {
 		return Code_DARTY_NODE_NOINIT, nil
 	case "WECHAT_LOGIN_ERROR":
 		return Code_WECHAT_LOGIN_ERROR, nil
+	case "WECHAT_TOKEN_TIMEOUT":
+		return Code_WECHAT_TOKEN_TIMEOUT, nil
 	}
 	return Code(0), fmt.Errorf("not a valid Code string")
 }

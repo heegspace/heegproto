@@ -31,5 +31,6 @@ enum code {
     DARTY_NODE_ERROR  = 9004, // 第三方服务异常
     DARTY_NODE_NOINIT = 9005, // 第三方服务没有初始化
 
-    WECHAT_LOGIN_ERROR = 10001,     // 微信登录错误
+    WECHAT_LOGIN_ERROR = 30001,     // 微信登录错误
+    WECHAT_TOKEN_TIMEOUT = 30002,   // 微信refresh token过期
 }
