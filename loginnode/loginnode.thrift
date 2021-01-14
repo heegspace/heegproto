@@ -37,9 +37,14 @@ struct login_by_code_res {
 struct login_wechat_req {
     1:string                appid;
     2:string                openid;
-    3:string                unionid;
-    4:string                access_token;
-    5:map<string,string>    extra;
+    3:string                nickname;
+    5:string                province;
+    6:string                city;
+    7:string                country;
+    8:string                headimgurl;
+    9:string                unionid;
+    10:string                access_token;
+    11:map<string,string>    extra;
 }
 
 struct login_wechat_res {

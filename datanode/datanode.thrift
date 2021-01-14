@@ -39,7 +39,7 @@ struct new_user_req {
     6:string    contactor,
     7:string    email,
     8:i64       reg_ip;
-    9:map<string,string> extra,
+    10:map<string,string> extra,
 }
 
 struct search_user_req {
