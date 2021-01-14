@@ -6,6 +6,15 @@ struct authorize {
     3:map<string,string> extra,
 }
 
+enum user_status {
+    FROM_PLATOM      =  0x00000,    // 平台帐号
+    FROM_WECHAT      =  0x00001,    // wechat帐号
+    FROM_ALIPAY      =  0x00002,    // alipay帐号
+
+    FROM_INVALID     =  0x00801,    // 无效用户
+}
+
+
 struct question_query {
     1:string        roll_id (go.tag = 'form:"roll_id" json:"roll_id"'),
     2:string        roll_name   (go.tag = 'form:"roll_name" json:"roll_name"'),
