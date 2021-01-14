@@ -33,7 +33,7 @@ struct login_wechat_req {
     1:string                appid;
     2:string                Code;
     3:string                State;
-    12:map<string,string>    extra;
+    4:map<string,string>    extra;
 }
 
 struct login_wechat_res {
