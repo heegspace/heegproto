@@ -952,29 +952,15 @@ func (p *LoginByCodeRes) String() string {
 
 // Attributes:
 //  - Appid
-//  - Openid
-//  - Nickname
-//  - Province
-//  - City
-//  - Country
-//  - Headimgurl
-//  - Unionid
-//  - AccessToken
-//  - RefreshToken
+//  - Code
+//  - State
 //  - Extra
 type LoginWechatReq struct {
-	Appid    string `thrift:"appid,1" db:"appid" json:"appid"`
-	Openid   string `thrift:"openid,2" db:"openid" json:"openid"`
-	Nickname string `thrift:"nickname,3" db:"nickname" json:"nickname"`
-	// unused field # 4
-	Province     string            `thrift:"province,5" db:"province" json:"province"`
-	City         string            `thrift:"city,6" db:"city" json:"city"`
-	Country      string            `thrift:"country,7" db:"country" json:"country"`
-	Headimgurl   string            `thrift:"headimgurl,8" db:"headimgurl" json:"headimgurl"`
-	Unionid      string            `thrift:"unionid,9" db:"unionid" json:"unionid"`
-	AccessToken  string            `thrift:"access_token,10" db:"access_token" json:"access_token"`
-	RefreshToken string            `thrift:"refresh_token,11" db:"refresh_token" json:"refresh_token"`
-	Extra        map[string]string `thrift:"extra,12" db:"extra" json:"extra"`
+	Appid string `thrift:"appid,1" db:"appid" json:"appid"`
+	Code  string `thrift:"Code,2" db:"Code" json:"Code"`
+	State string `thrift:"State,3" db:"State" json:"State"`
+	// unused fields # 4 to 11
+	Extra map[string]string `thrift:"extra,12" db:"extra" json:"extra"`
 }
 
 func NewLoginWechatReq() *LoginWechatReq {
@@ -985,40 +971,12 @@ func (p *LoginWechatReq) GetAppid() string {
 	return p.Appid
 }
 
-func (p *LoginWechatReq) GetOpenid() string {
-	return p.Openid
+func (p *LoginWechatReq) GetCode() string {
+	return p.Code
 }
 
-func (p *LoginWechatReq) GetNickname() string {
-	return p.Nickname
-}
-
-func (p *LoginWechatReq) GetProvince() string {
-	return p.Province
-}
-
-func (p *LoginWechatReq) GetCity() string {
-	return p.City
-}
-
-func (p *LoginWechatReq) GetCountry() string {
-	return p.Country
-}
-
-func (p *LoginWechatReq) GetHeadimgurl() string {
-	return p.Headimgurl
-}
-
-func (p *LoginWechatReq) GetUnionid() string {
-	return p.Unionid
-}
-
-func (p *LoginWechatReq) GetAccessToken() string {
-	return p.AccessToken
-}
-
-func (p *LoginWechatReq) GetRefreshToken() string {
-	return p.RefreshToken
+func (p *LoginWechatReq) GetState() string {
+	return p.State
 }
 
 func (p *LoginWechatReq) GetExtra() map[string]string {
@@ -1068,76 +1026,6 @@ func (p *LoginWechatReq) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
-		case 5:
-			if fieldTypeId == thrift.STRING {
-				if err := p.ReadField5(iprot); err != nil {
-					return err
-				}
-			} else {
-				if err := iprot.Skip(fieldTypeId); err != nil {
-					return err
-				}
-			}
-		case 6:
-			if fieldTypeId == thrift.STRING {
-				if err := p.ReadField6(iprot); err != nil {
-					return err
-				}
-			} else {
-				if err := iprot.Skip(fieldTypeId); err != nil {
-					return err
-				}
-			}
-		case 7:
-			if fieldTypeId == thrift.STRING {
-				if err := p.ReadField7(iprot); err != nil {
-					return err
-				}
-			} else {
-				if err := iprot.Skip(fieldTypeId); err != nil {
-					return err
-				}
-			}
-		case 8:
-			if fieldTypeId == thrift.STRING {
-				if err := p.ReadField8(iprot); err != nil {
-					return err
-				}
-			} else {
-				if err := iprot.Skip(fieldTypeId); err != nil {
-					return err
-				}
-			}
-		case 9:
-			if fieldTypeId == thrift.STRING {
-				if err := p.ReadField9(iprot); err != nil {
-					return err
-				}
-			} else {
-				if err := iprot.Skip(fieldTypeId); err != nil {
-					return err
-				}
-			}
-		case 10:
-			if fieldTypeId == thrift.STRING {
-				if err := p.ReadField10(iprot); err != nil {
-					return err
-				}
-			} else {
-				if err := iprot.Skip(fieldTypeId); err != nil {
-					return err
-				}
-			}
-		case 11:
-			if fieldTypeId == thrift.STRING {
-				if err := p.ReadField11(iprot); err != nil {
-					return err
-				}
-			} else {
-				if err := iprot.Skip(fieldTypeId); err != nil {
-					return err
-				}
-			}
 		case 12:
 			if fieldTypeId == thrift.MAP {
 				if err := p.ReadField12(iprot); err != nil {
@@ -1176,7 +1064,7 @@ func (p *LoginWechatReq) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
-		p.Openid = v
+		p.Code = v
 	}
 	return nil
 }
@@ -1185,70 +1073,7 @@ func (p *LoginWechatReq) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 3: ", err)
 	} else {
-		p.Nickname = v
-	}
-	return nil
-}
-
-func (p *LoginWechatReq) ReadField5(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return thrift.PrependError("error reading field 5: ", err)
-	} else {
-		p.Province = v
-	}
-	return nil
-}
-
-func (p *LoginWechatReq) ReadField6(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return thrift.PrependError("error reading field 6: ", err)
-	} else {
-		p.City = v
-	}
-	return nil
-}
-
-func (p *LoginWechatReq) ReadField7(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return thrift.PrependError("error reading field 7: ", err)
-	} else {
-		p.Country = v
-	}
-	return nil
-}
-
-func (p *LoginWechatReq) ReadField8(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return thrift.PrependError("error reading field 8: ", err)
-	} else {
-		p.Headimgurl = v
-	}
-	return nil
-}
-
-func (p *LoginWechatReq) ReadField9(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return thrift.PrependError("error reading field 9: ", err)
-	} else {
-		p.Unionid = v
-	}
-	return nil
-}
-
-func (p *LoginWechatReq) ReadField10(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return thrift.PrependError("error reading field 10: ", err)
-	} else {
-		p.AccessToken = v
-	}
-	return nil
-}
-
-func (p *LoginWechatReq) ReadField11(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return thrift.PrependError("error reading field 11: ", err)
-	} else {
-		p.RefreshToken = v
+		p.State = v
 	}
 	return nil
 }
@@ -1295,27 +1120,6 @@ func (p *LoginWechatReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
-		if err := p.writeField5(oprot); err != nil {
-			return err
-		}
-		if err := p.writeField6(oprot); err != nil {
-			return err
-		}
-		if err := p.writeField7(oprot); err != nil {
-			return err
-		}
-		if err := p.writeField8(oprot); err != nil {
-			return err
-		}
-		if err := p.writeField9(oprot); err != nil {
-			return err
-		}
-		if err := p.writeField10(oprot); err != nil {
-			return err
-		}
-		if err := p.writeField11(oprot); err != nil {
-			return err
-		}
 		if err := p.writeField12(oprot); err != nil {
 			return err
 		}
@@ -1343,118 +1147,27 @@ func (p *LoginWechatReq) writeField1(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *LoginWechatReq) writeField2(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("openid", thrift.STRING, 2); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:openid: ", p), err)
+	if err := oprot.WriteFieldBegin("Code", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:Code: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Openid)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.openid (2) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Code)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.Code (2) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:openid: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:Code: ", p), err)
 	}
 	return err
 }
 
 func (p *LoginWechatReq) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("nickname", thrift.STRING, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:nickname: ", p), err)
+	if err := oprot.WriteFieldBegin("State", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:State: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Nickname)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.nickname (3) field write error: ", p), err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:nickname: ", p), err)
-	}
-	return err
-}
-
-func (p *LoginWechatReq) writeField5(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("province", thrift.STRING, 5); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:province: ", p), err)
-	}
-	if err := oprot.WriteString(string(p.Province)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.province (5) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.State)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.State (3) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:province: ", p), err)
-	}
-	return err
-}
-
-func (p *LoginWechatReq) writeField6(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("city", thrift.STRING, 6); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:city: ", p), err)
-	}
-	if err := oprot.WriteString(string(p.City)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.city (6) field write error: ", p), err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:city: ", p), err)
-	}
-	return err
-}
-
-func (p *LoginWechatReq) writeField7(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("country", thrift.STRING, 7); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:country: ", p), err)
-	}
-	if err := oprot.WriteString(string(p.Country)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.country (7) field write error: ", p), err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 7:country: ", p), err)
-	}
-	return err
-}
-
-func (p *LoginWechatReq) writeField8(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("headimgurl", thrift.STRING, 8); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 8:headimgurl: ", p), err)
-	}
-	if err := oprot.WriteString(string(p.Headimgurl)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.headimgurl (8) field write error: ", p), err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 8:headimgurl: ", p), err)
-	}
-	return err
-}
-
-func (p *LoginWechatReq) writeField9(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("unionid", thrift.STRING, 9); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 9:unionid: ", p), err)
-	}
-	if err := oprot.WriteString(string(p.Unionid)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.unionid (9) field write error: ", p), err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 9:unionid: ", p), err)
-	}
-	return err
-}
-
-func (p *LoginWechatReq) writeField10(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("access_token", thrift.STRING, 10); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 10:access_token: ", p), err)
-	}
-	if err := oprot.WriteString(string(p.AccessToken)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.access_token (10) field write error: ", p), err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 10:access_token: ", p), err)
-	}
-	return err
-}
-
-func (p *LoginWechatReq) writeField11(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("refresh_token", thrift.STRING, 11); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 11:refresh_token: ", p), err)
-	}
-	if err := oprot.WriteString(string(p.RefreshToken)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.refresh_token (11) field write error: ", p), err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 11:refresh_token: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:State: ", p), err)
 	}
 	return err
 }
