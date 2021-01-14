@@ -28,4 +28,8 @@ enum code {
     CODE_NODE_NOINIT  = 9001, // 验证码服务没有初始化
     DATA_NODE_ERROR   = 9002, // 数据服务异常
     DATA_NODE_NOINIT  = 9003, // 数据服务没有初始化
+    DARTY_NODE_ERROR  = 9004, // 第三方服务异常
+    DARTY_NODE_NOINIT = 9005, // 第三方服务没有初始化
+
+    WECHAT_LOGIN_ERROR = 10001,     // 微信登录错误
 }
