@@ -21,6 +21,74 @@ var _ = context.Background
 var _ = reflect.DeepEqual
 var _ = bytes.Equal
 
+type Role int64
+
+const (
+	Role_NORMAL     Role = 0
+	Role_COOPERATOR Role = 1
+	Role_STAFFOR    Role = 98
+	Role_SUPEROR    Role = 99
+)
+
+func (p Role) String() string {
+	switch p {
+	case Role_NORMAL:
+		return "NORMAL"
+	case Role_COOPERATOR:
+		return "COOPERATOR"
+	case Role_STAFFOR:
+		return "STAFFOR"
+	case Role_SUPEROR:
+		return "SUPEROR"
+	}
+	return "<UNSET>"
+}
+
+func RoleFromString(s string) (Role, error) {
+	switch s {
+	case "NORMAL":
+		return Role_NORMAL, nil
+	case "COOPERATOR":
+		return Role_COOPERATOR, nil
+	case "STAFFOR":
+		return Role_STAFFOR, nil
+	case "SUPEROR":
+		return Role_SUPEROR, nil
+	}
+	return Role(0), fmt.Errorf("not a valid Role string")
+}
+
+func RolePtr(v Role) *Role { return &v }
+
+func (p Role) MarshalText() ([]byte, error) {
+	return []byte(p.String()), nil
+}
+
+func (p *Role) UnmarshalText(text []byte) error {
+	q, err := RoleFromString(string(text))
+	if err != nil {
+		return err
+	}
+	*p = q
+	return nil
+}
+
+func (p *Role) Scan(value interface{}) error {
+	v, ok := value.(int64)
+	if !ok {
+		return errors.New("Scan value is not int64")
+	}
+	*p = Role(v)
+	return nil
+}
+
+func (p *Role) Value() (driver.Value, error) {
+	if p == nil {
+		return nil, nil
+	}
+	return int64(*p), nil
+}
+
 type UserStatus int64
 
 const (
@@ -83,6 +151,69 @@ func (p *UserStatus) Scan(value interface{}) error {
 }
 
 func (p *UserStatus) Value() (driver.Value, error) {
+	if p == nil {
+		return nil, nil
+	}
+	return int64(*p), nil
+}
+
+type FromPlatom int64
+
+const (
+	FromPlatom_FROM_LOCAL  FromPlatom = 0
+	FromPlatom_FROM_WECHAT FromPlatom = 1
+	FromPlatom_FROM_ALIPAY FromPlatom = 2
+)
+
+func (p FromPlatom) String() string {
+	switch p {
+	case FromPlatom_FROM_LOCAL:
+		return "FROM_LOCAL"
+	case FromPlatom_FROM_WECHAT:
+		return "FROM_WECHAT"
+	case FromPlatom_FROM_ALIPAY:
+		return "FROM_ALIPAY"
+	}
+	return "<UNSET>"
+}
+
+func FromPlatomFromString(s string) (FromPlatom, error) {
+	switch s {
+	case "FROM_LOCAL":
+		return FromPlatom_FROM_LOCAL, nil
+	case "FROM_WECHAT":
+		return FromPlatom_FROM_WECHAT, nil
+	case "FROM_ALIPAY":
+		return FromPlatom_FROM_ALIPAY, nil
+	}
+	return FromPlatom(0), fmt.Errorf("not a valid FromPlatom string")
+}
+
+func FromPlatomPtr(v FromPlatom) *FromPlatom { return &v }
+
+func (p FromPlatom) MarshalText() ([]byte, error) {
+	return []byte(p.String()), nil
+}
+
+func (p *FromPlatom) UnmarshalText(text []byte) error {
+	q, err := FromPlatomFromString(string(text))
+	if err != nil {
+		return err
+	}
+	*p = q
+	return nil
+}
+
+func (p *FromPlatom) Scan(value interface{}) error {
+	v, ok := value.(int64)
+	if !ok {
+		return errors.New("Scan value is not int64")
+	}
+	*p = FromPlatom(v)
+	return nil
+}
+
+func (p *FromPlatom) Value() (driver.Value, error) {
 	if p == nil {
 		return nil, nil
 	}

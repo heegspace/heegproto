@@ -2,12 +2,6 @@ namespace go loginnode
 
 include "../rescode/rescode.thrift"
 
-enum from_platom {
-    FROM_LOCAL      = 0,     // 自己平台
-    FROM_WECHAT     = 1001,    // 微信平台
-    FROM_ALIPAY     = 2002,    // 支付宝平台
-}
-
 struct login_req {
     1:string                account;
     2:string                passwd;

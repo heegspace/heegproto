@@ -6,8 +6,6 @@ package datanode
 import (
 	"bytes"
 	"context"
-	"database/sql/driver"
-	"errors"
 	"fmt"
 	"reflect"
 
@@ -25,74 +23,6 @@ var _ = bytes.Equal
 
 var _ = rescode.GoUnusedProtection__
 var _ = common.GoUnusedProtection__
-
-type Role int64
-
-const (
-	Role_NORMAL     Role = 0
-	Role_COOPERATOR Role = 1
-	Role_STAFFOR    Role = 98
-	Role_SUPEROR    Role = 99
-)
-
-func (p Role) String() string {
-	switch p {
-	case Role_NORMAL:
-		return "NORMAL"
-	case Role_COOPERATOR:
-		return "COOPERATOR"
-	case Role_STAFFOR:
-		return "STAFFOR"
-	case Role_SUPEROR:
-		return "SUPEROR"
-	}
-	return "<UNSET>"
-}
-
-func RoleFromString(s string) (Role, error) {
-	switch s {
-	case "NORMAL":
-		return Role_NORMAL, nil
-	case "COOPERATOR":
-		return Role_COOPERATOR, nil
-	case "STAFFOR":
-		return Role_STAFFOR, nil
-	case "SUPEROR":
-		return Role_SUPEROR, nil
-	}
-	return Role(0), fmt.Errorf("not a valid Role string")
-}
-
-func RolePtr(v Role) *Role { return &v }
-
-func (p Role) MarshalText() ([]byte, error) {
-	return []byte(p.String()), nil
-}
-
-func (p *Role) UnmarshalText(text []byte) error {
-	q, err := RoleFromString(string(text))
-	if err != nil {
-		return err
-	}
-	*p = q
-	return nil
-}
-
-func (p *Role) Scan(value interface{}) error {
-	v, ok := value.(int64)
-	if !ok {
-		return errors.New("Scan value is not int64")
-	}
-	*p = Role(v)
-	return nil
-}
-
-func (p *Role) Value() (driver.Value, error) {
-	if p == nil {
-		return nil, nil
-	}
-	return int64(*p), nil
-}
 
 // Attributes:
 //  - UID
@@ -782,18 +712,19 @@ func (p *UserInfoReq) String() string {
 //  - Contactor
 //  - Email
 //  - RegIP
+//  - Status
 //  - Extra
 type NewUserReq_ struct {
-	Account   string `thrift:"account,1" db:"account" json:"account"`
-	PassWd    string `thrift:"pass_wd,2" db:"pass_wd" json:"pass_wd"`
-	Role      int32  `thrift:"role,3" db:"role" json:"role"`
-	Invitor   string `thrift:"invitor,4" db:"invitor" json:"invitor"`
-	Source    string `thrift:"source,5" db:"source" json:"source"`
-	Contactor string `thrift:"contactor,6" db:"contactor" json:"contactor"`
-	Email     string `thrift:"email,7" db:"email" json:"email"`
-	RegIP     int64  `thrift:"reg_ip,8" db:"reg_ip" json:"reg_ip"`
-	// unused field # 9
-	Extra map[string]string `thrift:"extra,10" db:"extra" json:"extra"`
+	Account   string            `thrift:"account,1" db:"account" json:"account"`
+	PassWd    string            `thrift:"pass_wd,2" db:"pass_wd" json:"pass_wd"`
+	Role      int32             `thrift:"role,3" db:"role" json:"role"`
+	Invitor   string            `thrift:"invitor,4" db:"invitor" json:"invitor"`
+	Source    string            `thrift:"source,5" db:"source" json:"source"`
+	Contactor string            `thrift:"contactor,6" db:"contactor" json:"contactor"`
+	Email     string            `thrift:"email,7" db:"email" json:"email"`
+	RegIP     int64             `thrift:"reg_ip,8" db:"reg_ip" json:"reg_ip"`
+	Status    int64             `thrift:"status,9" db:"status" json:"status"`
+	Extra     map[string]string `thrift:"extra,10" db:"extra" json:"extra"`
 }
 
 func NewNewUserReq_() *NewUserReq_ {
@@ -830,6 +761,10 @@ func (p *NewUserReq_) GetEmail() string {
 
 func (p *NewUserReq_) GetRegIP() int64 {
 	return p.RegIP
+}
+
+func (p *NewUserReq_) GetStatus() int64 {
+	return p.Status
 }
 
 func (p *NewUserReq_) GetExtra() map[string]string {
@@ -922,6 +857,16 @@ func (p *NewUserReq_) Read(iprot thrift.TProtocol) error {
 		case 8:
 			if fieldTypeId == thrift.I64 {
 				if err := p.ReadField8(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 9:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField9(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -1026,6 +971,15 @@ func (p *NewUserReq_) ReadField8(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *NewUserReq_) ReadField9(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 9: ", err)
+	} else {
+		p.Status = v
+	}
+	return nil
+}
+
 func (p *NewUserReq_) ReadField10(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
@@ -1081,6 +1035,9 @@ func (p *NewUserReq_) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField8(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField9(oprot); err != nil {
 			return err
 		}
 		if err := p.writeField10(oprot); err != nil {
@@ -1196,6 +1153,19 @@ func (p *NewUserReq_) writeField8(oprot thrift.TProtocol) (err error) {
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 8:reg_ip: ", p), err)
+	}
+	return err
+}
+
+func (p *NewUserReq_) writeField9(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("status", thrift.I64, 9); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 9:status: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.Status)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.status (9) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 9:status: ", p), err)
 	}
 	return err
 }

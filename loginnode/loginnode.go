@@ -6,8 +6,6 @@ package loginnode
 import (
 	"bytes"
 	"context"
-	"database/sql/driver"
-	"errors"
 	"fmt"
 	"reflect"
 
@@ -23,69 +21,6 @@ var _ = reflect.DeepEqual
 var _ = bytes.Equal
 
 var _ = rescode.GoUnusedProtection__
-
-type FromPlatom int64
-
-const (
-	FromPlatom_FROM_LOCAL  FromPlatom = 0
-	FromPlatom_FROM_WECHAT FromPlatom = 1001
-	FromPlatom_FROM_ALIPAY FromPlatom = 2002
-)
-
-func (p FromPlatom) String() string {
-	switch p {
-	case FromPlatom_FROM_LOCAL:
-		return "FROM_LOCAL"
-	case FromPlatom_FROM_WECHAT:
-		return "FROM_WECHAT"
-	case FromPlatom_FROM_ALIPAY:
-		return "FROM_ALIPAY"
-	}
-	return "<UNSET>"
-}
-
-func FromPlatomFromString(s string) (FromPlatom, error) {
-	switch s {
-	case "FROM_LOCAL":
-		return FromPlatom_FROM_LOCAL, nil
-	case "FROM_WECHAT":
-		return FromPlatom_FROM_WECHAT, nil
-	case "FROM_ALIPAY":
-		return FromPlatom_FROM_ALIPAY, nil
-	}
-	return FromPlatom(0), fmt.Errorf("not a valid FromPlatom string")
-}
-
-func FromPlatomPtr(v FromPlatom) *FromPlatom { return &v }
-
-func (p FromPlatom) MarshalText() ([]byte, error) {
-	return []byte(p.String()), nil
-}
-
-func (p *FromPlatom) UnmarshalText(text []byte) error {
-	q, err := FromPlatomFromString(string(text))
-	if err != nil {
-		return err
-	}
-	*p = q
-	return nil
-}
-
-func (p *FromPlatom) Scan(value interface{}) error {
-	v, ok := value.(int64)
-	if !ok {
-		return errors.New("Scan value is not int64")
-	}
-	*p = FromPlatom(v)
-	return nil
-}
-
-func (p *FromPlatom) Value() (driver.Value, error) {
-	if p == nil {
-		return nil, nil
-	}
-	return int64(*p), nil
-}
 
 // Attributes:
 //  - Account

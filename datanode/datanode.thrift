@@ -3,14 +3,6 @@ namespace go datanode
 include "../rescode/rescode.thrift"
 include "../common/common.thrift"
 
-enum Role {
-    NORMAL          = 0,        // 普通用户
-    COOPERATOR      = 1,        // 企业用户
-
-    STAFFOR         = 98,       // 员工同事
-    SUPEROR         = 99,       // 超级用户
-}
-
 struct user{
     1:i64       uid,
     2:string   phone,
@@ -39,6 +31,7 @@ struct new_user_req {
     6:string    contactor,
     7:string    email,
     8:i64       reg_ip;
+    9:i64       status;
     10:map<string,string> extra,
 }
 
