@@ -38,7 +38,8 @@ struct login_wechat_req {
     8:string                headimgurl;
     9:string                unionid;
     10:string                access_token;
-    11:map<string,string>    extra;
+    11:string                refresh_token;
+    12:map<string,string>    extra;
 }
 
 struct login_wechat_res {
