@@ -237,3 +237,15 @@ struct subject_cate {
     6:string    href,
     7:string    create_at,
 }
+
+struct wechat_userinfo {
+    1:string                openid,
+    2:string                nickname,
+    3:string                sex,
+    4:string                province,
+    5:string                city,
+    6:string                country,
+    7:string                headimgurl,
+    8:string               privilege,
+    9:string               unionid,
+}
