@@ -47,14 +47,16 @@ struct userinfo_wechat_req {
     1:i64                   uid,
     2:string                openid,
     3:string                access_token,
-    4:map<string,string>    extra,
+    4:string                refresh_token,  // 用于刷新access_token
+    5:map<string,string>    extra,
 }
 
 struct userinfo_wechat_res {
     1:rescode.code              rescode,
     2:string                    resmsg,
     3:common.wechat_userinfo    userinfo,
-    4:map<string,string>       extra,
+    4:string                    cookie, // 是否更新cookie
+    5:map<string,string>        extra,
 }
 
 service dartynode_service {
