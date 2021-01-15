@@ -23,6 +23,8 @@ enum code {
     CODE_RATE   = 10003,    // 请求频率太高
     CODE_LIMIT  = 10004,    // 验证码码达到限制
     CODE_TYPE_ERR = 10005,  // 不支持的类型
+    JSON_MAR_ERR = 10006,   // json编码错误
+    JSON_UNMAR_ERR = 10007, // json解码错误
 
     CODE_NODE_ERROR   = 9000, // 验证码服务异常
     CODE_NODE_NOINIT  = 9001, // 验证码服务没有初始化
@@ -32,5 +34,7 @@ enum code {
     DARTY_NODE_NOINIT = 9005, // 第三方服务没有初始化
 
     WECHAT_LOGIN_ERROR = 30001,     // 微信登录错误
-    WECHAT_TOKEN_TIMEOUT = 30002,   // 微信refresh token过期
+    WECHAT_TOKEN_TIMEOUT = 30002,   // 微信token过期
+    WECHAT_REFRESH_ERROR = 30003,   // 微信token刷新失败
+    WECHAT_USERINFO_ERR = 30004,    // 微信信息获取错误
 }

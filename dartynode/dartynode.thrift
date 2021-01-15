@@ -18,10 +18,11 @@ struct login_wechat_res {
 }
 
 struct refresh_wechat_req {
-    1:string                appid,
-    2:string                refresh_token,
-    3:string                access_token,
-    4:map<string,string>    extra,
+    1:i64                   uid,
+    2:string                appid,
+    3:string                refresh_token,
+    4:string                access_token,
+    5:map<string,string>    extra,
 }
 
 struct refresh_wechat_res {

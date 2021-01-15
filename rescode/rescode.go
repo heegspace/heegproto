@@ -41,6 +41,8 @@ const (
 	Code_CODE_RATE            Code = 10003
 	Code_CODE_LIMIT           Code = 10004
 	Code_CODE_TYPE_ERR        Code = 10005
+	Code_JSON_MAR_ERR         Code = 10006
+	Code_JSON_UNMAR_ERR       Code = 10007
 	Code_CODE_NODE_ERROR      Code = 9000
 	Code_CODE_NODE_NOINIT     Code = 9001
 	Code_DATA_NODE_ERROR      Code = 9002
@@ -49,6 +51,8 @@ const (
 	Code_DARTY_NODE_NOINIT    Code = 9005
 	Code_WECHAT_LOGIN_ERROR   Code = 30001
 	Code_WECHAT_TOKEN_TIMEOUT Code = 30002
+	Code_WECHAT_REFRESH_ERROR Code = 30003
+	Code_WECHAT_USERINFO_ERR  Code = 30004
 )
 
 func (p Code) String() string {
@@ -87,6 +91,10 @@ func (p Code) String() string {
 		return "CODE_LIMIT"
 	case Code_CODE_TYPE_ERR:
 		return "CODE_TYPE_ERR"
+	case Code_JSON_MAR_ERR:
+		return "JSON_MAR_ERR"
+	case Code_JSON_UNMAR_ERR:
+		return "JSON_UNMAR_ERR"
 	case Code_CODE_NODE_ERROR:
 		return "CODE_NODE_ERROR"
 	case Code_CODE_NODE_NOINIT:
@@ -103,6 +111,10 @@ func (p Code) String() string {
 		return "WECHAT_LOGIN_ERROR"
 	case Code_WECHAT_TOKEN_TIMEOUT:
 		return "WECHAT_TOKEN_TIMEOUT"
+	case Code_WECHAT_REFRESH_ERROR:
+		return "WECHAT_REFRESH_ERROR"
+	case Code_WECHAT_USERINFO_ERR:
+		return "WECHAT_USERINFO_ERR"
 	}
 	return "<UNSET>"
 }
@@ -143,6 +155,10 @@ func CodeFromString(s string) (Code, error) {
 		return Code_CODE_LIMIT, nil
 	case "CODE_TYPE_ERR":
 		return Code_CODE_TYPE_ERR, nil
+	case "JSON_MAR_ERR":
+		return Code_JSON_MAR_ERR, nil
+	case "JSON_UNMAR_ERR":
+		return Code_JSON_UNMAR_ERR, nil
 	case "CODE_NODE_ERROR":
 		return Code_CODE_NODE_ERROR, nil
 	case "CODE_NODE_NOINIT":
@@ -159,6 +175,10 @@ func CodeFromString(s string) (Code, error) {
 		return Code_WECHAT_LOGIN_ERROR, nil
 	case "WECHAT_TOKEN_TIMEOUT":
 		return Code_WECHAT_TOKEN_TIMEOUT, nil
+	case "WECHAT_REFRESH_ERROR":
+		return Code_WECHAT_REFRESH_ERROR, nil
+	case "WECHAT_USERINFO_ERR":
+		return Code_WECHAT_USERINFO_ERR, nil
 	}
 	return Code(0), fmt.Errorf("not a valid Code string")
 }
