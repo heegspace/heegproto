@@ -46,9 +46,10 @@ struct logout_wechat_res {
 struct userinfo_wechat_req {
     1:i64                   uid,
     2:string                openid,
-    3:string                access_token,
-    4:string                refresh_token,  // 用于刷新access_token
-    5:map<string,string>    extra,
+    3:string                appid,
+    4:string                access_token,
+    5:string                refresh_token,  // 用于刷新access_token
+    6:map<string,string>    extra,
 }
 
 struct userinfo_wechat_res {
