@@ -7,11 +7,10 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"reflect"
-
 	"github.com/heegspace/heegproto/common"
 	"github.com/heegspace/heegproto/rescode"
 	"github.com/heegspace/thrift"
+	"reflect"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -1077,17 +1076,23 @@ func (p *RefreshWechatRes) String() string {
 }
 
 // Attributes:
+//  - UID
 //  - Appid
 //  - Cookie
 //  - Extra
 type LogoutWechatReq struct {
-	Appid  string            `thrift:"appid,1" db:"appid" json:"appid"`
-	Cookie string            `thrift:"cookie,2" db:"cookie" json:"cookie"`
-	Extra  map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
+	UID    int64             `thrift:"uid,1" db:"uid" json:"uid"`
+	Appid  string            `thrift:"appid,2" db:"appid" json:"appid"`
+	Cookie string            `thrift:"cookie,3" db:"cookie" json:"cookie"`
+	Extra  map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewLogoutWechatReq() *LogoutWechatReq {
 	return &LogoutWechatReq{}
+}
+
+func (p *LogoutWechatReq) GetUID() int64 {
+	return p.UID
 }
 
 func (p *LogoutWechatReq) GetAppid() string {
@@ -1116,7 +1121,7 @@ func (p *LogoutWechatReq) Read(iprot thrift.TProtocol) error {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I64 {
 				if err := p.ReadField1(iprot); err != nil {
 					return err
 				}
@@ -1136,8 +1141,18 @@ func (p *LogoutWechatReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 3:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -1161,10 +1176,10 @@ func (p *LogoutWechatReq) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *LogoutWechatReq) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
+	if v, err := iprot.ReadI64(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
-		p.Appid = v
+		p.UID = v
 	}
 	return nil
 }
@@ -1173,12 +1188,21 @@ func (p *LogoutWechatReq) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
-		p.Cookie = v
+		p.Appid = v
 	}
 	return nil
 }
 
 func (p *LogoutWechatReq) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Cookie = v
+	}
+	return nil
+}
+
+func (p *LogoutWechatReq) ReadField4(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -1220,6 +1244,9 @@ func (p *LogoutWechatReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -1231,34 +1258,47 @@ func (p *LogoutWechatReq) Write(oprot thrift.TProtocol) error {
 }
 
 func (p *LogoutWechatReq) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("appid", thrift.STRING, 1); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:appid: ", p), err)
+	if err := oprot.WriteFieldBegin("uid", thrift.I64, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Appid)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.appid (1) field write error: ", p), err)
+	if err := oprot.WriteI64(int64(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:appid: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err)
 	}
 	return err
 }
 
 func (p *LogoutWechatReq) writeField2(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("cookie", thrift.STRING, 2); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:cookie: ", p), err)
+	if err := oprot.WriteFieldBegin("appid", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:appid: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Cookie)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.cookie (2) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Appid)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.appid (2) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:cookie: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:appid: ", p), err)
 	}
 	return err
 }
 
 func (p *LogoutWechatReq) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("cookie", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:cookie: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Cookie)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.cookie (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:cookie: ", p), err)
+	}
+	return err
+}
+
+func (p *LogoutWechatReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -1275,7 +1315,7 @@ func (p *LogoutWechatReq) writeField3(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
 	}
 	return err
 }
