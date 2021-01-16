@@ -9,9 +9,8 @@ import (
 	"database/sql/driver"
 	"errors"
 	"fmt"
-	"reflect"
-
 	"github.com/heegspace/thrift"
+	"reflect"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -7830,7 +7829,7 @@ func (p *SubjectCate) String() string {
 type WechatUserinfo struct {
 	Openid     string `thrift:"openid,1" db:"openid" json:"openid"`
 	Nickname   string `thrift:"nickname,2" db:"nickname" json:"nickname"`
-	Sex        string `thrift:"sex,3" db:"sex" json:"sex"`
+	Sex        int32  `thrift:"sex,3" db:"sex" json:"sex"`
 	Province   string `thrift:"province,4" db:"province" json:"province"`
 	City       string `thrift:"city,5" db:"city" json:"city"`
 	Country    string `thrift:"country,6" db:"country" json:"country"`
@@ -7851,7 +7850,7 @@ func (p *WechatUserinfo) GetNickname() string {
 	return p.Nickname
 }
 
-func (p *WechatUserinfo) GetSex() string {
+func (p *WechatUserinfo) GetSex() int32 {
 	return p.Sex
 }
 
@@ -7913,7 +7912,7 @@ func (p *WechatUserinfo) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 3:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I32 {
 				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
@@ -8016,7 +8015,7 @@ func (p *WechatUserinfo) ReadField2(iprot thrift.TProtocol) error {
 }
 
 func (p *WechatUserinfo) ReadField3(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
+	if v, err := iprot.ReadI32(); err != nil {
 		return thrift.PrependError("error reading field 3: ", err)
 	} else {
 		p.Sex = v
@@ -8147,10 +8146,10 @@ func (p *WechatUserinfo) writeField2(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *WechatUserinfo) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("sex", thrift.STRING, 3); err != nil {
+	if err := oprot.WriteFieldBegin("sex", thrift.I32, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:sex: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Sex)); err != nil {
+	if err := oprot.WriteI32(int32(p.Sex)); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T.sex (3) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {

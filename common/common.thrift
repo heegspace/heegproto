@@ -241,7 +241,7 @@ struct subject_cate {
 struct wechat_userinfo {
     1:string                openid,
     2:string                nickname,
-    3:string                sex,
+    3:i32                   sex,
     4:string                province,
     5:string                city,
     6:string                country,
