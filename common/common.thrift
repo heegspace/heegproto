@@ -246,6 +246,6 @@ struct wechat_userinfo {
     5:string                city,
     6:string                country,
     7:string                headimgurl,
-    8:string               privilege,
-    9:string               unionid,
+    8:list<string>          privilege,
+    9:string                unionid,
 }

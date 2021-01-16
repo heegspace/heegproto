@@ -7827,15 +7827,15 @@ func (p *SubjectCate) String() string {
 //  - Privilege
 //  - Unionid
 type WechatUserinfo struct {
-	Openid     string `thrift:"openid,1" db:"openid" json:"openid"`
-	Nickname   string `thrift:"nickname,2" db:"nickname" json:"nickname"`
-	Sex        int32  `thrift:"sex,3" db:"sex" json:"sex"`
-	Province   string `thrift:"province,4" db:"province" json:"province"`
-	City       string `thrift:"city,5" db:"city" json:"city"`
-	Country    string `thrift:"country,6" db:"country" json:"country"`
-	Headimgurl string `thrift:"headimgurl,7" db:"headimgurl" json:"headimgurl"`
-	Privilege  string `thrift:"privilege,8" db:"privilege" json:"privilege"`
-	Unionid    string `thrift:"unionid,9" db:"unionid" json:"unionid"`
+	Openid     string   `thrift:"openid,1" db:"openid" json:"openid"`
+	Nickname   string   `thrift:"nickname,2" db:"nickname" json:"nickname"`
+	Sex        int32    `thrift:"sex,3" db:"sex" json:"sex"`
+	Province   string   `thrift:"province,4" db:"province" json:"province"`
+	City       string   `thrift:"city,5" db:"city" json:"city"`
+	Country    string   `thrift:"country,6" db:"country" json:"country"`
+	Headimgurl string   `thrift:"headimgurl,7" db:"headimgurl" json:"headimgurl"`
+	Privilege  []string `thrift:"privilege,8" db:"privilege" json:"privilege"`
+	Unionid    string   `thrift:"unionid,9" db:"unionid" json:"unionid"`
 }
 
 func NewWechatUserinfo() *WechatUserinfo {
@@ -7870,7 +7870,7 @@ func (p *WechatUserinfo) GetHeadimgurl() string {
 	return p.Headimgurl
 }
 
-func (p *WechatUserinfo) GetPrivilege() string {
+func (p *WechatUserinfo) GetPrivilege() []string {
 	return p.Privilege
 }
 
@@ -7962,7 +7962,7 @@ func (p *WechatUserinfo) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 8:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.LIST {
 				if err := p.ReadField8(iprot); err != nil {
 					return err
 				}
@@ -8060,10 +8060,23 @@ func (p *WechatUserinfo) ReadField7(iprot thrift.TProtocol) error {
 }
 
 func (p *WechatUserinfo) ReadField8(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return thrift.PrependError("error reading field 8: ", err)
-	} else {
-		p.Privilege = v
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
+		return thrift.PrependError("error reading list begin: ", err)
+	}
+	tSlice := make([]string, 0, size)
+	p.Privilege = tSlice
+	for i := 0; i < size; i++ {
+		var _elem13 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_elem13 = v
+		}
+		p.Privilege = append(p.Privilege, _elem13)
+	}
+	if err := iprot.ReadListEnd(); err != nil {
+		return thrift.PrependError("error reading list end: ", err)
 	}
 	return nil
 }
@@ -8211,11 +8224,19 @@ func (p *WechatUserinfo) writeField7(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *WechatUserinfo) writeField8(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("privilege", thrift.STRING, 8); err != nil {
+	if err := oprot.WriteFieldBegin("privilege", thrift.LIST, 8); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 8:privilege: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Privilege)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.privilege (8) field write error: ", p), err)
+	if err := oprot.WriteListBegin(thrift.STRING, len(p.Privilege)); err != nil {
+		return thrift.PrependError("error writing list begin: ", err)
+	}
+	for _, v := range p.Privilege {
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteListEnd(); err != nil {
+		return thrift.PrependError("error writing list end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 8:privilege: ", p), err)
