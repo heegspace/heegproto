@@ -68,9 +68,10 @@ struct update_user_res {
 }
 
 struct user_info_req {
-    1:common.authorize auth,
-    2:i64    uid,
-    3:map<string,string> extra,
+    1:common.authorize      auth,
+    2:i64                   uid,
+    3:common.from_platom    platom, // 帐号来源平台
+    4:map<string,string>    extra,
 }
 
 struct user_info_res {
