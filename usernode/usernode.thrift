@@ -9,16 +9,20 @@ enum attention_op_type {
 }
 
 struct user_obj {
-    1:i64       uid,
-    2:string   phone,
-    3:string   email,
-    4:string    account,
-    5:string    pass_wd,
-    6:i16      status,
-    7:i64      role,
-    8:i64      vip,
-    9:double   coin
-    10:string  reg_at;
+    1:string    phone,
+    2:string    email,
+    3:string    account,
+    4:i16       status,
+    5:i64       role,
+    6:i64       vip,
+    7:double    coin
+    8:string    reg_at,
+    9:string    nick_name,
+    10:string   avatar,
+    11:i32      sex,
+    12:string   province,
+    13:string   city,
+    14:string   country,
 }
 
 struct update_username_req {
