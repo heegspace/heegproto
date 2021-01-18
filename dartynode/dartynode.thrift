@@ -7,7 +7,7 @@ struct login_wechat_req {
     1:string                appid,
     2:string                Code,
     3:string                State,
-    14:map<string,string>   extra,
+    4:map<string,string>   extra,
 }
 
 struct login_wechat_res {
@@ -45,6 +45,20 @@ struct logout_wechat_res {
     3:map<string,string>    extra,
 }
 
+struct login_alipay_req {
+    1:string                app_id,
+    2:string                source,
+    3:string                scope,
+    4:string                auth_code,
+    5:map<string,string>   extra,
+}
+
+struct login_alipay_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:string                cookie,
+    4:map<string,string>    extra,
+}
 
 service dartynode_service {
     // 登录微信
@@ -55,4 +69,7 @@ service dartynode_service {
 
     // 退出微信登录
     logout_wechat_res logout_wechat(1:logout_wechat_req req),
+
+    // 支付宝登陆
+    login_alipay_res login_alipay(1:login_alipay_req req),
 }
