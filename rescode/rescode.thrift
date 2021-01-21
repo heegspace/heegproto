@@ -38,8 +38,8 @@ enum code {
     WECHAT_REFRESH_ERROR = 30003,   // 微信token刷新失败
     WECHAT_USERINFO_ERR = 30004,    // 微信信息获取错误
 
-    ALIPAY_LOGIN_ERROR = 30001,     // 微信登录错误
-    ALIPAY_TOKEN_TIMEOUT = 30002,   // 微信token过期
-    ALIPAY_REFRESH_ERROR = 30003,   // 微信token刷新失败
-    ALIPAY_USERINFO_ERR = 30004,    // 微信信息获取错误
+    ALIPAY_LOGIN_ERROR = 30031,     // 微信登录错误
+    ALIPAY_TOKEN_TIMEOUT = 30032,   // 微信token过期
+    ALIPAY_REFRESH_ERROR = 30033,   // 微信token刷新失败
+    ALIPAY_USERINFO_ERR = 30034,    // 微信信息获取错误
 }
