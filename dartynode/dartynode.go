@@ -2721,6 +2721,642 @@ func (p *LoginAlipayRes) String() string {
 	return fmt.Sprintf("LoginAlipayRes(%+v)", *p)
 }
 
+// Attributes:
+//  - UID
+//  - Openid
+//  - Appid
+//  - AccessToken
+//  - RefreshToken
+//  - Extra
+type UserinfoAlipayReq struct {
+	UID          int64             `thrift:"uid,1" db:"uid" json:"uid"`
+	Openid       string            `thrift:"openid,2" db:"openid" json:"openid"`
+	Appid        string            `thrift:"appid,3" db:"appid" json:"appid"`
+	AccessToken  string            `thrift:"access_token,4" db:"access_token" json:"access_token"`
+	RefreshToken string            `thrift:"refresh_token,5" db:"refresh_token" json:"refresh_token"`
+	Extra        map[string]string `thrift:"extra,6" db:"extra" json:"extra"`
+}
+
+func NewUserinfoAlipayReq() *UserinfoAlipayReq {
+	return &UserinfoAlipayReq{}
+}
+
+func (p *UserinfoAlipayReq) GetUID() int64 {
+	return p.UID
+}
+
+func (p *UserinfoAlipayReq) GetOpenid() string {
+	return p.Openid
+}
+
+func (p *UserinfoAlipayReq) GetAppid() string {
+	return p.Appid
+}
+
+func (p *UserinfoAlipayReq) GetAccessToken() string {
+	return p.AccessToken
+}
+
+func (p *UserinfoAlipayReq) GetRefreshToken() string {
+	return p.RefreshToken
+}
+
+func (p *UserinfoAlipayReq) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *UserinfoAlipayReq) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 6:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField6(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *UserinfoAlipayReq) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
+func (p *UserinfoAlipayReq) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Openid = v
+	}
+	return nil
+}
+
+func (p *UserinfoAlipayReq) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Appid = v
+	}
+	return nil
+}
+
+func (p *UserinfoAlipayReq) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.AccessToken = v
+	}
+	return nil
+}
+
+func (p *UserinfoAlipayReq) ReadField5(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 5: ", err)
+	} else {
+		p.RefreshToken = v
+	}
+	return nil
+}
+
+func (p *UserinfoAlipayReq) ReadField6(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key20 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key20 = v
+		}
+		var _val21 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val21 = v
+		}
+		p.Extra[_key20] = _val21
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *UserinfoAlipayReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("userinfo_alipay_req"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField6(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *UserinfoAlipayReq) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("uid", thrift.I64, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *UserinfoAlipayReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("openid", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:openid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Openid)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.openid (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:openid: ", p), err)
+	}
+	return err
+}
+
+func (p *UserinfoAlipayReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("appid", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:appid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Appid)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.appid (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:appid: ", p), err)
+	}
+	return err
+}
+
+func (p *UserinfoAlipayReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("access_token", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:access_token: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.AccessToken)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.access_token (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:access_token: ", p), err)
+	}
+	return err
+}
+
+func (p *UserinfoAlipayReq) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("refresh_token", thrift.STRING, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:refresh_token: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.RefreshToken)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.refresh_token (5) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:refresh_token: ", p), err)
+	}
+	return err
+}
+
+func (p *UserinfoAlipayReq) writeField6(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 6); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *UserinfoAlipayReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserinfoAlipayReq(%+v)", *p)
+}
+
+// Attributes:
+//  - Rescode
+//  - Resmsg
+//  - Userinfo
+//  - Cookie
+//  - Extra
+type UserinfoAlipayRes struct {
+	Rescode  rescode.Code           `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg   string                 `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Userinfo *common.AlipayUserinfo `thrift:"userinfo,3" db:"userinfo" json:"userinfo"`
+	Cookie   string                 `thrift:"cookie,4" db:"cookie" json:"cookie"`
+	Extra    map[string]string      `thrift:"extra,5" db:"extra" json:"extra"`
+}
+
+func NewUserinfoAlipayRes() *UserinfoAlipayRes {
+	return &UserinfoAlipayRes{}
+}
+
+func (p *UserinfoAlipayRes) GetRescode() rescode.Code {
+	return p.Rescode
+}
+
+func (p *UserinfoAlipayRes) GetResmsg() string {
+	return p.Resmsg
+}
+
+var UserinfoAlipayRes_Userinfo_DEFAULT *common.AlipayUserinfo
+
+func (p *UserinfoAlipayRes) GetUserinfo() *common.AlipayUserinfo {
+	if !p.IsSetUserinfo() {
+		return UserinfoAlipayRes_Userinfo_DEFAULT
+	}
+	return p.Userinfo
+}
+
+func (p *UserinfoAlipayRes) GetCookie() string {
+	return p.Cookie
+}
+
+func (p *UserinfoAlipayRes) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *UserinfoAlipayRes) IsSetUserinfo() bool {
+	return p.Userinfo != nil
+}
+
+func (p *UserinfoAlipayRes) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *UserinfoAlipayRes) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		temp := rescode.Code(v)
+		p.Rescode = temp
+	}
+	return nil
+}
+
+func (p *UserinfoAlipayRes) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Resmsg = v
+	}
+	return nil
+}
+
+func (p *UserinfoAlipayRes) ReadField3(iprot thrift.TProtocol) error {
+	p.Userinfo = &common.AlipayUserinfo{}
+	if err := p.Userinfo.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Userinfo), err)
+	}
+	return nil
+}
+
+func (p *UserinfoAlipayRes) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.Cookie = v
+	}
+	return nil
+}
+
+func (p *UserinfoAlipayRes) ReadField5(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key22 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key22 = v
+		}
+		var _val23 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val23 = v
+		}
+		p.Extra[_key22] = _val23
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *UserinfoAlipayRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("userinfo_alipay_res"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *UserinfoAlipayRes) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Rescode)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.rescode (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:rescode: ", p), err)
+	}
+	return err
+}
+
+func (p *UserinfoAlipayRes) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err)
+	}
+	return err
+}
+
+func (p *UserinfoAlipayRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("userinfo", thrift.STRUCT, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:userinfo: ", p), err)
+	}
+	if err := p.Userinfo.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Userinfo), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:userinfo: ", p), err)
+	}
+	return err
+}
+
+func (p *UserinfoAlipayRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("cookie", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:cookie: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Cookie)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.cookie (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:cookie: ", p), err)
+	}
+	return err
+}
+
+func (p *UserinfoAlipayRes) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *UserinfoAlipayRes) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserinfoAlipayRes(%+v)", *p)
+}
+
 type DartynodeService interface {
 	// Parameters:
 	//  - Req
@@ -2737,6 +3373,9 @@ type DartynodeService interface {
 	// Parameters:
 	//  - Req
 	LoginAlipay(ctx context.Context, req *LoginAlipayReq) (r *LoginAlipayRes, err error)
+	// Parameters:
+	//  - Req
+	UserinfoAlipay(ctx context.Context, req *UserinfoAlipayReq) (r *UserinfoAlipayRes, err error)
 }
 
 type DartynodeServiceClient struct {
@@ -2768,34 +3407,10 @@ func (p *DartynodeServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Req
 func (p *DartynodeServiceClient) LoginWechat(ctx context.Context, req *LoginWechatReq) (r *LoginWechatRes, err error) {
-	var _args20 DartynodeServiceLoginWechatArgs
-	_args20.Req = req
-	var _result21 DartynodeServiceLoginWechatResult
-	if err = p.Client_().Call(ctx, "login_wechat", &_args20, &_result21); err != nil {
-		return
-	}
-	return _result21.GetSuccess(), nil
-}
-
-// Parameters:
-//  - Req
-func (p *DartynodeServiceClient) RefreshWechat(ctx context.Context, req *RefreshWechatReq) (r *RefreshWechatRes, err error) {
-	var _args22 DartynodeServiceRefreshWechatArgs
-	_args22.Req = req
-	var _result23 DartynodeServiceRefreshWechatResult
-	if err = p.Client_().Call(ctx, "refresh_wechat", &_args22, &_result23); err != nil {
-		return
-	}
-	return _result23.GetSuccess(), nil
-}
-
-// Parameters:
-//  - Req
-func (p *DartynodeServiceClient) LogoutWechat(ctx context.Context, req *LogoutWechatReq) (r *LogoutWechatRes, err error) {
-	var _args24 DartynodeServiceLogoutWechatArgs
+	var _args24 DartynodeServiceLoginWechatArgs
 	_args24.Req = req
-	var _result25 DartynodeServiceLogoutWechatResult
-	if err = p.Client_().Call(ctx, "logout_wechat", &_args24, &_result25); err != nil {
+	var _result25 DartynodeServiceLoginWechatResult
+	if err = p.Client_().Call(ctx, "login_wechat", &_args24, &_result25); err != nil {
 		return
 	}
 	return _result25.GetSuccess(), nil
@@ -2803,11 +3418,11 @@ func (p *DartynodeServiceClient) LogoutWechat(ctx context.Context, req *LogoutWe
 
 // Parameters:
 //  - Req
-func (p *DartynodeServiceClient) UserinfoWechat(ctx context.Context, req *UserinfoWechatReq) (r *UserinfoWechatRes, err error) {
-	var _args26 DartynodeServiceUserinfoWechatArgs
+func (p *DartynodeServiceClient) RefreshWechat(ctx context.Context, req *RefreshWechatReq) (r *RefreshWechatRes, err error) {
+	var _args26 DartynodeServiceRefreshWechatArgs
 	_args26.Req = req
-	var _result27 DartynodeServiceUserinfoWechatResult
-	if err = p.Client_().Call(ctx, "userinfo_wechat", &_args26, &_result27); err != nil {
+	var _result27 DartynodeServiceRefreshWechatResult
+	if err = p.Client_().Call(ctx, "refresh_wechat", &_args26, &_result27); err != nil {
 		return
 	}
 	return _result27.GetSuccess(), nil
@@ -2815,14 +3430,50 @@ func (p *DartynodeServiceClient) UserinfoWechat(ctx context.Context, req *Userin
 
 // Parameters:
 //  - Req
-func (p *DartynodeServiceClient) LoginAlipay(ctx context.Context, req *LoginAlipayReq) (r *LoginAlipayRes, err error) {
-	var _args28 DartynodeServiceLoginAlipayArgs
+func (p *DartynodeServiceClient) LogoutWechat(ctx context.Context, req *LogoutWechatReq) (r *LogoutWechatRes, err error) {
+	var _args28 DartynodeServiceLogoutWechatArgs
 	_args28.Req = req
-	var _result29 DartynodeServiceLoginAlipayResult
-	if err = p.Client_().Call(ctx, "login_alipay", &_args28, &_result29); err != nil {
+	var _result29 DartynodeServiceLogoutWechatResult
+	if err = p.Client_().Call(ctx, "logout_wechat", &_args28, &_result29); err != nil {
 		return
 	}
 	return _result29.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *DartynodeServiceClient) UserinfoWechat(ctx context.Context, req *UserinfoWechatReq) (r *UserinfoWechatRes, err error) {
+	var _args30 DartynodeServiceUserinfoWechatArgs
+	_args30.Req = req
+	var _result31 DartynodeServiceUserinfoWechatResult
+	if err = p.Client_().Call(ctx, "userinfo_wechat", &_args30, &_result31); err != nil {
+		return
+	}
+	return _result31.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *DartynodeServiceClient) LoginAlipay(ctx context.Context, req *LoginAlipayReq) (r *LoginAlipayRes, err error) {
+	var _args32 DartynodeServiceLoginAlipayArgs
+	_args32.Req = req
+	var _result33 DartynodeServiceLoginAlipayResult
+	if err = p.Client_().Call(ctx, "login_alipay", &_args32, &_result33); err != nil {
+		return
+	}
+	return _result33.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *DartynodeServiceClient) UserinfoAlipay(ctx context.Context, req *UserinfoAlipayReq) (r *UserinfoAlipayRes, err error) {
+	var _args34 DartynodeServiceUserinfoAlipayArgs
+	_args34.Req = req
+	var _result35 DartynodeServiceUserinfoAlipayResult
+	if err = p.Client_().Call(ctx, "userinfo_alipay", &_args34, &_result35); err != nil {
+		return
+	}
+	return _result35.GetSuccess(), nil
 }
 
 type DartynodeServiceProcessor struct {
@@ -2845,13 +3496,14 @@ func (p *DartynodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorF
 
 func NewDartynodeServiceProcessor(handler DartynodeService) *DartynodeServiceProcessor {
 
-	self30 := &DartynodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self30.processorMap["login_wechat"] = &dartynodeServiceProcessorLoginWechat{handler: handler}
-	self30.processorMap["refresh_wechat"] = &dartynodeServiceProcessorRefreshWechat{handler: handler}
-	self30.processorMap["logout_wechat"] = &dartynodeServiceProcessorLogoutWechat{handler: handler}
-	self30.processorMap["userinfo_wechat"] = &dartynodeServiceProcessorUserinfoWechat{handler: handler}
-	self30.processorMap["login_alipay"] = &dartynodeServiceProcessorLoginAlipay{handler: handler}
-	return self30
+	self36 := &DartynodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self36.processorMap["login_wechat"] = &dartynodeServiceProcessorLoginWechat{handler: handler}
+	self36.processorMap["refresh_wechat"] = &dartynodeServiceProcessorRefreshWechat{handler: handler}
+	self36.processorMap["logout_wechat"] = &dartynodeServiceProcessorLogoutWechat{handler: handler}
+	self36.processorMap["userinfo_wechat"] = &dartynodeServiceProcessorUserinfoWechat{handler: handler}
+	self36.processorMap["login_alipay"] = &dartynodeServiceProcessorLoginAlipay{handler: handler}
+	self36.processorMap["userinfo_alipay"] = &dartynodeServiceProcessorUserinfoAlipay{handler: handler}
+	return self36
 }
 
 func (p *DartynodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -2864,12 +3516,12 @@ func (p *DartynodeServiceProcessor) Process(ctx context.Context, iprot, oprot th
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x31 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x37 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x31.Write(oprot)
+	x37.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x31
+	return false, x37
 
 }
 
@@ -3096,6 +3748,54 @@ func (p *dartynodeServiceProcessorLoginAlipay) Process(ctx context.Context, seqI
 		result.Success = retval
 	}
 	if err2 = oprot.WriteMessageBegin("login_alipay", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type dartynodeServiceProcessorUserinfoAlipay struct {
+	handler DartynodeService
+}
+
+func (p *dartynodeServiceProcessorUserinfoAlipay) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := DartynodeServiceUserinfoAlipayArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("userinfo_alipay", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	result := DartynodeServiceUserinfoAlipayResult{}
+	var retval *UserinfoAlipayRes
+	var err2 error
+	if retval, err2 = p.handler.UserinfoAlipay(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing userinfo_alipay: "+err2.Error())
+		oprot.WriteMessageBegin("userinfo_alipay", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("userinfo_alipay", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -4193,4 +4893,220 @@ func (p *DartynodeServiceLoginAlipayResult) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("DartynodeServiceLoginAlipayResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type DartynodeServiceUserinfoAlipayArgs struct {
+	Req *UserinfoAlipayReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewDartynodeServiceUserinfoAlipayArgs() *DartynodeServiceUserinfoAlipayArgs {
+	return &DartynodeServiceUserinfoAlipayArgs{}
+}
+
+var DartynodeServiceUserinfoAlipayArgs_Req_DEFAULT *UserinfoAlipayReq
+
+func (p *DartynodeServiceUserinfoAlipayArgs) GetReq() *UserinfoAlipayReq {
+	if !p.IsSetReq() {
+		return DartynodeServiceUserinfoAlipayArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *DartynodeServiceUserinfoAlipayArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DartynodeServiceUserinfoAlipayArgs) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *DartynodeServiceUserinfoAlipayArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &UserinfoAlipayReq{}
+	if err := p.Req.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+	}
+	return nil
+}
+
+func (p *DartynodeServiceUserinfoAlipayArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("userinfo_alipay_args"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *DartynodeServiceUserinfoAlipayArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+	}
+	return err
+}
+
+func (p *DartynodeServiceUserinfoAlipayArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DartynodeServiceUserinfoAlipayArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type DartynodeServiceUserinfoAlipayResult struct {
+	Success *UserinfoAlipayRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewDartynodeServiceUserinfoAlipayResult() *DartynodeServiceUserinfoAlipayResult {
+	return &DartynodeServiceUserinfoAlipayResult{}
+}
+
+var DartynodeServiceUserinfoAlipayResult_Success_DEFAULT *UserinfoAlipayRes
+
+func (p *DartynodeServiceUserinfoAlipayResult) GetSuccess() *UserinfoAlipayRes {
+	if !p.IsSetSuccess() {
+		return DartynodeServiceUserinfoAlipayResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *DartynodeServiceUserinfoAlipayResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DartynodeServiceUserinfoAlipayResult) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField0(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *DartynodeServiceUserinfoAlipayResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &UserinfoAlipayRes{}
+	if err := p.Success.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+	}
+	return nil
+}
+
+func (p *DartynodeServiceUserinfoAlipayResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("userinfo_alipay_result"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField0(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *DartynodeServiceUserinfoAlipayResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+		}
+		if err := oprot.WriteFieldEnd(); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err)
+		}
+	}
+	return err
+}
+
+func (p *DartynodeServiceUserinfoAlipayResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DartynodeServiceUserinfoAlipayResult(%+v)", *p)
 }

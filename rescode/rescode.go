@@ -53,6 +53,10 @@ const (
 	Code_WECHAT_TOKEN_TIMEOUT Code = 30002
 	Code_WECHAT_REFRESH_ERROR Code = 30003
 	Code_WECHAT_USERINFO_ERR  Code = 30004
+	Code_ALIPAY_LOGIN_ERROR   Code = 30001
+	Code_ALIPAY_TOKEN_TIMEOUT Code = 30002
+	Code_ALIPAY_REFRESH_ERROR Code = 30003
+	Code_ALIPAY_USERINFO_ERR  Code = 30004
 )
 
 func (p Code) String() string {
@@ -115,6 +119,14 @@ func (p Code) String() string {
 		return "WECHAT_REFRESH_ERROR"
 	case Code_WECHAT_USERINFO_ERR:
 		return "WECHAT_USERINFO_ERR"
+	case Code_ALIPAY_LOGIN_ERROR:
+		return "ALIPAY_LOGIN_ERROR"
+	case Code_ALIPAY_TOKEN_TIMEOUT:
+		return "ALIPAY_TOKEN_TIMEOUT"
+	case Code_ALIPAY_REFRESH_ERROR:
+		return "ALIPAY_REFRESH_ERROR"
+	case Code_ALIPAY_USERINFO_ERR:
+		return "ALIPAY_USERINFO_ERR"
 	}
 	return "<UNSET>"
 }
@@ -179,6 +191,14 @@ func CodeFromString(s string) (Code, error) {
 		return Code_WECHAT_REFRESH_ERROR, nil
 	case "WECHAT_USERINFO_ERR":
 		return Code_WECHAT_USERINFO_ERR, nil
+	case "ALIPAY_LOGIN_ERROR":
+		return Code_ALIPAY_LOGIN_ERROR, nil
+	case "ALIPAY_TOKEN_TIMEOUT":
+		return Code_ALIPAY_TOKEN_TIMEOUT, nil
+	case "ALIPAY_REFRESH_ERROR":
+		return Code_ALIPAY_REFRESH_ERROR, nil
+	case "ALIPAY_USERINFO_ERR":
+		return Code_ALIPAY_USERINFO_ERR, nil
 	}
 	return Code(0), fmt.Errorf("not a valid Code string")
 }

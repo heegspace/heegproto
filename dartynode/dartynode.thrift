@@ -62,7 +62,6 @@ struct userinfo_wechat_res {
     5:map<string,string>        extra,
 }
 
-
 struct login_alipay_req {
     1:string                app_id,
     2:string                source,
@@ -76,6 +75,23 @@ struct login_alipay_res {
     2:string                resmsg,
     3:string                cookie,
     4:map<string,string>    extra,
+}
+
+struct userinfo_alipay_req {
+    1:i64                   uid,
+    2:string                openid,
+    3:string                appid,
+    4:string                access_token,
+    5:string                refresh_token,  // 用于刷新access_token
+    6:map<string,string>    extra,
+}
+
+struct userinfo_alipay_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:common.alipay_userinfo    userinfo,
+    4:string                    cookie, // 是否更新cookie
+    5:map<string,string>        extra,
 }
 
 service dartynode_service {
@@ -93,4 +109,7 @@ service dartynode_service {
 
     // 支付宝登陆
     login_alipay_res login_alipay(1:login_alipay_req req),
+
+    // 获取用户信息
+    userinfo_alipay_res userinfo_alipay(1:userinfo_alipay_req req),
 }

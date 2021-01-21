@@ -249,3 +249,14 @@ struct wechat_userinfo {
     8:list<string>          privilege,
     9:string                unionid,
 }
+
+struct alipay_userinfo {
+    1:string    code,
+    2:string    msg,
+    3:string    source_id,
+    4:string    avatar,
+    5:string    province,
+    6:string    city,
+    7:string    nick_name,
+    8:string    gender,
+}
