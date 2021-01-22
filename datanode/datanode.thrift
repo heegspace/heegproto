@@ -710,7 +710,7 @@ struct get_alipay_uinfo_req {
     2:map<string,string>        extra,
 }
 
-struct update_alipay_uinfo_res {
+struct get_alipay_uinfo_res {
     1:rescode.code              rescode,
     2:string                    resmsg,
     3:common.alipay_userinfo    info,
@@ -862,9 +862,9 @@ service datanode_service {
 
     // 微信用户信息操作
     set_wechat_uinfo_res set_wechat_uinfo(1:set_wechat_uinfo_req req),
-    get_wechat_uinfo_req get_wechat_uinfo(1:get_wechat_uinfo_req req),
+    get_wechat_uinfo_res get_wechat_uinfo(1:get_wechat_uinfo_req req),
 
     // 支付宝用户信息操作
     set_alipay_uinfo_res set_alipay_uinfo(1:set_alipay_uinfo_req req),
-    get_alipay_uinfo_req get_alipay_uinfo(1:get_alipay_uinfo_req req),
+    get_alipay_uinfo_res get_alipay_uinfo(1:get_alipay_uinfo_req req),
 }

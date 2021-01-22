@@ -7,11 +7,10 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"reflect"
-
 	"github.com/heegspace/heegproto/common"
 	"github.com/heegspace/heegproto/rescode"
 	"github.com/heegspace/thrift"
+	"reflect"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -24752,42 +24751,42 @@ func (p *GetAlipayUinfoReq) String() string {
 //  - Resmsg
 //  - Info
 //  - Extra
-type UpdateAlipayUinfoRes struct {
+type GetAlipayUinfoRes struct {
 	Rescode rescode.Code           `thrift:"rescode,1" db:"rescode" json:"rescode"`
 	Resmsg  string                 `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
 	Info    *common.AlipayUserinfo `thrift:"info,3" db:"info" json:"info"`
 	Extra   map[string]string      `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
-func NewUpdateAlipayUinfoRes() *UpdateAlipayUinfoRes {
-	return &UpdateAlipayUinfoRes{}
+func NewGetAlipayUinfoRes() *GetAlipayUinfoRes {
+	return &GetAlipayUinfoRes{}
 }
 
-func (p *UpdateAlipayUinfoRes) GetRescode() rescode.Code {
+func (p *GetAlipayUinfoRes) GetRescode() rescode.Code {
 	return p.Rescode
 }
 
-func (p *UpdateAlipayUinfoRes) GetResmsg() string {
+func (p *GetAlipayUinfoRes) GetResmsg() string {
 	return p.Resmsg
 }
 
-var UpdateAlipayUinfoRes_Info_DEFAULT *common.AlipayUserinfo
+var GetAlipayUinfoRes_Info_DEFAULT *common.AlipayUserinfo
 
-func (p *UpdateAlipayUinfoRes) GetInfo() *common.AlipayUserinfo {
+func (p *GetAlipayUinfoRes) GetInfo() *common.AlipayUserinfo {
 	if !p.IsSetInfo() {
-		return UpdateAlipayUinfoRes_Info_DEFAULT
+		return GetAlipayUinfoRes_Info_DEFAULT
 	}
 	return p.Info
 }
 
-func (p *UpdateAlipayUinfoRes) GetExtra() map[string]string {
+func (p *GetAlipayUinfoRes) GetExtra() map[string]string {
 	return p.Extra
 }
-func (p *UpdateAlipayUinfoRes) IsSetInfo() bool {
+func (p *GetAlipayUinfoRes) IsSetInfo() bool {
 	return p.Info != nil
 }
 
-func (p *UpdateAlipayUinfoRes) Read(iprot thrift.TProtocol) error {
+func (p *GetAlipayUinfoRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -24856,7 +24855,7 @@ func (p *UpdateAlipayUinfoRes) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateAlipayUinfoRes) ReadField1(iprot thrift.TProtocol) error {
+func (p *GetAlipayUinfoRes) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
@@ -24866,7 +24865,7 @@ func (p *UpdateAlipayUinfoRes) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateAlipayUinfoRes) ReadField2(iprot thrift.TProtocol) error {
+func (p *GetAlipayUinfoRes) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
@@ -24875,7 +24874,7 @@ func (p *UpdateAlipayUinfoRes) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateAlipayUinfoRes) ReadField3(iprot thrift.TProtocol) error {
+func (p *GetAlipayUinfoRes) ReadField3(iprot thrift.TProtocol) error {
 	p.Info = &common.AlipayUserinfo{}
 	if err := p.Info.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Info), err)
@@ -24883,7 +24882,7 @@ func (p *UpdateAlipayUinfoRes) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateAlipayUinfoRes) ReadField4(iprot thrift.TProtocol) error {
+func (p *GetAlipayUinfoRes) ReadField4(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -24911,8 +24910,8 @@ func (p *UpdateAlipayUinfoRes) ReadField4(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateAlipayUinfoRes) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("update_alipay_uinfo_res"); err != nil {
+func (p *GetAlipayUinfoRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("get_alipay_uinfo_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -24938,7 +24937,7 @@ func (p *UpdateAlipayUinfoRes) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateAlipayUinfoRes) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *GetAlipayUinfoRes) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
 	}
@@ -24951,7 +24950,7 @@ func (p *UpdateAlipayUinfoRes) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateAlipayUinfoRes) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *GetAlipayUinfoRes) writeField2(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
 	}
@@ -24964,7 +24963,7 @@ func (p *UpdateAlipayUinfoRes) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateAlipayUinfoRes) writeField3(oprot thrift.TProtocol) (err error) {
+func (p *GetAlipayUinfoRes) writeField3(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("info", thrift.STRUCT, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:info: ", p), err)
 	}
@@ -24977,7 +24976,7 @@ func (p *UpdateAlipayUinfoRes) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateAlipayUinfoRes) writeField4(oprot thrift.TProtocol) (err error) {
+func (p *GetAlipayUinfoRes) writeField4(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
 	}
@@ -25001,11 +25000,11 @@ func (p *UpdateAlipayUinfoRes) writeField4(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateAlipayUinfoRes) String() string {
+func (p *GetAlipayUinfoRes) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("UpdateAlipayUinfoRes(%+v)", *p)
+	return fmt.Sprintf("GetAlipayUinfoRes(%+v)", *p)
 }
 
 type DatanodeService interface {
@@ -25217,13 +25216,13 @@ type DatanodeService interface {
 	SetWechatUinfo(ctx context.Context, req *SetWechatUinfoReq) (r *SetWechatUinfoRes, err error)
 	// Parameters:
 	//  - Req
-	GetWechatUinfo(ctx context.Context, req *GetWechatUinfoReq) (r *GetWechatUinfoReq, err error)
+	GetWechatUinfo(ctx context.Context, req *GetWechatUinfoReq) (r *GetWechatUinfoRes, err error)
 	// Parameters:
 	//  - Req
 	SetAlipayUinfo(ctx context.Context, req *SetAlipayUinfoReq) (r *SetAlipayUinfoRes, err error)
 	// Parameters:
 	//  - Req
-	GetAlipayUinfo(ctx context.Context, req *GetAlipayUinfoReq) (r *GetAlipayUinfoReq, err error)
+	GetAlipayUinfo(ctx context.Context, req *GetAlipayUinfoReq) (r *GetAlipayUinfoRes, err error)
 }
 
 type DatanodeServiceClient struct {
@@ -26048,7 +26047,7 @@ func (p *DatanodeServiceClient) SetWechatUinfo(ctx context.Context, req *SetWech
 
 // Parameters:
 //  - Req
-func (p *DatanodeServiceClient) GetWechatUinfo(ctx context.Context, req *GetWechatUinfoReq) (r *GetWechatUinfoReq, err error) {
+func (p *DatanodeServiceClient) GetWechatUinfo(ctx context.Context, req *GetWechatUinfoReq) (r *GetWechatUinfoRes, err error) {
 	var _args300 DatanodeServiceGetWechatUinfoArgs
 	_args300.Req = req
 	var _result301 DatanodeServiceGetWechatUinfoResult
@@ -26072,7 +26071,7 @@ func (p *DatanodeServiceClient) SetAlipayUinfo(ctx context.Context, req *SetAlip
 
 // Parameters:
 //  - Req
-func (p *DatanodeServiceClient) GetAlipayUinfo(ctx context.Context, req *GetAlipayUinfoReq) (r *GetAlipayUinfoReq, err error) {
+func (p *DatanodeServiceClient) GetAlipayUinfo(ctx context.Context, req *GetAlipayUinfoReq) (r *GetAlipayUinfoRes, err error) {
 	var _args304 DatanodeServiceGetAlipayUinfoArgs
 	_args304.Req = req
 	var _result305 DatanodeServiceGetAlipayUinfoResult
@@ -29233,7 +29232,7 @@ func (p *datanodeServiceProcessorGetWechatUinfo) Process(ctx context.Context, se
 
 	iprot.ReadMessageEnd()
 	result := DatanodeServiceGetWechatUinfoResult{}
-	var retval *GetWechatUinfoReq
+	var retval *GetWechatUinfoRes
 	var err2 error
 	if retval, err2 = p.handler.GetWechatUinfo(ctx, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing get_wechat_uinfo: "+err2.Error())
@@ -29329,7 +29328,7 @@ func (p *datanodeServiceProcessorGetAlipayUinfo) Process(ctx context.Context, se
 
 	iprot.ReadMessageEnd()
 	result := DatanodeServiceGetAlipayUinfoResult{}
-	var retval *GetAlipayUinfoReq
+	var retval *GetAlipayUinfoRes
 	var err2 error
 	if retval, err2 = p.handler.GetAlipayUinfo(ctx, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing get_alipay_uinfo: "+err2.Error())
@@ -43785,16 +43784,16 @@ func (p *DatanodeServiceGetWechatUinfoArgs) String() string {
 // Attributes:
 //  - Success
 type DatanodeServiceGetWechatUinfoResult struct {
-	Success *GetWechatUinfoReq `thrift:"success,0" db:"success" json:"success,omitempty"`
+	Success *GetWechatUinfoRes `thrift:"success,0" db:"success" json:"success,omitempty"`
 }
 
 func NewDatanodeServiceGetWechatUinfoResult() *DatanodeServiceGetWechatUinfoResult {
 	return &DatanodeServiceGetWechatUinfoResult{}
 }
 
-var DatanodeServiceGetWechatUinfoResult_Success_DEFAULT *GetWechatUinfoReq
+var DatanodeServiceGetWechatUinfoResult_Success_DEFAULT *GetWechatUinfoRes
 
-func (p *DatanodeServiceGetWechatUinfoResult) GetSuccess() *GetWechatUinfoReq {
+func (p *DatanodeServiceGetWechatUinfoResult) GetSuccess() *GetWechatUinfoRes {
 	if !p.IsSetSuccess() {
 		return DatanodeServiceGetWechatUinfoResult_Success_DEFAULT
 	}
@@ -43844,7 +43843,7 @@ func (p *DatanodeServiceGetWechatUinfoResult) Read(iprot thrift.TProtocol) error
 }
 
 func (p *DatanodeServiceGetWechatUinfoResult) ReadField0(iprot thrift.TProtocol) error {
-	p.Success = &GetWechatUinfoReq{}
+	p.Success = &GetWechatUinfoRes{}
 	if err := p.Success.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
 	}
@@ -44217,16 +44216,16 @@ func (p *DatanodeServiceGetAlipayUinfoArgs) String() string {
 // Attributes:
 //  - Success
 type DatanodeServiceGetAlipayUinfoResult struct {
-	Success *GetAlipayUinfoReq `thrift:"success,0" db:"success" json:"success,omitempty"`
+	Success *GetAlipayUinfoRes `thrift:"success,0" db:"success" json:"success,omitempty"`
 }
 
 func NewDatanodeServiceGetAlipayUinfoResult() *DatanodeServiceGetAlipayUinfoResult {
 	return &DatanodeServiceGetAlipayUinfoResult{}
 }
 
-var DatanodeServiceGetAlipayUinfoResult_Success_DEFAULT *GetAlipayUinfoReq
+var DatanodeServiceGetAlipayUinfoResult_Success_DEFAULT *GetAlipayUinfoRes
 
-func (p *DatanodeServiceGetAlipayUinfoResult) GetSuccess() *GetAlipayUinfoReq {
+func (p *DatanodeServiceGetAlipayUinfoResult) GetSuccess() *GetAlipayUinfoRes {
 	if !p.IsSetSuccess() {
 		return DatanodeServiceGetAlipayUinfoResult_Success_DEFAULT
 	}
@@ -44276,7 +44275,7 @@ func (p *DatanodeServiceGetAlipayUinfoResult) Read(iprot thrift.TProtocol) error
 }
 
 func (p *DatanodeServiceGetAlipayUinfoResult) ReadField0(iprot thrift.TProtocol) error {
-	p.Success = &GetAlipayUinfoReq{}
+	p.Success = &GetAlipayUinfoRes{}
 	if err := p.Success.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
 	}
