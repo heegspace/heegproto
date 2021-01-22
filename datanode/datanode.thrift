@@ -669,6 +669,54 @@ struct del_user_attention_res {
     3:map<string,string>        extra,
 }
 
+struct update_wechat_uinfo_req {
+    1:i64                       uid,
+    2:common.wechat_userinfo    info,
+    3:map<string,string>        extra,
+}
+
+struct update_wechat_uinfo_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:map<string,string>        extra,
+}
+
+struct get_wechat_uinfo_req {
+    1:i64                       uid,
+    2:map<string,string>        extra,
+}
+
+struct get_wechat_uinfo_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:common.wechat_userinfo    info,
+    4:map<string,string>        extra,
+}
+
+struct update_alipay_uinfo_req {
+    1:i64                       uid,
+    2:common.alipay_userinfo    info,
+    3:map<string,string>        extra,
+}
+
+struct update_alipay_uinfo_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:map<string,string>        extra,
+}
+
+struct get_alipay_uinfo_req {
+    1:i64                       uid,
+    2:map<string,string>        extra,
+}
+
+struct get_alipay_uinfo_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:common.alipay_userinfo    info,
+    4:map<string,string>        extra,
+}
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -811,4 +859,12 @@ service datanode_service {
     subject_cate_count_res subject_cate_count(),
     // 获取科目列表
     subject_cate_list_res subject_cate_list(1:subject_cate_list_req req),
+
+    // 微信用户信息操作
+    update_wechat_uinfo_res update_wechat_uinfo(1:update_wechat_uinfo_req req),
+    get_wechat_uinfo_req get_wechat_uinfo(1:get_wechat_uinfo_req req),
+
+    // 支付宝用户信息操作
+    update_alipay_uinfo_res update_alipay_uinfo(1:update_alipay_uinfo_req req),
+    get_alipay_uinfo_req get_alipay_uinfo(1:get_alipay_uinfo_req req),
 }
