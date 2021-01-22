@@ -23288,37 +23288,37 @@ func (p *DelUserAttentionRes) String() string {
 //  - UID
 //  - Info
 //  - Extra
-type UpdateWechatUinfoReq struct {
+type SetWechatUinfoReq struct {
 	UID   int64                  `thrift:"uid,1" db:"uid" json:"uid"`
 	Info  *common.WechatUserinfo `thrift:"info,2" db:"info" json:"info"`
 	Extra map[string]string      `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
-func NewUpdateWechatUinfoReq() *UpdateWechatUinfoReq {
-	return &UpdateWechatUinfoReq{}
+func NewSetWechatUinfoReq() *SetWechatUinfoReq {
+	return &SetWechatUinfoReq{}
 }
 
-func (p *UpdateWechatUinfoReq) GetUID() int64 {
+func (p *SetWechatUinfoReq) GetUID() int64 {
 	return p.UID
 }
 
-var UpdateWechatUinfoReq_Info_DEFAULT *common.WechatUserinfo
+var SetWechatUinfoReq_Info_DEFAULT *common.WechatUserinfo
 
-func (p *UpdateWechatUinfoReq) GetInfo() *common.WechatUserinfo {
+func (p *SetWechatUinfoReq) GetInfo() *common.WechatUserinfo {
 	if !p.IsSetInfo() {
-		return UpdateWechatUinfoReq_Info_DEFAULT
+		return SetWechatUinfoReq_Info_DEFAULT
 	}
 	return p.Info
 }
 
-func (p *UpdateWechatUinfoReq) GetExtra() map[string]string {
+func (p *SetWechatUinfoReq) GetExtra() map[string]string {
 	return p.Extra
 }
-func (p *UpdateWechatUinfoReq) IsSetInfo() bool {
+func (p *SetWechatUinfoReq) IsSetInfo() bool {
 	return p.Info != nil
 }
 
-func (p *UpdateWechatUinfoReq) Read(iprot thrift.TProtocol) error {
+func (p *SetWechatUinfoReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -23377,7 +23377,7 @@ func (p *UpdateWechatUinfoReq) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateWechatUinfoReq) ReadField1(iprot thrift.TProtocol) error {
+func (p *SetWechatUinfoReq) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI64(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
@@ -23386,7 +23386,7 @@ func (p *UpdateWechatUinfoReq) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateWechatUinfoReq) ReadField2(iprot thrift.TProtocol) error {
+func (p *SetWechatUinfoReq) ReadField2(iprot thrift.TProtocol) error {
 	p.Info = &common.WechatUserinfo{}
 	if err := p.Info.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Info), err)
@@ -23394,7 +23394,7 @@ func (p *UpdateWechatUinfoReq) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateWechatUinfoReq) ReadField3(iprot thrift.TProtocol) error {
+func (p *SetWechatUinfoReq) ReadField3(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -23422,8 +23422,8 @@ func (p *UpdateWechatUinfoReq) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateWechatUinfoReq) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("update_wechat_uinfo_req"); err != nil {
+func (p *SetWechatUinfoReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("set_wechat_uinfo_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -23446,7 +23446,7 @@ func (p *UpdateWechatUinfoReq) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateWechatUinfoReq) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *SetWechatUinfoReq) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("uid", thrift.I64, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
 	}
@@ -23459,7 +23459,7 @@ func (p *UpdateWechatUinfoReq) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateWechatUinfoReq) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *SetWechatUinfoReq) writeField2(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("info", thrift.STRUCT, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:info: ", p), err)
 	}
@@ -23472,7 +23472,7 @@ func (p *UpdateWechatUinfoReq) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateWechatUinfoReq) writeField3(oprot thrift.TProtocol) (err error) {
+func (p *SetWechatUinfoReq) writeField3(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
 	}
@@ -23496,39 +23496,39 @@ func (p *UpdateWechatUinfoReq) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateWechatUinfoReq) String() string {
+func (p *SetWechatUinfoReq) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("UpdateWechatUinfoReq(%+v)", *p)
+	return fmt.Sprintf("SetWechatUinfoReq(%+v)", *p)
 }
 
 // Attributes:
 //  - Rescode
 //  - Resmsg
 //  - Extra
-type UpdateWechatUinfoRes struct {
+type SetWechatUinfoRes struct {
 	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
 	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
 	Extra   map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
-func NewUpdateWechatUinfoRes() *UpdateWechatUinfoRes {
-	return &UpdateWechatUinfoRes{}
+func NewSetWechatUinfoRes() *SetWechatUinfoRes {
+	return &SetWechatUinfoRes{}
 }
 
-func (p *UpdateWechatUinfoRes) GetRescode() rescode.Code {
+func (p *SetWechatUinfoRes) GetRescode() rescode.Code {
 	return p.Rescode
 }
 
-func (p *UpdateWechatUinfoRes) GetResmsg() string {
+func (p *SetWechatUinfoRes) GetResmsg() string {
 	return p.Resmsg
 }
 
-func (p *UpdateWechatUinfoRes) GetExtra() map[string]string {
+func (p *SetWechatUinfoRes) GetExtra() map[string]string {
 	return p.Extra
 }
-func (p *UpdateWechatUinfoRes) Read(iprot thrift.TProtocol) error {
+func (p *SetWechatUinfoRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -23587,7 +23587,7 @@ func (p *UpdateWechatUinfoRes) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateWechatUinfoRes) ReadField1(iprot thrift.TProtocol) error {
+func (p *SetWechatUinfoRes) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
@@ -23597,7 +23597,7 @@ func (p *UpdateWechatUinfoRes) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateWechatUinfoRes) ReadField2(iprot thrift.TProtocol) error {
+func (p *SetWechatUinfoRes) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
@@ -23606,7 +23606,7 @@ func (p *UpdateWechatUinfoRes) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateWechatUinfoRes) ReadField3(iprot thrift.TProtocol) error {
+func (p *SetWechatUinfoRes) ReadField3(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -23634,8 +23634,8 @@ func (p *UpdateWechatUinfoRes) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateWechatUinfoRes) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("update_wechat_uinfo_res"); err != nil {
+func (p *SetWechatUinfoRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("set_wechat_uinfo_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -23658,7 +23658,7 @@ func (p *UpdateWechatUinfoRes) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateWechatUinfoRes) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *SetWechatUinfoRes) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
 	}
@@ -23671,7 +23671,7 @@ func (p *UpdateWechatUinfoRes) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateWechatUinfoRes) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *SetWechatUinfoRes) writeField2(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
 	}
@@ -23684,7 +23684,7 @@ func (p *UpdateWechatUinfoRes) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateWechatUinfoRes) writeField3(oprot thrift.TProtocol) (err error) {
+func (p *SetWechatUinfoRes) writeField3(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
 	}
@@ -23708,11 +23708,11 @@ func (p *UpdateWechatUinfoRes) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateWechatUinfoRes) String() string {
+func (p *SetWechatUinfoRes) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("UpdateWechatUinfoRes(%+v)", *p)
+	return fmt.Sprintf("SetWechatUinfoRes(%+v)", *p)
 }
 
 // Attributes:
@@ -24150,37 +24150,37 @@ func (p *GetWechatUinfoRes) String() string {
 //  - UID
 //  - Info
 //  - Extra
-type UpdateAlipayUinfoReq struct {
+type SetAlipayUinfoReq struct {
 	UID   int64                  `thrift:"uid,1" db:"uid" json:"uid"`
 	Info  *common.AlipayUserinfo `thrift:"info,2" db:"info" json:"info"`
 	Extra map[string]string      `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
-func NewUpdateAlipayUinfoReq() *UpdateAlipayUinfoReq {
-	return &UpdateAlipayUinfoReq{}
+func NewSetAlipayUinfoReq() *SetAlipayUinfoReq {
+	return &SetAlipayUinfoReq{}
 }
 
-func (p *UpdateAlipayUinfoReq) GetUID() int64 {
+func (p *SetAlipayUinfoReq) GetUID() int64 {
 	return p.UID
 }
 
-var UpdateAlipayUinfoReq_Info_DEFAULT *common.AlipayUserinfo
+var SetAlipayUinfoReq_Info_DEFAULT *common.AlipayUserinfo
 
-func (p *UpdateAlipayUinfoReq) GetInfo() *common.AlipayUserinfo {
+func (p *SetAlipayUinfoReq) GetInfo() *common.AlipayUserinfo {
 	if !p.IsSetInfo() {
-		return UpdateAlipayUinfoReq_Info_DEFAULT
+		return SetAlipayUinfoReq_Info_DEFAULT
 	}
 	return p.Info
 }
 
-func (p *UpdateAlipayUinfoReq) GetExtra() map[string]string {
+func (p *SetAlipayUinfoReq) GetExtra() map[string]string {
 	return p.Extra
 }
-func (p *UpdateAlipayUinfoReq) IsSetInfo() bool {
+func (p *SetAlipayUinfoReq) IsSetInfo() bool {
 	return p.Info != nil
 }
 
-func (p *UpdateAlipayUinfoReq) Read(iprot thrift.TProtocol) error {
+func (p *SetAlipayUinfoReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -24239,7 +24239,7 @@ func (p *UpdateAlipayUinfoReq) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateAlipayUinfoReq) ReadField1(iprot thrift.TProtocol) error {
+func (p *SetAlipayUinfoReq) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI64(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
@@ -24248,7 +24248,7 @@ func (p *UpdateAlipayUinfoReq) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateAlipayUinfoReq) ReadField2(iprot thrift.TProtocol) error {
+func (p *SetAlipayUinfoReq) ReadField2(iprot thrift.TProtocol) error {
 	p.Info = &common.AlipayUserinfo{}
 	if err := p.Info.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Info), err)
@@ -24256,7 +24256,7 @@ func (p *UpdateAlipayUinfoReq) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateAlipayUinfoReq) ReadField3(iprot thrift.TProtocol) error {
+func (p *SetAlipayUinfoReq) ReadField3(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -24284,8 +24284,8 @@ func (p *UpdateAlipayUinfoReq) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateAlipayUinfoReq) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("update_alipay_uinfo_req"); err != nil {
+func (p *SetAlipayUinfoReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("set_alipay_uinfo_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -24308,7 +24308,7 @@ func (p *UpdateAlipayUinfoReq) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateAlipayUinfoReq) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *SetAlipayUinfoReq) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("uid", thrift.I64, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
 	}
@@ -24321,7 +24321,7 @@ func (p *UpdateAlipayUinfoReq) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateAlipayUinfoReq) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *SetAlipayUinfoReq) writeField2(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("info", thrift.STRUCT, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:info: ", p), err)
 	}
@@ -24334,7 +24334,7 @@ func (p *UpdateAlipayUinfoReq) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateAlipayUinfoReq) writeField3(oprot thrift.TProtocol) (err error) {
+func (p *SetAlipayUinfoReq) writeField3(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
 	}
@@ -24358,39 +24358,39 @@ func (p *UpdateAlipayUinfoReq) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateAlipayUinfoReq) String() string {
+func (p *SetAlipayUinfoReq) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("UpdateAlipayUinfoReq(%+v)", *p)
+	return fmt.Sprintf("SetAlipayUinfoReq(%+v)", *p)
 }
 
 // Attributes:
 //  - Rescode
 //  - Resmsg
 //  - Extra
-type UpdateAlipayUinfoRes struct {
+type SetAlipayUinfoRes struct {
 	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
 	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
 	Extra   map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
-func NewUpdateAlipayUinfoRes() *UpdateAlipayUinfoRes {
-	return &UpdateAlipayUinfoRes{}
+func NewSetAlipayUinfoRes() *SetAlipayUinfoRes {
+	return &SetAlipayUinfoRes{}
 }
 
-func (p *UpdateAlipayUinfoRes) GetRescode() rescode.Code {
+func (p *SetAlipayUinfoRes) GetRescode() rescode.Code {
 	return p.Rescode
 }
 
-func (p *UpdateAlipayUinfoRes) GetResmsg() string {
+func (p *SetAlipayUinfoRes) GetResmsg() string {
 	return p.Resmsg
 }
 
-func (p *UpdateAlipayUinfoRes) GetExtra() map[string]string {
+func (p *SetAlipayUinfoRes) GetExtra() map[string]string {
 	return p.Extra
 }
-func (p *UpdateAlipayUinfoRes) Read(iprot thrift.TProtocol) error {
+func (p *SetAlipayUinfoRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -24449,7 +24449,7 @@ func (p *UpdateAlipayUinfoRes) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateAlipayUinfoRes) ReadField1(iprot thrift.TProtocol) error {
+func (p *SetAlipayUinfoRes) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
@@ -24459,7 +24459,7 @@ func (p *UpdateAlipayUinfoRes) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateAlipayUinfoRes) ReadField2(iprot thrift.TProtocol) error {
+func (p *SetAlipayUinfoRes) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
@@ -24468,7 +24468,7 @@ func (p *UpdateAlipayUinfoRes) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateAlipayUinfoRes) ReadField3(iprot thrift.TProtocol) error {
+func (p *SetAlipayUinfoRes) ReadField3(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -24496,8 +24496,8 @@ func (p *UpdateAlipayUinfoRes) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateAlipayUinfoRes) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("update_alipay_uinfo_res"); err != nil {
+func (p *SetAlipayUinfoRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("set_alipay_uinfo_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -24520,7 +24520,7 @@ func (p *UpdateAlipayUinfoRes) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UpdateAlipayUinfoRes) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *SetAlipayUinfoRes) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
 	}
@@ -24533,7 +24533,7 @@ func (p *UpdateAlipayUinfoRes) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateAlipayUinfoRes) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *SetAlipayUinfoRes) writeField2(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
 	}
@@ -24546,7 +24546,7 @@ func (p *UpdateAlipayUinfoRes) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateAlipayUinfoRes) writeField3(oprot thrift.TProtocol) (err error) {
+func (p *SetAlipayUinfoRes) writeField3(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
 	}
@@ -24570,11 +24570,11 @@ func (p *UpdateAlipayUinfoRes) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *UpdateAlipayUinfoRes) String() string {
+func (p *SetAlipayUinfoRes) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("UpdateAlipayUinfoRes(%+v)", *p)
+	return fmt.Sprintf("SetAlipayUinfoRes(%+v)", *p)
 }
 
 // Attributes:
@@ -24752,42 +24752,42 @@ func (p *GetAlipayUinfoReq) String() string {
 //  - Resmsg
 //  - Info
 //  - Extra
-type GetAlipayUinfoRes struct {
+type UpdateAlipayUinfoRes struct {
 	Rescode rescode.Code           `thrift:"rescode,1" db:"rescode" json:"rescode"`
 	Resmsg  string                 `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
 	Info    *common.AlipayUserinfo `thrift:"info,3" db:"info" json:"info"`
 	Extra   map[string]string      `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
-func NewGetAlipayUinfoRes() *GetAlipayUinfoRes {
-	return &GetAlipayUinfoRes{}
+func NewUpdateAlipayUinfoRes() *UpdateAlipayUinfoRes {
+	return &UpdateAlipayUinfoRes{}
 }
 
-func (p *GetAlipayUinfoRes) GetRescode() rescode.Code {
+func (p *UpdateAlipayUinfoRes) GetRescode() rescode.Code {
 	return p.Rescode
 }
 
-func (p *GetAlipayUinfoRes) GetResmsg() string {
+func (p *UpdateAlipayUinfoRes) GetResmsg() string {
 	return p.Resmsg
 }
 
-var GetAlipayUinfoRes_Info_DEFAULT *common.AlipayUserinfo
+var UpdateAlipayUinfoRes_Info_DEFAULT *common.AlipayUserinfo
 
-func (p *GetAlipayUinfoRes) GetInfo() *common.AlipayUserinfo {
+func (p *UpdateAlipayUinfoRes) GetInfo() *common.AlipayUserinfo {
 	if !p.IsSetInfo() {
-		return GetAlipayUinfoRes_Info_DEFAULT
+		return UpdateAlipayUinfoRes_Info_DEFAULT
 	}
 	return p.Info
 }
 
-func (p *GetAlipayUinfoRes) GetExtra() map[string]string {
+func (p *UpdateAlipayUinfoRes) GetExtra() map[string]string {
 	return p.Extra
 }
-func (p *GetAlipayUinfoRes) IsSetInfo() bool {
+func (p *UpdateAlipayUinfoRes) IsSetInfo() bool {
 	return p.Info != nil
 }
 
-func (p *GetAlipayUinfoRes) Read(iprot thrift.TProtocol) error {
+func (p *UpdateAlipayUinfoRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -24856,7 +24856,7 @@ func (p *GetAlipayUinfoRes) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *GetAlipayUinfoRes) ReadField1(iprot thrift.TProtocol) error {
+func (p *UpdateAlipayUinfoRes) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
@@ -24866,7 +24866,7 @@ func (p *GetAlipayUinfoRes) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *GetAlipayUinfoRes) ReadField2(iprot thrift.TProtocol) error {
+func (p *UpdateAlipayUinfoRes) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
@@ -24875,7 +24875,7 @@ func (p *GetAlipayUinfoRes) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *GetAlipayUinfoRes) ReadField3(iprot thrift.TProtocol) error {
+func (p *UpdateAlipayUinfoRes) ReadField3(iprot thrift.TProtocol) error {
 	p.Info = &common.AlipayUserinfo{}
 	if err := p.Info.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Info), err)
@@ -24883,7 +24883,7 @@ func (p *GetAlipayUinfoRes) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *GetAlipayUinfoRes) ReadField4(iprot thrift.TProtocol) error {
+func (p *UpdateAlipayUinfoRes) ReadField4(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -24911,8 +24911,8 @@ func (p *GetAlipayUinfoRes) ReadField4(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *GetAlipayUinfoRes) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("get_alipay_uinfo_res"); err != nil {
+func (p *UpdateAlipayUinfoRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("update_alipay_uinfo_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -24938,7 +24938,7 @@ func (p *GetAlipayUinfoRes) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *GetAlipayUinfoRes) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *UpdateAlipayUinfoRes) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
 	}
@@ -24951,7 +24951,7 @@ func (p *GetAlipayUinfoRes) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *GetAlipayUinfoRes) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *UpdateAlipayUinfoRes) writeField2(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
 	}
@@ -24964,7 +24964,7 @@ func (p *GetAlipayUinfoRes) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *GetAlipayUinfoRes) writeField3(oprot thrift.TProtocol) (err error) {
+func (p *UpdateAlipayUinfoRes) writeField3(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("info", thrift.STRUCT, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:info: ", p), err)
 	}
@@ -24977,7 +24977,7 @@ func (p *GetAlipayUinfoRes) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *GetAlipayUinfoRes) writeField4(oprot thrift.TProtocol) (err error) {
+func (p *UpdateAlipayUinfoRes) writeField4(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
 	}
@@ -25001,11 +25001,11 @@ func (p *GetAlipayUinfoRes) writeField4(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *GetAlipayUinfoRes) String() string {
+func (p *UpdateAlipayUinfoRes) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("GetAlipayUinfoRes(%+v)", *p)
+	return fmt.Sprintf("UpdateAlipayUinfoRes(%+v)", *p)
 }
 
 type DatanodeService interface {
@@ -25214,13 +25214,13 @@ type DatanodeService interface {
 	SubjectCateList(ctx context.Context, req *SubjectCateListReq) (r *SubjectCateListRes, err error)
 	// Parameters:
 	//  - Req
-	UpdateWechatUinfo(ctx context.Context, req *UpdateWechatUinfoReq) (r *UpdateWechatUinfoRes, err error)
+	SetWechatUinfo(ctx context.Context, req *SetWechatUinfoReq) (r *SetWechatUinfoRes, err error)
 	// Parameters:
 	//  - Req
 	GetWechatUinfo(ctx context.Context, req *GetWechatUinfoReq) (r *GetWechatUinfoReq, err error)
 	// Parameters:
 	//  - Req
-	UpdateAlipayUinfo(ctx context.Context, req *UpdateAlipayUinfoReq) (r *UpdateAlipayUinfoRes, err error)
+	SetAlipayUinfo(ctx context.Context, req *SetAlipayUinfoReq) (r *SetAlipayUinfoRes, err error)
 	// Parameters:
 	//  - Req
 	GetAlipayUinfo(ctx context.Context, req *GetAlipayUinfoReq) (r *GetAlipayUinfoReq, err error)
@@ -26036,11 +26036,11 @@ func (p *DatanodeServiceClient) SubjectCateList(ctx context.Context, req *Subjec
 
 // Parameters:
 //  - Req
-func (p *DatanodeServiceClient) UpdateWechatUinfo(ctx context.Context, req *UpdateWechatUinfoReq) (r *UpdateWechatUinfoRes, err error) {
-	var _args298 DatanodeServiceUpdateWechatUinfoArgs
+func (p *DatanodeServiceClient) SetWechatUinfo(ctx context.Context, req *SetWechatUinfoReq) (r *SetWechatUinfoRes, err error) {
+	var _args298 DatanodeServiceSetWechatUinfoArgs
 	_args298.Req = req
-	var _result299 DatanodeServiceUpdateWechatUinfoResult
-	if err = p.Client_().Call(ctx, "update_wechat_uinfo", &_args298, &_result299); err != nil {
+	var _result299 DatanodeServiceSetWechatUinfoResult
+	if err = p.Client_().Call(ctx, "set_wechat_uinfo", &_args298, &_result299); err != nil {
 		return
 	}
 	return _result299.GetSuccess(), nil
@@ -26060,11 +26060,11 @@ func (p *DatanodeServiceClient) GetWechatUinfo(ctx context.Context, req *GetWech
 
 // Parameters:
 //  - Req
-func (p *DatanodeServiceClient) UpdateAlipayUinfo(ctx context.Context, req *UpdateAlipayUinfoReq) (r *UpdateAlipayUinfoRes, err error) {
-	var _args302 DatanodeServiceUpdateAlipayUinfoArgs
+func (p *DatanodeServiceClient) SetAlipayUinfo(ctx context.Context, req *SetAlipayUinfoReq) (r *SetAlipayUinfoRes, err error) {
+	var _args302 DatanodeServiceSetAlipayUinfoArgs
 	_args302.Req = req
-	var _result303 DatanodeServiceUpdateAlipayUinfoResult
-	if err = p.Client_().Call(ctx, "update_alipay_uinfo", &_args302, &_result303); err != nil {
+	var _result303 DatanodeServiceSetAlipayUinfoResult
+	if err = p.Client_().Call(ctx, "set_alipay_uinfo", &_args302, &_result303); err != nil {
 		return
 	}
 	return _result303.GetSuccess(), nil
@@ -26165,9 +26165,9 @@ func NewDatanodeServiceProcessor(handler DatanodeService) *DatanodeServiceProces
 	self306.processorMap["subject_cate_add"] = &datanodeServiceProcessorSubjectCateAdd{handler: handler}
 	self306.processorMap["subject_cate_count"] = &datanodeServiceProcessorSubjectCateCount{handler: handler}
 	self306.processorMap["subject_cate_list"] = &datanodeServiceProcessorSubjectCateList{handler: handler}
-	self306.processorMap["update_wechat_uinfo"] = &datanodeServiceProcessorUpdateWechatUinfo{handler: handler}
+	self306.processorMap["set_wechat_uinfo"] = &datanodeServiceProcessorSetWechatUinfo{handler: handler}
 	self306.processorMap["get_wechat_uinfo"] = &datanodeServiceProcessorGetWechatUinfo{handler: handler}
-	self306.processorMap["update_alipay_uinfo"] = &datanodeServiceProcessorUpdateAlipayUinfo{handler: handler}
+	self306.processorMap["set_alipay_uinfo"] = &datanodeServiceProcessorSetAlipayUinfo{handler: handler}
 	self306.processorMap["get_alipay_uinfo"] = &datanodeServiceProcessorGetAlipayUinfo{handler: handler}
 	return self306
 }
@@ -29167,16 +29167,16 @@ func (p *datanodeServiceProcessorSubjectCateList) Process(ctx context.Context, s
 	return true, err
 }
 
-type datanodeServiceProcessorUpdateWechatUinfo struct {
+type datanodeServiceProcessorSetWechatUinfo struct {
 	handler DatanodeService
 }
 
-func (p *datanodeServiceProcessorUpdateWechatUinfo) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	args := DatanodeServiceUpdateWechatUinfoArgs{}
+func (p *datanodeServiceProcessorSetWechatUinfo) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := DatanodeServiceSetWechatUinfoArgs{}
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
-		oprot.WriteMessageBegin("update_wechat_uinfo", thrift.EXCEPTION, seqId)
+		oprot.WriteMessageBegin("set_wechat_uinfo", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -29184,12 +29184,12 @@ func (p *datanodeServiceProcessorUpdateWechatUinfo) Process(ctx context.Context,
 	}
 
 	iprot.ReadMessageEnd()
-	result := DatanodeServiceUpdateWechatUinfoResult{}
-	var retval *UpdateWechatUinfoRes
+	result := DatanodeServiceSetWechatUinfoResult{}
+	var retval *SetWechatUinfoRes
 	var err2 error
-	if retval, err2 = p.handler.UpdateWechatUinfo(ctx, args.Req); err2 != nil {
-		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing update_wechat_uinfo: "+err2.Error())
-		oprot.WriteMessageBegin("update_wechat_uinfo", thrift.EXCEPTION, seqId)
+	if retval, err2 = p.handler.SetWechatUinfo(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing set_wechat_uinfo: "+err2.Error())
+		oprot.WriteMessageBegin("set_wechat_uinfo", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -29197,7 +29197,7 @@ func (p *datanodeServiceProcessorUpdateWechatUinfo) Process(ctx context.Context,
 	} else {
 		result.Success = retval
 	}
-	if err2 = oprot.WriteMessageBegin("update_wechat_uinfo", thrift.REPLY, seqId); err2 != nil {
+	if err2 = oprot.WriteMessageBegin("set_wechat_uinfo", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -29263,16 +29263,16 @@ func (p *datanodeServiceProcessorGetWechatUinfo) Process(ctx context.Context, se
 	return true, err
 }
 
-type datanodeServiceProcessorUpdateAlipayUinfo struct {
+type datanodeServiceProcessorSetAlipayUinfo struct {
 	handler DatanodeService
 }
 
-func (p *datanodeServiceProcessorUpdateAlipayUinfo) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	args := DatanodeServiceUpdateAlipayUinfoArgs{}
+func (p *datanodeServiceProcessorSetAlipayUinfo) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := DatanodeServiceSetAlipayUinfoArgs{}
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
-		oprot.WriteMessageBegin("update_alipay_uinfo", thrift.EXCEPTION, seqId)
+		oprot.WriteMessageBegin("set_alipay_uinfo", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -29280,12 +29280,12 @@ func (p *datanodeServiceProcessorUpdateAlipayUinfo) Process(ctx context.Context,
 	}
 
 	iprot.ReadMessageEnd()
-	result := DatanodeServiceUpdateAlipayUinfoResult{}
-	var retval *UpdateAlipayUinfoRes
+	result := DatanodeServiceSetAlipayUinfoResult{}
+	var retval *SetAlipayUinfoRes
 	var err2 error
-	if retval, err2 = p.handler.UpdateAlipayUinfo(ctx, args.Req); err2 != nil {
-		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing update_alipay_uinfo: "+err2.Error())
-		oprot.WriteMessageBegin("update_alipay_uinfo", thrift.EXCEPTION, seqId)
+	if retval, err2 = p.handler.SetAlipayUinfo(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing set_alipay_uinfo: "+err2.Error())
+		oprot.WriteMessageBegin("set_alipay_uinfo", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -29293,7 +29293,7 @@ func (p *datanodeServiceProcessorUpdateAlipayUinfo) Process(ctx context.Context,
 	} else {
 		result.Success = retval
 	}
-	if err2 = oprot.WriteMessageBegin("update_alipay_uinfo", thrift.REPLY, seqId); err2 != nil {
+	if err2 = oprot.WriteMessageBegin("set_alipay_uinfo", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -43461,27 +43461,27 @@ func (p *DatanodeServiceSubjectCateListResult) String() string {
 
 // Attributes:
 //  - Req
-type DatanodeServiceUpdateWechatUinfoArgs struct {
-	Req *UpdateWechatUinfoReq `thrift:"req,1" db:"req" json:"req"`
+type DatanodeServiceSetWechatUinfoArgs struct {
+	Req *SetWechatUinfoReq `thrift:"req,1" db:"req" json:"req"`
 }
 
-func NewDatanodeServiceUpdateWechatUinfoArgs() *DatanodeServiceUpdateWechatUinfoArgs {
-	return &DatanodeServiceUpdateWechatUinfoArgs{}
+func NewDatanodeServiceSetWechatUinfoArgs() *DatanodeServiceSetWechatUinfoArgs {
+	return &DatanodeServiceSetWechatUinfoArgs{}
 }
 
-var DatanodeServiceUpdateWechatUinfoArgs_Req_DEFAULT *UpdateWechatUinfoReq
+var DatanodeServiceSetWechatUinfoArgs_Req_DEFAULT *SetWechatUinfoReq
 
-func (p *DatanodeServiceUpdateWechatUinfoArgs) GetReq() *UpdateWechatUinfoReq {
+func (p *DatanodeServiceSetWechatUinfoArgs) GetReq() *SetWechatUinfoReq {
 	if !p.IsSetReq() {
-		return DatanodeServiceUpdateWechatUinfoArgs_Req_DEFAULT
+		return DatanodeServiceSetWechatUinfoArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *DatanodeServiceUpdateWechatUinfoArgs) IsSetReq() bool {
+func (p *DatanodeServiceSetWechatUinfoArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *DatanodeServiceUpdateWechatUinfoArgs) Read(iprot thrift.TProtocol) error {
+func (p *DatanodeServiceSetWechatUinfoArgs) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -43520,16 +43520,16 @@ func (p *DatanodeServiceUpdateWechatUinfoArgs) Read(iprot thrift.TProtocol) erro
 	return nil
 }
 
-func (p *DatanodeServiceUpdateWechatUinfoArgs) ReadField1(iprot thrift.TProtocol) error {
-	p.Req = &UpdateWechatUinfoReq{}
+func (p *DatanodeServiceSetWechatUinfoArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &SetWechatUinfoReq{}
 	if err := p.Req.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
 	}
 	return nil
 }
 
-func (p *DatanodeServiceUpdateWechatUinfoArgs) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("update_wechat_uinfo_args"); err != nil {
+func (p *DatanodeServiceSetWechatUinfoArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("set_wechat_uinfo_args"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -43546,7 +43546,7 @@ func (p *DatanodeServiceUpdateWechatUinfoArgs) Write(oprot thrift.TProtocol) err
 	return nil
 }
 
-func (p *DatanodeServiceUpdateWechatUinfoArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *DatanodeServiceSetWechatUinfoArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
 	}
@@ -43559,36 +43559,36 @@ func (p *DatanodeServiceUpdateWechatUinfoArgs) writeField1(oprot thrift.TProtoco
 	return err
 }
 
-func (p *DatanodeServiceUpdateWechatUinfoArgs) String() string {
+func (p *DatanodeServiceSetWechatUinfoArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("DatanodeServiceUpdateWechatUinfoArgs(%+v)", *p)
+	return fmt.Sprintf("DatanodeServiceSetWechatUinfoArgs(%+v)", *p)
 }
 
 // Attributes:
 //  - Success
-type DatanodeServiceUpdateWechatUinfoResult struct {
-	Success *UpdateWechatUinfoRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+type DatanodeServiceSetWechatUinfoResult struct {
+	Success *SetWechatUinfoRes `thrift:"success,0" db:"success" json:"success,omitempty"`
 }
 
-func NewDatanodeServiceUpdateWechatUinfoResult() *DatanodeServiceUpdateWechatUinfoResult {
-	return &DatanodeServiceUpdateWechatUinfoResult{}
+func NewDatanodeServiceSetWechatUinfoResult() *DatanodeServiceSetWechatUinfoResult {
+	return &DatanodeServiceSetWechatUinfoResult{}
 }
 
-var DatanodeServiceUpdateWechatUinfoResult_Success_DEFAULT *UpdateWechatUinfoRes
+var DatanodeServiceSetWechatUinfoResult_Success_DEFAULT *SetWechatUinfoRes
 
-func (p *DatanodeServiceUpdateWechatUinfoResult) GetSuccess() *UpdateWechatUinfoRes {
+func (p *DatanodeServiceSetWechatUinfoResult) GetSuccess() *SetWechatUinfoRes {
 	if !p.IsSetSuccess() {
-		return DatanodeServiceUpdateWechatUinfoResult_Success_DEFAULT
+		return DatanodeServiceSetWechatUinfoResult_Success_DEFAULT
 	}
 	return p.Success
 }
-func (p *DatanodeServiceUpdateWechatUinfoResult) IsSetSuccess() bool {
+func (p *DatanodeServiceSetWechatUinfoResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *DatanodeServiceUpdateWechatUinfoResult) Read(iprot thrift.TProtocol) error {
+func (p *DatanodeServiceSetWechatUinfoResult) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -43627,16 +43627,16 @@ func (p *DatanodeServiceUpdateWechatUinfoResult) Read(iprot thrift.TProtocol) er
 	return nil
 }
 
-func (p *DatanodeServiceUpdateWechatUinfoResult) ReadField0(iprot thrift.TProtocol) error {
-	p.Success = &UpdateWechatUinfoRes{}
+func (p *DatanodeServiceSetWechatUinfoResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &SetWechatUinfoRes{}
 	if err := p.Success.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
 	}
 	return nil
 }
 
-func (p *DatanodeServiceUpdateWechatUinfoResult) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("update_wechat_uinfo_result"); err != nil {
+func (p *DatanodeServiceSetWechatUinfoResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("set_wechat_uinfo_result"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -43653,7 +43653,7 @@ func (p *DatanodeServiceUpdateWechatUinfoResult) Write(oprot thrift.TProtocol) e
 	return nil
 }
 
-func (p *DatanodeServiceUpdateWechatUinfoResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *DatanodeServiceSetWechatUinfoResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
@@ -43668,11 +43668,11 @@ func (p *DatanodeServiceUpdateWechatUinfoResult) writeField0(oprot thrift.TProto
 	return err
 }
 
-func (p *DatanodeServiceUpdateWechatUinfoResult) String() string {
+func (p *DatanodeServiceSetWechatUinfoResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("DatanodeServiceUpdateWechatUinfoResult(%+v)", *p)
+	return fmt.Sprintf("DatanodeServiceSetWechatUinfoResult(%+v)", *p)
 }
 
 // Attributes:
@@ -43893,27 +43893,27 @@ func (p *DatanodeServiceGetWechatUinfoResult) String() string {
 
 // Attributes:
 //  - Req
-type DatanodeServiceUpdateAlipayUinfoArgs struct {
-	Req *UpdateAlipayUinfoReq `thrift:"req,1" db:"req" json:"req"`
+type DatanodeServiceSetAlipayUinfoArgs struct {
+	Req *SetAlipayUinfoReq `thrift:"req,1" db:"req" json:"req"`
 }
 
-func NewDatanodeServiceUpdateAlipayUinfoArgs() *DatanodeServiceUpdateAlipayUinfoArgs {
-	return &DatanodeServiceUpdateAlipayUinfoArgs{}
+func NewDatanodeServiceSetAlipayUinfoArgs() *DatanodeServiceSetAlipayUinfoArgs {
+	return &DatanodeServiceSetAlipayUinfoArgs{}
 }
 
-var DatanodeServiceUpdateAlipayUinfoArgs_Req_DEFAULT *UpdateAlipayUinfoReq
+var DatanodeServiceSetAlipayUinfoArgs_Req_DEFAULT *SetAlipayUinfoReq
 
-func (p *DatanodeServiceUpdateAlipayUinfoArgs) GetReq() *UpdateAlipayUinfoReq {
+func (p *DatanodeServiceSetAlipayUinfoArgs) GetReq() *SetAlipayUinfoReq {
 	if !p.IsSetReq() {
-		return DatanodeServiceUpdateAlipayUinfoArgs_Req_DEFAULT
+		return DatanodeServiceSetAlipayUinfoArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *DatanodeServiceUpdateAlipayUinfoArgs) IsSetReq() bool {
+func (p *DatanodeServiceSetAlipayUinfoArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *DatanodeServiceUpdateAlipayUinfoArgs) Read(iprot thrift.TProtocol) error {
+func (p *DatanodeServiceSetAlipayUinfoArgs) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -43952,16 +43952,16 @@ func (p *DatanodeServiceUpdateAlipayUinfoArgs) Read(iprot thrift.TProtocol) erro
 	return nil
 }
 
-func (p *DatanodeServiceUpdateAlipayUinfoArgs) ReadField1(iprot thrift.TProtocol) error {
-	p.Req = &UpdateAlipayUinfoReq{}
+func (p *DatanodeServiceSetAlipayUinfoArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &SetAlipayUinfoReq{}
 	if err := p.Req.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
 	}
 	return nil
 }
 
-func (p *DatanodeServiceUpdateAlipayUinfoArgs) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("update_alipay_uinfo_args"); err != nil {
+func (p *DatanodeServiceSetAlipayUinfoArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("set_alipay_uinfo_args"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -43978,7 +43978,7 @@ func (p *DatanodeServiceUpdateAlipayUinfoArgs) Write(oprot thrift.TProtocol) err
 	return nil
 }
 
-func (p *DatanodeServiceUpdateAlipayUinfoArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *DatanodeServiceSetAlipayUinfoArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
 	}
@@ -43991,36 +43991,36 @@ func (p *DatanodeServiceUpdateAlipayUinfoArgs) writeField1(oprot thrift.TProtoco
 	return err
 }
 
-func (p *DatanodeServiceUpdateAlipayUinfoArgs) String() string {
+func (p *DatanodeServiceSetAlipayUinfoArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("DatanodeServiceUpdateAlipayUinfoArgs(%+v)", *p)
+	return fmt.Sprintf("DatanodeServiceSetAlipayUinfoArgs(%+v)", *p)
 }
 
 // Attributes:
 //  - Success
-type DatanodeServiceUpdateAlipayUinfoResult struct {
-	Success *UpdateAlipayUinfoRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+type DatanodeServiceSetAlipayUinfoResult struct {
+	Success *SetAlipayUinfoRes `thrift:"success,0" db:"success" json:"success,omitempty"`
 }
 
-func NewDatanodeServiceUpdateAlipayUinfoResult() *DatanodeServiceUpdateAlipayUinfoResult {
-	return &DatanodeServiceUpdateAlipayUinfoResult{}
+func NewDatanodeServiceSetAlipayUinfoResult() *DatanodeServiceSetAlipayUinfoResult {
+	return &DatanodeServiceSetAlipayUinfoResult{}
 }
 
-var DatanodeServiceUpdateAlipayUinfoResult_Success_DEFAULT *UpdateAlipayUinfoRes
+var DatanodeServiceSetAlipayUinfoResult_Success_DEFAULT *SetAlipayUinfoRes
 
-func (p *DatanodeServiceUpdateAlipayUinfoResult) GetSuccess() *UpdateAlipayUinfoRes {
+func (p *DatanodeServiceSetAlipayUinfoResult) GetSuccess() *SetAlipayUinfoRes {
 	if !p.IsSetSuccess() {
-		return DatanodeServiceUpdateAlipayUinfoResult_Success_DEFAULT
+		return DatanodeServiceSetAlipayUinfoResult_Success_DEFAULT
 	}
 	return p.Success
 }
-func (p *DatanodeServiceUpdateAlipayUinfoResult) IsSetSuccess() bool {
+func (p *DatanodeServiceSetAlipayUinfoResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *DatanodeServiceUpdateAlipayUinfoResult) Read(iprot thrift.TProtocol) error {
+func (p *DatanodeServiceSetAlipayUinfoResult) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -44059,16 +44059,16 @@ func (p *DatanodeServiceUpdateAlipayUinfoResult) Read(iprot thrift.TProtocol) er
 	return nil
 }
 
-func (p *DatanodeServiceUpdateAlipayUinfoResult) ReadField0(iprot thrift.TProtocol) error {
-	p.Success = &UpdateAlipayUinfoRes{}
+func (p *DatanodeServiceSetAlipayUinfoResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &SetAlipayUinfoRes{}
 	if err := p.Success.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
 	}
 	return nil
 }
 
-func (p *DatanodeServiceUpdateAlipayUinfoResult) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("update_alipay_uinfo_result"); err != nil {
+func (p *DatanodeServiceSetAlipayUinfoResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("set_alipay_uinfo_result"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -44085,7 +44085,7 @@ func (p *DatanodeServiceUpdateAlipayUinfoResult) Write(oprot thrift.TProtocol) e
 	return nil
 }
 
-func (p *DatanodeServiceUpdateAlipayUinfoResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *DatanodeServiceSetAlipayUinfoResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
@@ -44100,11 +44100,11 @@ func (p *DatanodeServiceUpdateAlipayUinfoResult) writeField0(oprot thrift.TProto
 	return err
 }
 
-func (p *DatanodeServiceUpdateAlipayUinfoResult) String() string {
+func (p *DatanodeServiceSetAlipayUinfoResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("DatanodeServiceUpdateAlipayUinfoResult(%+v)", *p)
+	return fmt.Sprintf("DatanodeServiceSetAlipayUinfoResult(%+v)", *p)
 }
 
 // Attributes:
