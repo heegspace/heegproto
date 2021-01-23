@@ -276,4 +276,5 @@ struct baidu_entity {
     7:string            bdbkUrl,            // 百科url
     8:string            offset,
     9:string            desc,               // 实体的简介
+    10:string           mention,            // 实体名
 }
