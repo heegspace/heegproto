@@ -9,9 +9,8 @@ import (
 	"database/sql/driver"
 	"errors"
 	"fmt"
-	"reflect"
-
 	"github.com/heegspace/thrift"
+	"reflect"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -8649,4 +8648,579 @@ func (p *AlipayUserinfo) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("AlipayUserinfo(%+v)", *p)
+}
+
+// Attributes:
+//  - Level1
+//  - Level2
+type BaiduConcept struct {
+	Level1 string `thrift:"level1,1" db:"level1" json:"level1"`
+	Level2 string `thrift:"level2,2" db:"level2" json:"level2"`
+}
+
+func NewBaiduConcept() *BaiduConcept {
+	return &BaiduConcept{}
+}
+
+func (p *BaiduConcept) GetLevel1() string {
+	return p.Level1
+}
+
+func (p *BaiduConcept) GetLevel2() string {
+	return p.Level2
+}
+func (p *BaiduConcept) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *BaiduConcept) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.Level1 = v
+	}
+	return nil
+}
+
+func (p *BaiduConcept) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Level2 = v
+	}
+	return nil
+}
+
+func (p *BaiduConcept) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("baidu_concept"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *BaiduConcept) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("level1", thrift.STRING, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:level1: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Level1)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.level1 (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:level1: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduConcept) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("level2", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:level2: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Level2)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.level2 (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:level2: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduConcept) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("BaiduConcept(%+v)", *p)
+}
+
+// Attributes:
+//  - Status
+//  - Confidence
+//  - AnnoType
+//  - Concept
+//  - BdbkKgId
+//  - MainReqRankList
+//  - BdbkUrl
+//  - Offset
+//  - Desc
+type BaiduEntity struct {
+	Status          string        `thrift:"status,1" db:"status" json:"status"`
+	Confidence      string        `thrift:"confidence,2" db:"confidence" json:"confidence"`
+	AnnoType        string        `thrift:"annoType,3" db:"annoType" json:"annoType"`
+	Concept         *BaiduConcept `thrift:"concept,4" db:"concept" json:"concept"`
+	BdbkKgId        string        `thrift:"bdbkKgId,5" db:"bdbkKgId" json:"bdbkKgId"`
+	MainReqRankList string        `thrift:"mainReqRankList,6" db:"mainReqRankList" json:"mainReqRankList"`
+	BdbkUrl         string        `thrift:"bdbkUrl,7" db:"bdbkUrl" json:"bdbkUrl"`
+	Offset          string        `thrift:"offset,8" db:"offset" json:"offset"`
+	Desc            string        `thrift:"desc,9" db:"desc" json:"desc"`
+}
+
+func NewBaiduEntity() *BaiduEntity {
+	return &BaiduEntity{}
+}
+
+func (p *BaiduEntity) GetStatus() string {
+	return p.Status
+}
+
+func (p *BaiduEntity) GetConfidence() string {
+	return p.Confidence
+}
+
+func (p *BaiduEntity) GetAnnoType() string {
+	return p.AnnoType
+}
+
+var BaiduEntity_Concept_DEFAULT *BaiduConcept
+
+func (p *BaiduEntity) GetConcept() *BaiduConcept {
+	if !p.IsSetConcept() {
+		return BaiduEntity_Concept_DEFAULT
+	}
+	return p.Concept
+}
+
+func (p *BaiduEntity) GetBdbkKgId() string {
+	return p.BdbkKgId
+}
+
+func (p *BaiduEntity) GetMainReqRankList() string {
+	return p.MainReqRankList
+}
+
+func (p *BaiduEntity) GetBdbkUrl() string {
+	return p.BdbkUrl
+}
+
+func (p *BaiduEntity) GetOffset() string {
+	return p.Offset
+}
+
+func (p *BaiduEntity) GetDesc() string {
+	return p.Desc
+}
+func (p *BaiduEntity) IsSetConcept() bool {
+	return p.Concept != nil
+}
+
+func (p *BaiduEntity) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 6:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField6(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 7:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField7(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 8:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField8(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 9:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField9(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *BaiduEntity) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.Status = v
+	}
+	return nil
+}
+
+func (p *BaiduEntity) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Confidence = v
+	}
+	return nil
+}
+
+func (p *BaiduEntity) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.AnnoType = v
+	}
+	return nil
+}
+
+func (p *BaiduEntity) ReadField4(iprot thrift.TProtocol) error {
+	p.Concept = &BaiduConcept{}
+	if err := p.Concept.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Concept), err)
+	}
+	return nil
+}
+
+func (p *BaiduEntity) ReadField5(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 5: ", err)
+	} else {
+		p.BdbkKgId = v
+	}
+	return nil
+}
+
+func (p *BaiduEntity) ReadField6(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 6: ", err)
+	} else {
+		p.MainReqRankList = v
+	}
+	return nil
+}
+
+func (p *BaiduEntity) ReadField7(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 7: ", err)
+	} else {
+		p.BdbkUrl = v
+	}
+	return nil
+}
+
+func (p *BaiduEntity) ReadField8(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 8: ", err)
+	} else {
+		p.Offset = v
+	}
+	return nil
+}
+
+func (p *BaiduEntity) ReadField9(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 9: ", err)
+	} else {
+		p.Desc = v
+	}
+	return nil
+}
+
+func (p *BaiduEntity) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("baidu_entity"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField6(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField7(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField8(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField9(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *BaiduEntity) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("status", thrift.STRING, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:status: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Status)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.status (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:status: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduEntity) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("confidence", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:confidence: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Confidence)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.confidence (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:confidence: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduEntity) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("annoType", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:annoType: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.AnnoType)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.annoType (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:annoType: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduEntity) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("concept", thrift.STRUCT, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:concept: ", p), err)
+	}
+	if err := p.Concept.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Concept), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:concept: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduEntity) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("bdbkKgId", thrift.STRING, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:bdbkKgId: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.BdbkKgId)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.bdbkKgId (5) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:bdbkKgId: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduEntity) writeField6(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("mainReqRankList", thrift.STRING, 6); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:mainReqRankList: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.MainReqRankList)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.mainReqRankList (6) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:mainReqRankList: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduEntity) writeField7(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("bdbkUrl", thrift.STRING, 7); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:bdbkUrl: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.BdbkUrl)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.bdbkUrl (7) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 7:bdbkUrl: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduEntity) writeField8(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("offset", thrift.STRING, 8); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 8:offset: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Offset)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.offset (8) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 8:offset: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduEntity) writeField9(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("desc", thrift.STRING, 9); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 9:desc: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Desc)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.desc (9) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 9:desc: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduEntity) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("BaiduEntity(%+v)", *p)
 }

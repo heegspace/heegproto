@@ -260,3 +260,20 @@ struct alipay_userinfo {
     7:string    nick_name,
     8:string    gender,
 }
+
+struct baidu_concept {
+    1:string    level1, // 一级概
+    2:string    level2, // 二级概念
+}
+
+struct baidu_entity {
+    1:string            status,             // 用于对关联结果进行标识
+    2:string            confidence,         // 实体关联至该@id的置信度
+    3:string            annoType,           // 标注类型：Instance | Category | Property
+    4:baidu_concept    concept,            // 概念标注结果
+    5:string            bdbkKgId,           // 百科newid
+    6:string            mainReqRankList,    // 主需求实体，列出所有候选实体信息，根据热度从高到低排列
+    7:string            bdbkUrl,            // 百科url
+    8:string            offset,
+    9:string            desc,               // 实体的简介
+}

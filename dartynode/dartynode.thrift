@@ -94,6 +94,18 @@ struct userinfo_alipay_res {
     5:map<string,string>        extra,
 }
 
+struct baidu_entity_req {
+    1:string                statement,
+    2:map<string,string>    extra,
+}
+
+struct baidu_entity_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:common.baidu_entity       entitys,
+    4:map<string,string>        extra,
+}
+
 service dartynode_service {
     // 登录微信
     login_wechat_res login_wechat(1:login_wechat_req req),
@@ -112,4 +124,7 @@ service dartynode_service {
 
     // 获取用户信息
     userinfo_alipay_res userinfo_alipay(1:userinfo_alipay_req req),
+
+    // 百度实体
+    baidu_entity_res baidu_entity(1:baidu_entity_req req),
 }
