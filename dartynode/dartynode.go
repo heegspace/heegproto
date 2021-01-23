@@ -3532,10 +3532,10 @@ func (p *BaiduEntityReq) String() string {
 //  - Entitys
 //  - Extra
 type BaiduEntityRes struct {
-	Rescode rescode.Code        `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Resmsg  string              `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
-	Entitys *common.BaiduEntity `thrift:"entitys,3" db:"entitys" json:"entitys"`
-	Extra   map[string]string   `thrift:"extra,4" db:"extra" json:"extra"`
+	Rescode rescode.Code          `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string                `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Entitys []*common.BaiduEntity `thrift:"entitys,3" db:"entitys" json:"entitys"`
+	Extra   map[string]string     `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewBaiduEntityRes() *BaiduEntityRes {
@@ -3550,22 +3550,13 @@ func (p *BaiduEntityRes) GetResmsg() string {
 	return p.Resmsg
 }
 
-var BaiduEntityRes_Entitys_DEFAULT *common.BaiduEntity
-
-func (p *BaiduEntityRes) GetEntitys() *common.BaiduEntity {
-	if !p.IsSetEntitys() {
-		return BaiduEntityRes_Entitys_DEFAULT
-	}
+func (p *BaiduEntityRes) GetEntitys() []*common.BaiduEntity {
 	return p.Entitys
 }
 
 func (p *BaiduEntityRes) GetExtra() map[string]string {
 	return p.Extra
 }
-func (p *BaiduEntityRes) IsSetEntitys() bool {
-	return p.Entitys != nil
-}
-
 func (p *BaiduEntityRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
@@ -3601,7 +3592,7 @@ func (p *BaiduEntityRes) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 3:
-			if fieldTypeId == thrift.STRUCT {
+			if fieldTypeId == thrift.LIST {
 				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
@@ -3655,9 +3646,21 @@ func (p *BaiduEntityRes) ReadField2(iprot thrift.TProtocol) error {
 }
 
 func (p *BaiduEntityRes) ReadField3(iprot thrift.TProtocol) error {
-	p.Entitys = &common.BaiduEntity{}
-	if err := p.Entitys.Read(iprot); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Entitys), err)
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
+		return thrift.PrependError("error reading list begin: ", err)
+	}
+	tSlice := make([]*common.BaiduEntity, 0, size)
+	p.Entitys = tSlice
+	for i := 0; i < size; i++ {
+		_elem26 := &common.BaiduEntity{}
+		if err := _elem26.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem26), err)
+		}
+		p.Entitys = append(p.Entitys, _elem26)
+	}
+	if err := iprot.ReadListEnd(); err != nil {
+		return thrift.PrependError("error reading list end: ", err)
 	}
 	return nil
 }
@@ -3670,19 +3673,19 @@ func (p *BaiduEntityRes) ReadField4(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key26 string
+		var _key27 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key26 = v
+			_key27 = v
 		}
-		var _val27 string
+		var _val28 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val27 = v
+			_val28 = v
 		}
-		p.Extra[_key26] = _val27
+		p.Extra[_key27] = _val28
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -3744,11 +3747,19 @@ func (p *BaiduEntityRes) writeField2(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *BaiduEntityRes) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("entitys", thrift.STRUCT, 3); err != nil {
+	if err := oprot.WriteFieldBegin("entitys", thrift.LIST, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:entitys: ", p), err)
 	}
-	if err := p.Entitys.Write(oprot); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Entitys), err)
+	if err := oprot.WriteListBegin(thrift.STRUCT, len(p.Entitys)); err != nil {
+		return thrift.PrependError("error writing list begin: ", err)
+	}
+	for _, v := range p.Entitys {
+		if err := v.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", v), err)
+		}
+	}
+	if err := oprot.WriteListEnd(); err != nil {
+		return thrift.PrependError("error writing list end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:entitys: ", p), err)
@@ -3840,85 +3851,85 @@ func (p *DartynodeServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Req
 func (p *DartynodeServiceClient) LoginWechat(ctx context.Context, req *LoginWechatReq) (r *LoginWechatRes, err error) {
-	var _args28 DartynodeServiceLoginWechatArgs
-	_args28.Req = req
-	var _result29 DartynodeServiceLoginWechatResult
-	if err = p.Client_().Call(ctx, "login_wechat", &_args28, &_result29); err != nil {
+	var _args29 DartynodeServiceLoginWechatArgs
+	_args29.Req = req
+	var _result30 DartynodeServiceLoginWechatResult
+	if err = p.Client_().Call(ctx, "login_wechat", &_args29, &_result30); err != nil {
 		return
 	}
-	return _result29.GetSuccess(), nil
+	return _result30.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DartynodeServiceClient) RefreshWechat(ctx context.Context, req *RefreshWechatReq) (r *RefreshWechatRes, err error) {
-	var _args30 DartynodeServiceRefreshWechatArgs
-	_args30.Req = req
-	var _result31 DartynodeServiceRefreshWechatResult
-	if err = p.Client_().Call(ctx, "refresh_wechat", &_args30, &_result31); err != nil {
+	var _args31 DartynodeServiceRefreshWechatArgs
+	_args31.Req = req
+	var _result32 DartynodeServiceRefreshWechatResult
+	if err = p.Client_().Call(ctx, "refresh_wechat", &_args31, &_result32); err != nil {
 		return
 	}
-	return _result31.GetSuccess(), nil
+	return _result32.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DartynodeServiceClient) LogoutWechat(ctx context.Context, req *LogoutWechatReq) (r *LogoutWechatRes, err error) {
-	var _args32 DartynodeServiceLogoutWechatArgs
-	_args32.Req = req
-	var _result33 DartynodeServiceLogoutWechatResult
-	if err = p.Client_().Call(ctx, "logout_wechat", &_args32, &_result33); err != nil {
+	var _args33 DartynodeServiceLogoutWechatArgs
+	_args33.Req = req
+	var _result34 DartynodeServiceLogoutWechatResult
+	if err = p.Client_().Call(ctx, "logout_wechat", &_args33, &_result34); err != nil {
 		return
 	}
-	return _result33.GetSuccess(), nil
+	return _result34.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DartynodeServiceClient) UserinfoWechat(ctx context.Context, req *UserinfoWechatReq) (r *UserinfoWechatRes, err error) {
-	var _args34 DartynodeServiceUserinfoWechatArgs
-	_args34.Req = req
-	var _result35 DartynodeServiceUserinfoWechatResult
-	if err = p.Client_().Call(ctx, "userinfo_wechat", &_args34, &_result35); err != nil {
+	var _args35 DartynodeServiceUserinfoWechatArgs
+	_args35.Req = req
+	var _result36 DartynodeServiceUserinfoWechatResult
+	if err = p.Client_().Call(ctx, "userinfo_wechat", &_args35, &_result36); err != nil {
 		return
 	}
-	return _result35.GetSuccess(), nil
+	return _result36.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DartynodeServiceClient) LoginAlipay(ctx context.Context, req *LoginAlipayReq) (r *LoginAlipayRes, err error) {
-	var _args36 DartynodeServiceLoginAlipayArgs
-	_args36.Req = req
-	var _result37 DartynodeServiceLoginAlipayResult
-	if err = p.Client_().Call(ctx, "login_alipay", &_args36, &_result37); err != nil {
+	var _args37 DartynodeServiceLoginAlipayArgs
+	_args37.Req = req
+	var _result38 DartynodeServiceLoginAlipayResult
+	if err = p.Client_().Call(ctx, "login_alipay", &_args37, &_result38); err != nil {
 		return
 	}
-	return _result37.GetSuccess(), nil
+	return _result38.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DartynodeServiceClient) UserinfoAlipay(ctx context.Context, req *UserinfoAlipayReq) (r *UserinfoAlipayRes, err error) {
-	var _args38 DartynodeServiceUserinfoAlipayArgs
-	_args38.Req = req
-	var _result39 DartynodeServiceUserinfoAlipayResult
-	if err = p.Client_().Call(ctx, "userinfo_alipay", &_args38, &_result39); err != nil {
+	var _args39 DartynodeServiceUserinfoAlipayArgs
+	_args39.Req = req
+	var _result40 DartynodeServiceUserinfoAlipayResult
+	if err = p.Client_().Call(ctx, "userinfo_alipay", &_args39, &_result40); err != nil {
 		return
 	}
-	return _result39.GetSuccess(), nil
+	return _result40.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DartynodeServiceClient) BaiduEntity(ctx context.Context, req *BaiduEntityReq) (r *BaiduEntityRes, err error) {
-	var _args40 DartynodeServiceBaiduEntityArgs
-	_args40.Req = req
-	var _result41 DartynodeServiceBaiduEntityResult
-	if err = p.Client_().Call(ctx, "baidu_entity", &_args40, &_result41); err != nil {
+	var _args41 DartynodeServiceBaiduEntityArgs
+	_args41.Req = req
+	var _result42 DartynodeServiceBaiduEntityResult
+	if err = p.Client_().Call(ctx, "baidu_entity", &_args41, &_result42); err != nil {
 		return
 	}
-	return _result41.GetSuccess(), nil
+	return _result42.GetSuccess(), nil
 }
 
 type DartynodeServiceProcessor struct {
@@ -3941,15 +3952,15 @@ func (p *DartynodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorF
 
 func NewDartynodeServiceProcessor(handler DartynodeService) *DartynodeServiceProcessor {
 
-	self42 := &DartynodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self42.processorMap["login_wechat"] = &dartynodeServiceProcessorLoginWechat{handler: handler}
-	self42.processorMap["refresh_wechat"] = &dartynodeServiceProcessorRefreshWechat{handler: handler}
-	self42.processorMap["logout_wechat"] = &dartynodeServiceProcessorLogoutWechat{handler: handler}
-	self42.processorMap["userinfo_wechat"] = &dartynodeServiceProcessorUserinfoWechat{handler: handler}
-	self42.processorMap["login_alipay"] = &dartynodeServiceProcessorLoginAlipay{handler: handler}
-	self42.processorMap["userinfo_alipay"] = &dartynodeServiceProcessorUserinfoAlipay{handler: handler}
-	self42.processorMap["baidu_entity"] = &dartynodeServiceProcessorBaiduEntity{handler: handler}
-	return self42
+	self43 := &DartynodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self43.processorMap["login_wechat"] = &dartynodeServiceProcessorLoginWechat{handler: handler}
+	self43.processorMap["refresh_wechat"] = &dartynodeServiceProcessorRefreshWechat{handler: handler}
+	self43.processorMap["logout_wechat"] = &dartynodeServiceProcessorLogoutWechat{handler: handler}
+	self43.processorMap["userinfo_wechat"] = &dartynodeServiceProcessorUserinfoWechat{handler: handler}
+	self43.processorMap["login_alipay"] = &dartynodeServiceProcessorLoginAlipay{handler: handler}
+	self43.processorMap["userinfo_alipay"] = &dartynodeServiceProcessorUserinfoAlipay{handler: handler}
+	self43.processorMap["baidu_entity"] = &dartynodeServiceProcessorBaiduEntity{handler: handler}
+	return self43
 }
 
 func (p *DartynodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -3962,12 +3973,12 @@ func (p *DartynodeServiceProcessor) Process(ctx context.Context, iprot, oprot th
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x43 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x44 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x43.Write(oprot)
+	x44.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x43
+	return false, x44
 
 }
 

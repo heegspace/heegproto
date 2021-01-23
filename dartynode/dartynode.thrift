@@ -102,7 +102,7 @@ struct baidu_entity_req {
 struct baidu_entity_res {
     1:rescode.code              rescode,
     2:string                    resmsg,
-    3:common.baidu_entity       entitys,
+    3:list<common.baidu_entity> entitys,
     4:map<string,string>        extra,
 }
 

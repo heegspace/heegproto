@@ -42,4 +42,7 @@ enum code {
     ALIPAY_TOKEN_TIMEOUT = 30032,   // 微信token过期
     ALIPAY_REFRESH_ERROR = 30033,   // 微信token刷新失败
     ALIPAY_USERINFO_ERR = 30034,    // 微信信息获取错误
+
+    BAIDU_ACCESS_TOKEN_ERROR = 30061,   // 百度accesstoken错误
+    BAIDU_ENTITY_ERROR = 30062,         // 百度entity请求错误
 }
