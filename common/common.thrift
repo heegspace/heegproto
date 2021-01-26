@@ -253,7 +253,7 @@ struct wechat_userinfo {
 struct alipay_userinfo {
     1:string    code,
     2:string    msg,
-    3:string    source_id,
+    3:string    user_id,
     4:string    avatar,
     5:string    province,
     6:string    city,
