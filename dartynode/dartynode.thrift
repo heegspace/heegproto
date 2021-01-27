@@ -94,6 +94,34 @@ struct userinfo_alipay_res {
     5:map<string,string>        extra,
 }
 
+struct refresh_alipay_req {
+    1:i64                   uid,
+    2:string                appid,
+    3:string                refresh_token,
+    4:string                access_token,
+    5:map<string,string>    extra,
+}
+
+struct refresh_alipay_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:string                cookie,
+    4:map<string,string>    extra,
+}
+
+struct logout_alipay_req {
+    1:i64                   uid,
+    2:string                appid,
+    3:string                cookie,
+    4:map<string,string>    extra,
+}
+
+struct logout_alipay_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:map<string,string>    extra,
+}
+
 struct baidu_entity_req {
     1:string                statement,
     2:map<string,string>    extra,
@@ -121,6 +149,12 @@ service dartynode_service {
 
     // 支付宝登陆
     login_alipay_res login_alipay(1:login_alipay_req req),
+
+    // 刷新alipay的token
+    refresh_alipay_res refresh_alipay(1:refresh_alipay_req req),
+
+    // 退出alipay登录
+    logout_alipay_res logout_alipay(1:logout_alipay_req req),
 
     // 获取用户信息
     userinfo_alipay_res userinfo_alipay(1:userinfo_alipay_req req),
