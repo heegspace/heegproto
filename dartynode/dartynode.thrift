@@ -123,15 +123,19 @@ struct logout_alipay_res {
 }
 
 struct baidu_entity_req {
-    1:string                statement,
-    2:map<string,string>    extra,
+    1:i32                   page,
+    2:i32                   size,
+    3:string                statement,
+    4:map<string,string>    extra,
 }
 
 struct baidu_entity_res {
     1:rescode.code              rescode,
     2:string                    resmsg,
-    3:list<common.baidu_entity> entitys,
-    4:map<string,string>        extra,
+    3:i32                       page,
+    4:i32                       size,
+    5:list<common.baidu_entity> entitys,
+    6:map<string,string>        extra,
 }
 
 service dartynode_service {

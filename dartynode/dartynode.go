@@ -7,11 +7,10 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"reflect"
-
 	"github.com/heegspace/heegproto/common"
 	"github.com/heegspace/heegproto/rescode"
 	"github.com/heegspace/thrift"
+	"reflect"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -4368,15 +4367,27 @@ func (p *LogoutAlipayRes) String() string {
 }
 
 // Attributes:
+//  - Page
+//  - Size
 //  - Statement
 //  - Extra
 type BaiduEntityReq struct {
-	Statement string            `thrift:"statement,1" db:"statement" json:"statement"`
-	Extra     map[string]string `thrift:"extra,2" db:"extra" json:"extra"`
+	Page      int32             `thrift:"page,1" db:"page" json:"page"`
+	Size      int32             `thrift:"size,2" db:"size" json:"size"`
+	Statement string            `thrift:"statement,3" db:"statement" json:"statement"`
+	Extra     map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewBaiduEntityReq() *BaiduEntityReq {
 	return &BaiduEntityReq{}
+}
+
+func (p *BaiduEntityReq) GetPage() int32 {
+	return p.Page
+}
+
+func (p *BaiduEntityReq) GetSize() int32 {
+	return p.Size
 }
 
 func (p *BaiduEntityReq) GetStatement() string {
@@ -4401,7 +4412,7 @@ func (p *BaiduEntityReq) Read(iprot thrift.TProtocol) error {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I32 {
 				if err := p.ReadField1(iprot); err != nil {
 					return err
 				}
@@ -4411,8 +4422,28 @@ func (p *BaiduEntityReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 2:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.I32 {
 				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -4436,15 +4467,33 @@ func (p *BaiduEntityReq) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *BaiduEntityReq) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
+	if v, err := iprot.ReadI32(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.Page = v
+	}
+	return nil
+}
+
+func (p *BaiduEntityReq) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Size = v
+	}
+	return nil
+}
+
+func (p *BaiduEntityReq) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
 	} else {
 		p.Statement = v
 	}
 	return nil
 }
 
-func (p *BaiduEntityReq) ReadField2(iprot thrift.TProtocol) error {
+func (p *BaiduEntityReq) ReadField4(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -4483,6 +4532,12 @@ func (p *BaiduEntityReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField2(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -4494,21 +4549,47 @@ func (p *BaiduEntityReq) Write(oprot thrift.TProtocol) error {
 }
 
 func (p *BaiduEntityReq) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("statement", thrift.STRING, 1); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:statement: ", p), err)
+	if err := oprot.WriteFieldBegin("page", thrift.I32, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:page: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Statement)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.statement (1) field write error: ", p), err)
+	if err := oprot.WriteI32(int32(p.Page)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.page (1) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:statement: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:page: ", p), err)
 	}
 	return err
 }
 
 func (p *BaiduEntityReq) writeField2(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 2); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("size", thrift.I32, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:size: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Size)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.size (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:size: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduEntityReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("statement", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:statement: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Statement)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.statement (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:statement: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduEntityReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -4525,7 +4606,7 @@ func (p *BaiduEntityReq) writeField2(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
 	}
 	return err
 }
@@ -4540,13 +4621,17 @@ func (p *BaiduEntityReq) String() string {
 // Attributes:
 //  - Rescode
 //  - Resmsg
+//  - Page
+//  - Size
 //  - Entitys
 //  - Extra
 type BaiduEntityRes struct {
 	Rescode rescode.Code          `thrift:"rescode,1" db:"rescode" json:"rescode"`
 	Resmsg  string                `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
-	Entitys []*common.BaiduEntity `thrift:"entitys,3" db:"entitys" json:"entitys"`
-	Extra   map[string]string     `thrift:"extra,4" db:"extra" json:"extra"`
+	Page    int32                 `thrift:"page,3" db:"page" json:"page"`
+	Size    int32                 `thrift:"size,4" db:"size" json:"size"`
+	Entitys []*common.BaiduEntity `thrift:"entitys,5" db:"entitys" json:"entitys"`
+	Extra   map[string]string     `thrift:"extra,6" db:"extra" json:"extra"`
 }
 
 func NewBaiduEntityRes() *BaiduEntityRes {
@@ -4559,6 +4644,14 @@ func (p *BaiduEntityRes) GetRescode() rescode.Code {
 
 func (p *BaiduEntityRes) GetResmsg() string {
 	return p.Resmsg
+}
+
+func (p *BaiduEntityRes) GetPage() int32 {
+	return p.Page
+}
+
+func (p *BaiduEntityRes) GetSize() int32 {
+	return p.Size
 }
 
 func (p *BaiduEntityRes) GetEntitys() []*common.BaiduEntity {
@@ -4603,7 +4696,7 @@ func (p *BaiduEntityRes) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 3:
-			if fieldTypeId == thrift.LIST {
+			if fieldTypeId == thrift.I32 {
 				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
@@ -4613,8 +4706,28 @@ func (p *BaiduEntityRes) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 4:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.I32 {
 				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.LIST {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 6:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField6(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -4657,6 +4770,24 @@ func (p *BaiduEntityRes) ReadField2(iprot thrift.TProtocol) error {
 }
 
 func (p *BaiduEntityRes) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Page = v
+	}
+	return nil
+}
+
+func (p *BaiduEntityRes) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.Size = v
+	}
+	return nil
+}
+
+func (p *BaiduEntityRes) ReadField5(iprot thrift.TProtocol) error {
 	_, size, err := iprot.ReadListBegin()
 	if err != nil {
 		return thrift.PrependError("error reading list begin: ", err)
@@ -4676,7 +4807,7 @@ func (p *BaiduEntityRes) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *BaiduEntityRes) ReadField4(iprot thrift.TProtocol) error {
+func (p *BaiduEntityRes) ReadField6(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -4721,6 +4852,12 @@ func (p *BaiduEntityRes) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField6(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -4758,8 +4895,34 @@ func (p *BaiduEntityRes) writeField2(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *BaiduEntityRes) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("entitys", thrift.LIST, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:entitys: ", p), err)
+	if err := oprot.WriteFieldBegin("page", thrift.I32, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:page: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Page)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.page (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:page: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduEntityRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("size", thrift.I32, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:size: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Size)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.size (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:size: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduEntityRes) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("entitys", thrift.LIST, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:entitys: ", p), err)
 	}
 	if err := oprot.WriteListBegin(thrift.STRUCT, len(p.Entitys)); err != nil {
 		return thrift.PrependError("error writing list begin: ", err)
@@ -4773,14 +4936,14 @@ func (p *BaiduEntityRes) writeField3(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing list end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:entitys: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:entitys: ", p), err)
 	}
 	return err
 }
 
-func (p *BaiduEntityRes) writeField4(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+func (p *BaiduEntityRes) writeField6(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 6); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -4797,7 +4960,7 @@ func (p *BaiduEntityRes) writeField4(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:extra: ", p), err)
 	}
 	return err
 }
