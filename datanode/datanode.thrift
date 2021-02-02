@@ -717,6 +717,22 @@ struct get_alipay_uinfo_res {
     4:map<string,string>        extra,
 }
 
+struct baidu_entity_req {
+    1:string                    bid,
+    2:i64                       page,
+    3:i64                       size,
+    4:map<string,string>        extra,
+}
+
+struct baidu_entity_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:i64                       page,
+    4:i64                       size,
+    5:list<common.baidu_entity> entitys,
+    6:map<string,string>        extra,
+}
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -867,4 +883,7 @@ service datanode_service {
     // 支付宝用户信息操作
     set_alipay_uinfo_res set_alipay_uinfo(1:set_alipay_uinfo_req req),
     get_alipay_uinfo_res get_alipay_uinfo(1:get_alipay_uinfo_req req),
+
+    // 请求百度实体信息
+    baidu_entity_res baidu_entity(1:baidu_entity_req req);
 }
