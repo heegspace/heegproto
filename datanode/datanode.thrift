@@ -717,6 +717,18 @@ struct get_alipay_uinfo_res {
     4:map<string,string>        extra,
 }
 
+struct set_baidu_entity_req {
+    1:string                    bid,
+    2:list<common.baidu_entity> entitys,
+    3:map<string,string>        extra,
+}
+
+struct set_baidu_entity_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:map<string,string>        extra,
+}
+
 struct baidu_entity_req {
     1:string                    bid,
     2:i64                       page,
@@ -885,5 +897,6 @@ service datanode_service {
     get_alipay_uinfo_res get_alipay_uinfo(1:get_alipay_uinfo_req req),
 
     // 请求百度实体信息
-    baidu_entity_res baidu_entity(1:baidu_entity_req req);
+    set_baidu_entity_res set_baidu_entity(1:set_baidu_entity_req req),
+    baidu_entity_res baidu_entity(1:baidu_entity_req req),
 }
