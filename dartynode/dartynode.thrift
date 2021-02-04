@@ -7,7 +7,7 @@ struct login_wechat_req {
     1:string                appid,
     2:string                Code,
     3:string                State,
-    4:string                style,
+    4:string                style, // normal: 普通用户   cooper: 合作者   school: 学校
     5:map<string,string>   extra,
 }
 
@@ -68,7 +68,7 @@ struct login_alipay_req {
     2:string                source,
     3:string                scope,
     4:string                auth_code,
-    5:string                style,
+    5:string                style,  // normal: 普通用户   cooper: 合作者   school: 学校
     6:map<string,string>   extra,
 }
 
