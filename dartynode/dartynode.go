@@ -7,10 +7,11 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"reflect"
+
 	"github.com/heegspace/heegproto/common"
 	"github.com/heegspace/heegproto/rescode"
 	"github.com/heegspace/thrift"
-	"reflect"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -27,12 +28,14 @@ var _ = common.GoUnusedProtection__
 //  - Appid
 //  - Code
 //  - State
+//  - Style
 //  - Extra
 type LoginWechatReq struct {
 	Appid string            `thrift:"appid,1" db:"appid" json:"appid"`
 	Code  string            `thrift:"Code,2" db:"Code" json:"Code"`
 	State string            `thrift:"State,3" db:"State" json:"State"`
-	Extra map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
+	Style string            `thrift:"style,4" db:"style" json:"style"`
+	Extra map[string]string `thrift:"extra,5" db:"extra" json:"extra"`
 }
 
 func NewLoginWechatReq() *LoginWechatReq {
@@ -49,6 +52,10 @@ func (p *LoginWechatReq) GetCode() string {
 
 func (p *LoginWechatReq) GetState() string {
 	return p.State
+}
+
+func (p *LoginWechatReq) GetStyle() string {
+	return p.Style
 }
 
 func (p *LoginWechatReq) GetExtra() map[string]string {
@@ -99,8 +106,18 @@ func (p *LoginWechatReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 4:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField5(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -151,6 +168,15 @@ func (p *LoginWechatReq) ReadField3(iprot thrift.TProtocol) error {
 }
 
 func (p *LoginWechatReq) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.Style = v
+	}
+	return nil
+}
+
+func (p *LoginWechatReq) ReadField5(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -193,6 +219,9 @@ func (p *LoginWechatReq) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
 			return err
 		}
 	}
@@ -245,8 +274,21 @@ func (p *LoginWechatReq) writeField3(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *LoginWechatReq) writeField4(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("style", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:style: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Style)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.style (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:style: ", p), err)
+	}
+	return err
+}
+
+func (p *LoginWechatReq) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -263,7 +305,7 @@ func (p *LoginWechatReq) writeField4(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:extra: ", p), err)
 	}
 	return err
 }
@@ -2179,13 +2221,15 @@ func (p *UserinfoWechatRes) String() string {
 //  - Source
 //  - Scope
 //  - AuthCode
+//  - Style
 //  - Extra
 type LoginAlipayReq struct {
 	AppID    string            `thrift:"app_id,1" db:"app_id" json:"app_id"`
 	Source   string            `thrift:"source,2" db:"source" json:"source"`
 	Scope    string            `thrift:"scope,3" db:"scope" json:"scope"`
 	AuthCode string            `thrift:"auth_code,4" db:"auth_code" json:"auth_code"`
-	Extra    map[string]string `thrift:"extra,5" db:"extra" json:"extra"`
+	Style    string            `thrift:"style,5" db:"style" json:"style"`
+	Extra    map[string]string `thrift:"extra,6" db:"extra" json:"extra"`
 }
 
 func NewLoginAlipayReq() *LoginAlipayReq {
@@ -2206,6 +2250,10 @@ func (p *LoginAlipayReq) GetScope() string {
 
 func (p *LoginAlipayReq) GetAuthCode() string {
 	return p.AuthCode
+}
+
+func (p *LoginAlipayReq) GetStyle() string {
+	return p.Style
 }
 
 func (p *LoginAlipayReq) GetExtra() map[string]string {
@@ -2266,8 +2314,18 @@ func (p *LoginAlipayReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 5:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 6:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField6(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -2327,6 +2385,15 @@ func (p *LoginAlipayReq) ReadField4(iprot thrift.TProtocol) error {
 }
 
 func (p *LoginAlipayReq) ReadField5(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 5: ", err)
+	} else {
+		p.Style = v
+	}
+	return nil
+}
+
+func (p *LoginAlipayReq) ReadField6(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -2372,6 +2439,9 @@ func (p *LoginAlipayReq) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField6(oprot); err != nil {
 			return err
 		}
 	}
@@ -2437,8 +2507,21 @@ func (p *LoginAlipayReq) writeField4(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *LoginAlipayReq) writeField5(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 5); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("style", thrift.STRING, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:style: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Style)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.style (5) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:style: ", p), err)
+	}
+	return err
+}
+
+func (p *LoginAlipayReq) writeField6(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 6); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -2455,7 +2538,7 @@ func (p *LoginAlipayReq) writeField5(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:extra: ", p), err)
 	}
 	return err
 }
