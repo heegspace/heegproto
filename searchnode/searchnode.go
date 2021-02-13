@@ -6,12 +6,13 @@ package searchnode
 import (
 	"bytes"
 	"context"
+	"database/sql/driver"
+	"errors"
 	"fmt"
-	"reflect"
-
 	"github.com/heegspace/heegproto/common"
 	"github.com/heegspace/heegproto/rescode"
 	"github.com/heegspace/thrift"
+	"reflect"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -23,6 +24,64 @@ var _ = bytes.Equal
 
 var _ = rescode.GoUnusedProtection__
 var _ = common.GoUnusedProtection__
+
+type Search_Style int64
+
+const (
+	Search_Style_PUBLIC_SEARCH  Search_Style = 0
+	Search_Style_PRIVATE_SEARCH Search_Style = 1
+)
+
+func (p Search_Style) String() string {
+	switch p {
+	case Search_Style_PUBLIC_SEARCH:
+		return "PUBLIC_SEARCH"
+	case Search_Style_PRIVATE_SEARCH:
+		return "PRIVATE_SEARCH"
+	}
+	return "<UNSET>"
+}
+
+func Search_StyleFromString(s string) (Search_Style, error) {
+	switch s {
+	case "PUBLIC_SEARCH":
+		return Search_Style_PUBLIC_SEARCH, nil
+	case "PRIVATE_SEARCH":
+		return Search_Style_PRIVATE_SEARCH, nil
+	}
+	return Search_Style(0), fmt.Errorf("not a valid Search_Style string")
+}
+
+func Search_StylePtr(v Search_Style) *Search_Style { return &v }
+
+func (p Search_Style) MarshalText() ([]byte, error) {
+	return []byte(p.String()), nil
+}
+
+func (p *Search_Style) UnmarshalText(text []byte) error {
+	q, err := Search_StyleFromString(string(text))
+	if err != nil {
+		return err
+	}
+	*p = q
+	return nil
+}
+
+func (p *Search_Style) Scan(value interface{}) error {
+	v, ok := value.(int64)
+	if !ok {
+		return errors.New("Scan value is not int64")
+	}
+	*p = Search_Style(v)
+	return nil
+}
+
+func (p *Search_Style) Value() (driver.Value, error) {
+	if p == nil {
+		return nil, nil
+	}
+	return int64(*p), nil
+}
 
 // Attributes:
 //  - Auth
@@ -728,10 +787,710 @@ func (p *SearchQuestionRes) String() string {
 	return fmt.Sprintf("SearchQuestionRes(%+v)", *p)
 }
 
+// Attributes:
+//  - Auth
+//  - UID
+//  - Style
+//  - Page
+//  - Size
+//  - Extra
+type SearchHistoryReq struct {
+	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	UID   int64             `thrift:"uid,2" db:"uid" json:"uid"`
+	Style Search_Style      `thrift:"style,3" db:"style" json:"style"`
+	Page  int32             `thrift:"page,4" db:"page" json:"page"`
+	Size  int32             `thrift:"size,5" db:"size" json:"size"`
+	Extra map[string]string `thrift:"extra,6" db:"extra" json:"extra"`
+}
+
+func NewSearchHistoryReq() *SearchHistoryReq {
+	return &SearchHistoryReq{}
+}
+
+var SearchHistoryReq_Auth_DEFAULT *common.Authorize
+
+func (p *SearchHistoryReq) GetAuth() *common.Authorize {
+	if !p.IsSetAuth() {
+		return SearchHistoryReq_Auth_DEFAULT
+	}
+	return p.Auth
+}
+
+func (p *SearchHistoryReq) GetUID() int64 {
+	return p.UID
+}
+
+func (p *SearchHistoryReq) GetStyle() Search_Style {
+	return p.Style
+}
+
+func (p *SearchHistoryReq) GetPage() int32 {
+	return p.Page
+}
+
+func (p *SearchHistoryReq) GetSize() int32 {
+	return p.Size
+}
+
+func (p *SearchHistoryReq) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *SearchHistoryReq) IsSetAuth() bool {
+	return p.Auth != nil
+}
+
+func (p *SearchHistoryReq) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 6:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField6(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *SearchHistoryReq) ReadField1(iprot thrift.TProtocol) error {
+	p.Auth = &common.Authorize{}
+	if err := p.Auth.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
+	}
+	return nil
+}
+
+func (p *SearchHistoryReq) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
+func (p *SearchHistoryReq) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		temp := Search_Style(v)
+		p.Style = temp
+	}
+	return nil
+}
+
+func (p *SearchHistoryReq) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.Page = v
+	}
+	return nil
+}
+
+func (p *SearchHistoryReq) ReadField5(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 5: ", err)
+	} else {
+		p.Size = v
+	}
+	return nil
+}
+
+func (p *SearchHistoryReq) ReadField6(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key5 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key5 = v
+		}
+		var _val6 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val6 = v
+		}
+		p.Extra[_key5] = _val6
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *SearchHistoryReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("search_history_req"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField6(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *SearchHistoryReq) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("auth", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:auth: ", p), err)
+	}
+	if err := p.Auth.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Auth), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:auth: ", p), err)
+	}
+	return err
+}
+
+func (p *SearchHistoryReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("uid", thrift.I64, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:uid: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *SearchHistoryReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("style", thrift.I32, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:style: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Style)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.style (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:style: ", p), err)
+	}
+	return err
+}
+
+func (p *SearchHistoryReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("page", thrift.I32, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:page: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Page)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.page (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:page: ", p), err)
+	}
+	return err
+}
+
+func (p *SearchHistoryReq) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("size", thrift.I32, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:size: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Size)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.size (5) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:size: ", p), err)
+	}
+	return err
+}
+
+func (p *SearchHistoryReq) writeField6(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 6); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *SearchHistoryReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SearchHistoryReq(%+v)", *p)
+}
+
+// Attributes:
+//  - Rescode
+//  - Resmsg
+//  - Lists
+//  - Page
+//  - Size
+//  - Extra
+type SearchHistoryRes struct {
+	Rescode rescode.Code                `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string                      `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Lists   []*common.SearchHistoryItem `thrift:"lists,3" db:"lists" json:"lists"`
+	Page    int32                       `thrift:"page,4" db:"page" json:"page"`
+	Size    int32                       `thrift:"size,5" db:"size" json:"size"`
+	Extra   map[string]string           `thrift:"extra,6" db:"extra" json:"extra"`
+}
+
+func NewSearchHistoryRes() *SearchHistoryRes {
+	return &SearchHistoryRes{}
+}
+
+func (p *SearchHistoryRes) GetRescode() rescode.Code {
+	return p.Rescode
+}
+
+func (p *SearchHistoryRes) GetResmsg() string {
+	return p.Resmsg
+}
+
+func (p *SearchHistoryRes) GetLists() []*common.SearchHistoryItem {
+	return p.Lists
+}
+
+func (p *SearchHistoryRes) GetPage() int32 {
+	return p.Page
+}
+
+func (p *SearchHistoryRes) GetSize() int32 {
+	return p.Size
+}
+
+func (p *SearchHistoryRes) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *SearchHistoryRes) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.LIST {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 6:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField6(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *SearchHistoryRes) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		temp := rescode.Code(v)
+		p.Rescode = temp
+	}
+	return nil
+}
+
+func (p *SearchHistoryRes) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Resmsg = v
+	}
+	return nil
+}
+
+func (p *SearchHistoryRes) ReadField3(iprot thrift.TProtocol) error {
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
+		return thrift.PrependError("error reading list begin: ", err)
+	}
+	tSlice := make([]*common.SearchHistoryItem, 0, size)
+	p.Lists = tSlice
+	for i := 0; i < size; i++ {
+		_elem7 := &common.SearchHistoryItem{}
+		if err := _elem7.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem7), err)
+		}
+		p.Lists = append(p.Lists, _elem7)
+	}
+	if err := iprot.ReadListEnd(); err != nil {
+		return thrift.PrependError("error reading list end: ", err)
+	}
+	return nil
+}
+
+func (p *SearchHistoryRes) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.Page = v
+	}
+	return nil
+}
+
+func (p *SearchHistoryRes) ReadField5(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 5: ", err)
+	} else {
+		p.Size = v
+	}
+	return nil
+}
+
+func (p *SearchHistoryRes) ReadField6(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key8 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key8 = v
+		}
+		var _val9 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val9 = v
+		}
+		p.Extra[_key8] = _val9
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *SearchHistoryRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("search_history_res"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField6(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *SearchHistoryRes) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Rescode)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.rescode (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:rescode: ", p), err)
+	}
+	return err
+}
+
+func (p *SearchHistoryRes) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err)
+	}
+	return err
+}
+
+func (p *SearchHistoryRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("lists", thrift.LIST, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:lists: ", p), err)
+	}
+	if err := oprot.WriteListBegin(thrift.STRUCT, len(p.Lists)); err != nil {
+		return thrift.PrependError("error writing list begin: ", err)
+	}
+	for _, v := range p.Lists {
+		if err := v.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", v), err)
+		}
+	}
+	if err := oprot.WriteListEnd(); err != nil {
+		return thrift.PrependError("error writing list end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:lists: ", p), err)
+	}
+	return err
+}
+
+func (p *SearchHistoryRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("page", thrift.I32, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:page: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Page)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.page (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:page: ", p), err)
+	}
+	return err
+}
+
+func (p *SearchHistoryRes) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("size", thrift.I32, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:size: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Size)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.size (5) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:size: ", p), err)
+	}
+	return err
+}
+
+func (p *SearchHistoryRes) writeField6(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 6); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *SearchHistoryRes) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SearchHistoryRes(%+v)", *p)
+}
+
 type SearchnodeService interface {
 	// Parameters:
 	//  - Req
 	SearchQuestion(ctx context.Context, req *SearchQuestionReq) (r *SearchQuestionRes, err error)
+	// Parameters:
+	//  - Req
+	SearchHistory(ctx context.Context, req *SearchHistoryReq) (r *SearchHistoryRes, err error)
 }
 
 type SearchnodeServiceClient struct {
@@ -763,13 +1522,25 @@ func (p *SearchnodeServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Req
 func (p *SearchnodeServiceClient) SearchQuestion(ctx context.Context, req *SearchQuestionReq) (r *SearchQuestionRes, err error) {
-	var _args5 SearchnodeServiceSearchQuestionArgs
-	_args5.Req = req
-	var _result6 SearchnodeServiceSearchQuestionResult
-	if err = p.Client_().Call(ctx, "search_question", &_args5, &_result6); err != nil {
+	var _args10 SearchnodeServiceSearchQuestionArgs
+	_args10.Req = req
+	var _result11 SearchnodeServiceSearchQuestionResult
+	if err = p.Client_().Call(ctx, "search_question", &_args10, &_result11); err != nil {
 		return
 	}
-	return _result6.GetSuccess(), nil
+	return _result11.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *SearchnodeServiceClient) SearchHistory(ctx context.Context, req *SearchHistoryReq) (r *SearchHistoryRes, err error) {
+	var _args12 SearchnodeServiceSearchHistoryArgs
+	_args12.Req = req
+	var _result13 SearchnodeServiceSearchHistoryResult
+	if err = p.Client_().Call(ctx, "search_history", &_args12, &_result13); err != nil {
+		return
+	}
+	return _result13.GetSuccess(), nil
 }
 
 type SearchnodeServiceProcessor struct {
@@ -792,9 +1563,10 @@ func (p *SearchnodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessor
 
 func NewSearchnodeServiceProcessor(handler SearchnodeService) *SearchnodeServiceProcessor {
 
-	self7 := &SearchnodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self7.processorMap["search_question"] = &searchnodeServiceProcessorSearchQuestion{handler: handler}
-	return self7
+	self14 := &SearchnodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self14.processorMap["search_question"] = &searchnodeServiceProcessorSearchQuestion{handler: handler}
+	self14.processorMap["search_history"] = &searchnodeServiceProcessorSearchHistory{handler: handler}
+	return self14
 }
 
 func (p *SearchnodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -807,12 +1579,12 @@ func (p *SearchnodeServiceProcessor) Process(ctx context.Context, iprot, oprot t
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x8 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x15 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x8.Write(oprot)
+	x15.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x8
+	return false, x15
 
 }
 
@@ -847,6 +1619,54 @@ func (p *searchnodeServiceProcessorSearchQuestion) Process(ctx context.Context, 
 		result.Success = retval
 	}
 	if err2 = oprot.WriteMessageBegin("search_question", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type searchnodeServiceProcessorSearchHistory struct {
+	handler SearchnodeService
+}
+
+func (p *searchnodeServiceProcessorSearchHistory) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := SearchnodeServiceSearchHistoryArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("search_history", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	result := SearchnodeServiceSearchHistoryResult{}
+	var retval *SearchHistoryRes
+	var err2 error
+	if retval, err2 = p.handler.SearchHistory(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing search_history: "+err2.Error())
+		oprot.WriteMessageBegin("search_history", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("search_history", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -1080,4 +1900,220 @@ func (p *SearchnodeServiceSearchQuestionResult) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("SearchnodeServiceSearchQuestionResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type SearchnodeServiceSearchHistoryArgs struct {
+	Req *SearchHistoryReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewSearchnodeServiceSearchHistoryArgs() *SearchnodeServiceSearchHistoryArgs {
+	return &SearchnodeServiceSearchHistoryArgs{}
+}
+
+var SearchnodeServiceSearchHistoryArgs_Req_DEFAULT *SearchHistoryReq
+
+func (p *SearchnodeServiceSearchHistoryArgs) GetReq() *SearchHistoryReq {
+	if !p.IsSetReq() {
+		return SearchnodeServiceSearchHistoryArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *SearchnodeServiceSearchHistoryArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *SearchnodeServiceSearchHistoryArgs) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *SearchnodeServiceSearchHistoryArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &SearchHistoryReq{}
+	if err := p.Req.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+	}
+	return nil
+}
+
+func (p *SearchnodeServiceSearchHistoryArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("search_history_args"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *SearchnodeServiceSearchHistoryArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+	}
+	return err
+}
+
+func (p *SearchnodeServiceSearchHistoryArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SearchnodeServiceSearchHistoryArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type SearchnodeServiceSearchHistoryResult struct {
+	Success *SearchHistoryRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewSearchnodeServiceSearchHistoryResult() *SearchnodeServiceSearchHistoryResult {
+	return &SearchnodeServiceSearchHistoryResult{}
+}
+
+var SearchnodeServiceSearchHistoryResult_Success_DEFAULT *SearchHistoryRes
+
+func (p *SearchnodeServiceSearchHistoryResult) GetSuccess() *SearchHistoryRes {
+	if !p.IsSetSuccess() {
+		return SearchnodeServiceSearchHistoryResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *SearchnodeServiceSearchHistoryResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *SearchnodeServiceSearchHistoryResult) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField0(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *SearchnodeServiceSearchHistoryResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &SearchHistoryRes{}
+	if err := p.Success.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+	}
+	return nil
+}
+
+func (p *SearchnodeServiceSearchHistoryResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("search_history_result"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField0(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *SearchnodeServiceSearchHistoryResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+		}
+		if err := oprot.WriteFieldEnd(); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err)
+		}
+	}
+	return err
+}
+
+func (p *SearchnodeServiceSearchHistoryResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SearchnodeServiceSearchHistoryResult(%+v)", *p)
 }

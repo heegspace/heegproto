@@ -238,6 +238,13 @@ struct subject_cate {
     7:string    create_at,
 }
 
+struct search_history_item {
+    1:string                keyword,
+    2:double                weight,
+    3:string                source,
+    4:map<string,string>    extra,
+}
+
 struct wechat_userinfo {
     1:string                openid,
     2:string                nickname,
@@ -278,3 +285,4 @@ struct baidu_entity {
     9:string            desc,               // 实体的简介
     10:string           mention,            // 实体名
 }
+
