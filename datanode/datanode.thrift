@@ -745,6 +745,20 @@ struct baidu_entity_res {
     6:map<string,string>        extra,
 }
 
+struct search_history_req {
+    2:i64           uid,
+    4:i32           page,
+    5:i32           size,
+    6:map<string,string> extra,
+}
+
+struct search_history_res {
+    1:rescode.code                      rescode,
+    2:string                            resmsg,
+    3:list<common.search_history_item>  lists,
+    4:map<string,string>                extra,
+}
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -899,4 +913,7 @@ service datanode_service {
     // 请求百度实体信息
     set_baidu_entity_res set_baidu_entity(1:set_baidu_entity_req req),
     baidu_entity_res baidu_entity(1:baidu_entity_req req),
+
+    // 获取搜索记录
+    search_history_res search_history(1:search_history_req req),
 }

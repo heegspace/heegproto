@@ -6,8 +6,6 @@ package searchnode
 import (
 	"bytes"
 	"context"
-	"database/sql/driver"
-	"errors"
 	"fmt"
 	"github.com/heegspace/heegproto/common"
 	"github.com/heegspace/heegproto/rescode"
@@ -24,64 +22,6 @@ var _ = bytes.Equal
 
 var _ = rescode.GoUnusedProtection__
 var _ = common.GoUnusedProtection__
-
-type Search_Style int64
-
-const (
-	Search_Style_PUBLIC_SEARCH  Search_Style = 0
-	Search_Style_PRIVATE_SEARCH Search_Style = 1
-)
-
-func (p Search_Style) String() string {
-	switch p {
-	case Search_Style_PUBLIC_SEARCH:
-		return "PUBLIC_SEARCH"
-	case Search_Style_PRIVATE_SEARCH:
-		return "PRIVATE_SEARCH"
-	}
-	return "<UNSET>"
-}
-
-func Search_StyleFromString(s string) (Search_Style, error) {
-	switch s {
-	case "PUBLIC_SEARCH":
-		return Search_Style_PUBLIC_SEARCH, nil
-	case "PRIVATE_SEARCH":
-		return Search_Style_PRIVATE_SEARCH, nil
-	}
-	return Search_Style(0), fmt.Errorf("not a valid Search_Style string")
-}
-
-func Search_StylePtr(v Search_Style) *Search_Style { return &v }
-
-func (p Search_Style) MarshalText() ([]byte, error) {
-	return []byte(p.String()), nil
-}
-
-func (p *Search_Style) UnmarshalText(text []byte) error {
-	q, err := Search_StyleFromString(string(text))
-	if err != nil {
-		return err
-	}
-	*p = q
-	return nil
-}
-
-func (p *Search_Style) Scan(value interface{}) error {
-	v, ok := value.(int64)
-	if !ok {
-		return errors.New("Scan value is not int64")
-	}
-	*p = Search_Style(v)
-	return nil
-}
-
-func (p *Search_Style) Value() (driver.Value, error) {
-	if p == nil {
-		return nil, nil
-	}
-	return int64(*p), nil
-}
 
 // Attributes:
 //  - Auth
@@ -790,14 +730,13 @@ func (p *SearchQuestionRes) String() string {
 // Attributes:
 //  - Auth
 //  - UID
-//  - Style
 //  - Page
 //  - Size
 //  - Extra
 type SearchHistoryReq struct {
-	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
-	UID   int64             `thrift:"uid,2" db:"uid" json:"uid"`
-	Style Search_Style      `thrift:"style,3" db:"style" json:"style"`
+	Auth *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	UID  int64             `thrift:"uid,2" db:"uid" json:"uid"`
+	// unused field # 3
 	Page  int32             `thrift:"page,4" db:"page" json:"page"`
 	Size  int32             `thrift:"size,5" db:"size" json:"size"`
 	Extra map[string]string `thrift:"extra,6" db:"extra" json:"extra"`
@@ -818,10 +757,6 @@ func (p *SearchHistoryReq) GetAuth() *common.Authorize {
 
 func (p *SearchHistoryReq) GetUID() int64 {
 	return p.UID
-}
-
-func (p *SearchHistoryReq) GetStyle() Search_Style {
-	return p.Style
 }
 
 func (p *SearchHistoryReq) GetPage() int32 {
@@ -866,16 +801,6 @@ func (p *SearchHistoryReq) Read(iprot thrift.TProtocol) error {
 		case 2:
 			if fieldTypeId == thrift.I64 {
 				if err := p.ReadField2(iprot); err != nil {
-					return err
-				}
-			} else {
-				if err := iprot.Skip(fieldTypeId); err != nil {
-					return err
-				}
-			}
-		case 3:
-			if fieldTypeId == thrift.I32 {
-				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -945,16 +870,6 @@ func (p *SearchHistoryReq) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *SearchHistoryReq) ReadField3(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadI32(); err != nil {
-		return thrift.PrependError("error reading field 3: ", err)
-	} else {
-		temp := Search_Style(v)
-		p.Style = temp
-	}
-	return nil
-}
-
 func (p *SearchHistoryReq) ReadField4(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return thrift.PrependError("error reading field 4: ", err)
@@ -1012,9 +927,6 @@ func (p *SearchHistoryReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField2(oprot); err != nil {
 			return err
 		}
-		if err := p.writeField3(oprot); err != nil {
-			return err
-		}
 		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
@@ -1056,19 +968,6 @@ func (p *SearchHistoryReq) writeField2(oprot thrift.TProtocol) (err error) {
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:uid: ", p), err)
-	}
-	return err
-}
-
-func (p *SearchHistoryReq) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("style", thrift.I32, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:style: ", p), err)
-	}
-	if err := oprot.WriteI32(int32(p.Style)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.style (3) field write error: ", p), err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:style: ", p), err)
 	}
 	return err
 }
@@ -1134,16 +1033,12 @@ func (p *SearchHistoryReq) String() string {
 //  - Rescode
 //  - Resmsg
 //  - Lists
-//  - Page
-//  - Size
 //  - Extra
 type SearchHistoryRes struct {
 	Rescode rescode.Code                `thrift:"rescode,1" db:"rescode" json:"rescode"`
 	Resmsg  string                      `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
 	Lists   []*common.SearchHistoryItem `thrift:"lists,3" db:"lists" json:"lists"`
-	Page    int32                       `thrift:"page,4" db:"page" json:"page"`
-	Size    int32                       `thrift:"size,5" db:"size" json:"size"`
-	Extra   map[string]string           `thrift:"extra,6" db:"extra" json:"extra"`
+	Extra   map[string]string           `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewSearchHistoryRes() *SearchHistoryRes {
@@ -1160,14 +1055,6 @@ func (p *SearchHistoryRes) GetResmsg() string {
 
 func (p *SearchHistoryRes) GetLists() []*common.SearchHistoryItem {
 	return p.Lists
-}
-
-func (p *SearchHistoryRes) GetPage() int32 {
-	return p.Page
-}
-
-func (p *SearchHistoryRes) GetSize() int32 {
-	return p.Size
 }
 
 func (p *SearchHistoryRes) GetExtra() map[string]string {
@@ -1218,28 +1105,8 @@ func (p *SearchHistoryRes) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 4:
-			if fieldTypeId == thrift.I32 {
-				if err := p.ReadField4(iprot); err != nil {
-					return err
-				}
-			} else {
-				if err := iprot.Skip(fieldTypeId); err != nil {
-					return err
-				}
-			}
-		case 5:
-			if fieldTypeId == thrift.I32 {
-				if err := p.ReadField5(iprot); err != nil {
-					return err
-				}
-			} else {
-				if err := iprot.Skip(fieldTypeId); err != nil {
-					return err
-				}
-			}
-		case 6:
 			if fieldTypeId == thrift.MAP {
-				if err := p.ReadField6(iprot); err != nil {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -1302,24 +1169,6 @@ func (p *SearchHistoryRes) ReadField3(iprot thrift.TProtocol) error {
 }
 
 func (p *SearchHistoryRes) ReadField4(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadI32(); err != nil {
-		return thrift.PrependError("error reading field 4: ", err)
-	} else {
-		p.Page = v
-	}
-	return nil
-}
-
-func (p *SearchHistoryRes) ReadField5(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadI32(); err != nil {
-		return thrift.PrependError("error reading field 5: ", err)
-	} else {
-		p.Size = v
-	}
-	return nil
-}
-
-func (p *SearchHistoryRes) ReadField6(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -1362,12 +1211,6 @@ func (p *SearchHistoryRes) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField4(oprot); err != nil {
-			return err
-		}
-		if err := p.writeField5(oprot); err != nil {
-			return err
-		}
-		if err := p.writeField6(oprot); err != nil {
 			return err
 		}
 	}
@@ -1428,34 +1271,8 @@ func (p *SearchHistoryRes) writeField3(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *SearchHistoryRes) writeField4(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("page", thrift.I32, 4); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:page: ", p), err)
-	}
-	if err := oprot.WriteI32(int32(p.Page)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.page (4) field write error: ", p), err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:page: ", p), err)
-	}
-	return err
-}
-
-func (p *SearchHistoryRes) writeField5(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("size", thrift.I32, 5); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:size: ", p), err)
-	}
-	if err := oprot.WriteI32(int32(p.Size)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.size (5) field write error: ", p), err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:size: ", p), err)
-	}
-	return err
-}
-
-func (p *SearchHistoryRes) writeField6(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 6); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -1472,7 +1289,7 @@ func (p *SearchHistoryRes) writeField6(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
 	}
 	return err
 }
