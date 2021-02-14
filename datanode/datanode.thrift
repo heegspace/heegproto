@@ -484,9 +484,11 @@ struct modify_cancel_res {
 }
 
 struct search_req {
-    1:string    keyword,
-    2:i32       page,
-    3:i32       size,
+    1:string        keyword,
+    2:i64           uid,
+    3:common.search_tyle   style,
+    4:i32           page,
+    5:i32           size,
 }
 
 struct search_res {
@@ -669,6 +671,30 @@ struct del_user_attention_res {
     3:map<string,string>        extra,
 }
 
+struct set_user_info_req {
+    1:i64                       uid,
+    2:common.user_info          info,
+    3:map<string,string>        extra,
+}
+
+struct set_user_info_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:map<string,string>        extra,
+}
+
+struct get_user_info_req {
+    1:i64                       uid,
+    2:map<string,string>        extra,
+}
+
+struct get_user_info_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:common.user_info          info,
+    4:map<string,string>        extra,
+}
+
 struct set_wechat_uinfo_req {
     1:i64                       uid,
     2:common.wechat_userinfo    info,
@@ -746,10 +772,10 @@ struct baidu_entity_res {
 }
 
 struct search_history_req {
-    2:i64           uid,
-    4:i32           page,
-    5:i32           size,
-    6:map<string,string> extra,
+    1:i64           uid,
+    2:i32           page,
+    3:i32           size,
+    4:map<string,string> extra,
 }
 
 struct search_history_res {
@@ -901,6 +927,10 @@ service datanode_service {
     subject_cate_count_res subject_cate_count(),
     // 获取科目列表
     subject_cate_list_res subject_cate_list(1:subject_cate_list_req req),
+
+    // 用户信息
+    set_user_info_res set_user_info(1:set_user_info_req req),
+    get_user_info_res get_user_info(1:get_user_info_req req),
 
     // 微信用户信息操作
     set_wechat_uinfo_res set_wechat_uinfo(1:set_wechat_uinfo_req req),

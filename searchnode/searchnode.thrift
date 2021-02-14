@@ -24,9 +24,9 @@ struct search_question_res {
 struct search_history_req {
     1:common.authorize auth,
     2:i64           uid,
-    4:i32           page,
-    5:i32           size,
-    6:map<string,string> extra,
+    3:i32           page,
+    4:i32           size,
+    5:map<string,string> extra,
 }
 
 struct search_history_res {

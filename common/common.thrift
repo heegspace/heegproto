@@ -29,6 +29,13 @@ enum from_platom {
     FROM_ALIPAY     = 0x0002,    // 支付宝平台
 }
 
+enum search_tyle {
+    FROM_QUESTION   = 0x0000,   // 来自试题
+    FROM_GRPAH      = 0x0001,   // 来自图谱
+    FROM_CLOUD      = 0x0002,   // 来自云盘
+    FROM_PRIVATE    = 0x0003,   // 来自自己
+}
+
 struct question_query {
     1:string        roll_id (go.tag = 'form:"roll_id" json:"roll_id"'),
     2:string        roll_name   (go.tag = 'form:"roll_name" json:"roll_name"'),
@@ -243,6 +250,15 @@ struct search_history_item {
     2:double                weight,
     3:string                source,
     4:map<string,string>    extra,
+}
+
+struct user_info {
+    1:string                avatar,
+    2:string                nickname,
+    3:i32                   sex,
+    4:string                province,
+    5:string                city,
+    6:string                country,
 }
 
 struct wechat_userinfo {
