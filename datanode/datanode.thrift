@@ -771,6 +771,20 @@ struct baidu_entity_res {
     6:map<string,string>        extra,
 }
 
+struct search_item_req {
+    1:string            keyword,
+    2:i32               page,
+    3:i32                size,
+    4:map<string,string> extra,
+}
+
+struct search_item_res {
+    1:rescode.code                      rescode,
+    2:string                            resmsg,
+    3:list<string>                      lists,
+    4:map<string,string>                extra,
+}
+
 struct search_history_req {
     1:i64           uid,
     2:i32           page,
@@ -946,4 +960,7 @@ service datanode_service {
 
     // 获取搜索记录
     search_history_res search_history(1:search_history_req req),
+
+    // 搜索关键字补全
+    search_item_res search_item(1:search_item_req req),
 }
