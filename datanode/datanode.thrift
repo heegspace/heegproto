@@ -461,6 +461,8 @@ struct modify_list_req {
     1:i64       uid,
     2:i32       page,
     3:i32       size,
+    4:string    sorted,
+    5:string    status,
 }
 
 struct modify_list_res {
@@ -468,6 +470,12 @@ struct modify_list_res {
     2:string             resmsg,
     3:list<common.modify_item>    timus,
     4:map<string,string> extra,
+}
+
+struct modify_count_req {
+    1:i64       uid,
+    2:string    status,
+    3:map<string,string> extra, 
 }
 
 struct modify_count_res {
@@ -913,7 +921,7 @@ service datanode_service {
     // 获取个人纠错的试题
     modify_list_res modify_list(1:modify_list_req req),
     // 获取个人纠错的试题的数量
-    modify_count_res modify_count(1:i64 uid),
+    modify_count_res modify_count(1:modify_count_req req),
     // 取消纠错试题
     modify_cancel_res modify_cancel(1:string tid),
     // 搜索试题

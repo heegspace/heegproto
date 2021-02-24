@@ -306,7 +306,9 @@ struct modify_list_req {
     2:i64       uid,
     3:i32       page,
     4:i32       size,
-    5:map<string,string> extra,
+    5:string    sorted,
+    6:string    status,
+    7:map<string,string> extra,
 }
 
 struct modify_list_res {
@@ -318,8 +320,9 @@ struct modify_list_res {
 
 struct modify_count_req {
     1:common.authorize auth,
-    2:i64    uid,
-    3:map<string,string> extra,
+    2:i64       uid,
+    3:string    status,
+    4:map<string,string> extra,
 }
 
 struct modify_count_res {
