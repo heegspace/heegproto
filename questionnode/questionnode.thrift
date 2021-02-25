@@ -334,10 +334,11 @@ struct modify_count_res {
 
 struct approve_modify_req {
     1:common.authorize auth,
-    2:i64                   uid,
-    3:string                status,
-    4:string                info,
-    5:map<string,string>    extra, 
+    2:i64                   id,
+    3:i64                   uid,
+    4:string                status,
+    5:string                info,
+    6:map<string,string>    extra, 
 }
 
 struct approve_modify_res {

@@ -486,10 +486,11 @@ struct modify_count_res {
 }
 
 struct approve_modify_req {
-    1:i64                   uid,
-    2:string                status,
-    3:string                info,
-    4:map<string,string>    extra, 
+    1:i64                   id,
+    2:i64                   uid,
+    3:string                status,
+    4:string                info,
+    5:map<string,string>    extra, 
 }
 
 struct approve_modify_res {
