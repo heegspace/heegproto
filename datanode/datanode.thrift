@@ -485,7 +485,14 @@ struct modify_count_res {
     4:map<string,string> extra, 
 }
 
-struct modify_cancel_res {
+struct approve_modify_req {
+    1:i64                   uid,
+    2:string                status,
+    3:string                info,
+    4:map<string,string>    extra, 
+}
+
+struct approve_modify_res {
     1:rescode.code       rescode,
     2:string             resmsg,
     3:map<string,string> extra, 
@@ -922,8 +929,8 @@ service datanode_service {
     modify_list_res modify_list(1:modify_list_req req),
     // 获取个人纠错的试题的数量
     modify_count_res modify_count(1:modify_count_req req),
-    // 取消纠错试题
-    modify_cancel_res modify_cancel(1:string tid),
+    // 审核修改的试题
+    approve_modify_res approve_modify(1:approve_modify_req req),
     // 搜索试题
     search_res on_search(1:search_req req),
 

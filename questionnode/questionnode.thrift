@@ -332,17 +332,18 @@ struct modify_count_res {
     4:map<string,string>    extra,
 }
 
-struct modify_cancel_req {
+struct approve_modify_req {
     1:common.authorize auth,
-    2:i64       uid,
-    3:string    tid
-    4:map<string,string> extra,
+    2:i64                   uid,
+    3:string                status,
+    4:string                info,
+    5:map<string,string>    extra, 
 }
 
-struct modify_cancel_res {
-    1:rescode.code          rescode,
-    2:string                resmsg,
-    3:map<string,string>    extra,
+struct approve_modify_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:map<string,string> extra, 
 }
 
 service questionnode_service {
@@ -394,6 +395,6 @@ service questionnode_service {
     modify_list_res modify_list(1:modify_list_req req),
     // 获取纠错数量
     modify_count_res modify_count(1:modify_count_req req),
-    // 取消纠错
-    modify_cancel_res modify_cancel(1:modify_cancel_req req),
+    // 审核修改的试题
+    approve_modify_res approve_modify(1:approve_modify_req req),
 }

@@ -7,10 +7,11 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"reflect"
+
 	"github.com/heegspace/heegproto/common"
 	"github.com/heegspace/heegproto/rescode"
 	"github.com/heegspace/thrift"
-	"reflect"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -12374,44 +12375,50 @@ func (p *ModifyCountRes) String() string {
 // Attributes:
 //  - Auth
 //  - UID
-//  - Tid
+//  - Status
+//  - Info
 //  - Extra
-type ModifyCancelReq struct {
-	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
-	UID   int64             `thrift:"uid,2" db:"uid" json:"uid"`
-	Tid   string            `thrift:"tid,3" db:"tid" json:"tid"`
-	Extra map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
+type ApproveModifyReq struct {
+	Auth   *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	UID    int64             `thrift:"uid,2" db:"uid" json:"uid"`
+	Status string            `thrift:"status,3" db:"status" json:"status"`
+	Info   string            `thrift:"info,4" db:"info" json:"info"`
+	Extra  map[string]string `thrift:"extra,5" db:"extra" json:"extra"`
 }
 
-func NewModifyCancelReq() *ModifyCancelReq {
-	return &ModifyCancelReq{}
+func NewApproveModifyReq() *ApproveModifyReq {
+	return &ApproveModifyReq{}
 }
 
-var ModifyCancelReq_Auth_DEFAULT *common.Authorize
+var ApproveModifyReq_Auth_DEFAULT *common.Authorize
 
-func (p *ModifyCancelReq) GetAuth() *common.Authorize {
+func (p *ApproveModifyReq) GetAuth() *common.Authorize {
 	if !p.IsSetAuth() {
-		return ModifyCancelReq_Auth_DEFAULT
+		return ApproveModifyReq_Auth_DEFAULT
 	}
 	return p.Auth
 }
 
-func (p *ModifyCancelReq) GetUID() int64 {
+func (p *ApproveModifyReq) GetUID() int64 {
 	return p.UID
 }
 
-func (p *ModifyCancelReq) GetTid() string {
-	return p.Tid
+func (p *ApproveModifyReq) GetStatus() string {
+	return p.Status
 }
 
-func (p *ModifyCancelReq) GetExtra() map[string]string {
+func (p *ApproveModifyReq) GetInfo() string {
+	return p.Info
+}
+
+func (p *ApproveModifyReq) GetExtra() map[string]string {
 	return p.Extra
 }
-func (p *ModifyCancelReq) IsSetAuth() bool {
+func (p *ApproveModifyReq) IsSetAuth() bool {
 	return p.Auth != nil
 }
 
-func (p *ModifyCancelReq) Read(iprot thrift.TProtocol) error {
+func (p *ApproveModifyReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -12456,8 +12463,18 @@ func (p *ModifyCancelReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 4:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField5(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -12480,7 +12497,7 @@ func (p *ModifyCancelReq) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ModifyCancelReq) ReadField1(iprot thrift.TProtocol) error {
+func (p *ApproveModifyReq) ReadField1(iprot thrift.TProtocol) error {
 	p.Auth = &common.Authorize{}
 	if err := p.Auth.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
@@ -12488,7 +12505,7 @@ func (p *ModifyCancelReq) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ModifyCancelReq) ReadField2(iprot thrift.TProtocol) error {
+func (p *ApproveModifyReq) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI64(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
@@ -12497,16 +12514,25 @@ func (p *ModifyCancelReq) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ModifyCancelReq) ReadField3(iprot thrift.TProtocol) error {
+func (p *ApproveModifyReq) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 3: ", err)
 	} else {
-		p.Tid = v
+		p.Status = v
 	}
 	return nil
 }
 
-func (p *ModifyCancelReq) ReadField4(iprot thrift.TProtocol) error {
+func (p *ApproveModifyReq) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.Info = v
+	}
+	return nil
+}
+
+func (p *ApproveModifyReq) ReadField5(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -12534,8 +12560,8 @@ func (p *ModifyCancelReq) ReadField4(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ModifyCancelReq) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("modify_cancel_req"); err != nil {
+func (p *ApproveModifyReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("approve_modify_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -12551,6 +12577,9 @@ func (p *ModifyCancelReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -12561,7 +12590,7 @@ func (p *ModifyCancelReq) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ModifyCancelReq) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *ApproveModifyReq) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("auth", thrift.STRUCT, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:auth: ", p), err)
 	}
@@ -12574,7 +12603,7 @@ func (p *ModifyCancelReq) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *ModifyCancelReq) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *ApproveModifyReq) writeField2(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("uid", thrift.I64, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:uid: ", p), err)
 	}
@@ -12587,22 +12616,35 @@ func (p *ModifyCancelReq) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *ModifyCancelReq) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("tid", thrift.STRING, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:tid: ", p), err)
+func (p *ApproveModifyReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("status", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:status: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Tid)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.tid (3) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Status)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.status (3) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:tid: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:status: ", p), err)
 	}
 	return err
 }
 
-func (p *ModifyCancelReq) writeField4(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+func (p *ApproveModifyReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("info", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:info: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Info)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.info (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:info: ", p), err)
+	}
+	return err
+}
+
+func (p *ApproveModifyReq) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -12619,44 +12661,44 @@ func (p *ModifyCancelReq) writeField4(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:extra: ", p), err)
 	}
 	return err
 }
 
-func (p *ModifyCancelReq) String() string {
+func (p *ApproveModifyReq) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("ModifyCancelReq(%+v)", *p)
+	return fmt.Sprintf("ApproveModifyReq(%+v)", *p)
 }
 
 // Attributes:
 //  - Rescode
 //  - Resmsg
 //  - Extra
-type ModifyCancelRes struct {
+type ApproveModifyRes struct {
 	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
 	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
 	Extra   map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
-func NewModifyCancelRes() *ModifyCancelRes {
-	return &ModifyCancelRes{}
+func NewApproveModifyRes() *ApproveModifyRes {
+	return &ApproveModifyRes{}
 }
 
-func (p *ModifyCancelRes) GetRescode() rescode.Code {
+func (p *ApproveModifyRes) GetRescode() rescode.Code {
 	return p.Rescode
 }
 
-func (p *ModifyCancelRes) GetResmsg() string {
+func (p *ApproveModifyRes) GetResmsg() string {
 	return p.Resmsg
 }
 
-func (p *ModifyCancelRes) GetExtra() map[string]string {
+func (p *ApproveModifyRes) GetExtra() map[string]string {
 	return p.Extra
 }
-func (p *ModifyCancelRes) Read(iprot thrift.TProtocol) error {
+func (p *ApproveModifyRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -12715,7 +12757,7 @@ func (p *ModifyCancelRes) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ModifyCancelRes) ReadField1(iprot thrift.TProtocol) error {
+func (p *ApproveModifyRes) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
@@ -12725,7 +12767,7 @@ func (p *ModifyCancelRes) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ModifyCancelRes) ReadField2(iprot thrift.TProtocol) error {
+func (p *ApproveModifyRes) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
@@ -12734,7 +12776,7 @@ func (p *ModifyCancelRes) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ModifyCancelRes) ReadField3(iprot thrift.TProtocol) error {
+func (p *ApproveModifyRes) ReadField3(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -12762,8 +12804,8 @@ func (p *ModifyCancelRes) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ModifyCancelRes) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("modify_cancel_res"); err != nil {
+func (p *ApproveModifyRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("approve_modify_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -12786,7 +12828,7 @@ func (p *ModifyCancelRes) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ModifyCancelRes) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *ApproveModifyRes) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
 	}
@@ -12799,7 +12841,7 @@ func (p *ModifyCancelRes) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *ModifyCancelRes) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *ApproveModifyRes) writeField2(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
 	}
@@ -12812,7 +12854,7 @@ func (p *ModifyCancelRes) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *ModifyCancelRes) writeField3(oprot thrift.TProtocol) (err error) {
+func (p *ApproveModifyRes) writeField3(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
 	}
@@ -12836,11 +12878,11 @@ func (p *ModifyCancelRes) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *ModifyCancelRes) String() string {
+func (p *ApproveModifyRes) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("ModifyCancelRes(%+v)", *p)
+	return fmt.Sprintf("ApproveModifyRes(%+v)", *p)
 }
 
 type QuestionnodeService interface {
@@ -12915,7 +12957,7 @@ type QuestionnodeService interface {
 	ModifyCount(ctx context.Context, req *ModifyCountReq) (r *ModifyCountRes, err error)
 	// Parameters:
 	//  - Req
-	ModifyCancel(ctx context.Context, req *ModifyCancelReq) (r *ModifyCancelRes, err error)
+	ApproveModify(ctx context.Context, req *ApproveModifyReq) (r *ApproveModifyRes, err error)
 }
 
 type QuestionnodeServiceClient struct {
@@ -13222,11 +13264,11 @@ func (p *QuestionnodeServiceClient) ModifyCount(ctx context.Context, req *Modify
 
 // Parameters:
 //  - Req
-func (p *QuestionnodeServiceClient) ModifyCancel(ctx context.Context, req *ModifyCancelReq) (r *ModifyCancelRes, err error) {
-	var _args155 QuestionnodeServiceModifyCancelArgs
+func (p *QuestionnodeServiceClient) ApproveModify(ctx context.Context, req *ApproveModifyReq) (r *ApproveModifyRes, err error) {
+	var _args155 QuestionnodeServiceApproveModifyArgs
 	_args155.Req = req
-	var _result156 QuestionnodeServiceModifyCancelResult
-	if err = p.Client_().Call(ctx, "modify_cancel", &_args155, &_result156); err != nil {
+	var _result156 QuestionnodeServiceApproveModifyResult
+	if err = p.Client_().Call(ctx, "approve_modify", &_args155, &_result156); err != nil {
 		return
 	}
 	return _result156.GetSuccess(), nil
@@ -13276,7 +13318,7 @@ func NewQuestionnodeServiceProcessor(handler QuestionnodeService) *QuestionnodeS
 	self157.processorMap["modify_question"] = &questionnodeServiceProcessorModifyQuestion{handler: handler}
 	self157.processorMap["modify_list"] = &questionnodeServiceProcessorModifyList{handler: handler}
 	self157.processorMap["modify_count"] = &questionnodeServiceProcessorModifyCount{handler: handler}
-	self157.processorMap["modify_cancel"] = &questionnodeServiceProcessorModifyCancel{handler: handler}
+	self157.processorMap["approve_modify"] = &questionnodeServiceProcessorApproveModify{handler: handler}
 	return self157
 }
 
@@ -14403,16 +14445,16 @@ func (p *questionnodeServiceProcessorModifyCount) Process(ctx context.Context, s
 	return true, err
 }
 
-type questionnodeServiceProcessorModifyCancel struct {
+type questionnodeServiceProcessorApproveModify struct {
 	handler QuestionnodeService
 }
 
-func (p *questionnodeServiceProcessorModifyCancel) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	args := QuestionnodeServiceModifyCancelArgs{}
+func (p *questionnodeServiceProcessorApproveModify) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := QuestionnodeServiceApproveModifyArgs{}
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
-		oprot.WriteMessageBegin("modify_cancel", thrift.EXCEPTION, seqId)
+		oprot.WriteMessageBegin("approve_modify", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -14420,12 +14462,12 @@ func (p *questionnodeServiceProcessorModifyCancel) Process(ctx context.Context, 
 	}
 
 	iprot.ReadMessageEnd()
-	result := QuestionnodeServiceModifyCancelResult{}
-	var retval *ModifyCancelRes
+	result := QuestionnodeServiceApproveModifyResult{}
+	var retval *ApproveModifyRes
 	var err2 error
-	if retval, err2 = p.handler.ModifyCancel(ctx, args.Req); err2 != nil {
-		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing modify_cancel: "+err2.Error())
-		oprot.WriteMessageBegin("modify_cancel", thrift.EXCEPTION, seqId)
+	if retval, err2 = p.handler.ApproveModify(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing approve_modify: "+err2.Error())
+		oprot.WriteMessageBegin("approve_modify", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -14433,7 +14475,7 @@ func (p *questionnodeServiceProcessorModifyCancel) Process(ctx context.Context, 
 	} else {
 		result.Success = retval
 	}
-	if err2 = oprot.WriteMessageBegin("modify_cancel", thrift.REPLY, seqId); err2 != nil {
+	if err2 = oprot.WriteMessageBegin("approve_modify", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -19423,27 +19465,27 @@ func (p *QuestionnodeServiceModifyCountResult) String() string {
 
 // Attributes:
 //  - Req
-type QuestionnodeServiceModifyCancelArgs struct {
-	Req *ModifyCancelReq `thrift:"req,1" db:"req" json:"req"`
+type QuestionnodeServiceApproveModifyArgs struct {
+	Req *ApproveModifyReq `thrift:"req,1" db:"req" json:"req"`
 }
 
-func NewQuestionnodeServiceModifyCancelArgs() *QuestionnodeServiceModifyCancelArgs {
-	return &QuestionnodeServiceModifyCancelArgs{}
+func NewQuestionnodeServiceApproveModifyArgs() *QuestionnodeServiceApproveModifyArgs {
+	return &QuestionnodeServiceApproveModifyArgs{}
 }
 
-var QuestionnodeServiceModifyCancelArgs_Req_DEFAULT *ModifyCancelReq
+var QuestionnodeServiceApproveModifyArgs_Req_DEFAULT *ApproveModifyReq
 
-func (p *QuestionnodeServiceModifyCancelArgs) GetReq() *ModifyCancelReq {
+func (p *QuestionnodeServiceApproveModifyArgs) GetReq() *ApproveModifyReq {
 	if !p.IsSetReq() {
-		return QuestionnodeServiceModifyCancelArgs_Req_DEFAULT
+		return QuestionnodeServiceApproveModifyArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *QuestionnodeServiceModifyCancelArgs) IsSetReq() bool {
+func (p *QuestionnodeServiceApproveModifyArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *QuestionnodeServiceModifyCancelArgs) Read(iprot thrift.TProtocol) error {
+func (p *QuestionnodeServiceApproveModifyArgs) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -19482,16 +19524,16 @@ func (p *QuestionnodeServiceModifyCancelArgs) Read(iprot thrift.TProtocol) error
 	return nil
 }
 
-func (p *QuestionnodeServiceModifyCancelArgs) ReadField1(iprot thrift.TProtocol) error {
-	p.Req = &ModifyCancelReq{}
+func (p *QuestionnodeServiceApproveModifyArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &ApproveModifyReq{}
 	if err := p.Req.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
 	}
 	return nil
 }
 
-func (p *QuestionnodeServiceModifyCancelArgs) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("modify_cancel_args"); err != nil {
+func (p *QuestionnodeServiceApproveModifyArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("approve_modify_args"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -19508,7 +19550,7 @@ func (p *QuestionnodeServiceModifyCancelArgs) Write(oprot thrift.TProtocol) erro
 	return nil
 }
 
-func (p *QuestionnodeServiceModifyCancelArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *QuestionnodeServiceApproveModifyArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
 	}
@@ -19521,36 +19563,36 @@ func (p *QuestionnodeServiceModifyCancelArgs) writeField1(oprot thrift.TProtocol
 	return err
 }
 
-func (p *QuestionnodeServiceModifyCancelArgs) String() string {
+func (p *QuestionnodeServiceApproveModifyArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("QuestionnodeServiceModifyCancelArgs(%+v)", *p)
+	return fmt.Sprintf("QuestionnodeServiceApproveModifyArgs(%+v)", *p)
 }
 
 // Attributes:
 //  - Success
-type QuestionnodeServiceModifyCancelResult struct {
-	Success *ModifyCancelRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+type QuestionnodeServiceApproveModifyResult struct {
+	Success *ApproveModifyRes `thrift:"success,0" db:"success" json:"success,omitempty"`
 }
 
-func NewQuestionnodeServiceModifyCancelResult() *QuestionnodeServiceModifyCancelResult {
-	return &QuestionnodeServiceModifyCancelResult{}
+func NewQuestionnodeServiceApproveModifyResult() *QuestionnodeServiceApproveModifyResult {
+	return &QuestionnodeServiceApproveModifyResult{}
 }
 
-var QuestionnodeServiceModifyCancelResult_Success_DEFAULT *ModifyCancelRes
+var QuestionnodeServiceApproveModifyResult_Success_DEFAULT *ApproveModifyRes
 
-func (p *QuestionnodeServiceModifyCancelResult) GetSuccess() *ModifyCancelRes {
+func (p *QuestionnodeServiceApproveModifyResult) GetSuccess() *ApproveModifyRes {
 	if !p.IsSetSuccess() {
-		return QuestionnodeServiceModifyCancelResult_Success_DEFAULT
+		return QuestionnodeServiceApproveModifyResult_Success_DEFAULT
 	}
 	return p.Success
 }
-func (p *QuestionnodeServiceModifyCancelResult) IsSetSuccess() bool {
+func (p *QuestionnodeServiceApproveModifyResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *QuestionnodeServiceModifyCancelResult) Read(iprot thrift.TProtocol) error {
+func (p *QuestionnodeServiceApproveModifyResult) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -19589,16 +19631,16 @@ func (p *QuestionnodeServiceModifyCancelResult) Read(iprot thrift.TProtocol) err
 	return nil
 }
 
-func (p *QuestionnodeServiceModifyCancelResult) ReadField0(iprot thrift.TProtocol) error {
-	p.Success = &ModifyCancelRes{}
+func (p *QuestionnodeServiceApproveModifyResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &ApproveModifyRes{}
 	if err := p.Success.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
 	}
 	return nil
 }
 
-func (p *QuestionnodeServiceModifyCancelResult) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("modify_cancel_result"); err != nil {
+func (p *QuestionnodeServiceApproveModifyResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("approve_modify_result"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -19615,7 +19657,7 @@ func (p *QuestionnodeServiceModifyCancelResult) Write(oprot thrift.TProtocol) er
 	return nil
 }
 
-func (p *QuestionnodeServiceModifyCancelResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *QuestionnodeServiceApproveModifyResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
@@ -19630,9 +19672,9 @@ func (p *QuestionnodeServiceModifyCancelResult) writeField0(oprot thrift.TProtoc
 	return err
 }
 
-func (p *QuestionnodeServiceModifyCancelResult) String() string {
+func (p *QuestionnodeServiceApproveModifyResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("QuestionnodeServiceModifyCancelResult(%+v)", *p)
+	return fmt.Sprintf("QuestionnodeServiceApproveModifyResult(%+v)", *p)
 }
