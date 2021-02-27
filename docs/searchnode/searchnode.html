@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css"/>
+<title>Thrift module: searchnode</title></head><body>
+<div class="container-fluid">
+<h1>Thrift module: searchnode</h1>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Module</th><th>Services</th><th>Data types</th><th>Constants</th></tr></thead><tbody>
+<tr>
+<td>searchnode</td><td><a href="#Svc_searchnode_service">searchnode_service</a><br/>
+<ul>
+<li><a href="#Fn_searchnode_service_search_history">search_history</a></li>
+<li><a href="#Fn_searchnode_service_search_item">search_item</a></li>
+<li><a href="#Fn_searchnode_service_search_question">search_question</a></li>
+</ul>
+</td>
+<td><a href="#Struct_search_history_req">search_history_req</a><br/>
+<a href="#Struct_search_history_res">search_history_res</a><br/>
+<a href="#Struct_search_item_req">search_item_req</a><br/>
+<a href="#Struct_search_item_res">search_item_res</a><br/>
+<a href="#Struct_search_question_req">search_question_req</a><br/>
+<a href="#Struct_search_question_res">search_question_res</a><br/>
+</td>
+<td></td>
+</tr></tbody></table>
+<hr/><h2 id="Structs">Data structures</h2>
+<div class="definition"><h3 id="Struct_search_question_req">Struct: search_question_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>keyword</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>page</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>size</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_search_question_res">Struct: search_question_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>timestamp</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>total</td><td><code><a href="common.html#Struct_search_hits_total">common.search_hits_total</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>hits</td><td><code>list&lt;<code><a href="common.html#Struct_search_hits_item">common.search_hits_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_search_item_req">Struct: search_item_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>keyword</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>page</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>size</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_search_item_res">Struct: search_item_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>lists</td><td><code>list&lt;<code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_search_history_req">Struct: search_history_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>page</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>size</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_search_history_res">Struct: search_history_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>lists</td><td><code>list&lt;<code><a href="common.html#Struct_search_history_item">common.search_history_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><hr/><h2 id="Services">Services</h2>
+<h3 id="Svc_searchnode_service">Service: searchnode_service</h3>
+<div class="definition"><h4 id="Fn_searchnode_service_search_question">Function: searchnode_service.search_question</h4>
+<pre><code><a href="#Struct_search_question_res">search_question_res</a></code> search_question(<code><a href="#Struct_search_question_req">search_question_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_searchnode_service_search_item">Function: searchnode_service.search_item</h4>
+<pre><code><a href="#Struct_search_item_res">search_item_res</a></code> search_item(<code><a href="#Struct_search_item_req">search_item_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_searchnode_service_search_history">Function: searchnode_service.search_history</h4>
+<pre><code><a href="#Struct_search_history_res">search_history_res</a></code> search_history(<code><a href="#Struct_search_history_req">search_history_req</a></code> req)
+</pre></div></div></body></html>

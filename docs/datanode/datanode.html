@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css"/>
+<title>Thrift module: datanode</title></head><body>
+<div class="container-fluid">
+<h1>Thrift module: datanode</h1>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Module</th><th>Services</th><th>Data types</th><th>Constants</th></tr></thead><tbody>
+<tr>
+<td>datanode</td><td><a href="#Svc_datanode_service">datanode_service</a><br/>
+<ul>
+<li><a href="#Fn_datanode_service_addFile">addFile</a></li>
+<li><a href="#Fn_datanode_service_addFriends">addFriends</a></li>
+<li><a href="#Fn_datanode_service_addNoteFriend">addNoteFriend</a></li>
+<li><a href="#Fn_datanode_service_add_attention">add_attention</a></li>
+<li><a href="#Fn_datanode_service_add_user_attention">add_user_attention</a></li>
+<li><a href="#Fn_datanode_service_agreeFriends">agreeFriends</a></li>
+<li><a href="#Fn_datanode_service_approve_modify">approve_modify</a></li>
+<li><a href="#Fn_datanode_service_baidu_entity">baidu_entity</a></li>
+<li><a href="#Fn_datanode_service_collect_timu">collect_timu</a></li>
+<li><a href="#Fn_datanode_service_createGroup">createGroup</a></li>
+<li><a href="#Fn_datanode_service_createUser">createUser</a></li>
+<li><a href="#Fn_datanode_service_delKeyValue">delKeyValue</a></li>
+<li><a href="#Fn_datanode_service_del_attention">del_attention</a></li>
+<li><a href="#Fn_datanode_service_del_user_attention">del_user_attention</a></li>
+<li><a href="#Fn_datanode_service_fileDirAdd">fileDirAdd</a></li>
+<li><a href="#Fn_datanode_service_fileDirOne">fileDirOne</a></li>
+<li><a href="#Fn_datanode_service_friendsList">friendsList</a></li>
+<li><a href="#Fn_datanode_service_getKeyValue">getKeyValue</a></li>
+<li><a href="#Fn_datanode_service_get_alipay_uinfo">get_alipay_uinfo</a></li>
+<li><a href="#Fn_datanode_service_get_attention">get_attention</a></li>
+<li><a href="#Fn_datanode_service_get_user_attention">get_user_attention</a></li>
+<li><a href="#Fn_datanode_service_get_user_info">get_user_info</a></li>
+<li><a href="#Fn_datanode_service_get_wechat_uinfo">get_wechat_uinfo</a></li>
+<li><a href="#Fn_datanode_service_grade_cate_add">grade_cate_add</a></li>
+<li><a href="#Fn_datanode_service_grade_cate_count">grade_cate_count</a></li>
+<li><a href="#Fn_datanode_service_grade_cate_list">grade_cate_list</a></li>
+<li><a href="#Fn_datanode_service_grade_subject">grade_subject</a></li>
+<li><a href="#Fn_datanode_service_home_black_data">home_black_data</a></li>
+<li><a href="#Fn_datanode_service_likesAdd">likesAdd</a></li>
+<li><a href="#Fn_datanode_service_likesCount">likesCount</a></li>
+<li><a href="#Fn_datanode_service_likesList">likesList</a></li>
+<li><a href="#Fn_datanode_service_modify_count">modify_count</a></li>
+<li><a href="#Fn_datanode_service_modify_list">modify_list</a></li>
+<li><a href="#Fn_datanode_service_modify_question">modify_question</a></li>
+<li><a href="#Fn_datanode_service_momentsAdd">momentsAdd</a></li>
+<li><a href="#Fn_datanode_service_momentsCount">momentsCount</a></li>
+<li><a href="#Fn_datanode_service_momentsList">momentsList</a></li>
+<li><a href="#Fn_datanode_service_moveToNewGroup">moveToNewGroup</a></li>
+<li><a href="#Fn_datanode_service_noteData">noteData</a></li>
+<li><a href="#Fn_datanode_service_noteHtml">noteHtml</a></li>
+<li><a href="#Fn_datanode_service_noteListCount">noteListCount</a></li>
+<li><a href="#Fn_datanode_service_noteMetaList">noteMetaList</a></li>
+<li><a href="#Fn_datanode_service_on_search">on_search</a></li>
+<li><a href="#Fn_datanode_service_query_collect_timu">query_collect_timu</a></li>
+<li><a href="#Fn_datanode_service_question_chapter">question_chapter</a></li>
+<li><a href="#Fn_datanode_service_question_source">question_source</a></li>
+<li><a href="#Fn_datanode_service_question_timu">question_timu</a></li>
+<li><a href="#Fn_datanode_service_question_timu_by_id">question_timu_by_id</a></li>
+<li><a href="#Fn_datanode_service_question_timu_count">question_timu_count</a></li>
+<li><a href="#Fn_datanode_service_question_tixing">question_tixing</a></li>
+<li><a href="#Fn_datanode_service_question_version">question_version</a></li>
+<li><a href="#Fn_datanode_service_removeFriend">removeFriend</a></li>
+<li><a href="#Fn_datanode_service_renameGroup">renameGroup</a></li>
+<li><a href="#Fn_datanode_service_school_list">school_list</a></li>
+<li><a href="#Fn_datanode_service_school_roll_add">school_roll_add</a></li>
+<li><a href="#Fn_datanode_service_school_roll_count">school_roll_count</a></li>
+<li><a href="#Fn_datanode_service_searchUser">searchUser</a></li>
+<li><a href="#Fn_datanode_service_search_history">search_history</a></li>
+<li><a href="#Fn_datanode_service_search_item">search_item</a></li>
+<li><a href="#Fn_datanode_service_setKeyValue">setKeyValue</a></li>
+<li><a href="#Fn_datanode_service_set_alipay_uinfo">set_alipay_uinfo</a></li>
+<li><a href="#Fn_datanode_service_set_baidu_entity">set_baidu_entity</a></li>
+<li><a href="#Fn_datanode_service_set_user_info">set_user_info</a></li>
+<li><a href="#Fn_datanode_service_set_wechat_uinfo">set_wechat_uinfo</a></li>
+<li><a href="#Fn_datanode_service_subject_cate_add">subject_cate_add</a></li>
+<li><a href="#Fn_datanode_service_subject_cate_count">subject_cate_count</a></li>
+<li><a href="#Fn_datanode_service_subject_cate_list">subject_cate_list</a></li>
+<li><a href="#Fn_datanode_service_subject_name">subject_name</a></li>
+<li><a href="#Fn_datanode_service_thumbnail">thumbnail</a></li>
+<li><a href="#Fn_datanode_service_updateNote">updateNote</a></li>
+<li><a href="#Fn_datanode_service_updateUser">updateUser</a></li>
+<li><a href="#Fn_datanode_service_userInfo">userInfo</a></li>
+<li><a href="#Fn_datanode_service_yunSaveAttr">yunSaveAttr</a></li>
+</ul>
+</td>
+<td><a href="#Struct_FileItem">FileItem</a><br/>
+<a href="#Struct_add_attention_req">add_attention_req</a><br/>
+<a href="#Struct_add_attention_res">add_attention_res</a><br/>
+<a href="#Struct_add_dir_req">add_dir_req</a><br/>
+<a href="#Struct_add_dir_res">add_dir_res</a><br/>
+<a href="#Struct_add_file_req">add_file_req</a><br/>
+<a href="#Struct_add_file_res">add_file_res</a><br/>
+<a href="#Struct_add_friend_note_req">add_friend_note_req</a><br/>
+<a href="#Struct_add_friend_note_res">add_friend_note_res</a><br/>
+<a href="#Struct_add_friend_req">add_friend_req</a><br/>
+<a href="#Struct_add_friend_res">add_friend_res</a><br/>
+<a href="#Struct_add_grade_cate_res">add_grade_cate_res</a><br/>
+<a href="#Struct_add_moments_res">add_moments_res</a><br/>
+<a href="#Struct_add_user_attention_req">add_user_attention_req</a><br/>
+<a href="#Struct_add_user_attention_res">add_user_attention_res</a><br/>
+<a href="#Struct_agree_friend_req">agree_friend_req</a><br/>
+<a href="#Struct_agree_friend_res">agree_friend_res</a><br/>
+<a href="#Struct_approve_modify_req">approve_modify_req</a><br/>
+<a href="#Struct_approve_modify_res">approve_modify_res</a><br/>
+<a href="#Struct_attention_item">attention_item</a><br/>
+<a href="#Struct_baidu_entity_req">baidu_entity_req</a><br/>
+<a href="#Struct_baidu_entity_res">baidu_entity_res</a><br/>
+<a href="#Struct_chapter_res">chapter_res</a><br/>
+<a href="#Struct_chapter_res_item">chapter_res_item</a><br/>
+<a href="#Struct_collect_list_req">collect_list_req</a><br/>
+<a href="#Struct_collect_list_res">collect_list_res</a><br/>
+<a href="#Struct_collect_req">collect_req</a><br/>
+<a href="#Struct_collect_res">collect_res</a><br/>
+<a href="#Struct_create_group_req">create_group_req</a><br/>
+<a href="#Struct_create_group_res">create_group_res</a><br/>
+<a href="#Struct_del_attention_req">del_attention_req</a><br/>
+<a href="#Struct_del_attention_res">del_attention_res</a><br/>
+<a href="#Struct_del_keyvalue_req">del_keyvalue_req</a><br/>
+<a href="#Struct_del_keyvalue_res">del_keyvalue_res</a><br/>
+<a href="#Struct_del_user_attention_req">del_user_attention_req</a><br/>
+<a href="#Struct_del_user_attention_res">del_user_attention_res</a><br/>
+<a href="#Struct_extra">extra</a><br/>
+<a href="#Struct_file_attr_res">file_attr_res</a><br/>
+<a href="#Struct_file_dir_res">file_dir_res</a><br/>
+<a href="#Struct_friend">friend</a><br/>
+<a href="#Struct_friend_item">friend_item</a><br/>
+<a href="#Struct_friend_res">friend_res</a><br/>
+<a href="#Struct_get_alipay_uinfo_req">get_alipay_uinfo_req</a><br/>
+<a href="#Struct_get_alipay_uinfo_res">get_alipay_uinfo_res</a><br/>
+<a href="#Struct_get_attention_req">get_attention_req</a><br/>
+<a href="#Struct_get_attention_res">get_attention_res</a><br/>
+<a href="#Struct_get_keyvalue_req">get_keyvalue_req</a><br/>
+<a href="#Struct_get_keyvalue_res">get_keyvalue_res</a><br/>
+<a href="#Struct_get_user_attention_req">get_user_attention_req</a><br/>
+<a href="#Struct_get_user_attention_res">get_user_attention_res</a><br/>
+<a href="#Struct_get_user_info_req">get_user_info_req</a><br/>
+<a href="#Struct_get_user_info_res">get_user_info_res</a><br/>
+<a href="#Struct_get_wechat_uinfo_req">get_wechat_uinfo_req</a><br/>
+<a href="#Struct_get_wechat_uinfo_res">get_wechat_uinfo_res</a><br/>
+<a href="#Struct_grade_cate_count_res">grade_cate_count_res</a><br/>
+<a href="#Struct_grade_cate_list_req">grade_cate_list_req</a><br/>
+<a href="#Struct_grade_cate_list_res">grade_cate_list_res</a><br/>
+<a href="#Struct_grade_subject_req">grade_subject_req</a><br/>
+<a href="#Struct_grade_subject_res">grade_subject_res</a><br/>
+<a href="#Struct_group">group</a><br/>
+<a href="#Struct_home_black_data_res">home_black_data_res</a><br/>
+<a href="#Struct_likes">likes</a><br/>
+<a href="#Struct_likes_add_res">likes_add_res</a><br/>
+<a href="#Struct_likes_count_res">likes_count_res</a><br/>
+<a href="#Struct_likes_list_res">likes_list_res</a><br/>
+<a href="#Struct_modify_count_req">modify_count_req</a><br/>
+<a href="#Struct_modify_count_res">modify_count_res</a><br/>
+<a href="#Struct_modify_list_req">modify_list_req</a><br/>
+<a href="#Struct_modify_list_res">modify_list_res</a><br/>
+<a href="#Struct_modify_req">modify_req</a><br/>
+<a href="#Struct_modify_res">modify_res</a><br/>
+<a href="#Struct_moments">moments</a><br/>
+<a href="#Struct_moments_count_res">moments_count_res</a><br/>
+<a href="#Struct_moments_list_res">moments_list_res</a><br/>
+<a href="#Struct_move_group_req">move_group_req</a><br/>
+<a href="#Struct_move_group_res">move_group_res</a><br/>
+<a href="#Struct_new_user_req">new_user_req</a><br/>
+<a href="#Struct_note_data_res">note_data_res</a><br/>
+<a href="#Struct_note_html_res">note_html_res</a><br/>
+<a href="#Struct_note_list_count_res">note_list_count_res</a><br/>
+<a href="#Struct_note_meta">note_meta</a><br/>
+<a href="#Struct_note_meta_list_res">note_meta_list_res</a><br/>
+<a href="#Struct_note_meta_res">note_meta_res</a><br/>
+<a href="#Struct_remove_friend_req">remove_friend_req</a><br/>
+<a href="#Struct_remove_friend_res">remove_friend_res</a><br/>
+<a href="#Struct_rename_group_req">rename_group_req</a><br/>
+<a href="#Struct_rename_group_res">rename_group_res</a><br/>
+<a href="#Struct_school_roll_add_res">school_roll_add_res</a><br/>
+<a href="#Struct_school_roll_count_res">school_roll_count_res</a><br/>
+<a href="#Struct_school_roll_list_req">school_roll_list_req</a><br/>
+<a href="#Struct_school_roll_list_res">school_roll_list_res</a><br/>
+<a href="#Struct_search_history_req">search_history_req</a><br/>
+<a href="#Struct_search_history_res">search_history_res</a><br/>
+<a href="#Struct_search_item_req">search_item_req</a><br/>
+<a href="#Struct_search_item_res">search_item_res</a><br/>
+<a href="#Struct_search_req">search_req</a><br/>
+<a href="#Struct_search_res">search_res</a><br/>
+<a href="#Struct_search_user_req">search_user_req</a><br/>
+<a href="#Struct_set_alipay_uinfo_req">set_alipay_uinfo_req</a><br/>
+<a href="#Struct_set_alipay_uinfo_res">set_alipay_uinfo_res</a><br/>
+<a href="#Struct_set_baidu_entity_req">set_baidu_entity_req</a><br/>
+<a href="#Struct_set_baidu_entity_res">set_baidu_entity_res</a><br/>
+<a href="#Struct_set_keyvalue_req">set_keyvalue_req</a><br/>
+<a href="#Struct_set_keyvalue_res">set_keyvalue_res</a><br/>
+<a href="#Struct_set_user_info_req">set_user_info_req</a><br/>
+<a href="#Struct_set_user_info_res">set_user_info_res</a><br/>
+<a href="#Struct_set_wechat_uinfo_req">set_wechat_uinfo_req</a><br/>
+<a href="#Struct_set_wechat_uinfo_res">set_wechat_uinfo_res</a><br/>
+<a href="#Struct_source_res">source_res</a><br/>
+<a href="#Struct_subject_cate_add_res">subject_cate_add_res</a><br/>
+<a href="#Struct_subject_cate_count_res">subject_cate_count_res</a><br/>
+<a href="#Struct_subject_cate_list_req">subject_cate_list_req</a><br/>
+<a href="#Struct_subject_cate_list_res">subject_cate_list_res</a><br/>
+<a href="#Struct_subject_name_res">subject_name_res</a><br/>
+<a href="#Struct_thumbnail_res">thumbnail_res</a><br/>
+<a href="#Struct_timu_by_id_req">timu_by_id_req</a><br/>
+<a href="#Struct_timu_by_id_res">timu_by_id_res</a><br/>
+<a href="#Struct_timu_count_res">timu_count_res</a><br/>
+<a href="#Struct_timu_res">timu_res</a><br/>
+<a href="#Struct_tixing_res">tixing_res</a><br/>
+<a href="#Struct_update_note_req">update_note_req</a><br/>
+<a href="#Struct_update_req">update_req</a><br/>
+<a href="#Struct_user">user</a><br/>
+<a href="#Struct_user_info_req">user_info_req</a><br/>
+<a href="#Struct_user_res">user_res</a><br/>
+<a href="#Struct_version_res">version_res</a><br/>
+</td>
+<td></td>
+</tr></tbody></table>
+<hr/><h2 id="Structs">Data structures</h2>
+<div class="definition"><h3 id="Struct_user">Struct: user</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>phone</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>email</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>account</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>pass_wd</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>status</td><td><code>i16</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>7</td><td>role</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>8</td><td>vip</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>9</td><td>coin</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>10</td><td>reg_ip</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>11</td><td>reg_at</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_user_info_req">Struct: user_info_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_new_user_req">Struct: new_user_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>account</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>pass_wd</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>role</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>invitor</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>source</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>contactor</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>7</td><td>email</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>8</td><td>reg_ip</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>9</td><td>status</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>10</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_search_user_req">Struct: search_user_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uids</td><td><code>list&lt;<code>i64</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>account</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>phone</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>email</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_user_res">Struct: user_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>user</td><td><code><a href="#Struct_user">user</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_update_req">Struct: update_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>phone</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>email</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>account</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>pass_wd</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>status</td><td><code>i16</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>7</td><td>role</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>8</td><td>vip</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>9</td><td>coin</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>23</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_friend_req">Struct: add_friend_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>phone</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_friend_res">Struct: add_friend_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_agree_friend_req">Struct: agree_friend_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_agree_friend_res">Struct: agree_friend_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_friend_item">Struct: friend_item</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>note</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>account</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>nick_name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>avatar</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>brithday</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>7</td><td>join_at</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_group">Struct: group</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>sort</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>lists</td><td><code>list&lt;<code><a href="#Struct_friend_item">friend_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_friend">Struct: friend</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>total</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>data</td><td><code>list&lt;<code><a href="#Struct_group">group</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>invite</td><td><code>list&lt;<code><a href="#Struct_friend_item">friend_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>blacks</td><td><code>list&lt;<code><a href="#Struct_friend_item">friend_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_friend_res">Struct: friend_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>friends</td><td><code><a href="#Struct_friend">friend</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_create_group_req">Struct: create_group_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_create_group_res">Struct: create_group_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_rename_group_req">Struct: rename_group_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>old_name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>new_name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_rename_group_res">Struct: rename_group_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_friend_note_req">Struct: add_friend_note_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>note</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_friend_note_res">Struct: add_friend_note_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_move_group_req">Struct: move_group_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>group</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_move_group_res">Struct: move_group_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_remove_friend_req">Struct: remove_friend_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_remove_friend_res">Struct: remove_friend_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_likes_count_res">Struct: likes_count_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>count</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_likes_add_res">Struct: likes_add_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_likes">Struct: likes</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>create_at</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_likes_list_res">Struct: likes_list_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>data</td><td><code>list&lt;<code><a href="#Struct_likes">likes</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_note_meta">Struct: note_meta</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>user_id</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>thumb</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>desc</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>sign</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>7</td><td>create_at</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>8</td><td>update_at</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_update_note_req">Struct: update_note_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>data</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>html</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_note_meta_res">Struct: note_meta_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>meta</td><td><code><a href="#Struct_note_meta">note_meta</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_note_meta_list_res">Struct: note_meta_list_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>meta</td><td><code>list&lt;<code><a href="#Struct_note_meta">note_meta</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_note_list_count_res">Struct: note_list_count_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>count</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_note_data_res">Struct: note_data_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>data</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_note_html_res">Struct: note_html_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>data</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_moments_count_res">Struct: moments_count_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>count</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_extra">Struct: extra</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>path</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>type</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_moments">Struct: moments</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>id</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>mid</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>text</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>list&lt;<code><a href="#Struct_extra">extra</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>create_at</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_moments_res">Struct: add_moments_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_moments_list_res">Struct: moments_list_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>data</td><td><code>list&lt;<code><a href="#Struct_moments">moments</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_FileItem">Struct: FileItem</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>type</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>path</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>size</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>url</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>create_at</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>7</td><td>update_at</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>8</td><td>extra</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_file_dir_res">Struct: file_dir_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>dirs</td><td><code>list&lt;<code><a href="#Struct_FileItem">FileItem</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_dir_req">Struct: add_dir_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>parent</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_dir_res">Struct: add_dir_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_file_req">Struct: add_file_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>size</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>path</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>url</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>thumb</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>content_type</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_file_res">Struct: add_file_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_file_attr_res">Struct: file_attr_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>capacity</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>number</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_thumbnail_res">Struct: thumbnail_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>thumb</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_set_keyvalue_req">Struct: set_keyvalue_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>key</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>value</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>expire</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_set_keyvalue_res">Struct: set_keyvalue_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_get_keyvalue_req">Struct: get_keyvalue_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>key</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_get_keyvalue_res">Struct: get_keyvalue_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>value</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_del_keyvalue_req">Struct: del_keyvalue_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>key</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_del_keyvalue_res">Struct: del_keyvalue_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_version_res">Struct: version_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>versions</td><td><code>list&lt;<code><a href="common.html#Struct_version_item">common.version_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_subject_name_res">Struct: subject_name_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_chapter_res_item">Struct: chapter_res_item</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>childs</td><td><code>list&lt;<code><a href="common.html#Struct_chapter_item">common.chapter_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_chapter_res">Struct: chapter_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>chapters</td><td><code>list&lt;<code><a href="#Struct_chapter_res_item">chapter_res_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_source_res">Struct: source_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>sources</td><td><code>list&lt;<code><a href="common.html#Struct_source_item">common.source_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_tixing_res">Struct: tixing_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>tixings</td><td><code>list&lt;<code><a href="common.html#Struct_tixing_item">common.tixing_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_timu_count_res">Struct: timu_count_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>count</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_timu_res">Struct: timu_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>timus</td><td><code>list&lt;<code><a href="common.html#Struct_timu_item">common.timu_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_timu_by_id_req">Struct: timu_by_id_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>tid</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_timu_by_id_res">Struct: timu_by_id_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>timus</td><td><code><a href="common.html#Struct_timu_item">common.timu_item</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_collect_req">Struct: collect_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>cid</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>op</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_collect_res">Struct: collect_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_collect_list_req">Struct: collect_list_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>page</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>size</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_collect_list_res">Struct: collect_list_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>timus</td><td><code>list&lt;<code><a href="common.html#Struct_timu_item">common.timu_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_modify_req">Struct: modify_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>tid</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>timu</td><td><code><a href="common.html#Struct_question">common.question</a></code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_modify_res">Struct: modify_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_modify_list_req">Struct: modify_list_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>page</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>size</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>sorted</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>status</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_modify_list_res">Struct: modify_list_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>timus</td><td><code>list&lt;<code><a href="common.html#Struct_modify_item">common.modify_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_modify_count_req">Struct: modify_count_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>status</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_modify_count_res">Struct: modify_count_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>count</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_approve_modify_req">Struct: approve_modify_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>id</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>status</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>info</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_approve_modify_res">Struct: approve_modify_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_search_req">Struct: search_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>keyword</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>style</td><td><code><a href="common.html#Enum_search_tyle">common.search_tyle</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>page</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>size</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_search_res">Struct: search_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>timestamp</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>total</td><td><code><a href="common.html#Struct_search_hits_total">common.search_hits_total</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>hits</td><td><code>list&lt;<code><a href="common.html#Struct_search_hits_item">common.search_hits_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_grade_cate_res">Struct: add_grade_cate_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_grade_cate_count_res">Struct: grade_cate_count_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>count</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_grade_cate_list_req">Struct: grade_cate_list_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>page</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>size</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_grade_cate_list_res">Struct: grade_cate_list_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>lists</td><td><code>list&lt;<code><a href="common.html#Struct_grade_cate">common.grade_cate</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_home_black_data_res">Struct: home_black_data_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>lists</td><td><code>list&lt;<code><a href="common.html#Struct_school_static">common.school_static</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_grade_subject_req">Struct: grade_subject_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>index</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_grade_subject_res">Struct: grade_subject_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>lists</td><td><code>list&lt;<code><a href="common.html#Struct_grade_subject">common.grade_subject</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_school_roll_add_res">Struct: school_roll_add_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_school_roll_count_res">Struct: school_roll_count_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>count</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_school_roll_list_req">Struct: school_roll_list_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>page</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>size</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_school_roll_list_res">Struct: school_roll_list_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>lists</td><td><code>list&lt;<code><a href="common.html#Struct_school_roll">common.school_roll</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_subject_cate_add_res">Struct: subject_cate_add_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_subject_cate_count_res">Struct: subject_cate_count_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>count</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_subject_cate_list_req">Struct: subject_cate_list_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>page</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>size</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_subject_cate_list_res">Struct: subject_cate_list_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>lists</td><td><code>list&lt;<code><a href="common.html#Struct_subject_cate">common.subject_cate</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_attention_item">Struct: attention_item</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>id</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>desc</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>create_at</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_attention_req">Struct: add_attention_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>item</td><td><code><a href="#Struct_attention_item">attention_item</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_attention_res">Struct: add_attention_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_del_attention_req">Struct: del_attention_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>aid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_del_attention_res">Struct: del_attention_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_get_attention_req">Struct: get_attention_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>aid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>page</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>size</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_get_attention_res">Struct: get_attention_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>lists</td><td><code>list&lt;<code><a href="#Struct_attention_item">attention_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_user_attention_req">Struct: add_user_attention_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>aid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_user_attention_res">Struct: add_user_attention_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_get_user_attention_req">Struct: get_user_attention_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_get_user_attention_res">Struct: get_user_attention_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>lists</td><td><code>list&lt;<code><a href="#Struct_attention_item">attention_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_del_user_attention_req">Struct: del_user_attention_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>aid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_del_user_attention_res">Struct: del_user_attention_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_set_user_info_req">Struct: set_user_info_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>info</td><td><code><a href="common.html#Struct_user_info">common.user_info</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_set_user_info_res">Struct: set_user_info_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_get_user_info_req">Struct: get_user_info_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_get_user_info_res">Struct: get_user_info_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>info</td><td><code><a href="common.html#Struct_user_info">common.user_info</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_set_wechat_uinfo_req">Struct: set_wechat_uinfo_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>info</td><td><code><a href="common.html#Struct_wechat_userinfo">common.wechat_userinfo</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_set_wechat_uinfo_res">Struct: set_wechat_uinfo_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_get_wechat_uinfo_req">Struct: get_wechat_uinfo_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_get_wechat_uinfo_res">Struct: get_wechat_uinfo_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>info</td><td><code><a href="common.html#Struct_wechat_userinfo">common.wechat_userinfo</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_set_alipay_uinfo_req">Struct: set_alipay_uinfo_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>info</td><td><code><a href="common.html#Struct_alipay_userinfo">common.alipay_userinfo</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_set_alipay_uinfo_res">Struct: set_alipay_uinfo_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_get_alipay_uinfo_req">Struct: get_alipay_uinfo_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_get_alipay_uinfo_res">Struct: get_alipay_uinfo_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>info</td><td><code><a href="common.html#Struct_alipay_userinfo">common.alipay_userinfo</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_set_baidu_entity_req">Struct: set_baidu_entity_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>bid</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>entitys</td><td><code>list&lt;<code><a href="common.html#Struct_baidu_entity">common.baidu_entity</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_set_baidu_entity_res">Struct: set_baidu_entity_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_baidu_entity_req">Struct: baidu_entity_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>bid</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>page</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>size</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_baidu_entity_res">Struct: baidu_entity_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>page</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>size</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>entitys</td><td><code>list&lt;<code><a href="common.html#Struct_baidu_entity">common.baidu_entity</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_search_item_req">Struct: search_item_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>keyword</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>page</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>size</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_search_item_res">Struct: search_item_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>lists</td><td><code>list&lt;<code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_search_history_req">Struct: search_history_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>page</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>size</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_search_history_res">Struct: search_history_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>lists</td><td><code>list&lt;<code><a href="common.html#Struct_search_history_item">common.search_history_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><hr/><h2 id="Services">Services</h2>
+<h3 id="Svc_datanode_service">Service: datanode_service</h3>
+<div class="definition"><h4 id="Fn_datanode_service_createUser">Function: datanode_service.createUser</h4>
+<pre><code><a href="#Struct_user_res">user_res</a></code> createUser(<code><a href="#Struct_new_user_req">new_user_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_userInfo">Function: datanode_service.userInfo</h4>
+<pre><code><a href="#Struct_user_res">user_res</a></code> userInfo(<code><a href="#Struct_user_info_req">user_info_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_searchUser">Function: datanode_service.searchUser</h4>
+<pre><code>list&lt;<code><a href="#Struct_user">user</a></code>&gt;</code> searchUser(<code><a href="#Struct_search_user_req">search_user_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_updateUser">Function: datanode_service.updateUser</h4>
+<pre><code><a href="#Struct_user_res">user_res</a></code> updateUser(<code><a href="#Struct_update_req">update_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_add_attention">Function: datanode_service.add_attention</h4>
+<pre><code><a href="#Struct_add_attention_res">add_attention_res</a></code> add_attention(<code><a href="#Struct_add_attention_req">add_attention_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_del_attention">Function: datanode_service.del_attention</h4>
+<pre><code><a href="#Struct_del_attention_res">del_attention_res</a></code> del_attention(<code><a href="#Struct_del_attention_req">del_attention_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_get_attention">Function: datanode_service.get_attention</h4>
+<pre><code><a href="#Struct_get_attention_res">get_attention_res</a></code> get_attention(<code><a href="#Struct_get_attention_req">get_attention_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_add_user_attention">Function: datanode_service.add_user_attention</h4>
+<pre><code><a href="#Struct_add_user_attention_res">add_user_attention_res</a></code> add_user_attention(<code><a href="#Struct_add_user_attention_req">add_user_attention_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_del_user_attention">Function: datanode_service.del_user_attention</h4>
+<pre><code><a href="#Struct_del_user_attention_res">del_user_attention_res</a></code> del_user_attention(<code><a href="#Struct_del_user_attention_req">del_user_attention_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_get_user_attention">Function: datanode_service.get_user_attention</h4>
+<pre><code><a href="#Struct_get_user_attention_res">get_user_attention_res</a></code> get_user_attention(<code><a href="#Struct_get_user_attention_req">get_user_attention_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_addFriends">Function: datanode_service.addFriends</h4>
+<pre><code><a href="#Struct_add_friend_res">add_friend_res</a></code> addFriends(<code>i64</code> uid,
+                          <code><a href="#Struct_add_friend_req">add_friend_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_agreeFriends">Function: datanode_service.agreeFriends</h4>
+<pre><code><a href="#Struct_agree_friend_res">agree_friend_res</a></code> agreeFriends(<code>i64</code> uid,
+                              <code><a href="#Struct_agree_friend_req">agree_friend_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_friendsList">Function: datanode_service.friendsList</h4>
+<pre><code><a href="#Struct_friend_res">friend_res</a></code> friendsList(<code>i64</code> uid,
+                       <code>i64</code> uid2)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_createGroup">Function: datanode_service.createGroup</h4>
+<pre><code><a href="#Struct_create_group_res">create_group_res</a></code> createGroup(<code>i64</code> uid,
+                             <code><a href="#Struct_create_group_req">create_group_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_renameGroup">Function: datanode_service.renameGroup</h4>
+<pre><code><a href="#Struct_rename_group_res">rename_group_res</a></code> renameGroup(<code>i64</code> uid,
+                             <code><a href="#Struct_rename_group_req">rename_group_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_addNoteFriend">Function: datanode_service.addNoteFriend</h4>
+<pre><code><a href="#Struct_add_friend_note_res">add_friend_note_res</a></code> addNoteFriend(<code>i64</code> uid,
+                                  <code><a href="#Struct_add_friend_note_req">add_friend_note_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_moveToNewGroup">Function: datanode_service.moveToNewGroup</h4>
+<pre><code><a href="#Struct_move_group_res">move_group_res</a></code> moveToNewGroup(<code>i64</code> uid,
+                              <code><a href="#Struct_move_group_req">move_group_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_removeFriend">Function: datanode_service.removeFriend</h4>
+<pre><code><a href="#Struct_remove_friend_res">remove_friend_res</a></code> removeFriend(<code>i64</code> uid,
+                               <code><a href="#Struct_remove_friend_req">remove_friend_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_likesCount">Function: datanode_service.likesCount</h4>
+<pre><code><a href="#Struct_likes_count_res">likes_count_res</a></code> likesCount(<code>string</code> mid)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_likesAdd">Function: datanode_service.likesAdd</h4>
+<pre><code><a href="#Struct_likes_add_res">likes_add_res</a></code> likesAdd(<code>string</code> mid,
+                       <code>i64</code> uid)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_likesList">Function: datanode_service.likesList</h4>
+<pre><code><a href="#Struct_likes_list_res">likes_list_res</a></code> likesList(<code>string</code> mid,
+                         <code>i32</code> page,
+                         <code>i32</code> size)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_updateNote">Function: datanode_service.updateNote</h4>
+<pre><code><a href="#Struct_note_meta_res">note_meta_res</a></code> updateNote(<code>i64</code> uid,
+                         <code><a href="#Struct_update_note_req">update_note_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_noteMetaList">Function: datanode_service.noteMetaList</h4>
+<pre><code><a href="#Struct_note_meta_list_res">note_meta_list_res</a></code> noteMetaList(<code>i64</code> uid,
+                                <code>i32</code> page,
+                                <code>i32</code> size)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_noteListCount">Function: datanode_service.noteListCount</h4>
+<pre><code><a href="#Struct_note_list_count_res">note_list_count_res</a></code> noteListCount(<code>i64</code> uid)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_noteData">Function: datanode_service.noteData</h4>
+<pre><code><a href="#Struct_note_data_res">note_data_res</a></code> noteData(<code>i64</code> uid,
+                       <code>i64</code> nid)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_noteHtml">Function: datanode_service.noteHtml</h4>
+<pre><code><a href="#Struct_note_html_res">note_html_res</a></code> noteHtml(<code>i64</code> uid,
+                       <code>i64</code> nid)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_momentsCount">Function: datanode_service.momentsCount</h4>
+<pre><code><a href="#Struct_moments_count_res">moments_count_res</a></code> momentsCount(<code>i64</code> uid)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_momentsAdd">Function: datanode_service.momentsAdd</h4>
+<pre><code><a href="#Struct_add_moments_res">add_moments_res</a></code> momentsAdd(<code>i64</code> uid,
+                           <code><a href="#Struct_moments">moments</a></code> moments)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_momentsList">Function: datanode_service.momentsList</h4>
+<pre><code><a href="#Struct_moments_list_res">moments_list_res</a></code> momentsList(<code>i64</code> uid,
+                             <code>i32</code> page,
+                             <code>i32</code> size)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_fileDirOne">Function: datanode_service.fileDirOne</h4>
+<pre><code><a href="#Struct_file_dir_res">file_dir_res</a></code> fileDirOne(<code>i64</code> uid,
+                        <code>string</code> path)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_fileDirAdd">Function: datanode_service.fileDirAdd</h4>
+<pre><code><a href="#Struct_add_dir_res">add_dir_res</a></code> fileDirAdd(<code>i64</code> uid,
+                       <code><a href="#Struct_add_dir_req">add_dir_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_addFile">Function: datanode_service.addFile</h4>
+<pre><code><a href="#Struct_add_file_res">add_file_res</a></code> addFile(<code>i64</code> uid,
+                     <code><a href="#Struct_add_file_req">add_file_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_yunSaveAttr">Function: datanode_service.yunSaveAttr</h4>
+<pre><code><a href="#Struct_file_attr_res">file_attr_res</a></code> yunSaveAttr(<code>i64</code> uid)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_thumbnail">Function: datanode_service.thumbnail</h4>
+<pre><code><a href="#Struct_thumbnail_res">thumbnail_res</a></code> thumbnail(<code>i64</code> uid,
+                        <code>string</code> path)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_setKeyValue">Function: datanode_service.setKeyValue</h4>
+<pre><code><a href="#Struct_set_keyvalue_res">set_keyvalue_res</a></code> setKeyValue(<code><a href="#Struct_set_keyvalue_req">set_keyvalue_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_getKeyValue">Function: datanode_service.getKeyValue</h4>
+<pre><code><a href="#Struct_get_keyvalue_res">get_keyvalue_res</a></code> getKeyValue(<code><a href="#Struct_get_keyvalue_req">get_keyvalue_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_delKeyValue">Function: datanode_service.delKeyValue</h4>
+<pre><code><a href="#Struct_del_keyvalue_res">del_keyvalue_res</a></code> delKeyValue(<code><a href="#Struct_del_keyvalue_req">del_keyvalue_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_question_version">Function: datanode_service.question_version</h4>
+<pre><code><a href="#Struct_version_res">version_res</a></code> question_version(<code><a href="common.html#Struct_question_query">common.question_query</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_question_chapter">Function: datanode_service.question_chapter</h4>
+<pre><code><a href="#Struct_chapter_res">chapter_res</a></code> question_chapter(<code><a href="common.html#Struct_question_query">common.question_query</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_subject_name">Function: datanode_service.subject_name</h4>
+<pre><code><a href="#Struct_subject_name_res">subject_name_res</a></code> subject_name(<code>string</code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_question_source">Function: datanode_service.question_source</h4>
+<pre><code><a href="#Struct_source_res">source_res</a></code> question_source(<code><a href="common.html#Struct_question_query">common.question_query</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_question_tixing">Function: datanode_service.question_tixing</h4>
+<pre><code><a href="#Struct_tixing_res">tixing_res</a></code> question_tixing(<code><a href="common.html#Struct_question_query">common.question_query</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_question_timu_count">Function: datanode_service.question_timu_count</h4>
+<pre><code><a href="#Struct_timu_count_res">timu_count_res</a></code> question_timu_count(<code><a href="common.html#Struct_question_query">common.question_query</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_question_timu">Function: datanode_service.question_timu</h4>
+<pre><code><a href="#Struct_timu_res">timu_res</a></code> question_timu(<code>i64</code> uid,
+                       <code><a href="common.html#Struct_question_query">common.question_query</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_question_timu_by_id">Function: datanode_service.question_timu_by_id</h4>
+<pre><code><a href="#Struct_timu_by_id_res">timu_by_id_res</a></code> question_timu_by_id(<code><a href="#Struct_timu_by_id_req">timu_by_id_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_collect_timu">Function: datanode_service.collect_timu</h4>
+<pre><code><a href="#Struct_collect_res">collect_res</a></code> collect_timu(<code>i64</code> uid,
+                         <code><a href="#Struct_collect_req">collect_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_query_collect_timu">Function: datanode_service.query_collect_timu</h4>
+<pre><code><a href="#Struct_collect_list_res">collect_list_res</a></code> query_collect_timu(<code><a href="#Struct_collect_list_req">collect_list_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_modify_question">Function: datanode_service.modify_question</h4>
+<pre><code><a href="#Struct_modify_res">modify_res</a></code> modify_question(<code><a href="#Struct_modify_req">modify_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_modify_list">Function: datanode_service.modify_list</h4>
+<pre><code><a href="#Struct_modify_list_res">modify_list_res</a></code> modify_list(<code><a href="#Struct_modify_list_req">modify_list_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_modify_count">Function: datanode_service.modify_count</h4>
+<pre><code><a href="#Struct_modify_count_res">modify_count_res</a></code> modify_count(<code><a href="#Struct_modify_count_req">modify_count_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_approve_modify">Function: datanode_service.approve_modify</h4>
+<pre><code><a href="#Struct_approve_modify_res">approve_modify_res</a></code> approve_modify(<code><a href="#Struct_approve_modify_req">approve_modify_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_on_search">Function: datanode_service.on_search</h4>
+<pre><code><a href="#Struct_search_res">search_res</a></code> on_search(<code><a href="#Struct_search_req">search_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_grade_cate_add">Function: datanode_service.grade_cate_add</h4>
+<pre><code><a href="#Struct_add_grade_cate_res">add_grade_cate_res</a></code> grade_cate_add(<code><a href="common.html#Struct_grade_cate">common.grade_cate</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_grade_cate_count">Function: datanode_service.grade_cate_count</h4>
+<pre><code><a href="#Struct_grade_cate_count_res">grade_cate_count_res</a></code> grade_cate_count()
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_grade_cate_list">Function: datanode_service.grade_cate_list</h4>
+<pre><code><a href="#Struct_grade_cate_list_res">grade_cate_list_res</a></code> grade_cate_list(<code><a href="#Struct_grade_cate_list_req">grade_cate_list_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_home_black_data">Function: datanode_service.home_black_data</h4>
+<pre><code><a href="#Struct_home_black_data_res">home_black_data_res</a></code> home_black_data()
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_grade_subject">Function: datanode_service.grade_subject</h4>
+<pre><code><a href="#Struct_grade_subject_res">grade_subject_res</a></code> grade_subject(<code><a href="#Struct_grade_subject_req">grade_subject_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_school_roll_add">Function: datanode_service.school_roll_add</h4>
+<pre><code><a href="#Struct_school_roll_add_res">school_roll_add_res</a></code> school_roll_add(<code><a href="common.html#Struct_school_roll">common.school_roll</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_school_roll_count">Function: datanode_service.school_roll_count</h4>
+<pre><code><a href="#Struct_school_roll_count_res">school_roll_count_res</a></code> school_roll_count()
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_school_list">Function: datanode_service.school_list</h4>
+<pre><code><a href="#Struct_school_roll_list_res">school_roll_list_res</a></code> school_list(<code><a href="#Struct_school_roll_list_req">school_roll_list_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_subject_cate_add">Function: datanode_service.subject_cate_add</h4>
+<pre><code><a href="#Struct_subject_cate_add_res">subject_cate_add_res</a></code> subject_cate_add(<code><a href="common.html#Struct_subject_cate">common.subject_cate</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_subject_cate_count">Function: datanode_service.subject_cate_count</h4>
+<pre><code><a href="#Struct_subject_cate_count_res">subject_cate_count_res</a></code> subject_cate_count()
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_subject_cate_list">Function: datanode_service.subject_cate_list</h4>
+<pre><code><a href="#Struct_subject_cate_list_res">subject_cate_list_res</a></code> subject_cate_list(<code><a href="#Struct_subject_cate_list_req">subject_cate_list_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_set_user_info">Function: datanode_service.set_user_info</h4>
+<pre><code><a href="#Struct_set_user_info_res">set_user_info_res</a></code> set_user_info(<code><a href="#Struct_set_user_info_req">set_user_info_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_get_user_info">Function: datanode_service.get_user_info</h4>
+<pre><code><a href="#Struct_get_user_info_res">get_user_info_res</a></code> get_user_info(<code><a href="#Struct_get_user_info_req">get_user_info_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_set_wechat_uinfo">Function: datanode_service.set_wechat_uinfo</h4>
+<pre><code><a href="#Struct_set_wechat_uinfo_res">set_wechat_uinfo_res</a></code> set_wechat_uinfo(<code><a href="#Struct_set_wechat_uinfo_req">set_wechat_uinfo_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_get_wechat_uinfo">Function: datanode_service.get_wechat_uinfo</h4>
+<pre><code><a href="#Struct_get_wechat_uinfo_res">get_wechat_uinfo_res</a></code> get_wechat_uinfo(<code><a href="#Struct_get_wechat_uinfo_req">get_wechat_uinfo_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_set_alipay_uinfo">Function: datanode_service.set_alipay_uinfo</h4>
+<pre><code><a href="#Struct_set_alipay_uinfo_res">set_alipay_uinfo_res</a></code> set_alipay_uinfo(<code><a href="#Struct_set_alipay_uinfo_req">set_alipay_uinfo_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_get_alipay_uinfo">Function: datanode_service.get_alipay_uinfo</h4>
+<pre><code><a href="#Struct_get_alipay_uinfo_res">get_alipay_uinfo_res</a></code> get_alipay_uinfo(<code><a href="#Struct_get_alipay_uinfo_req">get_alipay_uinfo_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_set_baidu_entity">Function: datanode_service.set_baidu_entity</h4>
+<pre><code><a href="#Struct_set_baidu_entity_res">set_baidu_entity_res</a></code> set_baidu_entity(<code><a href="#Struct_set_baidu_entity_req">set_baidu_entity_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_baidu_entity">Function: datanode_service.baidu_entity</h4>
+<pre><code><a href="#Struct_baidu_entity_res">baidu_entity_res</a></code> baidu_entity(<code><a href="#Struct_baidu_entity_req">baidu_entity_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_search_history">Function: datanode_service.search_history</h4>
+<pre><code><a href="#Struct_search_history_res">search_history_res</a></code> search_history(<code><a href="#Struct_search_history_req">search_history_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_search_item">Function: datanode_service.search_item</h4>
+<pre><code><a href="#Struct_search_item_res">search_item_res</a></code> search_item(<code><a href="#Struct_search_item_req">search_item_req</a></code> req)
+</pre></div></div></body></html>

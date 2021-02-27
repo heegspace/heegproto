@@ -5,3 +5,6 @@ thrift -r -gen go *.thrift
 
 cp -rf gen-go/rescode/* ./
 rm -rf gen-go
+
+thrift -r -gen html *.thrift
+mv gen-html ../docs/rescode

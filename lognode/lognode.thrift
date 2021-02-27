@@ -1,6 +1,6 @@
 namespace go lognode
 
-include "../rescode.thrift"
+include "../rescode/rescode.thrift"
 
 enum log_level {
     INFO  = 0,

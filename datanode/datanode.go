@@ -9,8 +9,8 @@ import(
 	"reflect"
 	"fmt"
 	"github.com/heegspace/heegproto/common"
-	"github.com/heegspace/heegproto/rescode"
-	"github.com/heegspace/thrift"
+"github.com/heegspace/heegproto/rescode"
+"github.com/heegspace/thrift"
 
 )
 

@@ -6,3 +6,7 @@ thrift -r -gen go *.thrift
 rm -rf gen-go/momnode/momnode_service-remote
 cp -rf gen-go/momnode/* ./
 rm -rf gen-go
+
+
+thrift -r -gen html *.thrift
+mv gen-html ../docs/momnode
