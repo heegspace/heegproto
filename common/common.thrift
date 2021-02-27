@@ -66,14 +66,14 @@ struct version_item {
 
 
 struct question_option {
-    1:string        name,
-    2:list<string>  images,
+    1:string        name (go.tag = 'form:"name" json:"name"'),
+    2:list<string>  images (go.tag = 'form:"images" json:"images"'),
 }
 
 struct question {
-    1:string                timu,
-    2:list<string>          images,
-    3:list<question_option> options,
+    1:string                timu (go.tag = 'form:"timu" json:"timu"'),
+    2:list<string>          images (go.tag = 'form:"images" json:"images"'),
+    3:list<question_option> options (go.tag = 'form:"options" json:"options"'),
 }
 
 struct timu_item {

@@ -430,7 +430,7 @@ struct timu_by_id_req {
 struct timu_by_id_res {
     1:rescode.code       rescode,
     2:string             resmsg,
-    3:common.timu_item    timus,
+    3:common.timu_item   timus,
     4:map<string,string> extra,
 }
 

@@ -1550,8 +1550,8 @@ func (p *VersionItem) String() string {
 //  - Name
 //  - Images
 type QuestionOption struct {
-	Name   string   `thrift:"name,1" db:"name" json:"name"`
-	Images []string `thrift:"images,2" db:"images" json:"images"`
+	Name   string   `thrift:"name,1" form:"name" json:"name"`
+	Images []string `thrift:"images,2" form:"images" json:"images"`
 }
 
 func NewQuestionOption() *QuestionOption {
@@ -1712,9 +1712,9 @@ func (p *QuestionOption) String() string {
 //  - Images
 //  - Options
 type Question struct {
-	Timu    string            `thrift:"timu,1" db:"timu" json:"timu"`
-	Images  []string          `thrift:"images,2" db:"images" json:"images"`
-	Options []*QuestionOption `thrift:"options,3" db:"options" json:"options"`
+	Timu    string            `thrift:"timu,1" form:"timu" json:"timu"`
+	Images  []string          `thrift:"images,2" form:"images" json:"images"`
+	Options []*QuestionOption `thrift:"options,3" form:"options" json:"options"`
 }
 
 func NewQuestion() *Question {
