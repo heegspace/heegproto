@@ -421,6 +421,19 @@ struct timu_res {
     4:map<string,string> extra,
 }
 
+struct timu_by_id_req {
+    1:i64                   uid,    // 用户id
+    2:string                tid,    // 题目id
+    3:map<string,string>    extra,
+}
+
+struct timu_by_id_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:common.timu_item    timus,
+    4:map<string,string> extra,
+}
+
 struct collect_req {
     1:string    cid,
     2:i64       op,
@@ -920,6 +933,8 @@ service datanode_service {
     timu_count_res question_timu_count(1:common.question_query req),
     // 请求题目
     timu_res question_timu(1:i64 uid, 2:common.question_query req),
+    // 根据试题id请求题目
+    timu_by_id_res question_timu_by_id(1:timu_by_id_req req),
     // 收藏试题
     collect_res collect_timu(1:i64 uid, 2:collect_req req),
     // 获取收藏列表

@@ -347,6 +347,20 @@ struct approve_modify_res {
     3:map<string,string> extra, 
 }
 
+struct timu_by_id_req {
+    1:common.authorize      auth,
+    2:i64                   uid,
+    3:string                tid,
+    4:map<string,string>    extra,
+}
+
+struct timu_by_id_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:common.timu_item   timu,
+    4:map<string,string> extra,
+}
+
 service questionnode_service {
     // 添加年纪信息
     grade_cate_add_res grade_cate_add(1:grade_cate_add_req req),
@@ -398,4 +412,7 @@ service questionnode_service {
     modify_count_res modify_count(1:modify_count_req req),
     // 审核修改的试题
     approve_modify_res approve_modify(1:approve_modify_req req),
+
+    // 根据试题id请求题目
+    timu_by_id_res question_timu_by_id(1:timu_by_id_req req),
 }
