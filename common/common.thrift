@@ -160,6 +160,8 @@ struct modify_item {
     10:string   confirmer,
     11:string   create_at,
     12:string   update_at,
+    13:string   username,
+    14:string   confirmname,
 }
 
 struct search_hits_total {

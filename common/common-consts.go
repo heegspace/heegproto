@@ -7,8 +7,9 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/heegspace/thrift"
 	"reflect"
+
+	"github.com/heegspace/thrift"
 )
 
 // (needed to ensure safety because of naive import list construction.)

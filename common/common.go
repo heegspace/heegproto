@@ -9,8 +9,9 @@ import (
 	"database/sql/driver"
 	"errors"
 	"fmt"
-	"github.com/heegspace/thrift"
 	"reflect"
+
+	"github.com/heegspace/thrift"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -4494,19 +4495,23 @@ func (p *ModifyMeta) String() string {
 //  - Confirmer
 //  - CreateAt
 //  - UpdateAt
+//  - Username
+//  - Confirmname
 type ModifyItem struct {
-	ID        int64       `thrift:"id,1" db:"id" json:"id"`
-	Userid    int64       `thrift:"userid,2" db:"userid" json:"userid"`
-	TiMuID    string      `thrift:"ti_mu_id,3" db:"ti_mu_id" json:"ti_mu_id"`
-	Source    *Question   `thrift:"source,4" db:"source" json:"source"`
-	Data      *Question   `thrift:"data,5" db:"data" json:"data"`
-	Sign      string      `thrift:"sign,6" db:"sign" json:"sign"`
-	Status    string      `thrift:"status,7" db:"status" json:"status"`
-	Msg       string      `thrift:"msg,8" db:"msg" json:"msg"`
-	Meta      *ModifyMeta `thrift:"meta,9" db:"meta" json:"meta"`
-	Confirmer string      `thrift:"confirmer,10" db:"confirmer" json:"confirmer"`
-	CreateAt  string      `thrift:"create_at,11" db:"create_at" json:"create_at"`
-	UpdateAt  string      `thrift:"update_at,12" db:"update_at" json:"update_at"`
+	ID          int64       `thrift:"id,1" db:"id" json:"id"`
+	Userid      int64       `thrift:"userid,2" db:"userid" json:"userid"`
+	TiMuID      string      `thrift:"ti_mu_id,3" db:"ti_mu_id" json:"ti_mu_id"`
+	Source      *Question   `thrift:"source,4" db:"source" json:"source"`
+	Data        *Question   `thrift:"data,5" db:"data" json:"data"`
+	Sign        string      `thrift:"sign,6" db:"sign" json:"sign"`
+	Status      string      `thrift:"status,7" db:"status" json:"status"`
+	Msg         string      `thrift:"msg,8" db:"msg" json:"msg"`
+	Meta        *ModifyMeta `thrift:"meta,9" db:"meta" json:"meta"`
+	Confirmer   string      `thrift:"confirmer,10" db:"confirmer" json:"confirmer"`
+	CreateAt    string      `thrift:"create_at,11" db:"create_at" json:"create_at"`
+	UpdateAt    string      `thrift:"update_at,12" db:"update_at" json:"update_at"`
+	Username    string      `thrift:"username,13" db:"username" json:"username"`
+	Confirmname string      `thrift:"confirmname,14" db:"confirmname" json:"confirmname"`
 }
 
 func NewModifyItem() *ModifyItem {
@@ -4574,6 +4579,14 @@ func (p *ModifyItem) GetCreateAt() string {
 
 func (p *ModifyItem) GetUpdateAt() string {
 	return p.UpdateAt
+}
+
+func (p *ModifyItem) GetUsername() string {
+	return p.Username
+}
+
+func (p *ModifyItem) GetConfirmname() string {
+	return p.Confirmname
 }
 func (p *ModifyItem) IsSetSource() bool {
 	return p.Source != nil
@@ -4721,6 +4734,26 @@ func (p *ModifyItem) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
+		case 13:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField13(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 14:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField14(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
 		default:
 			if err := iprot.Skip(fieldTypeId); err != nil {
 				return err
@@ -4841,6 +4874,24 @@ func (p *ModifyItem) ReadField12(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *ModifyItem) ReadField13(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 13: ", err)
+	} else {
+		p.Username = v
+	}
+	return nil
+}
+
+func (p *ModifyItem) ReadField14(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 14: ", err)
+	} else {
+		p.Confirmname = v
+	}
+	return nil
+}
+
 func (p *ModifyItem) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("modify_item"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -4880,6 +4931,12 @@ func (p *ModifyItem) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField12(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField13(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField14(oprot); err != nil {
 			return err
 		}
 	}
@@ -5044,6 +5101,32 @@ func (p *ModifyItem) writeField12(oprot thrift.TProtocol) (err error) {
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 12:update_at: ", p), err)
+	}
+	return err
+}
+
+func (p *ModifyItem) writeField13(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("username", thrift.STRING, 13); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 13:username: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Username)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.username (13) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 13:username: ", p), err)
+	}
+	return err
+}
+
+func (p *ModifyItem) writeField14(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("confirmname", thrift.STRING, 14); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 14:confirmname: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Confirmname)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.confirmname (14) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 14:confirmname: ", p), err)
 	}
 	return err
 }
