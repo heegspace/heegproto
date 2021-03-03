@@ -4497,6 +4497,7 @@ func (p *ModifyMeta) String() string {
 //  - UpdateAt
 //  - Username
 //  - Confirmname
+//  - Reward
 type ModifyItem struct {
 	ID          int64       `thrift:"id,1" db:"id" json:"id"`
 	Userid      int64       `thrift:"userid,2" db:"userid" json:"userid"`
@@ -4512,6 +4513,7 @@ type ModifyItem struct {
 	UpdateAt    string      `thrift:"update_at,12" db:"update_at" json:"update_at"`
 	Username    string      `thrift:"username,13" db:"username" json:"username"`
 	Confirmname string      `thrift:"confirmname,14" db:"confirmname" json:"confirmname"`
+	Reward      float64     `thrift:"reward,15" db:"reward" json:"reward"`
 }
 
 func NewModifyItem() *ModifyItem {
@@ -4587,6 +4589,10 @@ func (p *ModifyItem) GetUsername() string {
 
 func (p *ModifyItem) GetConfirmname() string {
 	return p.Confirmname
+}
+
+func (p *ModifyItem) GetReward() float64 {
+	return p.Reward
 }
 func (p *ModifyItem) IsSetSource() bool {
 	return p.Source != nil
@@ -4754,6 +4760,16 @@ func (p *ModifyItem) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
+		case 15:
+			if fieldTypeId == thrift.DOUBLE {
+				if err := p.ReadField15(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
 		default:
 			if err := iprot.Skip(fieldTypeId); err != nil {
 				return err
@@ -4892,6 +4908,15 @@ func (p *ModifyItem) ReadField14(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *ModifyItem) ReadField15(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadDouble(); err != nil {
+		return thrift.PrependError("error reading field 15: ", err)
+	} else {
+		p.Reward = v
+	}
+	return nil
+}
+
 func (p *ModifyItem) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("modify_item"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -4937,6 +4962,9 @@ func (p *ModifyItem) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField14(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField15(oprot); err != nil {
 			return err
 		}
 	}
@@ -5127,6 +5155,19 @@ func (p *ModifyItem) writeField14(oprot thrift.TProtocol) (err error) {
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 14:confirmname: ", p), err)
+	}
+	return err
+}
+
+func (p *ModifyItem) writeField15(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("reward", thrift.DOUBLE, 15); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 15:reward: ", p), err)
+	}
+	if err := oprot.WriteDouble(float64(p.Reward)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.reward (15) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 15:reward: ", p), err)
 	}
 	return err
 }

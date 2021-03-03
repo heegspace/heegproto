@@ -162,6 +162,7 @@ struct modify_item {
     12:string   update_at,
     13:string   username,
     14:string   confirmname,
+    15:double   reward,
 }
 
 struct search_hits_total {
