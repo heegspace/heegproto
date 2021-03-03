@@ -828,6 +828,34 @@ struct search_history_res {
     4:map<string,string>                extra,
 }
 
+struct refresh_modify_reward_req {
+    1:string                auth,
+    2:i64                   id,
+    3:double                reward,
+    4:map<string,string>    extra,
+} 
+
+struct refresh_modify_reward_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:string                code,
+    4:map<string,string>    extra,
+}
+
+struct refresh_user_coin_req {
+    1:string                auth,
+    2:i64                   userid,
+    3:double                coin,
+    4:map<string,string>    extra,
+}
+
+struct refresh_user_coin_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:string                code,
+    4:map<string,string>    extra,
+}
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -994,4 +1022,10 @@ service datanode_service {
 
     // 搜索关键字补全
     search_item_res search_item(1:search_item_req req),
+
+    // 更新修改试题的奖励积分
+    refresh_modify_reward_res refresh_modify_reward(1:refresh_modify_reward_req req),
+
+    // 更新用户的coin数值
+    refresh_user_coin_res refresh_user_coin(1:refresh_user_coin_req req),
 }

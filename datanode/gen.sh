@@ -8,4 +8,5 @@ cp -rf gen-go/datanode/* ./
 rm -rf gen-go
 
 thrift -r -gen html *.thrift
+rm -rf ../docs/datanode
 mv gen-html ../docs/datanode

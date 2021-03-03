@@ -25,6 +25,7 @@ type Role int64
 
 const (
 	Role_NORMAL     Role = 0
+	Role_NORMAL_VIP Role = 1
 	Role_COOPERATOR Role = 1
 	Role_STAFFOR    Role = 98
 	Role_SUPEROR    Role = 99
@@ -34,6 +35,8 @@ func (p Role) String() string {
 	switch p {
 	case Role_NORMAL:
 		return "NORMAL"
+	case Role_NORMAL_VIP:
+		return "NORMAL_VIP"
 	case Role_COOPERATOR:
 		return "COOPERATOR"
 	case Role_STAFFOR:
@@ -48,6 +51,8 @@ func RoleFromString(s string) (Role, error) {
 	switch s {
 	case "NORMAL":
 		return Role_NORMAL, nil
+	case "NORMAL_VIP":
+		return Role_NORMAL_VIP, nil
 	case "COOPERATOR":
 		return Role_COOPERATOR, nil
 	case "STAFFOR":
