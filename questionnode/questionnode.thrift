@@ -338,7 +338,8 @@ struct approve_modify_req {
     3:i64                   uid,
     4:string                status,
     5:string                info,
-    6:map<string,string>    extra, 
+    6:double                reward,
+    7:map<string,string>    extra, 
 }
 
 struct approve_modify_res {
