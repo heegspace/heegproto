@@ -57,6 +57,7 @@
 <li><a href="#Fn_datanode_service_question_chapter">question_chapter</a></li>
 <li><a href="#Fn_datanode_service_question_source">question_source</a></li>
 <li><a href="#Fn_datanode_service_question_timu">question_timu</a></li>
+<li><a href="#Fn_datanode_service_question_timu_add">question_timu_add</a></li>
 <li><a href="#Fn_datanode_service_question_timu_by_id">question_timu_by_id</a></li>
 <li><a href="#Fn_datanode_service_question_timu_count">question_timu_count</a></li>
 <li><a href="#Fn_datanode_service_question_tixing">question_tixing</a></li>
@@ -206,6 +207,8 @@
 <a href="#Struct_subject_cate_list_res">subject_cate_list_res</a><br/>
 <a href="#Struct_subject_name_res">subject_name_res</a><br/>
 <a href="#Struct_thumbnail_res">thumbnail_res</a><br/>
+<a href="#Struct_timu_add_req">timu_add_req</a><br/>
+<a href="#Struct_timu_add_res">timu_add_res</a><br/>
 <a href="#Struct_timu_by_id_req">timu_by_id_req</a><br/>
 <a href="#Struct_timu_by_id_res">timu_by_id_res</a><br/>
 <a href="#Struct_timu_count_res">timu_count_res</a><br/>
@@ -571,6 +574,16 @@
 <tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>count</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_timu_add_req">Struct: timu_add_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>timus</td><td><code>list&lt;<code><a href="common.html#Struct_timu_item">common.timu_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_timu_add_res">Struct: timu_add_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><div class="definition"><h3 id="Struct_timu_res">Struct: timu_res</h3>
 <table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
 <tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
@@ -648,7 +661,8 @@
 <tr><td>2</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>status</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>info</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>5</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>dest</td><td><code><a href="common.html#Enum_approve_dest">common.approve_dest</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><div class="definition"><h3 id="Struct_approve_modify_res">Struct: approve_modify_res</h3>
 <table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
 <tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
@@ -1055,6 +1069,8 @@
 <pre><code><a href="#Struct_tixing_res">tixing_res</a></code> question_tixing(<code><a href="common.html#Struct_question_query">common.question_query</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_datanode_service_question_timu_count">Function: datanode_service.question_timu_count</h4>
 <pre><code><a href="#Struct_timu_count_res">timu_count_res</a></code> question_timu_count(<code><a href="common.html#Struct_question_query">common.question_query</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_question_timu_add">Function: datanode_service.question_timu_add</h4>
+<pre><code><a href="#Struct_timu_add_res">timu_add_res</a></code> question_timu_add(<code><a href="#Struct_timu_add_req">timu_add_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_datanode_service_question_timu">Function: datanode_service.question_timu</h4>
 <pre><code><a href="#Struct_timu_res">timu_res</a></code> question_timu(<code>i64</code> uid,
                        <code><a href="common.html#Struct_question_query">common.question_query</a></code> req)

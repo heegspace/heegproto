@@ -36,6 +36,11 @@ enum search_tyle {
     FROM_PRIVATE    = 0x0003,   // 来自自己
 }
 
+enum approve_dest {
+    APPROVE_TIMU_MODIFY  = 0x0000,  // 审核修改试题
+    APPROVE_TIMU_ADD     = 0x0001,  // 审核试题添加
+}
+
 struct question_query {
     1:string        roll_id (go.tag = 'form:"roll_id" json:"roll_id"'),
     2:string        roll_name   (go.tag = 'form:"roll_name" json:"roll_name"'),

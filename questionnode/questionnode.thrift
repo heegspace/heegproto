@@ -339,7 +339,8 @@ struct approve_modify_req {
     4:string                status,
     5:string                info,
     6:double                reward,
-    7:map<string,string>    extra, 
+    7:common.approve_dest   dest,
+    8:map<string,string>    extra, 
 }
 
 struct approve_modify_res {
@@ -360,6 +361,19 @@ struct timu_by_id_res {
     2:string             resmsg,
     3:common.timu_item   timu,
     4:map<string,string> extra,
+}
+
+struct timu_add_req {
+    1:common.authorize      auth,
+    2:i64                       uid,
+    3:list<common.timu_item>    timus,
+    4:map<string,string>        extra,
+}
+
+struct timu_add_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:map<string,string> extra,
 }
 
 service questionnode_service {
@@ -416,4 +430,7 @@ service questionnode_service {
 
     // 根据试题id请求题目
     timu_by_id_res question_timu_by_id(1:timu_by_id_req req),
+
+    // 添加试题
+    timu_add_res question_timu_add(1:timu_add_req req),
 }

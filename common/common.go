@@ -288,6 +288,64 @@ func (p *SearchTyle) Value() (driver.Value, error) {
 	return int64(*p), nil
 }
 
+type ApproveDest int64
+
+const (
+	ApproveDest_APPROVE_TIMU_MODIFY ApproveDest = 0
+	ApproveDest_APPROVE_TIMU_ADD    ApproveDest = 1
+)
+
+func (p ApproveDest) String() string {
+	switch p {
+	case ApproveDest_APPROVE_TIMU_MODIFY:
+		return "APPROVE_TIMU_MODIFY"
+	case ApproveDest_APPROVE_TIMU_ADD:
+		return "APPROVE_TIMU_ADD"
+	}
+	return "<UNSET>"
+}
+
+func ApproveDestFromString(s string) (ApproveDest, error) {
+	switch s {
+	case "APPROVE_TIMU_MODIFY":
+		return ApproveDest_APPROVE_TIMU_MODIFY, nil
+	case "APPROVE_TIMU_ADD":
+		return ApproveDest_APPROVE_TIMU_ADD, nil
+	}
+	return ApproveDest(0), fmt.Errorf("not a valid ApproveDest string")
+}
+
+func ApproveDestPtr(v ApproveDest) *ApproveDest { return &v }
+
+func (p ApproveDest) MarshalText() ([]byte, error) {
+	return []byte(p.String()), nil
+}
+
+func (p *ApproveDest) UnmarshalText(text []byte) error {
+	q, err := ApproveDestFromString(string(text))
+	if err != nil {
+		return err
+	}
+	*p = q
+	return nil
+}
+
+func (p *ApproveDest) Scan(value interface{}) error {
+	v, ok := value.(int64)
+	if !ok {
+		return errors.New("Scan value is not int64")
+	}
+	*p = ApproveDest(v)
+	return nil
+}
+
+func (p *ApproveDest) Value() (driver.Value, error) {
+	if p == nil {
+		return nil, nil
+	}
+	return int64(*p), nil
+}
+
 // Attributes:
 //  - Key
 //  - Value

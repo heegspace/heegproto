@@ -414,6 +414,18 @@ struct timu_count_res {
     4:map<string,string> extra,
 }
 
+struct timu_add_req {
+    1:i64                       uid,
+    2:list<common.timu_item>    timus,
+    3:map<string,string>        extra,
+}
+
+struct timu_add_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:map<string,string> extra,
+}
+
 struct timu_res {
     1:rescode.code       rescode,
     2:string             resmsg,
@@ -503,7 +515,8 @@ struct approve_modify_req {
     2:i64                   uid,
     3:string                status,
     4:string                info,
-    5:map<string,string>    extra, 
+    5:common.approve_dest   dest,
+    6:map<string,string>    extra, 
 }
 
 struct approve_modify_res {
@@ -959,6 +972,8 @@ service datanode_service {
     tixing_res question_tixing(1:common.question_query req),
     // 获取题目数量
     timu_count_res question_timu_count(1:common.question_query req),
+    // 添加试题
+    timu_add_res question_timu_add(1:timu_add_req req),
     // 请求题目
     timu_res question_timu(1:i64 uid, 2:common.question_query req),
     // 根据试题id请求题目
