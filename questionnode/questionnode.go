@@ -13536,10 +13536,10 @@ func (p *TimuByIDRes) String() string {
 //  - Timus
 //  - Extra
 type TimuAddReq struct {
-	Auth  *common.Authorize  `thrift:"auth,1" db:"auth" json:"auth"`
-	UID   int64              `thrift:"uid,2" db:"uid" json:"uid"`
-	Timus []*common.TimuItem `thrift:"timus,3" db:"timus" json:"timus"`
-	Extra map[string]string  `thrift:"extra,4" db:"extra" json:"extra"`
+	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	UID   int64             `thrift:"uid,2" db:"uid" json:"uid"`
+	Timus *common.TimuItem  `thrift:"timus,3" db:"timus" json:"timus"`
+	Extra map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewTimuAddReq() *TimuAddReq {
@@ -13559,7 +13559,12 @@ func (p *TimuAddReq) GetUID() int64 {
 	return p.UID
 }
 
-func (p *TimuAddReq) GetTimus() []*common.TimuItem {
+var TimuAddReq_Timus_DEFAULT *common.TimuItem
+
+func (p *TimuAddReq) GetTimus() *common.TimuItem {
+	if !p.IsSetTimus() {
+		return TimuAddReq_Timus_DEFAULT
+	}
 	return p.Timus
 }
 
@@ -13568,6 +13573,10 @@ func (p *TimuAddReq) GetExtra() map[string]string {
 }
 func (p *TimuAddReq) IsSetAuth() bool {
 	return p.Auth != nil
+}
+
+func (p *TimuAddReq) IsSetTimus() bool {
+	return p.Timus != nil
 }
 
 func (p *TimuAddReq) Read(iprot thrift.TProtocol) error {
@@ -13605,7 +13614,7 @@ func (p *TimuAddReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 3:
-			if fieldTypeId == thrift.LIST {
+			if fieldTypeId == thrift.STRUCT {
 				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
@@ -13657,21 +13666,9 @@ func (p *TimuAddReq) ReadField2(iprot thrift.TProtocol) error {
 }
 
 func (p *TimuAddReq) ReadField3(iprot thrift.TProtocol) error {
-	_, size, err := iprot.ReadListBegin()
-	if err != nil {
-		return thrift.PrependError("error reading list begin: ", err)
-	}
-	tSlice := make([]*common.TimuItem, 0, size)
-	p.Timus = tSlice
-	for i := 0; i < size; i++ {
-		_elem113 := &common.TimuItem{}
-		if err := _elem113.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem113), err)
-		}
-		p.Timus = append(p.Timus, _elem113)
-	}
-	if err := iprot.ReadListEnd(); err != nil {
-		return thrift.PrependError("error reading list end: ", err)
+	p.Timus = &common.TimuItem{}
+	if err := p.Timus.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Timus), err)
 	}
 	return nil
 }
@@ -13684,19 +13681,19 @@ func (p *TimuAddReq) ReadField4(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key114 string
+		var _key113 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key114 = v
+			_key113 = v
 		}
-		var _val115 string
+		var _val114 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val115 = v
+			_val114 = v
 		}
-		p.Extra[_key114] = _val115
+		p.Extra[_key113] = _val114
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -13758,19 +13755,11 @@ func (p *TimuAddReq) writeField2(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *TimuAddReq) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("timus", thrift.LIST, 3); err != nil {
+	if err := oprot.WriteFieldBegin("timus", thrift.STRUCT, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:timus: ", p), err)
 	}
-	if err := oprot.WriteListBegin(thrift.STRUCT, len(p.Timus)); err != nil {
-		return thrift.PrependError("error writing list begin: ", err)
-	}
-	for _, v := range p.Timus {
-		if err := v.Write(oprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", v), err)
-		}
-	}
-	if err := oprot.WriteListEnd(); err != nil {
-		return thrift.PrependError("error writing list end: ", err)
+	if err := p.Timus.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Timus), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:timus: ", p), err)
@@ -13920,19 +13909,19 @@ func (p *TimuAddRes) ReadField3(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key116 string
+		var _key115 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key116 = v
+			_key115 = v
 		}
-		var _val117 string
+		var _val116 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val117 = v
+			_val116 = v
 		}
-		p.Extra[_key116] = _val117
+		p.Extra[_key115] = _val116
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -14131,313 +14120,313 @@ func (p *QuestionnodeServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) GradeCateAdd(ctx context.Context, req *GradeCateAddReq) (r *GradeCateAddRes, err error) {
-	var _args118 QuestionnodeServiceGradeCateAddArgs
-	_args118.Req = req
-	var _result119 QuestionnodeServiceGradeCateAddResult
-	if err = p.Client_().Call(ctx, "grade_cate_add", &_args118, &_result119); err != nil {
+	var _args117 QuestionnodeServiceGradeCateAddArgs
+	_args117.Req = req
+	var _result118 QuestionnodeServiceGradeCateAddResult
+	if err = p.Client_().Call(ctx, "grade_cate_add", &_args117, &_result118); err != nil {
 		return
 	}
-	return _result119.GetSuccess(), nil
+	return _result118.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) GradeCateCount(ctx context.Context, req *GradeCateCountReq) (r *GradeCateCountRes, err error) {
-	var _args120 QuestionnodeServiceGradeCateCountArgs
-	_args120.Req = req
-	var _result121 QuestionnodeServiceGradeCateCountResult
-	if err = p.Client_().Call(ctx, "grade_cate_count", &_args120, &_result121); err != nil {
+	var _args119 QuestionnodeServiceGradeCateCountArgs
+	_args119.Req = req
+	var _result120 QuestionnodeServiceGradeCateCountResult
+	if err = p.Client_().Call(ctx, "grade_cate_count", &_args119, &_result120); err != nil {
 		return
 	}
-	return _result121.GetSuccess(), nil
+	return _result120.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) GradeCateList(ctx context.Context, req *GradeCateListReq) (r *GradeCateListRes, err error) {
-	var _args122 QuestionnodeServiceGradeCateListArgs
-	_args122.Req = req
-	var _result123 QuestionnodeServiceGradeCateListResult
-	if err = p.Client_().Call(ctx, "grade_cate_list", &_args122, &_result123); err != nil {
+	var _args121 QuestionnodeServiceGradeCateListArgs
+	_args121.Req = req
+	var _result122 QuestionnodeServiceGradeCateListResult
+	if err = p.Client_().Call(ctx, "grade_cate_list", &_args121, &_result122); err != nil {
 		return
 	}
-	return _result123.GetSuccess(), nil
+	return _result122.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) HomeBlackData(ctx context.Context, req *HomeBlackDataReq) (r *HomeBlackDataRes, err error) {
-	var _args124 QuestionnodeServiceHomeBlackDataArgs
-	_args124.Req = req
-	var _result125 QuestionnodeServiceHomeBlackDataResult
-	if err = p.Client_().Call(ctx, "home_black_data", &_args124, &_result125); err != nil {
+	var _args123 QuestionnodeServiceHomeBlackDataArgs
+	_args123.Req = req
+	var _result124 QuestionnodeServiceHomeBlackDataResult
+	if err = p.Client_().Call(ctx, "home_black_data", &_args123, &_result124); err != nil {
 		return
 	}
-	return _result125.GetSuccess(), nil
+	return _result124.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) GradeSubject(ctx context.Context, req *GradeSubjectReq) (r *GradeSubjectRes, err error) {
-	var _args126 QuestionnodeServiceGradeSubjectArgs
-	_args126.Req = req
-	var _result127 QuestionnodeServiceGradeSubjectResult
-	if err = p.Client_().Call(ctx, "grade_subject", &_args126, &_result127); err != nil {
+	var _args125 QuestionnodeServiceGradeSubjectArgs
+	_args125.Req = req
+	var _result126 QuestionnodeServiceGradeSubjectResult
+	if err = p.Client_().Call(ctx, "grade_subject", &_args125, &_result126); err != nil {
 		return
 	}
-	return _result127.GetSuccess(), nil
+	return _result126.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) SchoolRollAdd(ctx context.Context, req *SchoolRollAddReq) (r *SchoolRollAddRes, err error) {
-	var _args128 QuestionnodeServiceSchoolRollAddArgs
-	_args128.Req = req
-	var _result129 QuestionnodeServiceSchoolRollAddResult
-	if err = p.Client_().Call(ctx, "school_roll_add", &_args128, &_result129); err != nil {
+	var _args127 QuestionnodeServiceSchoolRollAddArgs
+	_args127.Req = req
+	var _result128 QuestionnodeServiceSchoolRollAddResult
+	if err = p.Client_().Call(ctx, "school_roll_add", &_args127, &_result128); err != nil {
 		return
 	}
-	return _result129.GetSuccess(), nil
+	return _result128.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) SchoolRollCount(ctx context.Context, req *SchoolRollCountReq) (r *SchoolRollCountRes, err error) {
-	var _args130 QuestionnodeServiceSchoolRollCountArgs
-	_args130.Req = req
-	var _result131 QuestionnodeServiceSchoolRollCountResult
-	if err = p.Client_().Call(ctx, "school_roll_count", &_args130, &_result131); err != nil {
+	var _args129 QuestionnodeServiceSchoolRollCountArgs
+	_args129.Req = req
+	var _result130 QuestionnodeServiceSchoolRollCountResult
+	if err = p.Client_().Call(ctx, "school_roll_count", &_args129, &_result130); err != nil {
 		return
 	}
-	return _result131.GetSuccess(), nil
+	return _result130.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) SchoolList(ctx context.Context, req *SchoolListReq) (r *SchoolListRes, err error) {
-	var _args132 QuestionnodeServiceSchoolListArgs
-	_args132.Req = req
-	var _result133 QuestionnodeServiceSchoolListResult
-	if err = p.Client_().Call(ctx, "school_list", &_args132, &_result133); err != nil {
+	var _args131 QuestionnodeServiceSchoolListArgs
+	_args131.Req = req
+	var _result132 QuestionnodeServiceSchoolListResult
+	if err = p.Client_().Call(ctx, "school_list", &_args131, &_result132); err != nil {
 		return
 	}
-	return _result133.GetSuccess(), nil
+	return _result132.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) SubjectCateAdd(ctx context.Context, req *SubjectCateAddReq) (r *SubjectCateAddRes, err error) {
-	var _args134 QuestionnodeServiceSubjectCateAddArgs
-	_args134.Req = req
-	var _result135 QuestionnodeServiceSubjectCateAddResult
-	if err = p.Client_().Call(ctx, "subject_cate_add", &_args134, &_result135); err != nil {
+	var _args133 QuestionnodeServiceSubjectCateAddArgs
+	_args133.Req = req
+	var _result134 QuestionnodeServiceSubjectCateAddResult
+	if err = p.Client_().Call(ctx, "subject_cate_add", &_args133, &_result134); err != nil {
 		return
 	}
-	return _result135.GetSuccess(), nil
+	return _result134.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) SubjectCateCount(ctx context.Context, req *SubjectCateCountReq) (r *SubjectCateCountRes, err error) {
-	var _args136 QuestionnodeServiceSubjectCateCountArgs
-	_args136.Req = req
-	var _result137 QuestionnodeServiceSubjectCateCountResult
-	if err = p.Client_().Call(ctx, "subject_cate_count", &_args136, &_result137); err != nil {
+	var _args135 QuestionnodeServiceSubjectCateCountArgs
+	_args135.Req = req
+	var _result136 QuestionnodeServiceSubjectCateCountResult
+	if err = p.Client_().Call(ctx, "subject_cate_count", &_args135, &_result136); err != nil {
 		return
 	}
-	return _result137.GetSuccess(), nil
+	return _result136.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) SubjectCateList(ctx context.Context, req *SubejctCateListReq) (r *SubjectCateListRes, err error) {
-	var _args138 QuestionnodeServiceSubjectCateListArgs
-	_args138.Req = req
-	var _result139 QuestionnodeServiceSubjectCateListResult
-	if err = p.Client_().Call(ctx, "subject_cate_list", &_args138, &_result139); err != nil {
+	var _args137 QuestionnodeServiceSubjectCateListArgs
+	_args137.Req = req
+	var _result138 QuestionnodeServiceSubjectCateListResult
+	if err = p.Client_().Call(ctx, "subject_cate_list", &_args137, &_result138); err != nil {
 		return
 	}
-	return _result139.GetSuccess(), nil
+	return _result138.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) QuestionVersion(ctx context.Context, req *QuestionVersionReq) (r *QuestionVersionRes, err error) {
-	var _args140 QuestionnodeServiceQuestionVersionArgs
-	_args140.Req = req
-	var _result141 QuestionnodeServiceQuestionVersionResult
-	if err = p.Client_().Call(ctx, "question_version", &_args140, &_result141); err != nil {
+	var _args139 QuestionnodeServiceQuestionVersionArgs
+	_args139.Req = req
+	var _result140 QuestionnodeServiceQuestionVersionResult
+	if err = p.Client_().Call(ctx, "question_version", &_args139, &_result140); err != nil {
 		return
 	}
-	return _result141.GetSuccess(), nil
+	return _result140.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) QuestionChapter(ctx context.Context, req *QuestionChapterReq) (r *QuestionChapterRes, err error) {
-	var _args142 QuestionnodeServiceQuestionChapterArgs
-	_args142.Req = req
-	var _result143 QuestionnodeServiceQuestionChapterResult
-	if err = p.Client_().Call(ctx, "question_chapter", &_args142, &_result143); err != nil {
+	var _args141 QuestionnodeServiceQuestionChapterArgs
+	_args141.Req = req
+	var _result142 QuestionnodeServiceQuestionChapterResult
+	if err = p.Client_().Call(ctx, "question_chapter", &_args141, &_result142); err != nil {
 		return
 	}
-	return _result143.GetSuccess(), nil
+	return _result142.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) SubjectName(ctx context.Context, req *SubjectNameReq) (r *SubjectNameRes, err error) {
-	var _args144 QuestionnodeServiceSubjectNameArgs
-	_args144.Req = req
-	var _result145 QuestionnodeServiceSubjectNameResult
-	if err = p.Client_().Call(ctx, "subject_name", &_args144, &_result145); err != nil {
+	var _args143 QuestionnodeServiceSubjectNameArgs
+	_args143.Req = req
+	var _result144 QuestionnodeServiceSubjectNameResult
+	if err = p.Client_().Call(ctx, "subject_name", &_args143, &_result144); err != nil {
 		return
 	}
-	return _result145.GetSuccess(), nil
+	return _result144.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) QuestionSource(ctx context.Context, req *QuestionSourceReq) (r *QuestionSourceRes, err error) {
-	var _args146 QuestionnodeServiceQuestionSourceArgs
-	_args146.Req = req
-	var _result147 QuestionnodeServiceQuestionSourceResult
-	if err = p.Client_().Call(ctx, "question_source", &_args146, &_result147); err != nil {
+	var _args145 QuestionnodeServiceQuestionSourceArgs
+	_args145.Req = req
+	var _result146 QuestionnodeServiceQuestionSourceResult
+	if err = p.Client_().Call(ctx, "question_source", &_args145, &_result146); err != nil {
 		return
 	}
-	return _result147.GetSuccess(), nil
+	return _result146.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) QuestionTixing(ctx context.Context, req *QuestionTixingReq) (r *QuestionTixingRes, err error) {
-	var _args148 QuestionnodeServiceQuestionTixingArgs
-	_args148.Req = req
-	var _result149 QuestionnodeServiceQuestionTixingResult
-	if err = p.Client_().Call(ctx, "question_tixing", &_args148, &_result149); err != nil {
+	var _args147 QuestionnodeServiceQuestionTixingArgs
+	_args147.Req = req
+	var _result148 QuestionnodeServiceQuestionTixingResult
+	if err = p.Client_().Call(ctx, "question_tixing", &_args147, &_result148); err != nil {
 		return
 	}
-	return _result149.GetSuccess(), nil
+	return _result148.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) QuestionTimuCount(ctx context.Context, req *QuestionTimuCountReq) (r *QuestionTimuCountRes, err error) {
-	var _args150 QuestionnodeServiceQuestionTimuCountArgs
-	_args150.Req = req
-	var _result151 QuestionnodeServiceQuestionTimuCountResult
-	if err = p.Client_().Call(ctx, "question_timu_count", &_args150, &_result151); err != nil {
+	var _args149 QuestionnodeServiceQuestionTimuCountArgs
+	_args149.Req = req
+	var _result150 QuestionnodeServiceQuestionTimuCountResult
+	if err = p.Client_().Call(ctx, "question_timu_count", &_args149, &_result150); err != nil {
 		return
 	}
-	return _result151.GetSuccess(), nil
+	return _result150.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) QuestionTimu(ctx context.Context, req *QuestionTimuReq) (r *QuestionTimuRes, err error) {
-	var _args152 QuestionnodeServiceQuestionTimuArgs
-	_args152.Req = req
-	var _result153 QuestionnodeServiceQuestionTimuResult
-	if err = p.Client_().Call(ctx, "question_timu", &_args152, &_result153); err != nil {
+	var _args151 QuestionnodeServiceQuestionTimuArgs
+	_args151.Req = req
+	var _result152 QuestionnodeServiceQuestionTimuResult
+	if err = p.Client_().Call(ctx, "question_timu", &_args151, &_result152); err != nil {
 		return
 	}
-	return _result153.GetSuccess(), nil
+	return _result152.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) CollectTimu(ctx context.Context, req *CollectTimuReq) (r *CollectTimuRes, err error) {
-	var _args154 QuestionnodeServiceCollectTimuArgs
-	_args154.Req = req
-	var _result155 QuestionnodeServiceCollectTimuResult
-	if err = p.Client_().Call(ctx, "collect_timu", &_args154, &_result155); err != nil {
+	var _args153 QuestionnodeServiceCollectTimuArgs
+	_args153.Req = req
+	var _result154 QuestionnodeServiceCollectTimuResult
+	if err = p.Client_().Call(ctx, "collect_timu", &_args153, &_result154); err != nil {
 		return
 	}
-	return _result155.GetSuccess(), nil
+	return _result154.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) QueryCollectTimu(ctx context.Context, req *QueryCollectTimuReq) (r *QueryCollectTimuRes, err error) {
-	var _args156 QuestionnodeServiceQueryCollectTimuArgs
-	_args156.Req = req
-	var _result157 QuestionnodeServiceQueryCollectTimuResult
-	if err = p.Client_().Call(ctx, "query_collect_timu", &_args156, &_result157); err != nil {
+	var _args155 QuestionnodeServiceQueryCollectTimuArgs
+	_args155.Req = req
+	var _result156 QuestionnodeServiceQueryCollectTimuResult
+	if err = p.Client_().Call(ctx, "query_collect_timu", &_args155, &_result156); err != nil {
 		return
 	}
-	return _result157.GetSuccess(), nil
+	return _result156.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) ModifyQuestion(ctx context.Context, req *ModifyQuestionReq) (r *ModifyQuestionRes, err error) {
-	var _args158 QuestionnodeServiceModifyQuestionArgs
-	_args158.Req = req
-	var _result159 QuestionnodeServiceModifyQuestionResult
-	if err = p.Client_().Call(ctx, "modify_question", &_args158, &_result159); err != nil {
+	var _args157 QuestionnodeServiceModifyQuestionArgs
+	_args157.Req = req
+	var _result158 QuestionnodeServiceModifyQuestionResult
+	if err = p.Client_().Call(ctx, "modify_question", &_args157, &_result158); err != nil {
 		return
 	}
-	return _result159.GetSuccess(), nil
+	return _result158.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) ModifyList(ctx context.Context, req *ModifyListReq) (r *ModifyListRes, err error) {
-	var _args160 QuestionnodeServiceModifyListArgs
-	_args160.Req = req
-	var _result161 QuestionnodeServiceModifyListResult
-	if err = p.Client_().Call(ctx, "modify_list", &_args160, &_result161); err != nil {
+	var _args159 QuestionnodeServiceModifyListArgs
+	_args159.Req = req
+	var _result160 QuestionnodeServiceModifyListResult
+	if err = p.Client_().Call(ctx, "modify_list", &_args159, &_result160); err != nil {
 		return
 	}
-	return _result161.GetSuccess(), nil
+	return _result160.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) ModifyCount(ctx context.Context, req *ModifyCountReq) (r *ModifyCountRes, err error) {
-	var _args162 QuestionnodeServiceModifyCountArgs
-	_args162.Req = req
-	var _result163 QuestionnodeServiceModifyCountResult
-	if err = p.Client_().Call(ctx, "modify_count", &_args162, &_result163); err != nil {
+	var _args161 QuestionnodeServiceModifyCountArgs
+	_args161.Req = req
+	var _result162 QuestionnodeServiceModifyCountResult
+	if err = p.Client_().Call(ctx, "modify_count", &_args161, &_result162); err != nil {
 		return
 	}
-	return _result163.GetSuccess(), nil
+	return _result162.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) ApproveModify(ctx context.Context, req *ApproveModifyReq) (r *ApproveModifyRes, err error) {
-	var _args164 QuestionnodeServiceApproveModifyArgs
-	_args164.Req = req
-	var _result165 QuestionnodeServiceApproveModifyResult
-	if err = p.Client_().Call(ctx, "approve_modify", &_args164, &_result165); err != nil {
+	var _args163 QuestionnodeServiceApproveModifyArgs
+	_args163.Req = req
+	var _result164 QuestionnodeServiceApproveModifyResult
+	if err = p.Client_().Call(ctx, "approve_modify", &_args163, &_result164); err != nil {
 		return
 	}
-	return _result165.GetSuccess(), nil
+	return _result164.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) QuestionTimuByID(ctx context.Context, req *TimuByIDReq) (r *TimuByIDRes, err error) {
-	var _args166 QuestionnodeServiceQuestionTimuByIDArgs
-	_args166.Req = req
-	var _result167 QuestionnodeServiceQuestionTimuByIDResult
-	if err = p.Client_().Call(ctx, "question_timu_by_id", &_args166, &_result167); err != nil {
+	var _args165 QuestionnodeServiceQuestionTimuByIDArgs
+	_args165.Req = req
+	var _result166 QuestionnodeServiceQuestionTimuByIDResult
+	if err = p.Client_().Call(ctx, "question_timu_by_id", &_args165, &_result166); err != nil {
 		return
 	}
-	return _result167.GetSuccess(), nil
+	return _result166.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *QuestionnodeServiceClient) QuestionTimuAdd(ctx context.Context, req *TimuAddReq) (r *TimuAddRes, err error) {
-	var _args168 QuestionnodeServiceQuestionTimuAddArgs
-	_args168.Req = req
-	var _result169 QuestionnodeServiceQuestionTimuAddResult
-	if err = p.Client_().Call(ctx, "question_timu_add", &_args168, &_result169); err != nil {
+	var _args167 QuestionnodeServiceQuestionTimuAddArgs
+	_args167.Req = req
+	var _result168 QuestionnodeServiceQuestionTimuAddResult
+	if err = p.Client_().Call(ctx, "question_timu_add", &_args167, &_result168); err != nil {
 		return
 	}
-	return _result169.GetSuccess(), nil
+	return _result168.GetSuccess(), nil
 }
 
 type QuestionnodeServiceProcessor struct {
@@ -14460,34 +14449,34 @@ func (p *QuestionnodeServiceProcessor) ProcessorMap() map[string]thrift.TProcess
 
 func NewQuestionnodeServiceProcessor(handler QuestionnodeService) *QuestionnodeServiceProcessor {
 
-	self170 := &QuestionnodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self170.processorMap["grade_cate_add"] = &questionnodeServiceProcessorGradeCateAdd{handler: handler}
-	self170.processorMap["grade_cate_count"] = &questionnodeServiceProcessorGradeCateCount{handler: handler}
-	self170.processorMap["grade_cate_list"] = &questionnodeServiceProcessorGradeCateList{handler: handler}
-	self170.processorMap["home_black_data"] = &questionnodeServiceProcessorHomeBlackData{handler: handler}
-	self170.processorMap["grade_subject"] = &questionnodeServiceProcessorGradeSubject{handler: handler}
-	self170.processorMap["school_roll_add"] = &questionnodeServiceProcessorSchoolRollAdd{handler: handler}
-	self170.processorMap["school_roll_count"] = &questionnodeServiceProcessorSchoolRollCount{handler: handler}
-	self170.processorMap["school_list"] = &questionnodeServiceProcessorSchoolList{handler: handler}
-	self170.processorMap["subject_cate_add"] = &questionnodeServiceProcessorSubjectCateAdd{handler: handler}
-	self170.processorMap["subject_cate_count"] = &questionnodeServiceProcessorSubjectCateCount{handler: handler}
-	self170.processorMap["subject_cate_list"] = &questionnodeServiceProcessorSubjectCateList{handler: handler}
-	self170.processorMap["question_version"] = &questionnodeServiceProcessorQuestionVersion{handler: handler}
-	self170.processorMap["question_chapter"] = &questionnodeServiceProcessorQuestionChapter{handler: handler}
-	self170.processorMap["subject_name"] = &questionnodeServiceProcessorSubjectName{handler: handler}
-	self170.processorMap["question_source"] = &questionnodeServiceProcessorQuestionSource{handler: handler}
-	self170.processorMap["question_tixing"] = &questionnodeServiceProcessorQuestionTixing{handler: handler}
-	self170.processorMap["question_timu_count"] = &questionnodeServiceProcessorQuestionTimuCount{handler: handler}
-	self170.processorMap["question_timu"] = &questionnodeServiceProcessorQuestionTimu{handler: handler}
-	self170.processorMap["collect_timu"] = &questionnodeServiceProcessorCollectTimu{handler: handler}
-	self170.processorMap["query_collect_timu"] = &questionnodeServiceProcessorQueryCollectTimu{handler: handler}
-	self170.processorMap["modify_question"] = &questionnodeServiceProcessorModifyQuestion{handler: handler}
-	self170.processorMap["modify_list"] = &questionnodeServiceProcessorModifyList{handler: handler}
-	self170.processorMap["modify_count"] = &questionnodeServiceProcessorModifyCount{handler: handler}
-	self170.processorMap["approve_modify"] = &questionnodeServiceProcessorApproveModify{handler: handler}
-	self170.processorMap["question_timu_by_id"] = &questionnodeServiceProcessorQuestionTimuByID{handler: handler}
-	self170.processorMap["question_timu_add"] = &questionnodeServiceProcessorQuestionTimuAdd{handler: handler}
-	return self170
+	self169 := &QuestionnodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self169.processorMap["grade_cate_add"] = &questionnodeServiceProcessorGradeCateAdd{handler: handler}
+	self169.processorMap["grade_cate_count"] = &questionnodeServiceProcessorGradeCateCount{handler: handler}
+	self169.processorMap["grade_cate_list"] = &questionnodeServiceProcessorGradeCateList{handler: handler}
+	self169.processorMap["home_black_data"] = &questionnodeServiceProcessorHomeBlackData{handler: handler}
+	self169.processorMap["grade_subject"] = &questionnodeServiceProcessorGradeSubject{handler: handler}
+	self169.processorMap["school_roll_add"] = &questionnodeServiceProcessorSchoolRollAdd{handler: handler}
+	self169.processorMap["school_roll_count"] = &questionnodeServiceProcessorSchoolRollCount{handler: handler}
+	self169.processorMap["school_list"] = &questionnodeServiceProcessorSchoolList{handler: handler}
+	self169.processorMap["subject_cate_add"] = &questionnodeServiceProcessorSubjectCateAdd{handler: handler}
+	self169.processorMap["subject_cate_count"] = &questionnodeServiceProcessorSubjectCateCount{handler: handler}
+	self169.processorMap["subject_cate_list"] = &questionnodeServiceProcessorSubjectCateList{handler: handler}
+	self169.processorMap["question_version"] = &questionnodeServiceProcessorQuestionVersion{handler: handler}
+	self169.processorMap["question_chapter"] = &questionnodeServiceProcessorQuestionChapter{handler: handler}
+	self169.processorMap["subject_name"] = &questionnodeServiceProcessorSubjectName{handler: handler}
+	self169.processorMap["question_source"] = &questionnodeServiceProcessorQuestionSource{handler: handler}
+	self169.processorMap["question_tixing"] = &questionnodeServiceProcessorQuestionTixing{handler: handler}
+	self169.processorMap["question_timu_count"] = &questionnodeServiceProcessorQuestionTimuCount{handler: handler}
+	self169.processorMap["question_timu"] = &questionnodeServiceProcessorQuestionTimu{handler: handler}
+	self169.processorMap["collect_timu"] = &questionnodeServiceProcessorCollectTimu{handler: handler}
+	self169.processorMap["query_collect_timu"] = &questionnodeServiceProcessorQueryCollectTimu{handler: handler}
+	self169.processorMap["modify_question"] = &questionnodeServiceProcessorModifyQuestion{handler: handler}
+	self169.processorMap["modify_list"] = &questionnodeServiceProcessorModifyList{handler: handler}
+	self169.processorMap["modify_count"] = &questionnodeServiceProcessorModifyCount{handler: handler}
+	self169.processorMap["approve_modify"] = &questionnodeServiceProcessorApproveModify{handler: handler}
+	self169.processorMap["question_timu_by_id"] = &questionnodeServiceProcessorQuestionTimuByID{handler: handler}
+	self169.processorMap["question_timu_add"] = &questionnodeServiceProcessorQuestionTimuAdd{handler: handler}
+	return self169
 }
 
 func (p *QuestionnodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -14500,12 +14489,12 @@ func (p *QuestionnodeServiceProcessor) Process(ctx context.Context, iprot, oprot
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x171 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x170 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x171.Write(oprot)
+	x170.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x171
+	return false, x170
 
 }
 

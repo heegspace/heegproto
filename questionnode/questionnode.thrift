@@ -366,7 +366,7 @@ struct timu_by_id_res {
 struct timu_add_req {
     1:common.authorize      auth,
     2:i64                       uid,
-    3:list<common.timu_item>    timus,
+    3:common.timu_item      timus,
     4:map<string,string>        extra,
 }
 
