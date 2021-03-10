@@ -869,6 +869,33 @@ struct refresh_user_coin_res {
     4:map<string,string>    extra,
 }
 
+struct refresh_add_reward_req {
+    1:string                auth,
+    2:i64                   id,
+    3:double                reward,
+    4:map<string,string>    extra,
+} 
+
+struct refresh_add_reward_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:string                code,
+    4:map<string,string>    extra,
+}
+
+struct add_question_req {
+    1:i64                   uid,
+    3:common.add_timu_item  timu,
+}
+
+struct add_question_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:string                code,
+    4:map<string,string>    extra,
+}
+
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户

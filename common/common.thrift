@@ -310,3 +310,23 @@ struct baidu_entity {
     10:string           mention,            // 实体名
 }
 
+struct add_timu_item {
+    1:string    uid,
+    2:string    roll_id,
+    3:string    roll_name,
+    4:string    grade_id,
+    5:string    grade_name,
+    6:string    subject_id,
+    7:string    subject_name,
+    8:string    version_id,
+    9:string    version_name,
+    10:string   chapter_id,
+    11:string   chapter_name,
+    12:string   chapter_gd,
+    13:string   source_id,
+    14:string   source_name,
+    15:string   ti_xing_id,
+    16:string   ti_xing_name,
+    17:string   sign,
+    18:question data,
+}
