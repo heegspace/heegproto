@@ -9,9 +9,8 @@ import (
 	"database/sql/driver"
 	"errors"
 	"fmt"
-	"reflect"
-
 	"github.com/heegspace/thrift"
+	"reflect"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -10070,4 +10069,1013 @@ func (p *BaiduEntity) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("BaiduEntity(%+v)", *p)
+}
+
+// Attributes:
+//  - RollID
+//  - RollName
+//  - GradeID
+//  - GradeName
+//  - SubjectID
+//  - SubjectName
+//  - VersionID
+//  - VersionName
+//  - ChapterID
+//  - ChapterName
+//  - ChapterGd
+//  - SourceID
+//  - SourceName
+//  - TiXingID
+//  - TiXingName
+//  - Sign
+//  - Data
+//  - Creator
+//  - CreatorName
+//  - Approvor
+//  - ApprovorName
+//  - CreateAt
+//  - Msg
+type AddTimuItem struct {
+	RollID       string    `thrift:"roll_id,1" db:"roll_id" json:"roll_id"`
+	RollName     string    `thrift:"roll_name,2" db:"roll_name" json:"roll_name"`
+	GradeID      string    `thrift:"grade_id,3" db:"grade_id" json:"grade_id"`
+	GradeName    string    `thrift:"grade_name,4" db:"grade_name" json:"grade_name"`
+	SubjectID    string    `thrift:"subject_id,5" db:"subject_id" json:"subject_id"`
+	SubjectName  string    `thrift:"subject_name,6" db:"subject_name" json:"subject_name"`
+	VersionID    string    `thrift:"version_id,7" db:"version_id" json:"version_id"`
+	VersionName  string    `thrift:"version_name,8" db:"version_name" json:"version_name"`
+	ChapterID    string    `thrift:"chapter_id,9" db:"chapter_id" json:"chapter_id"`
+	ChapterName  string    `thrift:"chapter_name,10" db:"chapter_name" json:"chapter_name"`
+	ChapterGd    string    `thrift:"chapter_gd,11" db:"chapter_gd" json:"chapter_gd"`
+	SourceID     string    `thrift:"source_id,12" db:"source_id" json:"source_id"`
+	SourceName   string    `thrift:"source_name,13" db:"source_name" json:"source_name"`
+	TiXingID     string    `thrift:"ti_xing_id,14" db:"ti_xing_id" json:"ti_xing_id"`
+	TiXingName   string    `thrift:"ti_xing_name,15" db:"ti_xing_name" json:"ti_xing_name"`
+	Sign         string    `thrift:"sign,16" db:"sign" json:"sign"`
+	Data         *Question `thrift:"data,17" db:"data" json:"data"`
+	Creator      int64     `thrift:"creator,18" db:"creator" json:"creator"`
+	CreatorName  string    `thrift:"creator_name,19" db:"creator_name" json:"creator_name"`
+	Approvor     int64     `thrift:"approvor,20" db:"approvor" json:"approvor"`
+	ApprovorName string    `thrift:"approvor_name,21" db:"approvor_name" json:"approvor_name"`
+	CreateAt     string    `thrift:"create_at,22" db:"create_at" json:"create_at"`
+	Msg          string    `thrift:"msg,23" db:"msg" json:"msg"`
+}
+
+func NewAddTimuItem() *AddTimuItem {
+	return &AddTimuItem{}
+}
+
+func (p *AddTimuItem) GetRollID() string {
+	return p.RollID
+}
+
+func (p *AddTimuItem) GetRollName() string {
+	return p.RollName
+}
+
+func (p *AddTimuItem) GetGradeID() string {
+	return p.GradeID
+}
+
+func (p *AddTimuItem) GetGradeName() string {
+	return p.GradeName
+}
+
+func (p *AddTimuItem) GetSubjectID() string {
+	return p.SubjectID
+}
+
+func (p *AddTimuItem) GetSubjectName() string {
+	return p.SubjectName
+}
+
+func (p *AddTimuItem) GetVersionID() string {
+	return p.VersionID
+}
+
+func (p *AddTimuItem) GetVersionName() string {
+	return p.VersionName
+}
+
+func (p *AddTimuItem) GetChapterID() string {
+	return p.ChapterID
+}
+
+func (p *AddTimuItem) GetChapterName() string {
+	return p.ChapterName
+}
+
+func (p *AddTimuItem) GetChapterGd() string {
+	return p.ChapterGd
+}
+
+func (p *AddTimuItem) GetSourceID() string {
+	return p.SourceID
+}
+
+func (p *AddTimuItem) GetSourceName() string {
+	return p.SourceName
+}
+
+func (p *AddTimuItem) GetTiXingID() string {
+	return p.TiXingID
+}
+
+func (p *AddTimuItem) GetTiXingName() string {
+	return p.TiXingName
+}
+
+func (p *AddTimuItem) GetSign() string {
+	return p.Sign
+}
+
+var AddTimuItem_Data_DEFAULT *Question
+
+func (p *AddTimuItem) GetData() *Question {
+	if !p.IsSetData() {
+		return AddTimuItem_Data_DEFAULT
+	}
+	return p.Data
+}
+
+func (p *AddTimuItem) GetCreator() int64 {
+	return p.Creator
+}
+
+func (p *AddTimuItem) GetCreatorName() string {
+	return p.CreatorName
+}
+
+func (p *AddTimuItem) GetApprovor() int64 {
+	return p.Approvor
+}
+
+func (p *AddTimuItem) GetApprovorName() string {
+	return p.ApprovorName
+}
+
+func (p *AddTimuItem) GetCreateAt() string {
+	return p.CreateAt
+}
+
+func (p *AddTimuItem) GetMsg() string {
+	return p.Msg
+}
+func (p *AddTimuItem) IsSetData() bool {
+	return p.Data != nil
+}
+
+func (p *AddTimuItem) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 6:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField6(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 7:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField7(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 8:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField8(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 9:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField9(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 10:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField10(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 11:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField11(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 12:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField12(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 13:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField13(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 14:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField14(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 15:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField15(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 16:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField16(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 17:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField17(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 18:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField18(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 19:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField19(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 20:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField20(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 21:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField21(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 22:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField22(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 23:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField23(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.RollID = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.RollName = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.GradeID = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.GradeName = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField5(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 5: ", err)
+	} else {
+		p.SubjectID = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField6(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 6: ", err)
+	} else {
+		p.SubjectName = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField7(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 7: ", err)
+	} else {
+		p.VersionID = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField8(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 8: ", err)
+	} else {
+		p.VersionName = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField9(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 9: ", err)
+	} else {
+		p.ChapterID = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField10(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 10: ", err)
+	} else {
+		p.ChapterName = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField11(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 11: ", err)
+	} else {
+		p.ChapterGd = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField12(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 12: ", err)
+	} else {
+		p.SourceID = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField13(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 13: ", err)
+	} else {
+		p.SourceName = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField14(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 14: ", err)
+	} else {
+		p.TiXingID = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField15(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 15: ", err)
+	} else {
+		p.TiXingName = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField16(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 16: ", err)
+	} else {
+		p.Sign = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField17(iprot thrift.TProtocol) error {
+	p.Data = &Question{}
+	if err := p.Data.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Data), err)
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField18(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 18: ", err)
+	} else {
+		p.Creator = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField19(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 19: ", err)
+	} else {
+		p.CreatorName = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField20(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 20: ", err)
+	} else {
+		p.Approvor = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField21(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 21: ", err)
+	} else {
+		p.ApprovorName = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField22(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 22: ", err)
+	} else {
+		p.CreateAt = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) ReadField23(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 23: ", err)
+	} else {
+		p.Msg = v
+	}
+	return nil
+}
+
+func (p *AddTimuItem) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("add_timu_item"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField6(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField7(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField8(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField9(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField10(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField11(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField12(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField13(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField14(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField15(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField16(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField17(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField18(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField19(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField20(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField21(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField22(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField23(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *AddTimuItem) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("roll_id", thrift.STRING, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:roll_id: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.RollID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.roll_id (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:roll_id: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("roll_name", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:roll_name: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.RollName)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.roll_name (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:roll_name: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("grade_id", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:grade_id: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.GradeID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.grade_id (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:grade_id: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("grade_name", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:grade_name: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.GradeName)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.grade_name (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:grade_name: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("subject_id", thrift.STRING, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:subject_id: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.SubjectID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.subject_id (5) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:subject_id: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField6(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("subject_name", thrift.STRING, 6); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:subject_name: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.SubjectName)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.subject_name (6) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:subject_name: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField7(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("version_id", thrift.STRING, 7); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:version_id: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.VersionID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.version_id (7) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 7:version_id: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField8(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("version_name", thrift.STRING, 8); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 8:version_name: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.VersionName)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.version_name (8) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 8:version_name: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField9(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("chapter_id", thrift.STRING, 9); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 9:chapter_id: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.ChapterID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.chapter_id (9) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 9:chapter_id: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField10(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("chapter_name", thrift.STRING, 10); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 10:chapter_name: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.ChapterName)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.chapter_name (10) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 10:chapter_name: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField11(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("chapter_gd", thrift.STRING, 11); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 11:chapter_gd: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.ChapterGd)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.chapter_gd (11) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 11:chapter_gd: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField12(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("source_id", thrift.STRING, 12); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 12:source_id: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.SourceID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.source_id (12) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 12:source_id: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField13(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("source_name", thrift.STRING, 13); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 13:source_name: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.SourceName)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.source_name (13) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 13:source_name: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField14(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("ti_xing_id", thrift.STRING, 14); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 14:ti_xing_id: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.TiXingID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.ti_xing_id (14) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 14:ti_xing_id: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField15(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("ti_xing_name", thrift.STRING, 15); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 15:ti_xing_name: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.TiXingName)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.ti_xing_name (15) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 15:ti_xing_name: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField16(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("sign", thrift.STRING, 16); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 16:sign: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Sign)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.sign (16) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 16:sign: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField17(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("data", thrift.STRUCT, 17); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 17:data: ", p), err)
+	}
+	if err := p.Data.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Data), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 17:data: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField18(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("creator", thrift.I64, 18); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 18:creator: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.Creator)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.creator (18) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 18:creator: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField19(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("creator_name", thrift.STRING, 19); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 19:creator_name: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.CreatorName)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.creator_name (19) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 19:creator_name: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField20(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("approvor", thrift.I64, 20); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 20:approvor: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.Approvor)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.approvor (20) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 20:approvor: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField21(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("approvor_name", thrift.STRING, 21); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 21:approvor_name: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.ApprovorName)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.approvor_name (21) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 21:approvor_name: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField22(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("create_at", thrift.STRING, 22); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 22:create_at: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.CreateAt)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.create_at (22) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 22:create_at: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField23(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("msg", thrift.STRING, 23); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 23:msg: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Msg)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.msg (23) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 23:msg: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("AddTimuItem(%+v)", *p)
 }

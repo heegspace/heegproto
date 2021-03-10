@@ -364,9 +364,9 @@ struct timu_by_id_res {
 }
 
 struct timu_add_req {
-    1:common.authorize      auth,
+    1:common.authorize          auth,
     2:i64                       uid,
-    3:common.timu_item      timus,
+    3:common.add_timu_item      timu,
     4:map<string,string>        extra,
 }
 
@@ -374,6 +374,37 @@ struct timu_add_res {
     1:rescode.code       rescode,
     2:string             resmsg,
     3:map<string,string> extra,
+}
+
+
+struct add_list_req {
+    1:common.authorize   auth,
+    2:i64               uid,
+    3:i32               page,
+    4:i32               size,
+    5:string            sorted,
+    6:string            status,
+}
+
+struct add_list_res {
+    1:rescode.code                  rescode,
+    2:string                        resmsg,
+    3:list<common.add_timu_item>    timus,
+    4:map<string,string>            extra,
+}
+
+struct add_count_req {
+    1:common.authorize          auth,
+    2:i64                       uid,
+    3:string                    status,
+    4:map<string,string>        extra, 
+}
+
+struct add_count_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:i32                count,
+    4:map<string,string> extra, 
 }
 
 service questionnode_service {
@@ -425,12 +456,16 @@ service questionnode_service {
     modify_list_res modify_list(1:modify_list_req req),
     // 获取纠错数量
     modify_count_res modify_count(1:modify_count_req req),
+    // 添加试题
+    timu_add_res question_timu_add(1:timu_add_req req),
+    // 获取添加的试题
+    add_list_res add_list(1:add_list_req req),
+    // 获取添加的数量
+    add_count_res add_count(1:add_count_req req),
     // 审核修改的试题
     approve_modify_res approve_modify(1:approve_modify_req req),
 
     // 根据试题id请求题目
     timu_by_id_res question_timu_by_id(1:timu_by_id_req req),
 
-    // 添加试题
-    timu_add_res question_timu_add(1:timu_add_req req),
 }
