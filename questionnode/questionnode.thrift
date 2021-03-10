@@ -332,7 +332,7 @@ struct modify_count_res {
     4:map<string,string>    extra,
 }
 
-struct approve_modify_req {
+struct approve_req {
     1:common.authorize auth,
     2:i64                   id,
     3:i64                   uid,
@@ -343,7 +343,7 @@ struct approve_modify_req {
     8:map<string,string>    extra, 
 }
 
-struct approve_modify_res {
+struct approve_res {
     1:rescode.code       rescode,
     2:string             resmsg,
     3:map<string,string> extra, 
@@ -463,7 +463,7 @@ service questionnode_service {
     // 获取添加的数量
     add_count_res add_count(1:add_count_req req),
     // 审核修改的试题
-    approve_modify_res approve_modify(1:approve_modify_req req),
+    approve_res approve(1:approve_req req),
 
     // 根据试题id请求题目
     timu_by_id_res question_timu_by_id(1:timu_by_id_req req),

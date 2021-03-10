@@ -12380,7 +12380,7 @@ func (p *ModifyCountRes) String() string {
 //  - Reward
 //  - Dest
 //  - Extra
-type ApproveModifyReq struct {
+type ApproveReq struct {
 	Auth   *common.Authorize  `thrift:"auth,1" db:"auth" json:"auth"`
 	ID     int64              `thrift:"id,2" db:"id" json:"id"`
 	UID    int64              `thrift:"uid,3" db:"uid" json:"uid"`
@@ -12391,51 +12391,51 @@ type ApproveModifyReq struct {
 	Extra  map[string]string  `thrift:"extra,8" db:"extra" json:"extra"`
 }
 
-func NewApproveModifyReq() *ApproveModifyReq {
-	return &ApproveModifyReq{}
+func NewApproveReq() *ApproveReq {
+	return &ApproveReq{}
 }
 
-var ApproveModifyReq_Auth_DEFAULT *common.Authorize
+var ApproveReq_Auth_DEFAULT *common.Authorize
 
-func (p *ApproveModifyReq) GetAuth() *common.Authorize {
+func (p *ApproveReq) GetAuth() *common.Authorize {
 	if !p.IsSetAuth() {
-		return ApproveModifyReq_Auth_DEFAULT
+		return ApproveReq_Auth_DEFAULT
 	}
 	return p.Auth
 }
 
-func (p *ApproveModifyReq) GetID() int64 {
+func (p *ApproveReq) GetID() int64 {
 	return p.ID
 }
 
-func (p *ApproveModifyReq) GetUID() int64 {
+func (p *ApproveReq) GetUID() int64 {
 	return p.UID
 }
 
-func (p *ApproveModifyReq) GetStatus() string {
+func (p *ApproveReq) GetStatus() string {
 	return p.Status
 }
 
-func (p *ApproveModifyReq) GetInfo() string {
+func (p *ApproveReq) GetInfo() string {
 	return p.Info
 }
 
-func (p *ApproveModifyReq) GetReward() float64 {
+func (p *ApproveReq) GetReward() float64 {
 	return p.Reward
 }
 
-func (p *ApproveModifyReq) GetDest() common.ApproveDest {
+func (p *ApproveReq) GetDest() common.ApproveDest {
 	return p.Dest
 }
 
-func (p *ApproveModifyReq) GetExtra() map[string]string {
+func (p *ApproveReq) GetExtra() map[string]string {
 	return p.Extra
 }
-func (p *ApproveModifyReq) IsSetAuth() bool {
+func (p *ApproveReq) IsSetAuth() bool {
 	return p.Auth != nil
 }
 
-func (p *ApproveModifyReq) Read(iprot thrift.TProtocol) error {
+func (p *ApproveReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -12544,7 +12544,7 @@ func (p *ApproveModifyReq) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ApproveModifyReq) ReadField1(iprot thrift.TProtocol) error {
+func (p *ApproveReq) ReadField1(iprot thrift.TProtocol) error {
 	p.Auth = &common.Authorize{}
 	if err := p.Auth.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
@@ -12552,7 +12552,7 @@ func (p *ApproveModifyReq) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ApproveModifyReq) ReadField2(iprot thrift.TProtocol) error {
+func (p *ApproveReq) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI64(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
@@ -12561,7 +12561,7 @@ func (p *ApproveModifyReq) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ApproveModifyReq) ReadField3(iprot thrift.TProtocol) error {
+func (p *ApproveReq) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI64(); err != nil {
 		return thrift.PrependError("error reading field 3: ", err)
 	} else {
@@ -12570,7 +12570,7 @@ func (p *ApproveModifyReq) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ApproveModifyReq) ReadField4(iprot thrift.TProtocol) error {
+func (p *ApproveReq) ReadField4(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 4: ", err)
 	} else {
@@ -12579,7 +12579,7 @@ func (p *ApproveModifyReq) ReadField4(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ApproveModifyReq) ReadField5(iprot thrift.TProtocol) error {
+func (p *ApproveReq) ReadField5(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 5: ", err)
 	} else {
@@ -12588,7 +12588,7 @@ func (p *ApproveModifyReq) ReadField5(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ApproveModifyReq) ReadField6(iprot thrift.TProtocol) error {
+func (p *ApproveReq) ReadField6(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadDouble(); err != nil {
 		return thrift.PrependError("error reading field 6: ", err)
 	} else {
@@ -12597,7 +12597,7 @@ func (p *ApproveModifyReq) ReadField6(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ApproveModifyReq) ReadField7(iprot thrift.TProtocol) error {
+func (p *ApproveReq) ReadField7(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return thrift.PrependError("error reading field 7: ", err)
 	} else {
@@ -12607,7 +12607,7 @@ func (p *ApproveModifyReq) ReadField7(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ApproveModifyReq) ReadField8(iprot thrift.TProtocol) error {
+func (p *ApproveReq) ReadField8(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -12635,8 +12635,8 @@ func (p *ApproveModifyReq) ReadField8(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ApproveModifyReq) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("approve_modify_req"); err != nil {
+func (p *ApproveReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("approve_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -12674,7 +12674,7 @@ func (p *ApproveModifyReq) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ApproveModifyReq) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *ApproveReq) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("auth", thrift.STRUCT, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:auth: ", p), err)
 	}
@@ -12687,7 +12687,7 @@ func (p *ApproveModifyReq) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *ApproveModifyReq) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *ApproveReq) writeField2(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("id", thrift.I64, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:id: ", p), err)
 	}
@@ -12700,7 +12700,7 @@ func (p *ApproveModifyReq) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *ApproveModifyReq) writeField3(oprot thrift.TProtocol) (err error) {
+func (p *ApproveReq) writeField3(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("uid", thrift.I64, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:uid: ", p), err)
 	}
@@ -12713,7 +12713,7 @@ func (p *ApproveModifyReq) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *ApproveModifyReq) writeField4(oprot thrift.TProtocol) (err error) {
+func (p *ApproveReq) writeField4(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("status", thrift.STRING, 4); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:status: ", p), err)
 	}
@@ -12726,7 +12726,7 @@ func (p *ApproveModifyReq) writeField4(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *ApproveModifyReq) writeField5(oprot thrift.TProtocol) (err error) {
+func (p *ApproveReq) writeField5(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("info", thrift.STRING, 5); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:info: ", p), err)
 	}
@@ -12739,7 +12739,7 @@ func (p *ApproveModifyReq) writeField5(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *ApproveModifyReq) writeField6(oprot thrift.TProtocol) (err error) {
+func (p *ApproveReq) writeField6(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("reward", thrift.DOUBLE, 6); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:reward: ", p), err)
 	}
@@ -12752,7 +12752,7 @@ func (p *ApproveModifyReq) writeField6(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *ApproveModifyReq) writeField7(oprot thrift.TProtocol) (err error) {
+func (p *ApproveReq) writeField7(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("dest", thrift.I32, 7); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:dest: ", p), err)
 	}
@@ -12765,7 +12765,7 @@ func (p *ApproveModifyReq) writeField7(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *ApproveModifyReq) writeField8(oprot thrift.TProtocol) (err error) {
+func (p *ApproveReq) writeField8(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 8); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 8:extra: ", p), err)
 	}
@@ -12789,39 +12789,39 @@ func (p *ApproveModifyReq) writeField8(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *ApproveModifyReq) String() string {
+func (p *ApproveReq) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("ApproveModifyReq(%+v)", *p)
+	return fmt.Sprintf("ApproveReq(%+v)", *p)
 }
 
 // Attributes:
 //  - Rescode
 //  - Resmsg
 //  - Extra
-type ApproveModifyRes struct {
+type ApproveRes struct {
 	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
 	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
 	Extra   map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
-func NewApproveModifyRes() *ApproveModifyRes {
-	return &ApproveModifyRes{}
+func NewApproveRes() *ApproveRes {
+	return &ApproveRes{}
 }
 
-func (p *ApproveModifyRes) GetRescode() rescode.Code {
+func (p *ApproveRes) GetRescode() rescode.Code {
 	return p.Rescode
 }
 
-func (p *ApproveModifyRes) GetResmsg() string {
+func (p *ApproveRes) GetResmsg() string {
 	return p.Resmsg
 }
 
-func (p *ApproveModifyRes) GetExtra() map[string]string {
+func (p *ApproveRes) GetExtra() map[string]string {
 	return p.Extra
 }
-func (p *ApproveModifyRes) Read(iprot thrift.TProtocol) error {
+func (p *ApproveRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -12880,7 +12880,7 @@ func (p *ApproveModifyRes) Read(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ApproveModifyRes) ReadField1(iprot thrift.TProtocol) error {
+func (p *ApproveRes) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
@@ -12890,7 +12890,7 @@ func (p *ApproveModifyRes) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ApproveModifyRes) ReadField2(iprot thrift.TProtocol) error {
+func (p *ApproveRes) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
@@ -12899,7 +12899,7 @@ func (p *ApproveModifyRes) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ApproveModifyRes) ReadField3(iprot thrift.TProtocol) error {
+func (p *ApproveRes) ReadField3(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -12927,8 +12927,8 @@ func (p *ApproveModifyRes) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ApproveModifyRes) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("approve_modify_res"); err != nil {
+func (p *ApproveRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("approve_res"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -12951,7 +12951,7 @@ func (p *ApproveModifyRes) Write(oprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ApproveModifyRes) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *ApproveRes) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
 	}
@@ -12964,7 +12964,7 @@ func (p *ApproveModifyRes) writeField1(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *ApproveModifyRes) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *ApproveRes) writeField2(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
 	}
@@ -12977,7 +12977,7 @@ func (p *ApproveModifyRes) writeField2(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *ApproveModifyRes) writeField3(oprot thrift.TProtocol) (err error) {
+func (p *ApproveRes) writeField3(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
 	}
@@ -13001,11 +13001,11 @@ func (p *ApproveModifyRes) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *ApproveModifyRes) String() string {
+func (p *ApproveRes) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("ApproveModifyRes(%+v)", *p)
+	return fmt.Sprintf("ApproveRes(%+v)", *p)
 }
 
 // Attributes:
@@ -15187,7 +15187,7 @@ type QuestionnodeService interface {
 	AddCount(ctx context.Context, req *AddCountReq) (r *AddCountRes, err error)
 	// Parameters:
 	//  - Req
-	ApproveModify(ctx context.Context, req *ApproveModifyReq) (r *ApproveModifyRes, err error)
+	Approve(ctx context.Context, req *ApproveReq) (r *ApproveRes, err error)
 	// Parameters:
 	//  - Req
 	QuestionTimuByID(ctx context.Context, req *TimuByIDReq) (r *TimuByIDRes, err error)
@@ -15533,11 +15533,11 @@ func (p *QuestionnodeServiceClient) AddCount(ctx context.Context, req *AddCountR
 
 // Parameters:
 //  - Req
-func (p *QuestionnodeServiceClient) ApproveModify(ctx context.Context, req *ApproveModifyReq) (r *ApproveModifyRes, err error) {
-	var _args176 QuestionnodeServiceApproveModifyArgs
+func (p *QuestionnodeServiceClient) Approve(ctx context.Context, req *ApproveReq) (r *ApproveRes, err error) {
+	var _args176 QuestionnodeServiceApproveArgs
 	_args176.Req = req
-	var _result177 QuestionnodeServiceApproveModifyResult
-	if err = p.Client_().Call(ctx, "approve_modify", &_args176, &_result177); err != nil {
+	var _result177 QuestionnodeServiceApproveResult
+	if err = p.Client_().Call(ctx, "approve", &_args176, &_result177); err != nil {
 		return
 	}
 	return _result177.GetSuccess(), nil
@@ -15602,7 +15602,7 @@ func NewQuestionnodeServiceProcessor(handler QuestionnodeService) *QuestionnodeS
 	self180.processorMap["question_timu_add"] = &questionnodeServiceProcessorQuestionTimuAdd{handler: handler}
 	self180.processorMap["add_list"] = &questionnodeServiceProcessorAddList{handler: handler}
 	self180.processorMap["add_count"] = &questionnodeServiceProcessorAddCount{handler: handler}
-	self180.processorMap["approve_modify"] = &questionnodeServiceProcessorApproveModify{handler: handler}
+	self180.processorMap["approve"] = &questionnodeServiceProcessorApprove{handler: handler}
 	self180.processorMap["question_timu_by_id"] = &questionnodeServiceProcessorQuestionTimuByID{handler: handler}
 	return self180
 }
@@ -16874,16 +16874,16 @@ func (p *questionnodeServiceProcessorAddCount) Process(ctx context.Context, seqI
 	return true, err
 }
 
-type questionnodeServiceProcessorApproveModify struct {
+type questionnodeServiceProcessorApprove struct {
 	handler QuestionnodeService
 }
 
-func (p *questionnodeServiceProcessorApproveModify) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	args := QuestionnodeServiceApproveModifyArgs{}
+func (p *questionnodeServiceProcessorApprove) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := QuestionnodeServiceApproveArgs{}
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
-		oprot.WriteMessageBegin("approve_modify", thrift.EXCEPTION, seqId)
+		oprot.WriteMessageBegin("approve", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -16891,12 +16891,12 @@ func (p *questionnodeServiceProcessorApproveModify) Process(ctx context.Context,
 	}
 
 	iprot.ReadMessageEnd()
-	result := QuestionnodeServiceApproveModifyResult{}
-	var retval *ApproveModifyRes
+	result := QuestionnodeServiceApproveResult{}
+	var retval *ApproveRes
 	var err2 error
-	if retval, err2 = p.handler.ApproveModify(ctx, args.Req); err2 != nil {
-		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing approve_modify: "+err2.Error())
-		oprot.WriteMessageBegin("approve_modify", thrift.EXCEPTION, seqId)
+	if retval, err2 = p.handler.Approve(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing approve: "+err2.Error())
+		oprot.WriteMessageBegin("approve", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -16904,7 +16904,7 @@ func (p *questionnodeServiceProcessorApproveModify) Process(ctx context.Context,
 	} else {
 		result.Success = retval
 	}
-	if err2 = oprot.WriteMessageBegin("approve_modify", thrift.REPLY, seqId); err2 != nil {
+	if err2 = oprot.WriteMessageBegin("approve", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -22590,27 +22590,27 @@ func (p *QuestionnodeServiceAddCountResult) String() string {
 
 // Attributes:
 //  - Req
-type QuestionnodeServiceApproveModifyArgs struct {
-	Req *ApproveModifyReq `thrift:"req,1" db:"req" json:"req"`
+type QuestionnodeServiceApproveArgs struct {
+	Req *ApproveReq `thrift:"req,1" db:"req" json:"req"`
 }
 
-func NewQuestionnodeServiceApproveModifyArgs() *QuestionnodeServiceApproveModifyArgs {
-	return &QuestionnodeServiceApproveModifyArgs{}
+func NewQuestionnodeServiceApproveArgs() *QuestionnodeServiceApproveArgs {
+	return &QuestionnodeServiceApproveArgs{}
 }
 
-var QuestionnodeServiceApproveModifyArgs_Req_DEFAULT *ApproveModifyReq
+var QuestionnodeServiceApproveArgs_Req_DEFAULT *ApproveReq
 
-func (p *QuestionnodeServiceApproveModifyArgs) GetReq() *ApproveModifyReq {
+func (p *QuestionnodeServiceApproveArgs) GetReq() *ApproveReq {
 	if !p.IsSetReq() {
-		return QuestionnodeServiceApproveModifyArgs_Req_DEFAULT
+		return QuestionnodeServiceApproveArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *QuestionnodeServiceApproveModifyArgs) IsSetReq() bool {
+func (p *QuestionnodeServiceApproveArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *QuestionnodeServiceApproveModifyArgs) Read(iprot thrift.TProtocol) error {
+func (p *QuestionnodeServiceApproveArgs) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -22649,16 +22649,16 @@ func (p *QuestionnodeServiceApproveModifyArgs) Read(iprot thrift.TProtocol) erro
 	return nil
 }
 
-func (p *QuestionnodeServiceApproveModifyArgs) ReadField1(iprot thrift.TProtocol) error {
-	p.Req = &ApproveModifyReq{}
+func (p *QuestionnodeServiceApproveArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &ApproveReq{}
 	if err := p.Req.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
 	}
 	return nil
 }
 
-func (p *QuestionnodeServiceApproveModifyArgs) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("approve_modify_args"); err != nil {
+func (p *QuestionnodeServiceApproveArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("approve_args"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -22675,7 +22675,7 @@ func (p *QuestionnodeServiceApproveModifyArgs) Write(oprot thrift.TProtocol) err
 	return nil
 }
 
-func (p *QuestionnodeServiceApproveModifyArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *QuestionnodeServiceApproveArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
 	}
@@ -22688,36 +22688,36 @@ func (p *QuestionnodeServiceApproveModifyArgs) writeField1(oprot thrift.TProtoco
 	return err
 }
 
-func (p *QuestionnodeServiceApproveModifyArgs) String() string {
+func (p *QuestionnodeServiceApproveArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("QuestionnodeServiceApproveModifyArgs(%+v)", *p)
+	return fmt.Sprintf("QuestionnodeServiceApproveArgs(%+v)", *p)
 }
 
 // Attributes:
 //  - Success
-type QuestionnodeServiceApproveModifyResult struct {
-	Success *ApproveModifyRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+type QuestionnodeServiceApproveResult struct {
+	Success *ApproveRes `thrift:"success,0" db:"success" json:"success,omitempty"`
 }
 
-func NewQuestionnodeServiceApproveModifyResult() *QuestionnodeServiceApproveModifyResult {
-	return &QuestionnodeServiceApproveModifyResult{}
+func NewQuestionnodeServiceApproveResult() *QuestionnodeServiceApproveResult {
+	return &QuestionnodeServiceApproveResult{}
 }
 
-var QuestionnodeServiceApproveModifyResult_Success_DEFAULT *ApproveModifyRes
+var QuestionnodeServiceApproveResult_Success_DEFAULT *ApproveRes
 
-func (p *QuestionnodeServiceApproveModifyResult) GetSuccess() *ApproveModifyRes {
+func (p *QuestionnodeServiceApproveResult) GetSuccess() *ApproveRes {
 	if !p.IsSetSuccess() {
-		return QuestionnodeServiceApproveModifyResult_Success_DEFAULT
+		return QuestionnodeServiceApproveResult_Success_DEFAULT
 	}
 	return p.Success
 }
-func (p *QuestionnodeServiceApproveModifyResult) IsSetSuccess() bool {
+func (p *QuestionnodeServiceApproveResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *QuestionnodeServiceApproveModifyResult) Read(iprot thrift.TProtocol) error {
+func (p *QuestionnodeServiceApproveResult) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
 	}
@@ -22756,16 +22756,16 @@ func (p *QuestionnodeServiceApproveModifyResult) Read(iprot thrift.TProtocol) er
 	return nil
 }
 
-func (p *QuestionnodeServiceApproveModifyResult) ReadField0(iprot thrift.TProtocol) error {
-	p.Success = &ApproveModifyRes{}
+func (p *QuestionnodeServiceApproveResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &ApproveRes{}
 	if err := p.Success.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
 	}
 	return nil
 }
 
-func (p *QuestionnodeServiceApproveModifyResult) Write(oprot thrift.TProtocol) error {
-	if err := oprot.WriteStructBegin("approve_modify_result"); err != nil {
+func (p *QuestionnodeServiceApproveResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("approve_result"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
 	}
 	if p != nil {
@@ -22782,7 +22782,7 @@ func (p *QuestionnodeServiceApproveModifyResult) Write(oprot thrift.TProtocol) e
 	return nil
 }
 
-func (p *QuestionnodeServiceApproveModifyResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *QuestionnodeServiceApproveResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
@@ -22797,11 +22797,11 @@ func (p *QuestionnodeServiceApproveModifyResult) writeField0(oprot thrift.TProto
 	return err
 }
 
-func (p *QuestionnodeServiceApproveModifyResult) String() string {
+func (p *QuestionnodeServiceApproveResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("QuestionnodeServiceApproveModifyResult(%+v)", *p)
+	return fmt.Sprintf("QuestionnodeServiceApproveResult(%+v)", *p)
 }
 
 // Attributes:

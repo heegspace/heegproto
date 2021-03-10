@@ -12,7 +12,7 @@
 <ul>
 <li><a href="#Fn_questionnode_service_add_count">add_count</a></li>
 <li><a href="#Fn_questionnode_service_add_list">add_list</a></li>
-<li><a href="#Fn_questionnode_service_approve_modify">approve_modify</a></li>
+<li><a href="#Fn_questionnode_service_approve">approve</a></li>
 <li><a href="#Fn_questionnode_service_collect_timu">collect_timu</a></li>
 <li><a href="#Fn_questionnode_service_grade_cate_add">grade_cate_add</a></li>
 <li><a href="#Fn_questionnode_service_grade_cate_count">grade_cate_count</a></li>
@@ -44,8 +44,8 @@
 <a href="#Struct_add_count_res">add_count_res</a><br/>
 <a href="#Struct_add_list_req">add_list_req</a><br/>
 <a href="#Struct_add_list_res">add_list_res</a><br/>
-<a href="#Struct_approve_modify_req">approve_modify_req</a><br/>
-<a href="#Struct_approve_modify_res">approve_modify_res</a><br/>
+<a href="#Struct_approve_req">approve_req</a><br/>
+<a href="#Struct_approve_res">approve_res</a><br/>
 <a href="#Struct_chapter_res_item">chapter_res_item</a><br/>
 <a href="#Struct_collect_timu_req">collect_timu_req</a><br/>
 <a href="#Struct_collect_timu_res">collect_timu_res</a><br/>
@@ -383,7 +383,7 @@
 <tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>count</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
-</tbody></table><br/></div><div class="definition"><h3 id="Struct_approve_modify_req">Struct: approve_modify_req</h3>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_approve_req">Struct: approve_req</h3>
 <table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
 <tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>id</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
@@ -393,7 +393,7 @@
 <tr><td>6</td><td>reward</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>7</td><td>dest</td><td><code><a href="common.html#Enum_approve_dest">common.approve_dest</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>8</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
-</tbody></table><br/></div><div class="definition"><h3 id="Struct_approve_modify_res">Struct: approve_modify_res</h3>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_approve_res">Struct: approve_res</h3>
 <table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
 <tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
@@ -501,8 +501,8 @@
 <pre><code><a href="#Struct_add_list_res">add_list_res</a></code> add_list(<code><a href="#Struct_add_list_req">add_list_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_questionnode_service_add_count">Function: questionnode_service.add_count</h4>
 <pre><code><a href="#Struct_add_count_res">add_count_res</a></code> add_count(<code><a href="#Struct_add_count_req">add_count_req</a></code> req)
-</pre></div><div class="definition"><h4 id="Fn_questionnode_service_approve_modify">Function: questionnode_service.approve_modify</h4>
-<pre><code><a href="#Struct_approve_modify_res">approve_modify_res</a></code> approve_modify(<code><a href="#Struct_approve_modify_req">approve_modify_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_questionnode_service_approve">Function: questionnode_service.approve</h4>
+<pre><code><a href="#Struct_approve_res">approve_res</a></code> approve(<code><a href="#Struct_approve_req">approve_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_questionnode_service_question_timu_by_id">Function: questionnode_service.question_timu_by_id</h4>
 <pre><code><a href="#Struct_timu_by_id_res">timu_by_id_res</a></code> question_timu_by_id(<code><a href="#Struct_timu_by_id_req">timu_by_id_req</a></code> req)
 </pre></div></div></body></html>

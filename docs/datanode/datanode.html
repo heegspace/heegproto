@@ -18,7 +18,7 @@
 <li><a href="#Fn_datanode_service_add_list">add_list</a></li>
 <li><a href="#Fn_datanode_service_add_user_attention">add_user_attention</a></li>
 <li><a href="#Fn_datanode_service_agreeFriends">agreeFriends</a></li>
-<li><a href="#Fn_datanode_service_approve_modify">approve_modify</a></li>
+<li><a href="#Fn_datanode_service_approve">approve</a></li>
 <li><a href="#Fn_datanode_service_baidu_entity">baidu_entity</a></li>
 <li><a href="#Fn_datanode_service_collect_timu">collect_timu</a></li>
 <li><a href="#Fn_datanode_service_createGroup">createGroup</a></li>
@@ -114,8 +114,8 @@
 <a href="#Struct_add_user_attention_res">add_user_attention_res</a><br/>
 <a href="#Struct_agree_friend_req">agree_friend_req</a><br/>
 <a href="#Struct_agree_friend_res">agree_friend_res</a><br/>
-<a href="#Struct_approve_modify_req">approve_modify_req</a><br/>
-<a href="#Struct_approve_modify_res">approve_modify_res</a><br/>
+<a href="#Struct_approve_req">approve_req</a><br/>
+<a href="#Struct_approve_res">approve_res</a><br/>
 <a href="#Struct_attention_item">attention_item</a><br/>
 <a href="#Struct_baidu_entity_req">baidu_entity_req</a><br/>
 <a href="#Struct_baidu_entity_res">baidu_entity_res</a><br/>
@@ -666,7 +666,7 @@
 <tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>count</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
-</tbody></table><br/></div><div class="definition"><h3 id="Struct_approve_modify_req">Struct: approve_modify_req</h3>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_approve_req">Struct: approve_req</h3>
 <table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
 <tr><td>1</td><td>id</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
@@ -674,7 +674,7 @@
 <tr><td>4</td><td>info</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>5</td><td>dest</td><td><code><a href="common.html#Enum_approve_dest">common.approve_dest</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>6</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
-</tbody></table><br/></div><div class="definition"><h3 id="Struct_approve_modify_res">Struct: approve_modify_res</h3>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_approve_res">Struct: approve_res</h3>
 <table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
 <tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
@@ -1148,8 +1148,8 @@
 <pre><code><a href="#Struct_add_list_res">add_list_res</a></code> add_list(<code><a href="#Struct_add_list_req">add_list_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_datanode_service_add_count">Function: datanode_service.add_count</h4>
 <pre><code><a href="#Struct_add_count_res">add_count_res</a></code> add_count(<code><a href="#Struct_add_count_req">add_count_req</a></code> req)
-</pre></div><div class="definition"><h4 id="Fn_datanode_service_approve_modify">Function: datanode_service.approve_modify</h4>
-<pre><code><a href="#Struct_approve_modify_res">approve_modify_res</a></code> approve_modify(<code><a href="#Struct_approve_modify_req">approve_modify_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_approve">Function: datanode_service.approve</h4>
+<pre><code><a href="#Struct_approve_res">approve_res</a></code> approve(<code><a href="#Struct_approve_req">approve_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_datanode_service_on_search">Function: datanode_service.on_search</h4>
 <pre><code><a href="#Struct_search_res">search_res</a></code> on_search(<code><a href="#Struct_search_req">search_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_datanode_service_grade_cate_add">Function: datanode_service.grade_cate_add</h4>

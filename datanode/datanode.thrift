@@ -510,7 +510,7 @@ struct modify_count_res {
     4:map<string,string> extra, 
 }
 
-struct approve_modify_req {
+struct approve_req {
     1:i64                   id,
     2:i64                   uid,
     3:string                status,
@@ -519,7 +519,7 @@ struct approve_modify_req {
     6:map<string,string>    extra, 
 }
 
-struct approve_modify_res {
+struct approve_res {
     1:rescode.code       rescode,
     2:string             resmsg,
     3:map<string,string> extra, 
@@ -1049,7 +1049,7 @@ service datanode_service {
     add_count_res add_count(1:add_count_req req),
 
     // 审核修改的试题
-    approve_modify_res approve_modify(1:approve_modify_req req),
+    approve_res approve(1:approve_req req),
     // 搜索试题
     search_res on_search(1:search_req req),
 
