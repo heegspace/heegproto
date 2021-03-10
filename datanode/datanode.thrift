@@ -869,20 +869,6 @@ struct refresh_user_coin_res {
     4:map<string,string>    extra,
 }
 
-struct refresh_add_reward_req {
-    1:string                auth,
-    2:i64                   id,
-    3:double                reward,
-    4:map<string,string>    extra,
-} 
-
-struct refresh_add_reward_res {
-    1:rescode.code          rescode,
-    2:string                resmsg,
-    3:string                code,
-    4:map<string,string>    extra,
-}
-
 struct add_question_req {
     1:i64                   uid,
     3:common.add_timu_item  timu,
@@ -921,6 +907,21 @@ struct add_count_res {
     2:string             resmsg,
     3:i32                count,
     4:map<string,string> extra, 
+}
+
+
+struct refresh_add_reward_req {
+    1:string                auth,
+    2:i64                   id,
+    3:double                reward,
+    4:map<string,string>    extra,
+} 
+
+struct refresh_add_reward_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:string                code,
+    4:map<string,string>    extra,
 }
 
 service datanode_service {
@@ -1100,6 +1101,7 @@ service datanode_service {
     // 更新修改试题的奖励积分
     refresh_modify_reward_res refresh_modify_reward(1:refresh_modify_reward_req req),
     // 更新添加试题的奖励积分
+    refresh_add_reward_res refresh_add_reward(1:refresh_add_reward_req req),
 
     // 更新用户的coin数值
     refresh_user_coin_res refresh_user_coin(1:refresh_user_coin_req req),

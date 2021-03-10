@@ -7,11 +7,10 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"reflect"
-
 	"github.com/heegspace/heegproto/common"
 	"github.com/heegspace/heegproto/rescode"
 	"github.com/heegspace/thrift"
+	"reflect"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -1050,10 +1049,526 @@ func (p *RefreshUserCoinRes) String() string {
 	return fmt.Sprintf("RefreshUserCoinRes(%+v)", *p)
 }
 
+// Attributes:
+//  - Auth
+//  - ID
+//  - Reward
+//  - Extra
+type RefreshAddRewardReq struct {
+	Auth   *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	ID     int64             `thrift:"id,2" db:"id" json:"id"`
+	Reward float64           `thrift:"reward,3" db:"reward" json:"reward"`
+	Extra  map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
+}
+
+func NewRefreshAddRewardReq() *RefreshAddRewardReq {
+	return &RefreshAddRewardReq{}
+}
+
+var RefreshAddRewardReq_Auth_DEFAULT *common.Authorize
+
+func (p *RefreshAddRewardReq) GetAuth() *common.Authorize {
+	if !p.IsSetAuth() {
+		return RefreshAddRewardReq_Auth_DEFAULT
+	}
+	return p.Auth
+}
+
+func (p *RefreshAddRewardReq) GetID() int64 {
+	return p.ID
+}
+
+func (p *RefreshAddRewardReq) GetReward() float64 {
+	return p.Reward
+}
+
+func (p *RefreshAddRewardReq) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *RefreshAddRewardReq) IsSetAuth() bool {
+	return p.Auth != nil
+}
+
+func (p *RefreshAddRewardReq) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.DOUBLE {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *RefreshAddRewardReq) ReadField1(iprot thrift.TProtocol) error {
+	p.Auth = &common.Authorize{}
+	if err := p.Auth.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
+	}
+	return nil
+}
+
+func (p *RefreshAddRewardReq) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.ID = v
+	}
+	return nil
+}
+
+func (p *RefreshAddRewardReq) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadDouble(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Reward = v
+	}
+	return nil
+}
+
+func (p *RefreshAddRewardReq) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key8 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key8 = v
+		}
+		var _val9 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val9 = v
+		}
+		p.Extra[_key8] = _val9
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *RefreshAddRewardReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("refresh_add_reward_req"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *RefreshAddRewardReq) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("auth", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:auth: ", p), err)
+	}
+	if err := p.Auth.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Auth), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:auth: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshAddRewardReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("id", thrift.I64, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:id: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.ID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.id (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:id: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshAddRewardReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("reward", thrift.DOUBLE, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:reward: ", p), err)
+	}
+	if err := oprot.WriteDouble(float64(p.Reward)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.reward (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:reward: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshAddRewardReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshAddRewardReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("RefreshAddRewardReq(%+v)", *p)
+}
+
+// Attributes:
+//  - Rescode
+//  - Resmsg
+//  - Code
+//  - Extra
+type RefreshAddRewardRes struct {
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Code    string            `thrift:"code,3" db:"code" json:"code"`
+	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
+}
+
+func NewRefreshAddRewardRes() *RefreshAddRewardRes {
+	return &RefreshAddRewardRes{}
+}
+
+func (p *RefreshAddRewardRes) GetRescode() rescode.Code {
+	return p.Rescode
+}
+
+func (p *RefreshAddRewardRes) GetResmsg() string {
+	return p.Resmsg
+}
+
+func (p *RefreshAddRewardRes) GetCode() string {
+	return p.Code
+}
+
+func (p *RefreshAddRewardRes) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *RefreshAddRewardRes) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *RefreshAddRewardRes) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		temp := rescode.Code(v)
+		p.Rescode = temp
+	}
+	return nil
+}
+
+func (p *RefreshAddRewardRes) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Resmsg = v
+	}
+	return nil
+}
+
+func (p *RefreshAddRewardRes) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Code = v
+	}
+	return nil
+}
+
+func (p *RefreshAddRewardRes) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key10 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key10 = v
+		}
+		var _val11 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val11 = v
+		}
+		p.Extra[_key10] = _val11
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *RefreshAddRewardRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("refresh_add_reward_res"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *RefreshAddRewardRes) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Rescode)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.rescode (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:rescode: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshAddRewardRes) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshAddRewardRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("code", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:code: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Code)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.code (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:code: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshAddRewardRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshAddRewardRes) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("RefreshAddRewardRes(%+v)", *p)
+}
+
 type SensinodeService interface {
 	// Parameters:
 	//  - Req
 	RefreshModifyReward(ctx context.Context, req *RefreshModifyRewardReq) (r *RefreshModifyRewardRes, err error)
+	// Parameters:
+	//  - Req
+	RefreshAddReward(ctx context.Context, req *RefreshAddRewardReq) (r *RefreshAddRewardRes, err error)
 	// Parameters:
 	//  - Req
 	RefreshUserCoin(ctx context.Context, req *RefreshUserCoinReq) (r *RefreshUserCoinRes, err error)
@@ -1088,25 +1603,37 @@ func (p *SensinodeServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Req
 func (p *SensinodeServiceClient) RefreshModifyReward(ctx context.Context, req *RefreshModifyRewardReq) (r *RefreshModifyRewardRes, err error) {
-	var _args8 SensinodeServiceRefreshModifyRewardArgs
-	_args8.Req = req
-	var _result9 SensinodeServiceRefreshModifyRewardResult
-	if err = p.Client_().Call(ctx, "refresh_modify_reward", &_args8, &_result9); err != nil {
+	var _args12 SensinodeServiceRefreshModifyRewardArgs
+	_args12.Req = req
+	var _result13 SensinodeServiceRefreshModifyRewardResult
+	if err = p.Client_().Call(ctx, "refresh_modify_reward", &_args12, &_result13); err != nil {
 		return
 	}
-	return _result9.GetSuccess(), nil
+	return _result13.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *SensinodeServiceClient) RefreshAddReward(ctx context.Context, req *RefreshAddRewardReq) (r *RefreshAddRewardRes, err error) {
+	var _args14 SensinodeServiceRefreshAddRewardArgs
+	_args14.Req = req
+	var _result15 SensinodeServiceRefreshAddRewardResult
+	if err = p.Client_().Call(ctx, "refresh_add_reward", &_args14, &_result15); err != nil {
+		return
+	}
+	return _result15.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *SensinodeServiceClient) RefreshUserCoin(ctx context.Context, req *RefreshUserCoinReq) (r *RefreshUserCoinRes, err error) {
-	var _args10 SensinodeServiceRefreshUserCoinArgs
-	_args10.Req = req
-	var _result11 SensinodeServiceRefreshUserCoinResult
-	if err = p.Client_().Call(ctx, "refresh_user_coin", &_args10, &_result11); err != nil {
+	var _args16 SensinodeServiceRefreshUserCoinArgs
+	_args16.Req = req
+	var _result17 SensinodeServiceRefreshUserCoinResult
+	if err = p.Client_().Call(ctx, "refresh_user_coin", &_args16, &_result17); err != nil {
 		return
 	}
-	return _result11.GetSuccess(), nil
+	return _result17.GetSuccess(), nil
 }
 
 type SensinodeServiceProcessor struct {
@@ -1129,10 +1656,11 @@ func (p *SensinodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorF
 
 func NewSensinodeServiceProcessor(handler SensinodeService) *SensinodeServiceProcessor {
 
-	self12 := &SensinodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self12.processorMap["refresh_modify_reward"] = &sensinodeServiceProcessorRefreshModifyReward{handler: handler}
-	self12.processorMap["refresh_user_coin"] = &sensinodeServiceProcessorRefreshUserCoin{handler: handler}
-	return self12
+	self18 := &SensinodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self18.processorMap["refresh_modify_reward"] = &sensinodeServiceProcessorRefreshModifyReward{handler: handler}
+	self18.processorMap["refresh_add_reward"] = &sensinodeServiceProcessorRefreshAddReward{handler: handler}
+	self18.processorMap["refresh_user_coin"] = &sensinodeServiceProcessorRefreshUserCoin{handler: handler}
+	return self18
 }
 
 func (p *SensinodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -1145,12 +1673,12 @@ func (p *SensinodeServiceProcessor) Process(ctx context.Context, iprot, oprot th
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x13 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x19 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x13.Write(oprot)
+	x19.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x13
+	return false, x19
 
 }
 
@@ -1185,6 +1713,54 @@ func (p *sensinodeServiceProcessorRefreshModifyReward) Process(ctx context.Conte
 		result.Success = retval
 	}
 	if err2 = oprot.WriteMessageBegin("refresh_modify_reward", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type sensinodeServiceProcessorRefreshAddReward struct {
+	handler SensinodeService
+}
+
+func (p *sensinodeServiceProcessorRefreshAddReward) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := SensinodeServiceRefreshAddRewardArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("refresh_add_reward", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	result := SensinodeServiceRefreshAddRewardResult{}
+	var retval *RefreshAddRewardRes
+	var err2 error
+	if retval, err2 = p.handler.RefreshAddReward(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing refresh_add_reward: "+err2.Error())
+		oprot.WriteMessageBegin("refresh_add_reward", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("refresh_add_reward", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -1466,6 +2042,222 @@ func (p *SensinodeServiceRefreshModifyRewardResult) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("SensinodeServiceRefreshModifyRewardResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type SensinodeServiceRefreshAddRewardArgs struct {
+	Req *RefreshAddRewardReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewSensinodeServiceRefreshAddRewardArgs() *SensinodeServiceRefreshAddRewardArgs {
+	return &SensinodeServiceRefreshAddRewardArgs{}
+}
+
+var SensinodeServiceRefreshAddRewardArgs_Req_DEFAULT *RefreshAddRewardReq
+
+func (p *SensinodeServiceRefreshAddRewardArgs) GetReq() *RefreshAddRewardReq {
+	if !p.IsSetReq() {
+		return SensinodeServiceRefreshAddRewardArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *SensinodeServiceRefreshAddRewardArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *SensinodeServiceRefreshAddRewardArgs) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *SensinodeServiceRefreshAddRewardArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &RefreshAddRewardReq{}
+	if err := p.Req.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+	}
+	return nil
+}
+
+func (p *SensinodeServiceRefreshAddRewardArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("refresh_add_reward_args"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *SensinodeServiceRefreshAddRewardArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+	}
+	return err
+}
+
+func (p *SensinodeServiceRefreshAddRewardArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SensinodeServiceRefreshAddRewardArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type SensinodeServiceRefreshAddRewardResult struct {
+	Success *RefreshAddRewardRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewSensinodeServiceRefreshAddRewardResult() *SensinodeServiceRefreshAddRewardResult {
+	return &SensinodeServiceRefreshAddRewardResult{}
+}
+
+var SensinodeServiceRefreshAddRewardResult_Success_DEFAULT *RefreshAddRewardRes
+
+func (p *SensinodeServiceRefreshAddRewardResult) GetSuccess() *RefreshAddRewardRes {
+	if !p.IsSetSuccess() {
+		return SensinodeServiceRefreshAddRewardResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *SensinodeServiceRefreshAddRewardResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *SensinodeServiceRefreshAddRewardResult) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField0(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *SensinodeServiceRefreshAddRewardResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &RefreshAddRewardRes{}
+	if err := p.Success.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+	}
+	return nil
+}
+
+func (p *SensinodeServiceRefreshAddRewardResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("refresh_add_reward_result"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField0(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *SensinodeServiceRefreshAddRewardResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+		}
+		if err := oprot.WriteFieldEnd(); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err)
+		}
+	}
+	return err
+}
+
+func (p *SensinodeServiceRefreshAddRewardResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SensinodeServiceRefreshAddRewardResult(%+v)", *p)
 }
 
 // Attributes:
