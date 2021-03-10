@@ -10089,8 +10089,8 @@ func (p *BaiduEntity) String() string {
 //  - TiXingName
 //  - Sign
 //  - Data
-//  - Creator
-//  - CreatorName
+//  - UserID
+//  - UserName
 //  - Approvor
 //  - ApprovorName
 //  - CreateAt
@@ -10113,8 +10113,8 @@ type AddTimuItem struct {
 	TiXingName   string    `thrift:"ti_xing_name,15" db:"ti_xing_name" json:"ti_xing_name"`
 	Sign         string    `thrift:"sign,16" db:"sign" json:"sign"`
 	Data         *Question `thrift:"data,17" db:"data" json:"data"`
-	Creator      int64     `thrift:"creator,18" db:"creator" json:"creator"`
-	CreatorName  string    `thrift:"creator_name,19" db:"creator_name" json:"creator_name"`
+	UserID       int64     `thrift:"user_id,18" db:"user_id" json:"user_id"`
+	UserName     string    `thrift:"user_name,19" db:"user_name" json:"user_name"`
 	Approvor     int64     `thrift:"approvor,20" db:"approvor" json:"approvor"`
 	ApprovorName string    `thrift:"approvor_name,21" db:"approvor_name" json:"approvor_name"`
 	CreateAt     string    `thrift:"create_at,22" db:"create_at" json:"create_at"`
@@ -10198,12 +10198,12 @@ func (p *AddTimuItem) GetData() *Question {
 	return p.Data
 }
 
-func (p *AddTimuItem) GetCreator() int64 {
-	return p.Creator
+func (p *AddTimuItem) GetUserID() int64 {
+	return p.UserID
 }
 
-func (p *AddTimuItem) GetCreatorName() string {
-	return p.CreatorName
+func (p *AddTimuItem) GetUserName() string {
+	return p.UserName
 }
 
 func (p *AddTimuItem) GetApprovor() int64 {
@@ -10640,7 +10640,7 @@ func (p *AddTimuItem) ReadField18(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI64(); err != nil {
 		return thrift.PrependError("error reading field 18: ", err)
 	} else {
-		p.Creator = v
+		p.UserID = v
 	}
 	return nil
 }
@@ -10649,7 +10649,7 @@ func (p *AddTimuItem) ReadField19(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 19: ", err)
 	} else {
-		p.CreatorName = v
+		p.UserName = v
 	}
 	return nil
 }
@@ -10996,27 +10996,27 @@ func (p *AddTimuItem) writeField17(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *AddTimuItem) writeField18(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("creator", thrift.I64, 18); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 18:creator: ", p), err)
+	if err := oprot.WriteFieldBegin("user_id", thrift.I64, 18); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 18:user_id: ", p), err)
 	}
-	if err := oprot.WriteI64(int64(p.Creator)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.creator (18) field write error: ", p), err)
+	if err := oprot.WriteI64(int64(p.UserID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.user_id (18) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 18:creator: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 18:user_id: ", p), err)
 	}
 	return err
 }
 
 func (p *AddTimuItem) writeField19(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("creator_name", thrift.STRING, 19); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 19:creator_name: ", p), err)
+	if err := oprot.WriteFieldBegin("user_name", thrift.STRING, 19); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 19:user_name: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.CreatorName)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.creator_name (19) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.UserName)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.user_name (19) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 19:creator_name: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 19:user_name: ", p), err)
 	}
 	return err
 }

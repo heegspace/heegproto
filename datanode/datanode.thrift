@@ -416,7 +416,7 @@ struct timu_count_res {
 
 struct timu_add_req {
     1:i64                       uid,
-    2:common.timu_item          timus,
+    2:common.add_timu_item          timus,
     3:map<string,string>        extra,
 }
 
