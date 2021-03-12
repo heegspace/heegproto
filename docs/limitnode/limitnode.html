@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css"/>
+<title>Thrift module: limitnode</title></head><body>
+<div class="container-fluid">
+<h1>Thrift module: limitnode</h1>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Module</th><th>Services</th><th>Data types</th><th>Constants</th></tr></thead><tbody>
+<tr>
+<td>limitnode</td><td><a href="#Svc_limitnode_service">limitnode_service</a><br/>
+<ul>
+<li><a href="#Fn_limitnode_service_add_timu_limit">add_timu_limit</a></li>
+<li><a href="#Fn_limitnode_service_modify_timu_limit">modify_timu_limit</a></li>
+</ul>
+</td>
+<td><a href="#Struct_add_timu_limit_req">add_timu_limit_req</a><br/>
+<a href="#Struct_add_timu_limit_res">add_timu_limit_res</a><br/>
+<a href="#Struct_modify_timu_limit_req">modify_timu_limit_req</a><br/>
+<a href="#Struct_modify_timu_limit_res">modify_timu_limit_res</a><br/>
+</td>
+<td></td>
+</tr></tbody></table>
+<hr/><h2 id="Structs">Data structures</h2>
+<div class="definition"><h3 id="Struct_modify_timu_limit_req">Struct: modify_timu_limit_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_modify_timu_limit_res">Struct: modify_timu_limit_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_timu_limit_req">Struct: add_timu_limit_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_timu_limit_res">Struct: add_timu_limit_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><hr/><h2 id="Services">Services</h2>
+<h3 id="Svc_limitnode_service">Service: limitnode_service</h3>
+<div class="definition"><h4 id="Fn_limitnode_service_modify_timu_limit">Function: limitnode_service.modify_timu_limit</h4>
+<pre><code><a href="#Struct_modify_timu_limit_res">modify_timu_limit_res</a></code> modify_timu_limit(<code><a href="#Struct_modify_timu_limit_req">modify_timu_limit_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_limitnode_service_add_timu_limit">Function: limitnode_service.add_timu_limit</h4>
+<pre><code><a href="#Struct_add_timu_limit_res">add_timu_limit_res</a></code> add_timu_limit(<code><a href="#Struct_add_timu_limit_req">add_timu_limit_req</a></code> req)
+</pre></div></div></body></html>
