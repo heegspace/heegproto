@@ -34,10 +34,12 @@
 <li><a href="#Fn_questionnode_service_school_list">school_list</a></li>
 <li><a href="#Fn_questionnode_service_school_roll_add">school_roll_add</a></li>
 <li><a href="#Fn_questionnode_service_school_roll_count">school_roll_count</a></li>
+<li><a href="#Fn_questionnode_service_source_by_vid">source_by_vid</a></li>
 <li><a href="#Fn_questionnode_service_subject_cate_add">subject_cate_add</a></li>
 <li><a href="#Fn_questionnode_service_subject_cate_count">subject_cate_count</a></li>
 <li><a href="#Fn_questionnode_service_subject_cate_list">subject_cate_list</a></li>
 <li><a href="#Fn_questionnode_service_subject_name">subject_name</a></li>
+<li><a href="#Fn_questionnode_service_tixing_by_vid">tixing_by_vid</a></li>
 </ul>
 </td>
 <td><a href="#Struct_add_count_req">add_count_req</a><br/>
@@ -85,6 +87,8 @@
 <a href="#Struct_school_roll_add_res">school_roll_add_res</a><br/>
 <a href="#Struct_school_roll_count_req">school_roll_count_req</a><br/>
 <a href="#Struct_school_roll_count_res">school_roll_count_res</a><br/>
+<a href="#Struct_source_by_vid_req">source_by_vid_req</a><br/>
+<a href="#Struct_source_by_vid_res">source_by_vid_res</a><br/>
 <a href="#Struct_subejct_cate_list_req">subejct_cate_list_req</a><br/>
 <a href="#Struct_subject_cate_add_req">subject_cate_add_req</a><br/>
 <a href="#Struct_subject_cate_add_res">subject_cate_add_res</a><br/>
@@ -97,6 +101,8 @@
 <a href="#Struct_timu_add_res">timu_add_res</a><br/>
 <a href="#Struct_timu_by_id_req">timu_by_id_req</a><br/>
 <a href="#Struct_timu_by_id_res">timu_by_id_res</a><br/>
+<a href="#Struct_tixing_by_vid_req">tixing_by_vid_req</a><br/>
+<a href="#Struct_tixing_by_vid_res">tixing_by_vid_res</a><br/>
 </td>
 <td></td>
 </tr></tbody></table>
@@ -447,6 +453,28 @@
 <tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>count</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_tixing_by_vid_req">Struct: tixing_by_vid_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>vid</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_tixing_by_vid_res">Struct: tixing_by_vid_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>tixings</td><td><code>list&lt;<code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_source_by_vid_req">Struct: source_by_vid_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>vid</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_source_by_vid_res">Struct: source_by_vid_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>sources</td><td><code>list&lt;<code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_questionnode_service">Service: questionnode_service</h3>
 <div class="definition"><h4 id="Fn_questionnode_service_grade_cate_add">Function: questionnode_service.grade_cate_add</h4>
@@ -505,4 +533,8 @@
 <pre><code><a href="#Struct_approve_res">approve_res</a></code> approve(<code><a href="#Struct_approve_req">approve_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_questionnode_service_question_timu_by_id">Function: questionnode_service.question_timu_by_id</h4>
 <pre><code><a href="#Struct_timu_by_id_res">timu_by_id_res</a></code> question_timu_by_id(<code><a href="#Struct_timu_by_id_req">timu_by_id_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_questionnode_service_tixing_by_vid">Function: questionnode_service.tixing_by_vid</h4>
+<pre><code><a href="#Struct_tixing_by_vid_res">tixing_by_vid_res</a></code> tixing_by_vid(<code><a href="#Struct_tixing_by_vid_req">tixing_by_vid_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_questionnode_service_source_by_vid">Function: questionnode_service.source_by_vid</h4>
+<pre><code><a href="#Struct_source_by_vid_res">source_by_vid_res</a></code> source_by_vid(<code><a href="#Struct_source_by_vid_req">source_by_vid_req</a></code> req)
 </pre></div></div></body></html>

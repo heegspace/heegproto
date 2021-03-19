@@ -924,6 +924,30 @@ struct refresh_add_reward_res {
     4:map<string,string>    extra,
 }
 
+struct tixing_by_vid_req {
+    1:string                   vid,
+    2:map<string,string>    extra,
+}
+
+struct tixing_by_vid_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:list<string>          tixings,
+    4:map<string,string>    extra,
+}
+
+struct source_by_vid_req {
+    1:string                   vid,
+    2:map<string,string>    extra,
+}
+
+struct source_by_vid_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:list<string>          sources,
+    4:map<string,string>    extra,
+}
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -1105,4 +1129,10 @@ service datanode_service {
 
     // 更新用户的coin数值
     refresh_user_coin_res refresh_user_coin(1:refresh_user_coin_req req),
+
+    // 通过版本id获取题型列表
+    tixing_by_vid_res tixing_by_vid(1:tixing_by_vid_req req),
+
+    // 通过版本id获取来源
+    source_by_vid_res source_by_vid(1:source_by_vid_req req),
 }

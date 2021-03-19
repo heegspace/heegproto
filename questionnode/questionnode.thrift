@@ -407,6 +407,32 @@ struct add_count_res {
     4:map<string,string> extra, 
 }
 
+struct tixing_by_vid_req {
+    1:common.authorize          auth,
+    2:string                   vid,
+    3:map<string,string>    extra,
+}
+
+struct tixing_by_vid_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:list<string>          tixings,
+    4:map<string,string>    extra,
+}
+
+struct source_by_vid_req {
+    1:common.authorize          auth,
+    2:string                   vid,
+    3:map<string,string>    extra,
+}
+
+struct source_by_vid_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:list<string>          sources,
+    4:map<string,string>    extra,
+}
+
 service questionnode_service {
     // 添加年纪信息
     grade_cate_add_res grade_cate_add(1:grade_cate_add_req req),
@@ -468,4 +494,9 @@ service questionnode_service {
     // 根据试题id请求题目
     timu_by_id_res question_timu_by_id(1:timu_by_id_req req),
 
+    // 通过版本id获取题型列表
+    tixing_by_vid_res tixing_by_vid(1:tixing_by_vid_req req),
+
+    // 通过版本id获取来源
+    source_by_vid_res source_by_vid(1:source_by_vid_req req),
 }
