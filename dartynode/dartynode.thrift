@@ -140,6 +140,18 @@ struct baidu_entity_res {
     6:map<string,string>        extra,
 }
 
+struct baidu_doc_analysis_req {
+    1:i64                   uid,
+    2:string                image_base64,
+    3:map<string,string>    extra,
+}
+
+struct baidu_doc_analysis_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:map<string,string>    extra,
+}
+
 service dartynode_service {
     // 登录微信
     login_wechat_res login_wechat(1:login_wechat_req req),
@@ -167,4 +179,7 @@ service dartynode_service {
 
     // 百度实体
     baidu_entity_res baidu_entity(1:baidu_entity_req req),
+
+    // 试卷识别
+    baidu_doc_analysis_res baidu_doc_analysis(1:baidu_doc_analysis_req req),
 }
