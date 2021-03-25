@@ -334,4 +334,5 @@ struct add_timu_item {
     21:string   approvor_name,
     22:string   create_at,
     23:string   msg,
+    24:string   status,
 }

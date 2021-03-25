@@ -10095,6 +10095,7 @@ func (p *BaiduEntity) String() string {
 //  - ApprovorName
 //  - CreateAt
 //  - Msg
+//  - Status
 type AddTimuItem struct {
 	RollID       string    `thrift:"roll_id,1" db:"roll_id" json:"roll_id"`
 	RollName     string    `thrift:"roll_name,2" db:"roll_name" json:"roll_name"`
@@ -10119,6 +10120,7 @@ type AddTimuItem struct {
 	ApprovorName string    `thrift:"approvor_name,21" db:"approvor_name" json:"approvor_name"`
 	CreateAt     string    `thrift:"create_at,22" db:"create_at" json:"create_at"`
 	Msg          string    `thrift:"msg,23" db:"msg" json:"msg"`
+	Status       string    `thrift:"status,24" db:"status" json:"status"`
 }
 
 func NewAddTimuItem() *AddTimuItem {
@@ -10220,6 +10222,10 @@ func (p *AddTimuItem) GetCreateAt() string {
 
 func (p *AddTimuItem) GetMsg() string {
 	return p.Msg
+}
+
+func (p *AddTimuItem) GetStatus() string {
+	return p.Status
 }
 func (p *AddTimuItem) IsSetData() bool {
 	return p.Data != nil
@@ -10469,6 +10475,16 @@ func (p *AddTimuItem) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
+		case 24:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField24(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
 		default:
 			if err := iprot.Skip(fieldTypeId); err != nil {
 				return err
@@ -10690,6 +10706,15 @@ func (p *AddTimuItem) ReadField23(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *AddTimuItem) ReadField24(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 24: ", err)
+	} else {
+		p.Status = v
+	}
+	return nil
+}
+
 func (p *AddTimuItem) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("add_timu_item"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -10762,6 +10787,9 @@ func (p *AddTimuItem) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField23(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField24(oprot); err != nil {
 			return err
 		}
 	}
@@ -11069,6 +11097,19 @@ func (p *AddTimuItem) writeField23(oprot thrift.TProtocol) (err error) {
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 23:msg: ", p), err)
+	}
+	return err
+}
+
+func (p *AddTimuItem) writeField24(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("status", thrift.STRING, 24); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 24:status: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Status)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.status (24) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 24:status: ", p), err)
 	}
 	return err
 }
