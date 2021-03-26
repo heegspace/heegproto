@@ -9,8 +9,9 @@ import (
 	"database/sql/driver"
 	"errors"
 	"fmt"
-	"github.com/heegspace/thrift"
 	"reflect"
+
+	"github.com/heegspace/thrift"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -11119,4 +11120,908 @@ func (p *AddTimuItem) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("AddTimuItem(%+v)", *p)
+}
+
+// Attributes:
+//  - Top
+//  - Left
+//  - Width
+//  - Height
+type BaiduWordLocation struct {
+	Top    int32 `thrift:"top,1" db:"top" json:"top"`
+	Left   int32 `thrift:"left,2" db:"left" json:"left"`
+	Width  int32 `thrift:"width,3" db:"width" json:"width"`
+	Height int32 `thrift:"height,4" db:"height" json:"height"`
+}
+
+func NewBaiduWordLocation() *BaiduWordLocation {
+	return &BaiduWordLocation{}
+}
+
+func (p *BaiduWordLocation) GetTop() int32 {
+	return p.Top
+}
+
+func (p *BaiduWordLocation) GetLeft() int32 {
+	return p.Left
+}
+
+func (p *BaiduWordLocation) GetWidth() int32 {
+	return p.Width
+}
+
+func (p *BaiduWordLocation) GetHeight() int32 {
+	return p.Height
+}
+func (p *BaiduWordLocation) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *BaiduWordLocation) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.Top = v
+	}
+	return nil
+}
+
+func (p *BaiduWordLocation) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Left = v
+	}
+	return nil
+}
+
+func (p *BaiduWordLocation) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Width = v
+	}
+	return nil
+}
+
+func (p *BaiduWordLocation) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.Height = v
+	}
+	return nil
+}
+
+func (p *BaiduWordLocation) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("baidu_word_location"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *BaiduWordLocation) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("top", thrift.I32, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:top: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Top)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.top (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:top: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduWordLocation) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("left", thrift.I32, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:left: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Left)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.left (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:left: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduWordLocation) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("width", thrift.I32, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:width: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Width)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.width (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:width: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduWordLocation) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("height", thrift.I32, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:height: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Height)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.height (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:height: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduWordLocation) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("BaiduWordLocation(%+v)", *p)
+}
+
+type BaiduLineProbability struct {
+}
+
+func NewBaiduLineProbability() *BaiduLineProbability {
+	return &BaiduLineProbability{}
+}
+
+func (p *BaiduLineProbability) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		if err := iprot.Skip(fieldTypeId); err != nil {
+			return err
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *BaiduLineProbability) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("baidu_line_probability"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *BaiduLineProbability) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("BaiduLineProbability(%+v)", *p)
+}
+
+// Attributes:
+//  - Location
+//  - Probability
+//  - Word
+type BaiduWordsItem struct {
+	Location    *BaiduWordLocation    `thrift:"location,1" db:"location" json:"location"`
+	Probability *BaiduLineProbability `thrift:"probability,2" db:"probability" json:"probability"`
+	Word        string                `thrift:"word,3" db:"word" json:"word"`
+}
+
+func NewBaiduWordsItem() *BaiduWordsItem {
+	return &BaiduWordsItem{}
+}
+
+var BaiduWordsItem_Location_DEFAULT *BaiduWordLocation
+
+func (p *BaiduWordsItem) GetLocation() *BaiduWordLocation {
+	if !p.IsSetLocation() {
+		return BaiduWordsItem_Location_DEFAULT
+	}
+	return p.Location
+}
+
+var BaiduWordsItem_Probability_DEFAULT *BaiduLineProbability
+
+func (p *BaiduWordsItem) GetProbability() *BaiduLineProbability {
+	if !p.IsSetProbability() {
+		return BaiduWordsItem_Probability_DEFAULT
+	}
+	return p.Probability
+}
+
+func (p *BaiduWordsItem) GetWord() string {
+	return p.Word
+}
+func (p *BaiduWordsItem) IsSetLocation() bool {
+	return p.Location != nil
+}
+
+func (p *BaiduWordsItem) IsSetProbability() bool {
+	return p.Probability != nil
+}
+
+func (p *BaiduWordsItem) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *BaiduWordsItem) ReadField1(iprot thrift.TProtocol) error {
+	p.Location = &BaiduWordLocation{}
+	if err := p.Location.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Location), err)
+	}
+	return nil
+}
+
+func (p *BaiduWordsItem) ReadField2(iprot thrift.TProtocol) error {
+	p.Probability = &BaiduLineProbability{}
+	if err := p.Probability.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Probability), err)
+	}
+	return nil
+}
+
+func (p *BaiduWordsItem) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Word = v
+	}
+	return nil
+}
+
+func (p *BaiduWordsItem) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("baidu_words_item"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *BaiduWordsItem) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("location", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:location: ", p), err)
+	}
+	if err := p.Location.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Location), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:location: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduWordsItem) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("probability", thrift.STRUCT, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:probability: ", p), err)
+	}
+	if err := p.Probability.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Probability), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:probability: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduWordsItem) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("word", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:word: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Word)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.word (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:word: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduWordsItem) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("BaiduWordsItem(%+v)", *p)
+}
+
+// Attributes:
+//  - WordsType
+//  - Word
+type BaiduResultItem struct {
+	WordsType string           `thrift:"words_type,1" db:"words_type" json:"words_type"`
+	Word      *BaiduResultItem `thrift:"word,2" db:"word" json:"word"`
+}
+
+func NewBaiduResultItem() *BaiduResultItem {
+	return &BaiduResultItem{}
+}
+
+func (p *BaiduResultItem) GetWordsType() string {
+	return p.WordsType
+}
+
+var BaiduResultItem_Word_DEFAULT *BaiduResultItem
+
+func (p *BaiduResultItem) GetWord() *BaiduResultItem {
+	if !p.IsSetWord() {
+		return BaiduResultItem_Word_DEFAULT
+	}
+	return p.Word
+}
+func (p *BaiduResultItem) IsSetWord() bool {
+	return p.Word != nil
+}
+
+func (p *BaiduResultItem) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *BaiduResultItem) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.WordsType = v
+	}
+	return nil
+}
+
+func (p *BaiduResultItem) ReadField2(iprot thrift.TProtocol) error {
+	p.Word = &BaiduResultItem{}
+	if err := p.Word.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Word), err)
+	}
+	return nil
+}
+
+func (p *BaiduResultItem) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("baidu_result_item"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *BaiduResultItem) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("words_type", thrift.STRING, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:words_type: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.WordsType)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.words_type (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:words_type: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduResultItem) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("word", thrift.STRUCT, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:word: ", p), err)
+	}
+	if err := p.Word.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Word), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:word: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduResultItem) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("BaiduResultItem(%+v)", *p)
+}
+
+// Attributes:
+//  - LogID
+//  - ImgDirection
+//  - ResultsNum
+//  - LayoutsNum
+//  - Results
+type BaiduDocAnalysis struct {
+	LogID        int64              `thrift:"log_id,1" db:"log_id" json:"log_id"`
+	ImgDirection int32              `thrift:"img_direction,2" db:"img_direction" json:"img_direction"`
+	ResultsNum   int32              `thrift:"results_num,3" db:"results_num" json:"results_num"`
+	LayoutsNum   int32              `thrift:"layouts_num,4" db:"layouts_num" json:"layouts_num"`
+	Results      []*BaiduResultItem `thrift:"results,5" db:"results" json:"results"`
+}
+
+func NewBaiduDocAnalysis() *BaiduDocAnalysis {
+	return &BaiduDocAnalysis{}
+}
+
+func (p *BaiduDocAnalysis) GetLogID() int64 {
+	return p.LogID
+}
+
+func (p *BaiduDocAnalysis) GetImgDirection() int32 {
+	return p.ImgDirection
+}
+
+func (p *BaiduDocAnalysis) GetResultsNum() int32 {
+	return p.ResultsNum
+}
+
+func (p *BaiduDocAnalysis) GetLayoutsNum() int32 {
+	return p.LayoutsNum
+}
+
+func (p *BaiduDocAnalysis) GetResults() []*BaiduResultItem {
+	return p.Results
+}
+func (p *BaiduDocAnalysis) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.LIST {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *BaiduDocAnalysis) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.LogID = v
+	}
+	return nil
+}
+
+func (p *BaiduDocAnalysis) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.ImgDirection = v
+	}
+	return nil
+}
+
+func (p *BaiduDocAnalysis) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.ResultsNum = v
+	}
+	return nil
+}
+
+func (p *BaiduDocAnalysis) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.LayoutsNum = v
+	}
+	return nil
+}
+
+func (p *BaiduDocAnalysis) ReadField5(iprot thrift.TProtocol) error {
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
+		return thrift.PrependError("error reading list begin: ", err)
+	}
+	tSlice := make([]*BaiduResultItem, 0, size)
+	p.Results = tSlice
+	for i := 0; i < size; i++ {
+		_elem16 := &BaiduResultItem{}
+		if err := _elem16.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem16), err)
+		}
+		p.Results = append(p.Results, _elem16)
+	}
+	if err := iprot.ReadListEnd(); err != nil {
+		return thrift.PrependError("error reading list end: ", err)
+	}
+	return nil
+}
+
+func (p *BaiduDocAnalysis) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("baidu_doc_analysis"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *BaiduDocAnalysis) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("log_id", thrift.I64, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:log_id: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.LogID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.log_id (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:log_id: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduDocAnalysis) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("img_direction", thrift.I32, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:img_direction: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.ImgDirection)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.img_direction (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:img_direction: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduDocAnalysis) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("results_num", thrift.I32, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:results_num: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.ResultsNum)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.results_num (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:results_num: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduDocAnalysis) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("layouts_num", thrift.I32, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:layouts_num: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.LayoutsNum)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.layouts_num (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:layouts_num: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduDocAnalysis) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("results", thrift.LIST, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:results: ", p), err)
+	}
+	if err := oprot.WriteListBegin(thrift.STRUCT, len(p.Results)); err != nil {
+		return thrift.PrependError("error writing list begin: ", err)
+	}
+	for _, v := range p.Results {
+		if err := v.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", v), err)
+		}
+	}
+	if err := oprot.WriteListEnd(); err != nil {
+		return thrift.PrependError("error writing list end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:results: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduDocAnalysis) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("BaiduDocAnalysis(%+v)", *p)
 }

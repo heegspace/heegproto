@@ -336,3 +336,33 @@ struct add_timu_item {
     23:string   msg,
     24:string   status,
 }
+
+struct baidu_word_location {
+    1:i32   top,
+    2:i32   left,
+    3:i32   width,
+    4:i32   height,
+}
+
+struct baidu_line_probability {
+
+}
+
+struct baidu_words_item {
+    1:baidu_word_location     location,
+    2:baidu_line_probability  probability,
+    3:string            word,
+}
+
+struct baidu_result_item {
+    1:string                words_type,
+    2:baidu_result_item     word,
+}
+
+struct baidu_doc_analysis {
+    1:i64                       log_id,
+    2:i32                       img_direction,
+    3:i32                       results_num,
+    4:i32                       layouts_num,
+    5:list<baidu_result_item>   results,
+}

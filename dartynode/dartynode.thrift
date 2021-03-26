@@ -147,9 +147,10 @@ struct baidu_doc_analysis_req {
 }
 
 struct baidu_doc_analysis_res {
-    1:rescode.code          rescode,
-    2:string                resmsg,
-    3:map<string,string>    extra,
+    1:rescode.code                      rescode,
+    2:string                            resmsg,
+    3:common.baidu_doc_analysis         analysis,
+    4:map<string,string>                extra,
 }
 
 service dartynode_service {

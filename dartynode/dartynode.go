@@ -7,10 +7,11 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"reflect"
+
 	"github.com/heegspace/heegproto/common"
 	"github.com/heegspace/heegproto/rescode"
 	"github.com/heegspace/thrift"
-	"reflect"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -5268,11 +5269,13 @@ func (p *BaiduDocAnalysisReq) String() string {
 // Attributes:
 //  - Rescode
 //  - Resmsg
+//  - Analysis
 //  - Extra
 type BaiduDocAnalysisRes struct {
-	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
-	Extra   map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
+	Rescode  rescode.Code             `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg   string                   `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Analysis *common.BaiduDocAnalysis `thrift:"analysis,3" db:"analysis" json:"analysis"`
+	Extra    map[string]string        `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewBaiduDocAnalysisRes() *BaiduDocAnalysisRes {
@@ -5287,9 +5290,22 @@ func (p *BaiduDocAnalysisRes) GetResmsg() string {
 	return p.Resmsg
 }
 
+var BaiduDocAnalysisRes_Analysis_DEFAULT *common.BaiduDocAnalysis
+
+func (p *BaiduDocAnalysisRes) GetAnalysis() *common.BaiduDocAnalysis {
+	if !p.IsSetAnalysis() {
+		return BaiduDocAnalysisRes_Analysis_DEFAULT
+	}
+	return p.Analysis
+}
+
 func (p *BaiduDocAnalysisRes) GetExtra() map[string]string {
 	return p.Extra
 }
+func (p *BaiduDocAnalysisRes) IsSetAnalysis() bool {
+	return p.Analysis != nil
+}
+
 func (p *BaiduDocAnalysisRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
@@ -5325,8 +5341,18 @@ func (p *BaiduDocAnalysisRes) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 3:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.STRUCT {
 				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -5369,6 +5395,14 @@ func (p *BaiduDocAnalysisRes) ReadField2(iprot thrift.TProtocol) error {
 }
 
 func (p *BaiduDocAnalysisRes) ReadField3(iprot thrift.TProtocol) error {
+	p.Analysis = &common.BaiduDocAnalysis{}
+	if err := p.Analysis.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Analysis), err)
+	}
+	return nil
+}
+
+func (p *BaiduDocAnalysisRes) ReadField4(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -5410,6 +5444,9 @@ func (p *BaiduDocAnalysisRes) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -5447,8 +5484,21 @@ func (p *BaiduDocAnalysisRes) writeField2(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *BaiduDocAnalysisRes) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("analysis", thrift.STRUCT, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:analysis: ", p), err)
+	}
+	if err := p.Analysis.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Analysis), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:analysis: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduDocAnalysisRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -5465,7 +5515,7 @@ func (p *BaiduDocAnalysisRes) writeField3(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
 	}
 	return err
 }
