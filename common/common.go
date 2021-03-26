@@ -11600,8 +11600,8 @@ func (p *BaiduWordsItem) String() string {
 //  - WordsType
 //  - Word
 type BaiduResultItem struct {
-	WordsType string           `thrift:"words_type,1" db:"words_type" json:"words_type"`
-	Word      *BaiduResultItem `thrift:"word,2" db:"word" json:"word"`
+	WordsType string          `thrift:"words_type,1" db:"words_type" json:"words_type"`
+	Word      *BaiduWordsItem `thrift:"word,2" db:"word" json:"word"`
 }
 
 func NewBaiduResultItem() *BaiduResultItem {
@@ -11612,9 +11612,9 @@ func (p *BaiduResultItem) GetWordsType() string {
 	return p.WordsType
 }
 
-var BaiduResultItem_Word_DEFAULT *BaiduResultItem
+var BaiduResultItem_Word_DEFAULT *BaiduWordsItem
 
-func (p *BaiduResultItem) GetWord() *BaiduResultItem {
+func (p *BaiduResultItem) GetWord() *BaiduWordsItem {
 	if !p.IsSetWord() {
 		return BaiduResultItem_Word_DEFAULT
 	}
@@ -11683,7 +11683,7 @@ func (p *BaiduResultItem) ReadField1(iprot thrift.TProtocol) error {
 }
 
 func (p *BaiduResultItem) ReadField2(iprot thrift.TProtocol) error {
-	p.Word = &BaiduResultItem{}
+	p.Word = &BaiduWordsItem{}
 	if err := p.Word.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Word), err)
 	}

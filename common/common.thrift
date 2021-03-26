@@ -356,7 +356,7 @@ struct baidu_words_item {
 
 struct baidu_result_item {
     1:string                words_type,
-    2:baidu_result_item     word,
+    2:baidu_words_item      word,
 }
 
 struct baidu_doc_analysis {
