@@ -30309,7 +30309,7 @@ func (p *SourceByVidRes) String() string {
 type IdentAddReq struct {
   UID int64 `thrift:"uid,1" db:"uid" json:"uid"`
   LogID string `thrift:"log_id,2" db:"log_id" json:"log_id"`
-  Result_ []*common.BaiduResultItem `thrift:"result,3" db:"result" json:"result"`
+  Result_ []*common.BaiduDocAnalysis `thrift:"result,3" db:"result" json:"result"`
   Extra map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
@@ -30326,7 +30326,7 @@ func (p *IdentAddReq) GetLogID() string {
   return p.LogID
 }
 
-func (p *IdentAddReq) GetResult_() []*common.BaiduResultItem {
+func (p *IdentAddReq) GetResult_() []*common.BaiduDocAnalysis {
   return p.Result_
 }
 
@@ -30424,10 +30424,10 @@ func (p *IdentAddReq)  ReadField3(iprot thrift.TProtocol) error {
   if err != nil {
     return thrift.PrependError("error reading list begin: ", err)
   }
-  tSlice := make([]*common.BaiduResultItem, 0, size)
+  tSlice := make([]*common.BaiduDocAnalysis, 0, size)
   p.Result_ =  tSlice
   for i := 0; i < size; i ++ {
-    _elem245 := &common.BaiduResultItem{}
+    _elem245 := &common.BaiduDocAnalysis{}
     if err := _elem245.Read(iprot); err != nil {
       return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem245), err)
     }

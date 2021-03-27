@@ -951,7 +951,7 @@ struct source_by_vid_res {
 struct ident_add_req {
     1:i64                               uid,
     2:string                            log_id,
-    3:list<common.baidu_result_item>    result,
+    3:list<common.baidu_doc_analysis>    result,
     4:map<string,string>                extra,
 }
 

@@ -372,7 +372,7 @@ struct baidu_ident_item {
     2:string                        iid,
     3:string                        sign,
     4:string                        status,
-    5:list<baidu_result_item>       result,
+    5:list<baidu_doc_analysis>       result,
     6:string                        create_at,
     7:string                        update_at,
 }
