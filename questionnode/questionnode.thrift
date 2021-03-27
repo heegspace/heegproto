@@ -456,6 +456,7 @@ struct ident_list_req {
     5:string    sorted,
     6:string    status,
     7:string    iid,
+    8:string    sign,
 }
 
 struct ident_list_res {

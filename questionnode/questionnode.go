@@ -16621,6 +16621,7 @@ func (p *IdentByIidRes) String() string {
 //  - Sorted
 //  - Status
 //  - Iid
+//  - Sign
 type IdentListReq struct {
 	Auth   *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
 	UID    int64             `thrift:"uid,2" db:"uid" json:"uid"`
@@ -16629,6 +16630,7 @@ type IdentListReq struct {
 	Sorted string            `thrift:"sorted,5" db:"sorted" json:"sorted"`
 	Status string            `thrift:"status,6" db:"status" json:"status"`
 	Iid    string            `thrift:"iid,7" db:"iid" json:"iid"`
+	Sign   string            `thrift:"sign,8" db:"sign" json:"sign"`
 }
 
 func NewIdentListReq() *IdentListReq {
@@ -16666,6 +16668,10 @@ func (p *IdentListReq) GetStatus() string {
 
 func (p *IdentListReq) GetIid() string {
 	return p.Iid
+}
+
+func (p *IdentListReq) GetSign() string {
+	return p.Sign
 }
 func (p *IdentListReq) IsSetAuth() bool {
 	return p.Auth != nil
@@ -16755,6 +16761,16 @@ func (p *IdentListReq) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
+		case 8:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField8(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
 		default:
 			if err := iprot.Skip(fieldTypeId); err != nil {
 				return err
@@ -16832,6 +16848,15 @@ func (p *IdentListReq) ReadField7(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *IdentListReq) ReadField8(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 8: ", err)
+	} else {
+		p.Sign = v
+	}
+	return nil
+}
+
 func (p *IdentListReq) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("ident_list_req"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -16856,6 +16881,9 @@ func (p *IdentListReq) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField7(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField8(oprot); err != nil {
 			return err
 		}
 	}
@@ -16955,6 +16983,19 @@ func (p *IdentListReq) writeField7(oprot thrift.TProtocol) (err error) {
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 7:iid: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentListReq) writeField8(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("sign", thrift.STRING, 8); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 8:sign: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Sign)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.sign (8) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 8:sign: ", p), err)
 	}
 	return err
 }
