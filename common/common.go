@@ -12034,13 +12034,13 @@ func (p *BaiduDocAnalysis) String() string {
 //  - CreateAt
 //  - UpdateAt
 type BaiduIdentItem struct {
-	UID      int64               `thrift:"uid,1" db:"uid" json:"uid"`
-	Iid      string              `thrift:"iid,2" db:"iid" json:"iid"`
-	Sign     string              `thrift:"sign,3" db:"sign" json:"sign"`
-	Status   string              `thrift:"status,4" db:"status" json:"status"`
-	Result_  []*BaiduDocAnalysis `thrift:"result,5" db:"result" json:"result"`
-	CreateAt string              `thrift:"create_at,6" db:"create_at" json:"create_at"`
-	UpdateAt string              `thrift:"update_at,7" db:"update_at" json:"update_at"`
+	UID      int64             `thrift:"uid,1" db:"uid" json:"uid"`
+	Iid      string            `thrift:"iid,2" db:"iid" json:"iid"`
+	Sign     string            `thrift:"sign,3" db:"sign" json:"sign"`
+	Status   string            `thrift:"status,4" db:"status" json:"status"`
+	Result_  *BaiduDocAnalysis `thrift:"result,5" db:"result" json:"result"`
+	CreateAt string            `thrift:"create_at,6" db:"create_at" json:"create_at"`
+	UpdateAt string            `thrift:"update_at,7" db:"update_at" json:"update_at"`
 }
 
 func NewBaiduIdentItem() *BaiduIdentItem {
@@ -12063,7 +12063,12 @@ func (p *BaiduIdentItem) GetStatus() string {
 	return p.Status
 }
 
-func (p *BaiduIdentItem) GetResult_() []*BaiduDocAnalysis {
+var BaiduIdentItem_Result__DEFAULT *BaiduDocAnalysis
+
+func (p *BaiduIdentItem) GetResult_() *BaiduDocAnalysis {
+	if !p.IsSetResult_() {
+		return BaiduIdentItem_Result__DEFAULT
+	}
 	return p.Result_
 }
 
@@ -12074,6 +12079,10 @@ func (p *BaiduIdentItem) GetCreateAt() string {
 func (p *BaiduIdentItem) GetUpdateAt() string {
 	return p.UpdateAt
 }
+func (p *BaiduIdentItem) IsSetResult_() bool {
+	return p.Result_ != nil
+}
+
 func (p *BaiduIdentItem) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
@@ -12129,7 +12138,7 @@ func (p *BaiduIdentItem) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 5:
-			if fieldTypeId == thrift.LIST {
+			if fieldTypeId == thrift.STRUCT {
 				if err := p.ReadField5(iprot); err != nil {
 					return err
 				}
@@ -12210,21 +12219,9 @@ func (p *BaiduIdentItem) ReadField4(iprot thrift.TProtocol) error {
 }
 
 func (p *BaiduIdentItem) ReadField5(iprot thrift.TProtocol) error {
-	_, size, err := iprot.ReadListBegin()
-	if err != nil {
-		return thrift.PrependError("error reading list begin: ", err)
-	}
-	tSlice := make([]*BaiduDocAnalysis, 0, size)
-	p.Result_ = tSlice
-	for i := 0; i < size; i++ {
-		_elem17 := &BaiduDocAnalysis{}
-		if err := _elem17.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem17), err)
-		}
-		p.Result_ = append(p.Result_, _elem17)
-	}
-	if err := iprot.ReadListEnd(); err != nil {
-		return thrift.PrependError("error reading list end: ", err)
+	p.Result_ = &BaiduDocAnalysis{}
+	if err := p.Result_.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Result_), err)
 	}
 	return nil
 }
@@ -12336,19 +12333,11 @@ func (p *BaiduIdentItem) writeField4(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *BaiduIdentItem) writeField5(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("result", thrift.LIST, 5); err != nil {
+	if err := oprot.WriteFieldBegin("result", thrift.STRUCT, 5); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:result: ", p), err)
 	}
-	if err := oprot.WriteListBegin(thrift.STRUCT, len(p.Result_)); err != nil {
-		return thrift.PrependError("error writing list begin: ", err)
-	}
-	for _, v := range p.Result_ {
-		if err := v.Write(oprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", v), err)
-		}
-	}
-	if err := oprot.WriteListEnd(); err != nil {
-		return thrift.PrependError("error writing list end: ", err)
+	if err := p.Result_.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Result_), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:result: ", p), err)
