@@ -444,7 +444,7 @@ struct ident_by_iid_req {
 struct ident_by_iid_res {
     1:rescode.code              rescode,
     2:string                    resmsg,
-    3:common.baidu_result_item  result,
+    3:common.baidu_ident_item  result,
     4:map<string,string>        extra,
 }
 
@@ -462,7 +462,7 @@ struct ident_list_req {
 struct ident_list_res {
     1:rescode.code                      rescode,
     2:string                            resmsg,
-    3:list<common.baidu_result_item>    results,
+    3:list<common.baidu_ident_item>    results,
     4:map<string,string>                extra,
 }
 
