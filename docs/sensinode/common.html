@@ -15,7 +15,12 @@
 <a href="#Enum_approve_dest">approve_dest</a><br/>
 <a href="#Struct_authorize">authorize</a><br/>
 <a href="#Struct_baidu_concept">baidu_concept</a><br/>
+<a href="#Struct_baidu_doc_analysis">baidu_doc_analysis</a><br/>
 <a href="#Struct_baidu_entity">baidu_entity</a><br/>
+<a href="#Struct_baidu_line_probability">baidu_line_probability</a><br/>
+<a href="#Struct_baidu_result_item">baidu_result_item</a><br/>
+<a href="#Struct_baidu_word_location">baidu_word_location</a><br/>
+<a href="#Struct_baidu_words_item">baidu_words_item</a><br/>
 <a href="#Struct_chapter_item">chapter_item</a><br/>
 <a href="#Enum_from_platom">from_platom</a><br/>
 <a href="#Struct_grade_cate">grade_cate</a><br/>
@@ -361,10 +366,35 @@
 <tr><td>15</td><td>ti_xing_name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>16</td><td>sign</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>17</td><td>data</td><td><code><a href="#Struct_question">question</a></code></td><td></td><td>default</td><td></td></tr>
-<tr><td>18</td><td>creator</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>19</td><td>creator_name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>18</td><td>user_id</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>19</td><td>user_name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>20</td><td>approvor</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>21</td><td>approvor_name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>22</td><td>create_at</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>23</td><td>msg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>24</td><td>status</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_baidu_word_location">Struct: baidu_word_location</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>top</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>left</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>width</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>height</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_baidu_line_probability">Struct: baidu_line_probability</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_baidu_words_item">Struct: baidu_words_item</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>location</td><td><code><a href="#Struct_baidu_word_location">baidu_word_location</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>probability</td><td><code><a href="#Struct_baidu_line_probability">baidu_line_probability</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>word</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_baidu_result_item">Struct: baidu_result_item</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>words_type</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>word</td><td><code><a href="#Struct_baidu_words_item">baidu_words_item</a></code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_baidu_doc_analysis">Struct: baidu_doc_analysis</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>log_id</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>img_direction</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>results_num</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>layouts_num</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>results</td><td><code>list&lt;<code><a href="#Struct_baidu_result_item">baidu_result_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div></div></body></html>

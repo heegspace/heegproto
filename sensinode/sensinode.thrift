@@ -31,8 +31,6 @@ struct refresh_user_coin_res {
     4:map<string,string>    extra,
 }
 
-
-
 struct refresh_add_reward_req {
     1:common.authorize      auth,
     2:i64                   id,
@@ -47,6 +45,19 @@ struct refresh_add_reward_res {
     4:map<string,string>    extra,
 }
 
+struct refresh_ident_reward_req {
+    1:common.authorize      auth,
+    2:string                iid,
+    3:double                reward,
+    4:map<string,string>    extra,
+} 
+
+struct refresh_ident_reward_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:string                code,
+    4:map<string,string>    extra,
+}
 
 service sensinode_service {
     // 更新修改试题的奖励积分
@@ -57,4 +68,7 @@ service sensinode_service {
 
     // 更新用户的coin数值
     refresh_user_coin_res refresh_user_coin(1:refresh_user_coin_req req),
+
+    // 刷新识别奖励
+    refresh_ident_reward_res refresh_ident_reward(1:refresh_ident_reward_req req),
 }

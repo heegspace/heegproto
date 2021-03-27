@@ -7,11 +7,10 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"reflect"
-
 	"github.com/heegspace/heegproto/common"
 	"github.com/heegspace/heegproto/rescode"
 	"github.com/heegspace/thrift"
+	"reflect"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -33386,6 +33385,2495 @@ func (p *SourceByVidRes) String() string {
 	return fmt.Sprintf("SourceByVidRes(%+v)", *p)
 }
 
+// Attributes:
+//  - UID
+//  - LogID
+//  - Result_
+//  - Extra
+type IdentAddReq struct {
+	UID     int64                   `thrift:"uid,1" db:"uid" json:"uid"`
+	LogID   string                  `thrift:"log_id,2" db:"log_id" json:"log_id"`
+	Result_ *common.BaiduResultItem `thrift:"result,3" db:"result" json:"result"`
+	Extra   map[string]string       `thrift:"extra,4" db:"extra" json:"extra"`
+}
+
+func NewIdentAddReq() *IdentAddReq {
+	return &IdentAddReq{}
+}
+
+func (p *IdentAddReq) GetUID() int64 {
+	return p.UID
+}
+
+func (p *IdentAddReq) GetLogID() string {
+	return p.LogID
+}
+
+var IdentAddReq_Result__DEFAULT *common.BaiduResultItem
+
+func (p *IdentAddReq) GetResult_() *common.BaiduResultItem {
+	if !p.IsSetResult_() {
+		return IdentAddReq_Result__DEFAULT
+	}
+	return p.Result_
+}
+
+func (p *IdentAddReq) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *IdentAddReq) IsSetResult_() bool {
+	return p.Result_ != nil
+}
+
+func (p *IdentAddReq) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *IdentAddReq) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
+func (p *IdentAddReq) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.LogID = v
+	}
+	return nil
+}
+
+func (p *IdentAddReq) ReadField3(iprot thrift.TProtocol) error {
+	p.Result_ = &common.BaiduResultItem{}
+	if err := p.Result_.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Result_), err)
+	}
+	return nil
+}
+
+func (p *IdentAddReq) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key245 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key245 = v
+		}
+		var _val246 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val246 = v
+		}
+		p.Extra[_key245] = _val246
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *IdentAddReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("ident_add_req"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *IdentAddReq) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("uid", thrift.I64, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentAddReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("log_id", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:log_id: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.LogID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.log_id (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:log_id: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentAddReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("result", thrift.STRUCT, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:result: ", p), err)
+	}
+	if err := p.Result_.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Result_), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:result: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentAddReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentAddReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("IdentAddReq(%+v)", *p)
+}
+
+// Attributes:
+//  - Rescode
+//  - Resmsg
+//  - Extra
+type IdentAddRes struct {
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Extra   map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
+}
+
+func NewIdentAddRes() *IdentAddRes {
+	return &IdentAddRes{}
+}
+
+func (p *IdentAddRes) GetRescode() rescode.Code {
+	return p.Rescode
+}
+
+func (p *IdentAddRes) GetResmsg() string {
+	return p.Resmsg
+}
+
+func (p *IdentAddRes) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *IdentAddRes) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *IdentAddRes) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		temp := rescode.Code(v)
+		p.Rescode = temp
+	}
+	return nil
+}
+
+func (p *IdentAddRes) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Resmsg = v
+	}
+	return nil
+}
+
+func (p *IdentAddRes) ReadField3(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key247 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key247 = v
+		}
+		var _val248 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val248 = v
+		}
+		p.Extra[_key247] = _val248
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *IdentAddRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("ident_add_res"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *IdentAddRes) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Rescode)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.rescode (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:rescode: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentAddRes) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentAddRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentAddRes) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("IdentAddRes(%+v)", *p)
+}
+
+// Attributes:
+//  - UID
+//  - Iid
+//  - Extra
+type IdentByIidReq struct {
+	UID   int64             `thrift:"uid,1" db:"uid" json:"uid"`
+	Iid   string            `thrift:"iid,2" db:"iid" json:"iid"`
+	Extra map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
+}
+
+func NewIdentByIidReq() *IdentByIidReq {
+	return &IdentByIidReq{}
+}
+
+func (p *IdentByIidReq) GetUID() int64 {
+	return p.UID
+}
+
+func (p *IdentByIidReq) GetIid() string {
+	return p.Iid
+}
+
+func (p *IdentByIidReq) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *IdentByIidReq) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *IdentByIidReq) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
+func (p *IdentByIidReq) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Iid = v
+	}
+	return nil
+}
+
+func (p *IdentByIidReq) ReadField3(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key249 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key249 = v
+		}
+		var _val250 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val250 = v
+		}
+		p.Extra[_key249] = _val250
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *IdentByIidReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("ident_by_iid_req"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *IdentByIidReq) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("uid", thrift.I64, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentByIidReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("iid", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:iid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Iid)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.iid (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:iid: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentByIidReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentByIidReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("IdentByIidReq(%+v)", *p)
+}
+
+// Attributes:
+//  - Rescode
+//  - Resmsg
+//  - Result_
+//  - Extra
+type IdentByIidRes struct {
+	Rescode rescode.Code            `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string                  `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Result_ *common.BaiduResultItem `thrift:"result,3" db:"result" json:"result"`
+	Extra   map[string]string       `thrift:"extra,4" db:"extra" json:"extra"`
+}
+
+func NewIdentByIidRes() *IdentByIidRes {
+	return &IdentByIidRes{}
+}
+
+func (p *IdentByIidRes) GetRescode() rescode.Code {
+	return p.Rescode
+}
+
+func (p *IdentByIidRes) GetResmsg() string {
+	return p.Resmsg
+}
+
+var IdentByIidRes_Result__DEFAULT *common.BaiduResultItem
+
+func (p *IdentByIidRes) GetResult_() *common.BaiduResultItem {
+	if !p.IsSetResult_() {
+		return IdentByIidRes_Result__DEFAULT
+	}
+	return p.Result_
+}
+
+func (p *IdentByIidRes) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *IdentByIidRes) IsSetResult_() bool {
+	return p.Result_ != nil
+}
+
+func (p *IdentByIidRes) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *IdentByIidRes) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		temp := rescode.Code(v)
+		p.Rescode = temp
+	}
+	return nil
+}
+
+func (p *IdentByIidRes) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Resmsg = v
+	}
+	return nil
+}
+
+func (p *IdentByIidRes) ReadField3(iprot thrift.TProtocol) error {
+	p.Result_ = &common.BaiduResultItem{}
+	if err := p.Result_.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Result_), err)
+	}
+	return nil
+}
+
+func (p *IdentByIidRes) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key251 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key251 = v
+		}
+		var _val252 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val252 = v
+		}
+		p.Extra[_key251] = _val252
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *IdentByIidRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("ident_by_iid_res"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *IdentByIidRes) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Rescode)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.rescode (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:rescode: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentByIidRes) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentByIidRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("result", thrift.STRUCT, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:result: ", p), err)
+	}
+	if err := p.Result_.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Result_), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:result: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentByIidRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentByIidRes) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("IdentByIidRes(%+v)", *p)
+}
+
+// Attributes:
+//  - UID
+//  - Page
+//  - Size
+//  - Sorted
+//  - Status
+//  - Iid
+type IdentListReq struct {
+	UID    int64  `thrift:"uid,1" db:"uid" json:"uid"`
+	Page   int32  `thrift:"page,2" db:"page" json:"page"`
+	Size   int32  `thrift:"size,3" db:"size" json:"size"`
+	Sorted string `thrift:"sorted,4" db:"sorted" json:"sorted"`
+	Status string `thrift:"status,5" db:"status" json:"status"`
+	Iid    string `thrift:"iid,6" db:"iid" json:"iid"`
+}
+
+func NewIdentListReq() *IdentListReq {
+	return &IdentListReq{}
+}
+
+func (p *IdentListReq) GetUID() int64 {
+	return p.UID
+}
+
+func (p *IdentListReq) GetPage() int32 {
+	return p.Page
+}
+
+func (p *IdentListReq) GetSize() int32 {
+	return p.Size
+}
+
+func (p *IdentListReq) GetSorted() string {
+	return p.Sorted
+}
+
+func (p *IdentListReq) GetStatus() string {
+	return p.Status
+}
+
+func (p *IdentListReq) GetIid() string {
+	return p.Iid
+}
+func (p *IdentListReq) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 6:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField6(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *IdentListReq) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
+func (p *IdentListReq) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Page = v
+	}
+	return nil
+}
+
+func (p *IdentListReq) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Size = v
+	}
+	return nil
+}
+
+func (p *IdentListReq) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.Sorted = v
+	}
+	return nil
+}
+
+func (p *IdentListReq) ReadField5(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 5: ", err)
+	} else {
+		p.Status = v
+	}
+	return nil
+}
+
+func (p *IdentListReq) ReadField6(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 6: ", err)
+	} else {
+		p.Iid = v
+	}
+	return nil
+}
+
+func (p *IdentListReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("ident_list_req"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField6(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *IdentListReq) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("uid", thrift.I64, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentListReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("page", thrift.I32, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:page: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Page)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.page (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:page: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentListReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("size", thrift.I32, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:size: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Size)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.size (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:size: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentListReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("sorted", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:sorted: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Sorted)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.sorted (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:sorted: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentListReq) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("status", thrift.STRING, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:status: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Status)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.status (5) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:status: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentListReq) writeField6(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("iid", thrift.STRING, 6); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:iid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Iid)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.iid (6) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:iid: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentListReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("IdentListReq(%+v)", *p)
+}
+
+// Attributes:
+//  - Rescode
+//  - Resmsg
+//  - Results
+//  - Extra
+type IdentListRes struct {
+	Rescode rescode.Code              `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string                    `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Results []*common.BaiduResultItem `thrift:"results,3" db:"results" json:"results"`
+	Extra   map[string]string         `thrift:"extra,4" db:"extra" json:"extra"`
+}
+
+func NewIdentListRes() *IdentListRes {
+	return &IdentListRes{}
+}
+
+func (p *IdentListRes) GetRescode() rescode.Code {
+	return p.Rescode
+}
+
+func (p *IdentListRes) GetResmsg() string {
+	return p.Resmsg
+}
+
+func (p *IdentListRes) GetResults() []*common.BaiduResultItem {
+	return p.Results
+}
+
+func (p *IdentListRes) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *IdentListRes) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.LIST {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *IdentListRes) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		temp := rescode.Code(v)
+		p.Rescode = temp
+	}
+	return nil
+}
+
+func (p *IdentListRes) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Resmsg = v
+	}
+	return nil
+}
+
+func (p *IdentListRes) ReadField3(iprot thrift.TProtocol) error {
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
+		return thrift.PrependError("error reading list begin: ", err)
+	}
+	tSlice := make([]*common.BaiduResultItem, 0, size)
+	p.Results = tSlice
+	for i := 0; i < size; i++ {
+		_elem253 := &common.BaiduResultItem{}
+		if err := _elem253.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem253), err)
+		}
+		p.Results = append(p.Results, _elem253)
+	}
+	if err := iprot.ReadListEnd(); err != nil {
+		return thrift.PrependError("error reading list end: ", err)
+	}
+	return nil
+}
+
+func (p *IdentListRes) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key254 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key254 = v
+		}
+		var _val255 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val255 = v
+		}
+		p.Extra[_key254] = _val255
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *IdentListRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("ident_list_res"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *IdentListRes) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Rescode)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.rescode (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:rescode: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentListRes) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentListRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("results", thrift.LIST, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:results: ", p), err)
+	}
+	if err := oprot.WriteListBegin(thrift.STRUCT, len(p.Results)); err != nil {
+		return thrift.PrependError("error writing list begin: ", err)
+	}
+	for _, v := range p.Results {
+		if err := v.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", v), err)
+		}
+	}
+	if err := oprot.WriteListEnd(); err != nil {
+		return thrift.PrependError("error writing list end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:results: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentListRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentListRes) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("IdentListRes(%+v)", *p)
+}
+
+// Attributes:
+//  - UID
+//  - Status
+//  - Extra
+type IdentCountReq struct {
+	UID    int64             `thrift:"uid,1" db:"uid" json:"uid"`
+	Status string            `thrift:"status,2" db:"status" json:"status"`
+	Extra  map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
+}
+
+func NewIdentCountReq() *IdentCountReq {
+	return &IdentCountReq{}
+}
+
+func (p *IdentCountReq) GetUID() int64 {
+	return p.UID
+}
+
+func (p *IdentCountReq) GetStatus() string {
+	return p.Status
+}
+
+func (p *IdentCountReq) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *IdentCountReq) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *IdentCountReq) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
+func (p *IdentCountReq) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Status = v
+	}
+	return nil
+}
+
+func (p *IdentCountReq) ReadField3(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key256 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key256 = v
+		}
+		var _val257 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val257 = v
+		}
+		p.Extra[_key256] = _val257
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *IdentCountReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("ident_count_req"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *IdentCountReq) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("uid", thrift.I64, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentCountReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("status", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:status: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Status)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.status (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:status: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentCountReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentCountReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("IdentCountReq(%+v)", *p)
+}
+
+// Attributes:
+//  - Rescode
+//  - Resmsg
+//  - Count
+//  - Extra
+type IdentCountRes struct {
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Count   int32             `thrift:"count,3" db:"count" json:"count"`
+	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
+}
+
+func NewIdentCountRes() *IdentCountRes {
+	return &IdentCountRes{}
+}
+
+func (p *IdentCountRes) GetRescode() rescode.Code {
+	return p.Rescode
+}
+
+func (p *IdentCountRes) GetResmsg() string {
+	return p.Resmsg
+}
+
+func (p *IdentCountRes) GetCount() int32 {
+	return p.Count
+}
+
+func (p *IdentCountRes) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *IdentCountRes) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *IdentCountRes) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		temp := rescode.Code(v)
+		p.Rescode = temp
+	}
+	return nil
+}
+
+func (p *IdentCountRes) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Resmsg = v
+	}
+	return nil
+}
+
+func (p *IdentCountRes) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Count = v
+	}
+	return nil
+}
+
+func (p *IdentCountRes) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key258 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key258 = v
+		}
+		var _val259 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val259 = v
+		}
+		p.Extra[_key258] = _val259
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *IdentCountRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("ident_count_res"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *IdentCountRes) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Rescode)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.rescode (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:rescode: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentCountRes) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentCountRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("count", thrift.I32, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:count: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Count)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.count (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:count: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentCountRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *IdentCountRes) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("IdentCountRes(%+v)", *p)
+}
+
+// Attributes:
+//  - Auth
+//  - Iid
+//  - Reward
+//  - Extra
+type RefreshIdentRewardReq struct {
+	Auth   string            `thrift:"auth,1" db:"auth" json:"auth"`
+	Iid    string            `thrift:"iid,2" db:"iid" json:"iid"`
+	Reward float64           `thrift:"reward,3" db:"reward" json:"reward"`
+	Extra  map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
+}
+
+func NewRefreshIdentRewardReq() *RefreshIdentRewardReq {
+	return &RefreshIdentRewardReq{}
+}
+
+func (p *RefreshIdentRewardReq) GetAuth() string {
+	return p.Auth
+}
+
+func (p *RefreshIdentRewardReq) GetIid() string {
+	return p.Iid
+}
+
+func (p *RefreshIdentRewardReq) GetReward() float64 {
+	return p.Reward
+}
+
+func (p *RefreshIdentRewardReq) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *RefreshIdentRewardReq) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.DOUBLE {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *RefreshIdentRewardReq) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		p.Auth = v
+	}
+	return nil
+}
+
+func (p *RefreshIdentRewardReq) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Iid = v
+	}
+	return nil
+}
+
+func (p *RefreshIdentRewardReq) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadDouble(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Reward = v
+	}
+	return nil
+}
+
+func (p *RefreshIdentRewardReq) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key260 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key260 = v
+		}
+		var _val261 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val261 = v
+		}
+		p.Extra[_key260] = _val261
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *RefreshIdentRewardReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("refresh_ident_reward_req"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *RefreshIdentRewardReq) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("auth", thrift.STRING, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:auth: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Auth)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.auth (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:auth: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshIdentRewardReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("iid", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:iid: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Iid)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.iid (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:iid: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshIdentRewardReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("reward", thrift.DOUBLE, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:reward: ", p), err)
+	}
+	if err := oprot.WriteDouble(float64(p.Reward)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.reward (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:reward: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshIdentRewardReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshIdentRewardReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("RefreshIdentRewardReq(%+v)", *p)
+}
+
+// Attributes:
+//  - Rescode
+//  - Resmsg
+//  - Code
+//  - Extra
+type RefreshIdentRewardRes struct {
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Code    string            `thrift:"code,3" db:"code" json:"code"`
+	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
+}
+
+func NewRefreshIdentRewardRes() *RefreshIdentRewardRes {
+	return &RefreshIdentRewardRes{}
+}
+
+func (p *RefreshIdentRewardRes) GetRescode() rescode.Code {
+	return p.Rescode
+}
+
+func (p *RefreshIdentRewardRes) GetResmsg() string {
+	return p.Resmsg
+}
+
+func (p *RefreshIdentRewardRes) GetCode() string {
+	return p.Code
+}
+
+func (p *RefreshIdentRewardRes) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *RefreshIdentRewardRes) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *RefreshIdentRewardRes) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		temp := rescode.Code(v)
+		p.Rescode = temp
+	}
+	return nil
+}
+
+func (p *RefreshIdentRewardRes) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Resmsg = v
+	}
+	return nil
+}
+
+func (p *RefreshIdentRewardRes) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Code = v
+	}
+	return nil
+}
+
+func (p *RefreshIdentRewardRes) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key262 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key262 = v
+		}
+		var _val263 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val263 = v
+		}
+		p.Extra[_key262] = _val263
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *RefreshIdentRewardRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("refresh_ident_reward_res"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *RefreshIdentRewardRes) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Rescode)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.rescode (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:rescode: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshIdentRewardRes) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshIdentRewardRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("code", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:code: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Code)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.code (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:code: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshIdentRewardRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshIdentRewardRes) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("RefreshIdentRewardRes(%+v)", *p)
+}
+
 type DatanodeService interface {
 	// Parameters:
 	//  - Req
@@ -33647,6 +36135,21 @@ type DatanodeService interface {
 	// Parameters:
 	//  - Req
 	SourceByVid(ctx context.Context, req *SourceByVidReq) (r *SourceByVidRes, err error)
+	// Parameters:
+	//  - Req
+	IdentAdd(ctx context.Context, req *IdentAddReq) (r *IdentAddRes, err error)
+	// Parameters:
+	//  - Req
+	IdentByIid(ctx context.Context, req *IdentByIidReq) (r *IdentByIidRes, err error)
+	// Parameters:
+	//  - Req
+	IdentList(ctx context.Context, req *IdentListReq) (r *IdentListRes, err error)
+	// Parameters:
+	//  - Req
+	IdentCount(ctx context.Context, req *IdentCountReq) (r *IdentCountRes, err error)
+	// Parameters:
+	//  - Req
+	RefreshIdentReward(ctx context.Context, req *RefreshIdentRewardReq) (r *RefreshIdentRewardRes, err error)
 }
 
 type DatanodeServiceClient struct {
@@ -33678,259 +36181,259 @@ func (p *DatanodeServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) CreateUser(ctx context.Context, req *NewUserReq_) (r *UserRes, err error) {
-	var _args245 DatanodeServiceCreateUserArgs
-	_args245.Req = req
-	var _result246 DatanodeServiceCreateUserResult
-	if err = p.Client_().Call(ctx, "createUser", &_args245, &_result246); err != nil {
+	var _args264 DatanodeServiceCreateUserArgs
+	_args264.Req = req
+	var _result265 DatanodeServiceCreateUserResult
+	if err = p.Client_().Call(ctx, "createUser", &_args264, &_result265); err != nil {
 		return
 	}
-	return _result246.GetSuccess(), nil
+	return _result265.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) UserInfo(ctx context.Context, req *UserInfoReq) (r *UserRes, err error) {
-	var _args247 DatanodeServiceUserInfoArgs
-	_args247.Req = req
-	var _result248 DatanodeServiceUserInfoResult
-	if err = p.Client_().Call(ctx, "userInfo", &_args247, &_result248); err != nil {
+	var _args266 DatanodeServiceUserInfoArgs
+	_args266.Req = req
+	var _result267 DatanodeServiceUserInfoResult
+	if err = p.Client_().Call(ctx, "userInfo", &_args266, &_result267); err != nil {
 		return
 	}
-	return _result248.GetSuccess(), nil
+	return _result267.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) SearchUser(ctx context.Context, req *SearchUserReq) (r []*User, err error) {
-	var _args249 DatanodeServiceSearchUserArgs
-	_args249.Req = req
-	var _result250 DatanodeServiceSearchUserResult
-	if err = p.Client_().Call(ctx, "searchUser", &_args249, &_result250); err != nil {
+	var _args268 DatanodeServiceSearchUserArgs
+	_args268.Req = req
+	var _result269 DatanodeServiceSearchUserResult
+	if err = p.Client_().Call(ctx, "searchUser", &_args268, &_result269); err != nil {
 		return
 	}
-	return _result250.GetSuccess(), nil
+	return _result269.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) UpdateUser(ctx context.Context, req *UpdateReq) (r *UserRes, err error) {
-	var _args251 DatanodeServiceUpdateUserArgs
-	_args251.Req = req
-	var _result252 DatanodeServiceUpdateUserResult
-	if err = p.Client_().Call(ctx, "updateUser", &_args251, &_result252); err != nil {
+	var _args270 DatanodeServiceUpdateUserArgs
+	_args270.Req = req
+	var _result271 DatanodeServiceUpdateUserResult
+	if err = p.Client_().Call(ctx, "updateUser", &_args270, &_result271); err != nil {
 		return
 	}
-	return _result252.GetSuccess(), nil
+	return _result271.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) AddAttention(ctx context.Context, req *AddAttentionReq) (r *AddAttentionRes, err error) {
-	var _args253 DatanodeServiceAddAttentionArgs
-	_args253.Req = req
-	var _result254 DatanodeServiceAddAttentionResult
-	if err = p.Client_().Call(ctx, "add_attention", &_args253, &_result254); err != nil {
+	var _args272 DatanodeServiceAddAttentionArgs
+	_args272.Req = req
+	var _result273 DatanodeServiceAddAttentionResult
+	if err = p.Client_().Call(ctx, "add_attention", &_args272, &_result273); err != nil {
 		return
 	}
-	return _result254.GetSuccess(), nil
+	return _result273.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) DelAttention(ctx context.Context, req *DelAttentionReq) (r *DelAttentionRes, err error) {
-	var _args255 DatanodeServiceDelAttentionArgs
-	_args255.Req = req
-	var _result256 DatanodeServiceDelAttentionResult
-	if err = p.Client_().Call(ctx, "del_attention", &_args255, &_result256); err != nil {
+	var _args274 DatanodeServiceDelAttentionArgs
+	_args274.Req = req
+	var _result275 DatanodeServiceDelAttentionResult
+	if err = p.Client_().Call(ctx, "del_attention", &_args274, &_result275); err != nil {
 		return
 	}
-	return _result256.GetSuccess(), nil
+	return _result275.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) GetAttention(ctx context.Context, req *GetAttentionReq) (r *GetAttentionRes, err error) {
-	var _args257 DatanodeServiceGetAttentionArgs
-	_args257.Req = req
-	var _result258 DatanodeServiceGetAttentionResult
-	if err = p.Client_().Call(ctx, "get_attention", &_args257, &_result258); err != nil {
+	var _args276 DatanodeServiceGetAttentionArgs
+	_args276.Req = req
+	var _result277 DatanodeServiceGetAttentionResult
+	if err = p.Client_().Call(ctx, "get_attention", &_args276, &_result277); err != nil {
 		return
 	}
-	return _result258.GetSuccess(), nil
+	return _result277.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) AddUserAttention(ctx context.Context, req *AddUserAttentionReq) (r *AddUserAttentionRes, err error) {
-	var _args259 DatanodeServiceAddUserAttentionArgs
-	_args259.Req = req
-	var _result260 DatanodeServiceAddUserAttentionResult
-	if err = p.Client_().Call(ctx, "add_user_attention", &_args259, &_result260); err != nil {
+	var _args278 DatanodeServiceAddUserAttentionArgs
+	_args278.Req = req
+	var _result279 DatanodeServiceAddUserAttentionResult
+	if err = p.Client_().Call(ctx, "add_user_attention", &_args278, &_result279); err != nil {
 		return
 	}
-	return _result260.GetSuccess(), nil
+	return _result279.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) DelUserAttention(ctx context.Context, req *DelUserAttentionReq) (r *DelUserAttentionRes, err error) {
-	var _args261 DatanodeServiceDelUserAttentionArgs
-	_args261.Req = req
-	var _result262 DatanodeServiceDelUserAttentionResult
-	if err = p.Client_().Call(ctx, "del_user_attention", &_args261, &_result262); err != nil {
+	var _args280 DatanodeServiceDelUserAttentionArgs
+	_args280.Req = req
+	var _result281 DatanodeServiceDelUserAttentionResult
+	if err = p.Client_().Call(ctx, "del_user_attention", &_args280, &_result281); err != nil {
 		return
 	}
-	return _result262.GetSuccess(), nil
+	return _result281.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) GetUserAttention(ctx context.Context, req *GetUserAttentionReq) (r *GetUserAttentionRes, err error) {
-	var _args263 DatanodeServiceGetUserAttentionArgs
-	_args263.Req = req
-	var _result264 DatanodeServiceGetUserAttentionResult
-	if err = p.Client_().Call(ctx, "get_user_attention", &_args263, &_result264); err != nil {
+	var _args282 DatanodeServiceGetUserAttentionArgs
+	_args282.Req = req
+	var _result283 DatanodeServiceGetUserAttentionResult
+	if err = p.Client_().Call(ctx, "get_user_attention", &_args282, &_result283); err != nil {
 		return
 	}
-	return _result264.GetSuccess(), nil
+	return _result283.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) AddFriends(ctx context.Context, uid int64, req *AddFriendReq) (r *AddFriendRes, err error) {
-	var _args265 DatanodeServiceAddFriendsArgs
-	_args265.UID = uid
-	_args265.Req = req
-	var _result266 DatanodeServiceAddFriendsResult
-	if err = p.Client_().Call(ctx, "addFriends", &_args265, &_result266); err != nil {
+	var _args284 DatanodeServiceAddFriendsArgs
+	_args284.UID = uid
+	_args284.Req = req
+	var _result285 DatanodeServiceAddFriendsResult
+	if err = p.Client_().Call(ctx, "addFriends", &_args284, &_result285); err != nil {
 		return
 	}
-	return _result266.GetSuccess(), nil
+	return _result285.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) AgreeFriends(ctx context.Context, uid int64, req *AgreeFriendReq) (r *AgreeFriendRes, err error) {
-	var _args267 DatanodeServiceAgreeFriendsArgs
-	_args267.UID = uid
-	_args267.Req = req
-	var _result268 DatanodeServiceAgreeFriendsResult
-	if err = p.Client_().Call(ctx, "agreeFriends", &_args267, &_result268); err != nil {
+	var _args286 DatanodeServiceAgreeFriendsArgs
+	_args286.UID = uid
+	_args286.Req = req
+	var _result287 DatanodeServiceAgreeFriendsResult
+	if err = p.Client_().Call(ctx, "agreeFriends", &_args286, &_result287); err != nil {
 		return
 	}
-	return _result268.GetSuccess(), nil
+	return _result287.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Uid2
 func (p *DatanodeServiceClient) FriendsList(ctx context.Context, uid int64, uid2 int64) (r *FriendRes, err error) {
-	var _args269 DatanodeServiceFriendsListArgs
-	_args269.UID = uid
-	_args269.Uid2 = uid2
-	var _result270 DatanodeServiceFriendsListResult
-	if err = p.Client_().Call(ctx, "friendsList", &_args269, &_result270); err != nil {
+	var _args288 DatanodeServiceFriendsListArgs
+	_args288.UID = uid
+	_args288.Uid2 = uid2
+	var _result289 DatanodeServiceFriendsListResult
+	if err = p.Client_().Call(ctx, "friendsList", &_args288, &_result289); err != nil {
 		return
 	}
-	return _result270.GetSuccess(), nil
+	return _result289.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) CreateGroup(ctx context.Context, uid int64, req *CreateGroupReq) (r *CreateGroupRes, err error) {
-	var _args271 DatanodeServiceCreateGroupArgs
-	_args271.UID = uid
-	_args271.Req = req
-	var _result272 DatanodeServiceCreateGroupResult
-	if err = p.Client_().Call(ctx, "createGroup", &_args271, &_result272); err != nil {
+	var _args290 DatanodeServiceCreateGroupArgs
+	_args290.UID = uid
+	_args290.Req = req
+	var _result291 DatanodeServiceCreateGroupResult
+	if err = p.Client_().Call(ctx, "createGroup", &_args290, &_result291); err != nil {
 		return
 	}
-	return _result272.GetSuccess(), nil
+	return _result291.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) RenameGroup(ctx context.Context, uid int64, req *RenameGroupReq) (r *RenameGroupRes, err error) {
-	var _args273 DatanodeServiceRenameGroupArgs
-	_args273.UID = uid
-	_args273.Req = req
-	var _result274 DatanodeServiceRenameGroupResult
-	if err = p.Client_().Call(ctx, "renameGroup", &_args273, &_result274); err != nil {
+	var _args292 DatanodeServiceRenameGroupArgs
+	_args292.UID = uid
+	_args292.Req = req
+	var _result293 DatanodeServiceRenameGroupResult
+	if err = p.Client_().Call(ctx, "renameGroup", &_args292, &_result293); err != nil {
 		return
 	}
-	return _result274.GetSuccess(), nil
+	return _result293.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) AddNoteFriend(ctx context.Context, uid int64, req *AddFriendNoteReq) (r *AddFriendNoteRes, err error) {
-	var _args275 DatanodeServiceAddNoteFriendArgs
-	_args275.UID = uid
-	_args275.Req = req
-	var _result276 DatanodeServiceAddNoteFriendResult
-	if err = p.Client_().Call(ctx, "addNoteFriend", &_args275, &_result276); err != nil {
+	var _args294 DatanodeServiceAddNoteFriendArgs
+	_args294.UID = uid
+	_args294.Req = req
+	var _result295 DatanodeServiceAddNoteFriendResult
+	if err = p.Client_().Call(ctx, "addNoteFriend", &_args294, &_result295); err != nil {
 		return
 	}
-	return _result276.GetSuccess(), nil
+	return _result295.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) MoveToNewGroup(ctx context.Context, uid int64, req *MoveGroupReq) (r *MoveGroupRes, err error) {
-	var _args277 DatanodeServiceMoveToNewGroupArgs
-	_args277.UID = uid
-	_args277.Req = req
-	var _result278 DatanodeServiceMoveToNewGroupResult
-	if err = p.Client_().Call(ctx, "moveToNewGroup", &_args277, &_result278); err != nil {
+	var _args296 DatanodeServiceMoveToNewGroupArgs
+	_args296.UID = uid
+	_args296.Req = req
+	var _result297 DatanodeServiceMoveToNewGroupResult
+	if err = p.Client_().Call(ctx, "moveToNewGroup", &_args296, &_result297); err != nil {
 		return
 	}
-	return _result278.GetSuccess(), nil
+	return _result297.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) RemoveFriend(ctx context.Context, uid int64, req *RemoveFriendReq) (r *RemoveFriendRes, err error) {
-	var _args279 DatanodeServiceRemoveFriendArgs
-	_args279.UID = uid
-	_args279.Req = req
-	var _result280 DatanodeServiceRemoveFriendResult
-	if err = p.Client_().Call(ctx, "removeFriend", &_args279, &_result280); err != nil {
+	var _args298 DatanodeServiceRemoveFriendArgs
+	_args298.UID = uid
+	_args298.Req = req
+	var _result299 DatanodeServiceRemoveFriendResult
+	if err = p.Client_().Call(ctx, "removeFriend", &_args298, &_result299); err != nil {
 		return
 	}
-	return _result280.GetSuccess(), nil
+	return _result299.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Mid
 func (p *DatanodeServiceClient) LikesCount(ctx context.Context, mid string) (r *LikesCountRes, err error) {
-	var _args281 DatanodeServiceLikesCountArgs
-	_args281.Mid = mid
-	var _result282 DatanodeServiceLikesCountResult
-	if err = p.Client_().Call(ctx, "likesCount", &_args281, &_result282); err != nil {
+	var _args300 DatanodeServiceLikesCountArgs
+	_args300.Mid = mid
+	var _result301 DatanodeServiceLikesCountResult
+	if err = p.Client_().Call(ctx, "likesCount", &_args300, &_result301); err != nil {
 		return
 	}
-	return _result282.GetSuccess(), nil
+	return _result301.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Mid
 //  - UID
 func (p *DatanodeServiceClient) LikesAdd(ctx context.Context, mid string, uid int64) (r *LikesAddRes, err error) {
-	var _args283 DatanodeServiceLikesAddArgs
-	_args283.Mid = mid
-	_args283.UID = uid
-	var _result284 DatanodeServiceLikesAddResult
-	if err = p.Client_().Call(ctx, "likesAdd", &_args283, &_result284); err != nil {
+	var _args302 DatanodeServiceLikesAddArgs
+	_args302.Mid = mid
+	_args302.UID = uid
+	var _result303 DatanodeServiceLikesAddResult
+	if err = p.Client_().Call(ctx, "likesAdd", &_args302, &_result303); err != nil {
 		return
 	}
-	return _result284.GetSuccess(), nil
+	return _result303.GetSuccess(), nil
 }
 
 // Parameters:
@@ -33938,29 +36441,29 @@ func (p *DatanodeServiceClient) LikesAdd(ctx context.Context, mid string, uid in
 //  - Page
 //  - Size
 func (p *DatanodeServiceClient) LikesList(ctx context.Context, mid string, page int32, size int32) (r *LikesListRes, err error) {
-	var _args285 DatanodeServiceLikesListArgs
-	_args285.Mid = mid
-	_args285.Page = page
-	_args285.Size = size
-	var _result286 DatanodeServiceLikesListResult
-	if err = p.Client_().Call(ctx, "likesList", &_args285, &_result286); err != nil {
+	var _args304 DatanodeServiceLikesListArgs
+	_args304.Mid = mid
+	_args304.Page = page
+	_args304.Size = size
+	var _result305 DatanodeServiceLikesListResult
+	if err = p.Client_().Call(ctx, "likesList", &_args304, &_result305); err != nil {
 		return
 	}
-	return _result286.GetSuccess(), nil
+	return _result305.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) UpdateNote(ctx context.Context, uid int64, req *UpdateNoteReq) (r *NoteMetaRes, err error) {
-	var _args287 DatanodeServiceUpdateNoteArgs
-	_args287.UID = uid
-	_args287.Req = req
-	var _result288 DatanodeServiceUpdateNoteResult
-	if err = p.Client_().Call(ctx, "updateNote", &_args287, &_result288); err != nil {
+	var _args306 DatanodeServiceUpdateNoteArgs
+	_args306.UID = uid
+	_args306.Req = req
+	var _result307 DatanodeServiceUpdateNoteResult
+	if err = p.Client_().Call(ctx, "updateNote", &_args306, &_result307); err != nil {
 		return
 	}
-	return _result288.GetSuccess(), nil
+	return _result307.GetSuccess(), nil
 }
 
 // Parameters:
@@ -33968,81 +36471,81 @@ func (p *DatanodeServiceClient) UpdateNote(ctx context.Context, uid int64, req *
 //  - Page
 //  - Size
 func (p *DatanodeServiceClient) NoteMetaList(ctx context.Context, uid int64, page int32, size int32) (r *NoteMetaListRes, err error) {
-	var _args289 DatanodeServiceNoteMetaListArgs
-	_args289.UID = uid
-	_args289.Page = page
-	_args289.Size = size
-	var _result290 DatanodeServiceNoteMetaListResult
-	if err = p.Client_().Call(ctx, "noteMetaList", &_args289, &_result290); err != nil {
+	var _args308 DatanodeServiceNoteMetaListArgs
+	_args308.UID = uid
+	_args308.Page = page
+	_args308.Size = size
+	var _result309 DatanodeServiceNoteMetaListResult
+	if err = p.Client_().Call(ctx, "noteMetaList", &_args308, &_result309); err != nil {
 		return
 	}
-	return _result290.GetSuccess(), nil
+	return _result309.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 func (p *DatanodeServiceClient) NoteListCount(ctx context.Context, uid int64) (r *NoteListCountRes, err error) {
-	var _args291 DatanodeServiceNoteListCountArgs
-	_args291.UID = uid
-	var _result292 DatanodeServiceNoteListCountResult
-	if err = p.Client_().Call(ctx, "noteListCount", &_args291, &_result292); err != nil {
+	var _args310 DatanodeServiceNoteListCountArgs
+	_args310.UID = uid
+	var _result311 DatanodeServiceNoteListCountResult
+	if err = p.Client_().Call(ctx, "noteListCount", &_args310, &_result311); err != nil {
 		return
 	}
-	return _result292.GetSuccess(), nil
+	return _result311.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Nid
 func (p *DatanodeServiceClient) NoteData(ctx context.Context, uid int64, nid int64) (r *NoteDataRes, err error) {
-	var _args293 DatanodeServiceNoteDataArgs
-	_args293.UID = uid
-	_args293.Nid = nid
-	var _result294 DatanodeServiceNoteDataResult
-	if err = p.Client_().Call(ctx, "noteData", &_args293, &_result294); err != nil {
+	var _args312 DatanodeServiceNoteDataArgs
+	_args312.UID = uid
+	_args312.Nid = nid
+	var _result313 DatanodeServiceNoteDataResult
+	if err = p.Client_().Call(ctx, "noteData", &_args312, &_result313); err != nil {
 		return
 	}
-	return _result294.GetSuccess(), nil
+	return _result313.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Nid
 func (p *DatanodeServiceClient) NoteHtml(ctx context.Context, uid int64, nid int64) (r *NoteHTMLRes, err error) {
-	var _args295 DatanodeServiceNoteHtmlArgs
-	_args295.UID = uid
-	_args295.Nid = nid
-	var _result296 DatanodeServiceNoteHtmlResult
-	if err = p.Client_().Call(ctx, "noteHtml", &_args295, &_result296); err != nil {
+	var _args314 DatanodeServiceNoteHtmlArgs
+	_args314.UID = uid
+	_args314.Nid = nid
+	var _result315 DatanodeServiceNoteHtmlResult
+	if err = p.Client_().Call(ctx, "noteHtml", &_args314, &_result315); err != nil {
 		return
 	}
-	return _result296.GetSuccess(), nil
+	return _result315.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 func (p *DatanodeServiceClient) MomentsCount(ctx context.Context, uid int64) (r *MomentsCountRes, err error) {
-	var _args297 DatanodeServiceMomentsCountArgs
-	_args297.UID = uid
-	var _result298 DatanodeServiceMomentsCountResult
-	if err = p.Client_().Call(ctx, "momentsCount", &_args297, &_result298); err != nil {
+	var _args316 DatanodeServiceMomentsCountArgs
+	_args316.UID = uid
+	var _result317 DatanodeServiceMomentsCountResult
+	if err = p.Client_().Call(ctx, "momentsCount", &_args316, &_result317); err != nil {
 		return
 	}
-	return _result298.GetSuccess(), nil
+	return _result317.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Moments
 func (p *DatanodeServiceClient) MomentsAdd(ctx context.Context, uid int64, moments *Moments) (r *AddMomentsRes, err error) {
-	var _args299 DatanodeServiceMomentsAddArgs
-	_args299.UID = uid
-	_args299.Moments = moments
-	var _result300 DatanodeServiceMomentsAddResult
-	if err = p.Client_().Call(ctx, "momentsAdd", &_args299, &_result300); err != nil {
+	var _args318 DatanodeServiceMomentsAddArgs
+	_args318.UID = uid
+	_args318.Moments = moments
+	var _result319 DatanodeServiceMomentsAddResult
+	if err = p.Client_().Call(ctx, "momentsAdd", &_args318, &_result319); err != nil {
 		return
 	}
-	return _result300.GetSuccess(), nil
+	return _result319.GetSuccess(), nil
 }
 
 // Parameters:
@@ -34050,639 +36553,699 @@ func (p *DatanodeServiceClient) MomentsAdd(ctx context.Context, uid int64, momen
 //  - Page
 //  - Size
 func (p *DatanodeServiceClient) MomentsList(ctx context.Context, uid int64, page int32, size int32) (r *MomentsListRes, err error) {
-	var _args301 DatanodeServiceMomentsListArgs
-	_args301.UID = uid
-	_args301.Page = page
-	_args301.Size = size
-	var _result302 DatanodeServiceMomentsListResult
-	if err = p.Client_().Call(ctx, "momentsList", &_args301, &_result302); err != nil {
+	var _args320 DatanodeServiceMomentsListArgs
+	_args320.UID = uid
+	_args320.Page = page
+	_args320.Size = size
+	var _result321 DatanodeServiceMomentsListResult
+	if err = p.Client_().Call(ctx, "momentsList", &_args320, &_result321); err != nil {
 		return
 	}
-	return _result302.GetSuccess(), nil
+	return _result321.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Path
 func (p *DatanodeServiceClient) FileDirOne(ctx context.Context, uid int64, path string) (r *FileDirRes, err error) {
-	var _args303 DatanodeServiceFileDirOneArgs
-	_args303.UID = uid
-	_args303.Path = path
-	var _result304 DatanodeServiceFileDirOneResult
-	if err = p.Client_().Call(ctx, "fileDirOne", &_args303, &_result304); err != nil {
+	var _args322 DatanodeServiceFileDirOneArgs
+	_args322.UID = uid
+	_args322.Path = path
+	var _result323 DatanodeServiceFileDirOneResult
+	if err = p.Client_().Call(ctx, "fileDirOne", &_args322, &_result323); err != nil {
 		return
 	}
-	return _result304.GetSuccess(), nil
+	return _result323.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) FileDirAdd(ctx context.Context, uid int64, req *AddDirReq) (r *AddDirRes, err error) {
-	var _args305 DatanodeServiceFileDirAddArgs
-	_args305.UID = uid
-	_args305.Req = req
-	var _result306 DatanodeServiceFileDirAddResult
-	if err = p.Client_().Call(ctx, "fileDirAdd", &_args305, &_result306); err != nil {
+	var _args324 DatanodeServiceFileDirAddArgs
+	_args324.UID = uid
+	_args324.Req = req
+	var _result325 DatanodeServiceFileDirAddResult
+	if err = p.Client_().Call(ctx, "fileDirAdd", &_args324, &_result325); err != nil {
 		return
 	}
-	return _result306.GetSuccess(), nil
+	return _result325.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) AddFile(ctx context.Context, uid int64, req *AddFileReq) (r *AddFileRes, err error) {
-	var _args307 DatanodeServiceAddFileArgs
-	_args307.UID = uid
-	_args307.Req = req
-	var _result308 DatanodeServiceAddFileResult
-	if err = p.Client_().Call(ctx, "addFile", &_args307, &_result308); err != nil {
+	var _args326 DatanodeServiceAddFileArgs
+	_args326.UID = uid
+	_args326.Req = req
+	var _result327 DatanodeServiceAddFileResult
+	if err = p.Client_().Call(ctx, "addFile", &_args326, &_result327); err != nil {
 		return
 	}
-	return _result308.GetSuccess(), nil
+	return _result327.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 func (p *DatanodeServiceClient) YunSaveAttr(ctx context.Context, uid int64) (r *FileAttrRes, err error) {
-	var _args309 DatanodeServiceYunSaveAttrArgs
-	_args309.UID = uid
-	var _result310 DatanodeServiceYunSaveAttrResult
-	if err = p.Client_().Call(ctx, "yunSaveAttr", &_args309, &_result310); err != nil {
+	var _args328 DatanodeServiceYunSaveAttrArgs
+	_args328.UID = uid
+	var _result329 DatanodeServiceYunSaveAttrResult
+	if err = p.Client_().Call(ctx, "yunSaveAttr", &_args328, &_result329); err != nil {
 		return
 	}
-	return _result310.GetSuccess(), nil
+	return _result329.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Path
 func (p *DatanodeServiceClient) Thumbnail(ctx context.Context, uid int64, path string) (r *ThumbnailRes, err error) {
-	var _args311 DatanodeServiceThumbnailArgs
-	_args311.UID = uid
-	_args311.Path = path
-	var _result312 DatanodeServiceThumbnailResult
-	if err = p.Client_().Call(ctx, "thumbnail", &_args311, &_result312); err != nil {
+	var _args330 DatanodeServiceThumbnailArgs
+	_args330.UID = uid
+	_args330.Path = path
+	var _result331 DatanodeServiceThumbnailResult
+	if err = p.Client_().Call(ctx, "thumbnail", &_args330, &_result331); err != nil {
 		return
 	}
-	return _result312.GetSuccess(), nil
+	return _result331.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) SetKeyValue(ctx context.Context, req *SetKeyvalueReq) (r *SetKeyvalueRes, err error) {
-	var _args313 DatanodeServiceSetKeyValueArgs
-	_args313.Req = req
-	var _result314 DatanodeServiceSetKeyValueResult
-	if err = p.Client_().Call(ctx, "setKeyValue", &_args313, &_result314); err != nil {
+	var _args332 DatanodeServiceSetKeyValueArgs
+	_args332.Req = req
+	var _result333 DatanodeServiceSetKeyValueResult
+	if err = p.Client_().Call(ctx, "setKeyValue", &_args332, &_result333); err != nil {
 		return
 	}
-	return _result314.GetSuccess(), nil
+	return _result333.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) GetKeyValue(ctx context.Context, req *GetKeyvalueReq) (r *GetKeyvalueRes, err error) {
-	var _args315 DatanodeServiceGetKeyValueArgs
-	_args315.Req = req
-	var _result316 DatanodeServiceGetKeyValueResult
-	if err = p.Client_().Call(ctx, "getKeyValue", &_args315, &_result316); err != nil {
+	var _args334 DatanodeServiceGetKeyValueArgs
+	_args334.Req = req
+	var _result335 DatanodeServiceGetKeyValueResult
+	if err = p.Client_().Call(ctx, "getKeyValue", &_args334, &_result335); err != nil {
 		return
 	}
-	return _result316.GetSuccess(), nil
+	return _result335.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) DelKeyValue(ctx context.Context, req *DelKeyvalueReq) (r *DelKeyvalueRes, err error) {
-	var _args317 DatanodeServiceDelKeyValueArgs
-	_args317.Req = req
-	var _result318 DatanodeServiceDelKeyValueResult
-	if err = p.Client_().Call(ctx, "delKeyValue", &_args317, &_result318); err != nil {
+	var _args336 DatanodeServiceDelKeyValueArgs
+	_args336.Req = req
+	var _result337 DatanodeServiceDelKeyValueResult
+	if err = p.Client_().Call(ctx, "delKeyValue", &_args336, &_result337); err != nil {
 		return
 	}
-	return _result318.GetSuccess(), nil
+	return _result337.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) QuestionVersion(ctx context.Context, req *common.QuestionQuery) (r *VersionRes, err error) {
-	var _args319 DatanodeServiceQuestionVersionArgs
-	_args319.Req = req
-	var _result320 DatanodeServiceQuestionVersionResult
-	if err = p.Client_().Call(ctx, "question_version", &_args319, &_result320); err != nil {
+	var _args338 DatanodeServiceQuestionVersionArgs
+	_args338.Req = req
+	var _result339 DatanodeServiceQuestionVersionResult
+	if err = p.Client_().Call(ctx, "question_version", &_args338, &_result339); err != nil {
 		return
 	}
-	return _result320.GetSuccess(), nil
+	return _result339.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) QuestionChapter(ctx context.Context, req *common.QuestionQuery) (r *ChapterRes, err error) {
-	var _args321 DatanodeServiceQuestionChapterArgs
-	_args321.Req = req
-	var _result322 DatanodeServiceQuestionChapterResult
-	if err = p.Client_().Call(ctx, "question_chapter", &_args321, &_result322); err != nil {
+	var _args340 DatanodeServiceQuestionChapterArgs
+	_args340.Req = req
+	var _result341 DatanodeServiceQuestionChapterResult
+	if err = p.Client_().Call(ctx, "question_chapter", &_args340, &_result341); err != nil {
 		return
 	}
-	return _result322.GetSuccess(), nil
+	return _result341.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) SubjectName(ctx context.Context, req string) (r *SubjectNameRes, err error) {
-	var _args323 DatanodeServiceSubjectNameArgs
-	_args323.Req = req
-	var _result324 DatanodeServiceSubjectNameResult
-	if err = p.Client_().Call(ctx, "subject_name", &_args323, &_result324); err != nil {
+	var _args342 DatanodeServiceSubjectNameArgs
+	_args342.Req = req
+	var _result343 DatanodeServiceSubjectNameResult
+	if err = p.Client_().Call(ctx, "subject_name", &_args342, &_result343); err != nil {
 		return
 	}
-	return _result324.GetSuccess(), nil
+	return _result343.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) QuestionSource(ctx context.Context, req *common.QuestionQuery) (r *SourceRes, err error) {
-	var _args325 DatanodeServiceQuestionSourceArgs
-	_args325.Req = req
-	var _result326 DatanodeServiceQuestionSourceResult
-	if err = p.Client_().Call(ctx, "question_source", &_args325, &_result326); err != nil {
+	var _args344 DatanodeServiceQuestionSourceArgs
+	_args344.Req = req
+	var _result345 DatanodeServiceQuestionSourceResult
+	if err = p.Client_().Call(ctx, "question_source", &_args344, &_result345); err != nil {
 		return
 	}
-	return _result326.GetSuccess(), nil
+	return _result345.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) QuestionTixing(ctx context.Context, req *common.QuestionQuery) (r *TixingRes, err error) {
-	var _args327 DatanodeServiceQuestionTixingArgs
-	_args327.Req = req
-	var _result328 DatanodeServiceQuestionTixingResult
-	if err = p.Client_().Call(ctx, "question_tixing", &_args327, &_result328); err != nil {
+	var _args346 DatanodeServiceQuestionTixingArgs
+	_args346.Req = req
+	var _result347 DatanodeServiceQuestionTixingResult
+	if err = p.Client_().Call(ctx, "question_tixing", &_args346, &_result347); err != nil {
 		return
 	}
-	return _result328.GetSuccess(), nil
+	return _result347.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) QuestionTimuCount(ctx context.Context, req *common.QuestionQuery) (r *TimuCountRes, err error) {
-	var _args329 DatanodeServiceQuestionTimuCountArgs
-	_args329.Req = req
-	var _result330 DatanodeServiceQuestionTimuCountResult
-	if err = p.Client_().Call(ctx, "question_timu_count", &_args329, &_result330); err != nil {
+	var _args348 DatanodeServiceQuestionTimuCountArgs
+	_args348.Req = req
+	var _result349 DatanodeServiceQuestionTimuCountResult
+	if err = p.Client_().Call(ctx, "question_timu_count", &_args348, &_result349); err != nil {
 		return
 	}
-	return _result330.GetSuccess(), nil
+	return _result349.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) QuestionTimu(ctx context.Context, uid int64, req *common.QuestionQuery) (r *TimuRes, err error) {
-	var _args331 DatanodeServiceQuestionTimuArgs
-	_args331.UID = uid
-	_args331.Req = req
-	var _result332 DatanodeServiceQuestionTimuResult
-	if err = p.Client_().Call(ctx, "question_timu", &_args331, &_result332); err != nil {
+	var _args350 DatanodeServiceQuestionTimuArgs
+	_args350.UID = uid
+	_args350.Req = req
+	var _result351 DatanodeServiceQuestionTimuResult
+	if err = p.Client_().Call(ctx, "question_timu", &_args350, &_result351); err != nil {
 		return
 	}
-	return _result332.GetSuccess(), nil
+	return _result351.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) QuestionTimuByID(ctx context.Context, req *TimuByIDReq) (r *TimuByIDRes, err error) {
-	var _args333 DatanodeServiceQuestionTimuByIDArgs
-	_args333.Req = req
-	var _result334 DatanodeServiceQuestionTimuByIDResult
-	if err = p.Client_().Call(ctx, "question_timu_by_id", &_args333, &_result334); err != nil {
+	var _args352 DatanodeServiceQuestionTimuByIDArgs
+	_args352.Req = req
+	var _result353 DatanodeServiceQuestionTimuByIDResult
+	if err = p.Client_().Call(ctx, "question_timu_by_id", &_args352, &_result353); err != nil {
 		return
 	}
-	return _result334.GetSuccess(), nil
+	return _result353.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - Req
 func (p *DatanodeServiceClient) CollectTimu(ctx context.Context, uid int64, req *CollectReq) (r *CollectRes, err error) {
-	var _args335 DatanodeServiceCollectTimuArgs
-	_args335.UID = uid
-	_args335.Req = req
-	var _result336 DatanodeServiceCollectTimuResult
-	if err = p.Client_().Call(ctx, "collect_timu", &_args335, &_result336); err != nil {
+	var _args354 DatanodeServiceCollectTimuArgs
+	_args354.UID = uid
+	_args354.Req = req
+	var _result355 DatanodeServiceCollectTimuResult
+	if err = p.Client_().Call(ctx, "collect_timu", &_args354, &_result355); err != nil {
 		return
 	}
-	return _result336.GetSuccess(), nil
+	return _result355.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) QueryCollectTimu(ctx context.Context, req *CollectListReq) (r *CollectListRes, err error) {
-	var _args337 DatanodeServiceQueryCollectTimuArgs
-	_args337.Req = req
-	var _result338 DatanodeServiceQueryCollectTimuResult
-	if err = p.Client_().Call(ctx, "query_collect_timu", &_args337, &_result338); err != nil {
+	var _args356 DatanodeServiceQueryCollectTimuArgs
+	_args356.Req = req
+	var _result357 DatanodeServiceQueryCollectTimuResult
+	if err = p.Client_().Call(ctx, "query_collect_timu", &_args356, &_result357); err != nil {
 		return
 	}
-	return _result338.GetSuccess(), nil
+	return _result357.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) ModifyQuestion(ctx context.Context, req *ModifyReq) (r *ModifyRes, err error) {
-	var _args339 DatanodeServiceModifyQuestionArgs
-	_args339.Req = req
-	var _result340 DatanodeServiceModifyQuestionResult
-	if err = p.Client_().Call(ctx, "modify_question", &_args339, &_result340); err != nil {
+	var _args358 DatanodeServiceModifyQuestionArgs
+	_args358.Req = req
+	var _result359 DatanodeServiceModifyQuestionResult
+	if err = p.Client_().Call(ctx, "modify_question", &_args358, &_result359); err != nil {
 		return
 	}
-	return _result340.GetSuccess(), nil
+	return _result359.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) ModifyList(ctx context.Context, req *ModifyListReq) (r *ModifyListRes, err error) {
-	var _args341 DatanodeServiceModifyListArgs
-	_args341.Req = req
-	var _result342 DatanodeServiceModifyListResult
-	if err = p.Client_().Call(ctx, "modify_list", &_args341, &_result342); err != nil {
+	var _args360 DatanodeServiceModifyListArgs
+	_args360.Req = req
+	var _result361 DatanodeServiceModifyListResult
+	if err = p.Client_().Call(ctx, "modify_list", &_args360, &_result361); err != nil {
 		return
 	}
-	return _result342.GetSuccess(), nil
+	return _result361.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) ModifyCount(ctx context.Context, req *ModifyCountReq) (r *ModifyCountRes, err error) {
-	var _args343 DatanodeServiceModifyCountArgs
-	_args343.Req = req
-	var _result344 DatanodeServiceModifyCountResult
-	if err = p.Client_().Call(ctx, "modify_count", &_args343, &_result344); err != nil {
+	var _args362 DatanodeServiceModifyCountArgs
+	_args362.Req = req
+	var _result363 DatanodeServiceModifyCountResult
+	if err = p.Client_().Call(ctx, "modify_count", &_args362, &_result363); err != nil {
 		return
 	}
-	return _result344.GetSuccess(), nil
+	return _result363.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) QuestionTimuAdd(ctx context.Context, req *TimuAddReq) (r *TimuAddRes, err error) {
-	var _args345 DatanodeServiceQuestionTimuAddArgs
-	_args345.Req = req
-	var _result346 DatanodeServiceQuestionTimuAddResult
-	if err = p.Client_().Call(ctx, "question_timu_add", &_args345, &_result346); err != nil {
+	var _args364 DatanodeServiceQuestionTimuAddArgs
+	_args364.Req = req
+	var _result365 DatanodeServiceQuestionTimuAddResult
+	if err = p.Client_().Call(ctx, "question_timu_add", &_args364, &_result365); err != nil {
 		return
 	}
-	return _result346.GetSuccess(), nil
+	return _result365.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) AddList(ctx context.Context, req *AddListReq) (r *AddListRes, err error) {
-	var _args347 DatanodeServiceAddListArgs
-	_args347.Req = req
-	var _result348 DatanodeServiceAddListResult
-	if err = p.Client_().Call(ctx, "add_list", &_args347, &_result348); err != nil {
+	var _args366 DatanodeServiceAddListArgs
+	_args366.Req = req
+	var _result367 DatanodeServiceAddListResult
+	if err = p.Client_().Call(ctx, "add_list", &_args366, &_result367); err != nil {
 		return
 	}
-	return _result348.GetSuccess(), nil
+	return _result367.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) AddCount(ctx context.Context, req *AddCountReq) (r *AddCountRes, err error) {
-	var _args349 DatanodeServiceAddCountArgs
-	_args349.Req = req
-	var _result350 DatanodeServiceAddCountResult
-	if err = p.Client_().Call(ctx, "add_count", &_args349, &_result350); err != nil {
+	var _args368 DatanodeServiceAddCountArgs
+	_args368.Req = req
+	var _result369 DatanodeServiceAddCountResult
+	if err = p.Client_().Call(ctx, "add_count", &_args368, &_result369); err != nil {
 		return
 	}
-	return _result350.GetSuccess(), nil
+	return _result369.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) Approve(ctx context.Context, req *ApproveReq) (r *ApproveRes, err error) {
-	var _args351 DatanodeServiceApproveArgs
-	_args351.Req = req
-	var _result352 DatanodeServiceApproveResult
-	if err = p.Client_().Call(ctx, "approve", &_args351, &_result352); err != nil {
+	var _args370 DatanodeServiceApproveArgs
+	_args370.Req = req
+	var _result371 DatanodeServiceApproveResult
+	if err = p.Client_().Call(ctx, "approve", &_args370, &_result371); err != nil {
 		return
 	}
-	return _result352.GetSuccess(), nil
+	return _result371.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) OnSearch(ctx context.Context, req *SearchReq) (r *SearchRes, err error) {
-	var _args353 DatanodeServiceOnSearchArgs
-	_args353.Req = req
-	var _result354 DatanodeServiceOnSearchResult
-	if err = p.Client_().Call(ctx, "on_search", &_args353, &_result354); err != nil {
+	var _args372 DatanodeServiceOnSearchArgs
+	_args372.Req = req
+	var _result373 DatanodeServiceOnSearchResult
+	if err = p.Client_().Call(ctx, "on_search", &_args372, &_result373); err != nil {
 		return
 	}
-	return _result354.GetSuccess(), nil
+	return _result373.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) GradeCateAdd(ctx context.Context, req *common.GradeCate) (r *AddGradeCateRes, err error) {
-	var _args355 DatanodeServiceGradeCateAddArgs
-	_args355.Req = req
-	var _result356 DatanodeServiceGradeCateAddResult
-	if err = p.Client_().Call(ctx, "grade_cate_add", &_args355, &_result356); err != nil {
+	var _args374 DatanodeServiceGradeCateAddArgs
+	_args374.Req = req
+	var _result375 DatanodeServiceGradeCateAddResult
+	if err = p.Client_().Call(ctx, "grade_cate_add", &_args374, &_result375); err != nil {
 		return
 	}
-	return _result356.GetSuccess(), nil
+	return _result375.GetSuccess(), nil
 }
 
 func (p *DatanodeServiceClient) GradeCateCount(ctx context.Context) (r *GradeCateCountRes, err error) {
-	var _args357 DatanodeServiceGradeCateCountArgs
-	var _result358 DatanodeServiceGradeCateCountResult
-	if err = p.Client_().Call(ctx, "grade_cate_count", &_args357, &_result358); err != nil {
+	var _args376 DatanodeServiceGradeCateCountArgs
+	var _result377 DatanodeServiceGradeCateCountResult
+	if err = p.Client_().Call(ctx, "grade_cate_count", &_args376, &_result377); err != nil {
 		return
 	}
-	return _result358.GetSuccess(), nil
+	return _result377.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) GradeCateList(ctx context.Context, req *GradeCateListReq) (r *GradeCateListRes, err error) {
-	var _args359 DatanodeServiceGradeCateListArgs
-	_args359.Req = req
-	var _result360 DatanodeServiceGradeCateListResult
-	if err = p.Client_().Call(ctx, "grade_cate_list", &_args359, &_result360); err != nil {
+	var _args378 DatanodeServiceGradeCateListArgs
+	_args378.Req = req
+	var _result379 DatanodeServiceGradeCateListResult
+	if err = p.Client_().Call(ctx, "grade_cate_list", &_args378, &_result379); err != nil {
 		return
 	}
-	return _result360.GetSuccess(), nil
+	return _result379.GetSuccess(), nil
 }
 
 func (p *DatanodeServiceClient) HomeBlackData(ctx context.Context) (r *HomeBlackDataRes, err error) {
-	var _args361 DatanodeServiceHomeBlackDataArgs
-	var _result362 DatanodeServiceHomeBlackDataResult
-	if err = p.Client_().Call(ctx, "home_black_data", &_args361, &_result362); err != nil {
+	var _args380 DatanodeServiceHomeBlackDataArgs
+	var _result381 DatanodeServiceHomeBlackDataResult
+	if err = p.Client_().Call(ctx, "home_black_data", &_args380, &_result381); err != nil {
 		return
 	}
-	return _result362.GetSuccess(), nil
+	return _result381.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) GradeSubject(ctx context.Context, req *GradeSubjectReq) (r *GradeSubjectRes, err error) {
-	var _args363 DatanodeServiceGradeSubjectArgs
-	_args363.Req = req
-	var _result364 DatanodeServiceGradeSubjectResult
-	if err = p.Client_().Call(ctx, "grade_subject", &_args363, &_result364); err != nil {
+	var _args382 DatanodeServiceGradeSubjectArgs
+	_args382.Req = req
+	var _result383 DatanodeServiceGradeSubjectResult
+	if err = p.Client_().Call(ctx, "grade_subject", &_args382, &_result383); err != nil {
 		return
 	}
-	return _result364.GetSuccess(), nil
+	return _result383.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) SchoolRollAdd(ctx context.Context, req *common.SchoolRoll) (r *SchoolRollAddRes, err error) {
-	var _args365 DatanodeServiceSchoolRollAddArgs
-	_args365.Req = req
-	var _result366 DatanodeServiceSchoolRollAddResult
-	if err = p.Client_().Call(ctx, "school_roll_add", &_args365, &_result366); err != nil {
+	var _args384 DatanodeServiceSchoolRollAddArgs
+	_args384.Req = req
+	var _result385 DatanodeServiceSchoolRollAddResult
+	if err = p.Client_().Call(ctx, "school_roll_add", &_args384, &_result385); err != nil {
 		return
 	}
-	return _result366.GetSuccess(), nil
+	return _result385.GetSuccess(), nil
 }
 
 func (p *DatanodeServiceClient) SchoolRollCount(ctx context.Context) (r *SchoolRollCountRes, err error) {
-	var _args367 DatanodeServiceSchoolRollCountArgs
-	var _result368 DatanodeServiceSchoolRollCountResult
-	if err = p.Client_().Call(ctx, "school_roll_count", &_args367, &_result368); err != nil {
+	var _args386 DatanodeServiceSchoolRollCountArgs
+	var _result387 DatanodeServiceSchoolRollCountResult
+	if err = p.Client_().Call(ctx, "school_roll_count", &_args386, &_result387); err != nil {
 		return
 	}
-	return _result368.GetSuccess(), nil
+	return _result387.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) SchoolList(ctx context.Context, req *SchoolRollListReq) (r *SchoolRollListRes, err error) {
-	var _args369 DatanodeServiceSchoolListArgs
-	_args369.Req = req
-	var _result370 DatanodeServiceSchoolListResult
-	if err = p.Client_().Call(ctx, "school_list", &_args369, &_result370); err != nil {
+	var _args388 DatanodeServiceSchoolListArgs
+	_args388.Req = req
+	var _result389 DatanodeServiceSchoolListResult
+	if err = p.Client_().Call(ctx, "school_list", &_args388, &_result389); err != nil {
 		return
 	}
-	return _result370.GetSuccess(), nil
+	return _result389.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) SubjectCateAdd(ctx context.Context, req *common.SubjectCate) (r *SubjectCateAddRes, err error) {
-	var _args371 DatanodeServiceSubjectCateAddArgs
-	_args371.Req = req
-	var _result372 DatanodeServiceSubjectCateAddResult
-	if err = p.Client_().Call(ctx, "subject_cate_add", &_args371, &_result372); err != nil {
+	var _args390 DatanodeServiceSubjectCateAddArgs
+	_args390.Req = req
+	var _result391 DatanodeServiceSubjectCateAddResult
+	if err = p.Client_().Call(ctx, "subject_cate_add", &_args390, &_result391); err != nil {
 		return
 	}
-	return _result372.GetSuccess(), nil
+	return _result391.GetSuccess(), nil
 }
 
 func (p *DatanodeServiceClient) SubjectCateCount(ctx context.Context) (r *SubjectCateCountRes, err error) {
-	var _args373 DatanodeServiceSubjectCateCountArgs
-	var _result374 DatanodeServiceSubjectCateCountResult
-	if err = p.Client_().Call(ctx, "subject_cate_count", &_args373, &_result374); err != nil {
+	var _args392 DatanodeServiceSubjectCateCountArgs
+	var _result393 DatanodeServiceSubjectCateCountResult
+	if err = p.Client_().Call(ctx, "subject_cate_count", &_args392, &_result393); err != nil {
 		return
 	}
-	return _result374.GetSuccess(), nil
+	return _result393.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) SubjectCateList(ctx context.Context, req *SubjectCateListReq) (r *SubjectCateListRes, err error) {
-	var _args375 DatanodeServiceSubjectCateListArgs
-	_args375.Req = req
-	var _result376 DatanodeServiceSubjectCateListResult
-	if err = p.Client_().Call(ctx, "subject_cate_list", &_args375, &_result376); err != nil {
+	var _args394 DatanodeServiceSubjectCateListArgs
+	_args394.Req = req
+	var _result395 DatanodeServiceSubjectCateListResult
+	if err = p.Client_().Call(ctx, "subject_cate_list", &_args394, &_result395); err != nil {
 		return
 	}
-	return _result376.GetSuccess(), nil
+	return _result395.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) SetUserInfo(ctx context.Context, req *SetUserInfoReq) (r *SetUserInfoRes, err error) {
-	var _args377 DatanodeServiceSetUserInfoArgs
-	_args377.Req = req
-	var _result378 DatanodeServiceSetUserInfoResult
-	if err = p.Client_().Call(ctx, "set_user_info", &_args377, &_result378); err != nil {
+	var _args396 DatanodeServiceSetUserInfoArgs
+	_args396.Req = req
+	var _result397 DatanodeServiceSetUserInfoResult
+	if err = p.Client_().Call(ctx, "set_user_info", &_args396, &_result397); err != nil {
 		return
 	}
-	return _result378.GetSuccess(), nil
+	return _result397.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) GetUserInfo(ctx context.Context, req *GetUserInfoReq) (r *GetUserInfoRes, err error) {
-	var _args379 DatanodeServiceGetUserInfoArgs
-	_args379.Req = req
-	var _result380 DatanodeServiceGetUserInfoResult
-	if err = p.Client_().Call(ctx, "get_user_info", &_args379, &_result380); err != nil {
+	var _args398 DatanodeServiceGetUserInfoArgs
+	_args398.Req = req
+	var _result399 DatanodeServiceGetUserInfoResult
+	if err = p.Client_().Call(ctx, "get_user_info", &_args398, &_result399); err != nil {
 		return
 	}
-	return _result380.GetSuccess(), nil
+	return _result399.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) SetWechatUinfo(ctx context.Context, req *SetWechatUinfoReq) (r *SetWechatUinfoRes, err error) {
-	var _args381 DatanodeServiceSetWechatUinfoArgs
-	_args381.Req = req
-	var _result382 DatanodeServiceSetWechatUinfoResult
-	if err = p.Client_().Call(ctx, "set_wechat_uinfo", &_args381, &_result382); err != nil {
+	var _args400 DatanodeServiceSetWechatUinfoArgs
+	_args400.Req = req
+	var _result401 DatanodeServiceSetWechatUinfoResult
+	if err = p.Client_().Call(ctx, "set_wechat_uinfo", &_args400, &_result401); err != nil {
 		return
 	}
-	return _result382.GetSuccess(), nil
+	return _result401.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) GetWechatUinfo(ctx context.Context, req *GetWechatUinfoReq) (r *GetWechatUinfoRes, err error) {
-	var _args383 DatanodeServiceGetWechatUinfoArgs
-	_args383.Req = req
-	var _result384 DatanodeServiceGetWechatUinfoResult
-	if err = p.Client_().Call(ctx, "get_wechat_uinfo", &_args383, &_result384); err != nil {
+	var _args402 DatanodeServiceGetWechatUinfoArgs
+	_args402.Req = req
+	var _result403 DatanodeServiceGetWechatUinfoResult
+	if err = p.Client_().Call(ctx, "get_wechat_uinfo", &_args402, &_result403); err != nil {
 		return
 	}
-	return _result384.GetSuccess(), nil
+	return _result403.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) SetAlipayUinfo(ctx context.Context, req *SetAlipayUinfoReq) (r *SetAlipayUinfoRes, err error) {
-	var _args385 DatanodeServiceSetAlipayUinfoArgs
-	_args385.Req = req
-	var _result386 DatanodeServiceSetAlipayUinfoResult
-	if err = p.Client_().Call(ctx, "set_alipay_uinfo", &_args385, &_result386); err != nil {
+	var _args404 DatanodeServiceSetAlipayUinfoArgs
+	_args404.Req = req
+	var _result405 DatanodeServiceSetAlipayUinfoResult
+	if err = p.Client_().Call(ctx, "set_alipay_uinfo", &_args404, &_result405); err != nil {
 		return
 	}
-	return _result386.GetSuccess(), nil
+	return _result405.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) GetAlipayUinfo(ctx context.Context, req *GetAlipayUinfoReq) (r *GetAlipayUinfoRes, err error) {
-	var _args387 DatanodeServiceGetAlipayUinfoArgs
-	_args387.Req = req
-	var _result388 DatanodeServiceGetAlipayUinfoResult
-	if err = p.Client_().Call(ctx, "get_alipay_uinfo", &_args387, &_result388); err != nil {
+	var _args406 DatanodeServiceGetAlipayUinfoArgs
+	_args406.Req = req
+	var _result407 DatanodeServiceGetAlipayUinfoResult
+	if err = p.Client_().Call(ctx, "get_alipay_uinfo", &_args406, &_result407); err != nil {
 		return
 	}
-	return _result388.GetSuccess(), nil
+	return _result407.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) SetBaiduEntity(ctx context.Context, req *SetBaiduEntityReq) (r *SetBaiduEntityRes, err error) {
-	var _args389 DatanodeServiceSetBaiduEntityArgs
-	_args389.Req = req
-	var _result390 DatanodeServiceSetBaiduEntityResult
-	if err = p.Client_().Call(ctx, "set_baidu_entity", &_args389, &_result390); err != nil {
+	var _args408 DatanodeServiceSetBaiduEntityArgs
+	_args408.Req = req
+	var _result409 DatanodeServiceSetBaiduEntityResult
+	if err = p.Client_().Call(ctx, "set_baidu_entity", &_args408, &_result409); err != nil {
 		return
 	}
-	return _result390.GetSuccess(), nil
+	return _result409.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) BaiduEntity(ctx context.Context, req *BaiduEntityReq) (r *BaiduEntityRes, err error) {
-	var _args391 DatanodeServiceBaiduEntityArgs
-	_args391.Req = req
-	var _result392 DatanodeServiceBaiduEntityResult
-	if err = p.Client_().Call(ctx, "baidu_entity", &_args391, &_result392); err != nil {
+	var _args410 DatanodeServiceBaiduEntityArgs
+	_args410.Req = req
+	var _result411 DatanodeServiceBaiduEntityResult
+	if err = p.Client_().Call(ctx, "baidu_entity", &_args410, &_result411); err != nil {
 		return
 	}
-	return _result392.GetSuccess(), nil
+	return _result411.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) SearchHistory(ctx context.Context, req *SearchHistoryReq) (r *SearchHistoryRes, err error) {
-	var _args393 DatanodeServiceSearchHistoryArgs
-	_args393.Req = req
-	var _result394 DatanodeServiceSearchHistoryResult
-	if err = p.Client_().Call(ctx, "search_history", &_args393, &_result394); err != nil {
+	var _args412 DatanodeServiceSearchHistoryArgs
+	_args412.Req = req
+	var _result413 DatanodeServiceSearchHistoryResult
+	if err = p.Client_().Call(ctx, "search_history", &_args412, &_result413); err != nil {
 		return
 	}
-	return _result394.GetSuccess(), nil
+	return _result413.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) SearchItem(ctx context.Context, req *SearchItemReq) (r *SearchItemRes, err error) {
-	var _args395 DatanodeServiceSearchItemArgs
-	_args395.Req = req
-	var _result396 DatanodeServiceSearchItemResult
-	if err = p.Client_().Call(ctx, "search_item", &_args395, &_result396); err != nil {
+	var _args414 DatanodeServiceSearchItemArgs
+	_args414.Req = req
+	var _result415 DatanodeServiceSearchItemResult
+	if err = p.Client_().Call(ctx, "search_item", &_args414, &_result415); err != nil {
 		return
 	}
-	return _result396.GetSuccess(), nil
+	return _result415.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) RefreshModifyReward(ctx context.Context, req *RefreshModifyRewardReq) (r *RefreshModifyRewardRes, err error) {
-	var _args397 DatanodeServiceRefreshModifyRewardArgs
-	_args397.Req = req
-	var _result398 DatanodeServiceRefreshModifyRewardResult
-	if err = p.Client_().Call(ctx, "refresh_modify_reward", &_args397, &_result398); err != nil {
+	var _args416 DatanodeServiceRefreshModifyRewardArgs
+	_args416.Req = req
+	var _result417 DatanodeServiceRefreshModifyRewardResult
+	if err = p.Client_().Call(ctx, "refresh_modify_reward", &_args416, &_result417); err != nil {
 		return
 	}
-	return _result398.GetSuccess(), nil
+	return _result417.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) RefreshAddReward(ctx context.Context, req *RefreshAddRewardReq) (r *RefreshAddRewardRes, err error) {
-	var _args399 DatanodeServiceRefreshAddRewardArgs
-	_args399.Req = req
-	var _result400 DatanodeServiceRefreshAddRewardResult
-	if err = p.Client_().Call(ctx, "refresh_add_reward", &_args399, &_result400); err != nil {
+	var _args418 DatanodeServiceRefreshAddRewardArgs
+	_args418.Req = req
+	var _result419 DatanodeServiceRefreshAddRewardResult
+	if err = p.Client_().Call(ctx, "refresh_add_reward", &_args418, &_result419); err != nil {
 		return
 	}
-	return _result400.GetSuccess(), nil
+	return _result419.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) RefreshUserCoin(ctx context.Context, req *RefreshUserCoinReq) (r *RefreshUserCoinRes, err error) {
-	var _args401 DatanodeServiceRefreshUserCoinArgs
-	_args401.Req = req
-	var _result402 DatanodeServiceRefreshUserCoinResult
-	if err = p.Client_().Call(ctx, "refresh_user_coin", &_args401, &_result402); err != nil {
+	var _args420 DatanodeServiceRefreshUserCoinArgs
+	_args420.Req = req
+	var _result421 DatanodeServiceRefreshUserCoinResult
+	if err = p.Client_().Call(ctx, "refresh_user_coin", &_args420, &_result421); err != nil {
 		return
 	}
-	return _result402.GetSuccess(), nil
+	return _result421.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) TixingByVid(ctx context.Context, req *TixingByVidReq) (r *TixingByVidRes, err error) {
-	var _args403 DatanodeServiceTixingByVidArgs
-	_args403.Req = req
-	var _result404 DatanodeServiceTixingByVidResult
-	if err = p.Client_().Call(ctx, "tixing_by_vid", &_args403, &_result404); err != nil {
+	var _args422 DatanodeServiceTixingByVidArgs
+	_args422.Req = req
+	var _result423 DatanodeServiceTixingByVidResult
+	if err = p.Client_().Call(ctx, "tixing_by_vid", &_args422, &_result423); err != nil {
 		return
 	}
-	return _result404.GetSuccess(), nil
+	return _result423.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *DatanodeServiceClient) SourceByVid(ctx context.Context, req *SourceByVidReq) (r *SourceByVidRes, err error) {
-	var _args405 DatanodeServiceSourceByVidArgs
-	_args405.Req = req
-	var _result406 DatanodeServiceSourceByVidResult
-	if err = p.Client_().Call(ctx, "source_by_vid", &_args405, &_result406); err != nil {
+	var _args424 DatanodeServiceSourceByVidArgs
+	_args424.Req = req
+	var _result425 DatanodeServiceSourceByVidResult
+	if err = p.Client_().Call(ctx, "source_by_vid", &_args424, &_result425); err != nil {
 		return
 	}
-	return _result406.GetSuccess(), nil
+	return _result425.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *DatanodeServiceClient) IdentAdd(ctx context.Context, req *IdentAddReq) (r *IdentAddRes, err error) {
+	var _args426 DatanodeServiceIdentAddArgs
+	_args426.Req = req
+	var _result427 DatanodeServiceIdentAddResult
+	if err = p.Client_().Call(ctx, "ident_add", &_args426, &_result427); err != nil {
+		return
+	}
+	return _result427.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *DatanodeServiceClient) IdentByIid(ctx context.Context, req *IdentByIidReq) (r *IdentByIidRes, err error) {
+	var _args428 DatanodeServiceIdentByIidArgs
+	_args428.Req = req
+	var _result429 DatanodeServiceIdentByIidResult
+	if err = p.Client_().Call(ctx, "ident_by_iid", &_args428, &_result429); err != nil {
+		return
+	}
+	return _result429.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *DatanodeServiceClient) IdentList(ctx context.Context, req *IdentListReq) (r *IdentListRes, err error) {
+	var _args430 DatanodeServiceIdentListArgs
+	_args430.Req = req
+	var _result431 DatanodeServiceIdentListResult
+	if err = p.Client_().Call(ctx, "ident_list", &_args430, &_result431); err != nil {
+		return
+	}
+	return _result431.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *DatanodeServiceClient) IdentCount(ctx context.Context, req *IdentCountReq) (r *IdentCountRes, err error) {
+	var _args432 DatanodeServiceIdentCountArgs
+	_args432.Req = req
+	var _result433 DatanodeServiceIdentCountResult
+	if err = p.Client_().Call(ctx, "ident_count", &_args432, &_result433); err != nil {
+		return
+	}
+	return _result433.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *DatanodeServiceClient) RefreshIdentReward(ctx context.Context, req *RefreshIdentRewardReq) (r *RefreshIdentRewardRes, err error) {
+	var _args434 DatanodeServiceRefreshIdentRewardArgs
+	_args434.Req = req
+	var _result435 DatanodeServiceRefreshIdentRewardResult
+	if err = p.Client_().Call(ctx, "refresh_ident_reward", &_args434, &_result435); err != nil {
+		return
+	}
+	return _result435.GetSuccess(), nil
 }
 
 type DatanodeServiceProcessor struct {
@@ -34705,89 +37268,94 @@ func (p *DatanodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFu
 
 func NewDatanodeServiceProcessor(handler DatanodeService) *DatanodeServiceProcessor {
 
-	self407 := &DatanodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self407.processorMap["createUser"] = &datanodeServiceProcessorCreateUser{handler: handler}
-	self407.processorMap["userInfo"] = &datanodeServiceProcessorUserInfo{handler: handler}
-	self407.processorMap["searchUser"] = &datanodeServiceProcessorSearchUser{handler: handler}
-	self407.processorMap["updateUser"] = &datanodeServiceProcessorUpdateUser{handler: handler}
-	self407.processorMap["add_attention"] = &datanodeServiceProcessorAddAttention{handler: handler}
-	self407.processorMap["del_attention"] = &datanodeServiceProcessorDelAttention{handler: handler}
-	self407.processorMap["get_attention"] = &datanodeServiceProcessorGetAttention{handler: handler}
-	self407.processorMap["add_user_attention"] = &datanodeServiceProcessorAddUserAttention{handler: handler}
-	self407.processorMap["del_user_attention"] = &datanodeServiceProcessorDelUserAttention{handler: handler}
-	self407.processorMap["get_user_attention"] = &datanodeServiceProcessorGetUserAttention{handler: handler}
-	self407.processorMap["addFriends"] = &datanodeServiceProcessorAddFriends{handler: handler}
-	self407.processorMap["agreeFriends"] = &datanodeServiceProcessorAgreeFriends{handler: handler}
-	self407.processorMap["friendsList"] = &datanodeServiceProcessorFriendsList{handler: handler}
-	self407.processorMap["createGroup"] = &datanodeServiceProcessorCreateGroup{handler: handler}
-	self407.processorMap["renameGroup"] = &datanodeServiceProcessorRenameGroup{handler: handler}
-	self407.processorMap["addNoteFriend"] = &datanodeServiceProcessorAddNoteFriend{handler: handler}
-	self407.processorMap["moveToNewGroup"] = &datanodeServiceProcessorMoveToNewGroup{handler: handler}
-	self407.processorMap["removeFriend"] = &datanodeServiceProcessorRemoveFriend{handler: handler}
-	self407.processorMap["likesCount"] = &datanodeServiceProcessorLikesCount{handler: handler}
-	self407.processorMap["likesAdd"] = &datanodeServiceProcessorLikesAdd{handler: handler}
-	self407.processorMap["likesList"] = &datanodeServiceProcessorLikesList{handler: handler}
-	self407.processorMap["updateNote"] = &datanodeServiceProcessorUpdateNote{handler: handler}
-	self407.processorMap["noteMetaList"] = &datanodeServiceProcessorNoteMetaList{handler: handler}
-	self407.processorMap["noteListCount"] = &datanodeServiceProcessorNoteListCount{handler: handler}
-	self407.processorMap["noteData"] = &datanodeServiceProcessorNoteData{handler: handler}
-	self407.processorMap["noteHtml"] = &datanodeServiceProcessorNoteHtml{handler: handler}
-	self407.processorMap["momentsCount"] = &datanodeServiceProcessorMomentsCount{handler: handler}
-	self407.processorMap["momentsAdd"] = &datanodeServiceProcessorMomentsAdd{handler: handler}
-	self407.processorMap["momentsList"] = &datanodeServiceProcessorMomentsList{handler: handler}
-	self407.processorMap["fileDirOne"] = &datanodeServiceProcessorFileDirOne{handler: handler}
-	self407.processorMap["fileDirAdd"] = &datanodeServiceProcessorFileDirAdd{handler: handler}
-	self407.processorMap["addFile"] = &datanodeServiceProcessorAddFile{handler: handler}
-	self407.processorMap["yunSaveAttr"] = &datanodeServiceProcessorYunSaveAttr{handler: handler}
-	self407.processorMap["thumbnail"] = &datanodeServiceProcessorThumbnail{handler: handler}
-	self407.processorMap["setKeyValue"] = &datanodeServiceProcessorSetKeyValue{handler: handler}
-	self407.processorMap["getKeyValue"] = &datanodeServiceProcessorGetKeyValue{handler: handler}
-	self407.processorMap["delKeyValue"] = &datanodeServiceProcessorDelKeyValue{handler: handler}
-	self407.processorMap["question_version"] = &datanodeServiceProcessorQuestionVersion{handler: handler}
-	self407.processorMap["question_chapter"] = &datanodeServiceProcessorQuestionChapter{handler: handler}
-	self407.processorMap["subject_name"] = &datanodeServiceProcessorSubjectName{handler: handler}
-	self407.processorMap["question_source"] = &datanodeServiceProcessorQuestionSource{handler: handler}
-	self407.processorMap["question_tixing"] = &datanodeServiceProcessorQuestionTixing{handler: handler}
-	self407.processorMap["question_timu_count"] = &datanodeServiceProcessorQuestionTimuCount{handler: handler}
-	self407.processorMap["question_timu"] = &datanodeServiceProcessorQuestionTimu{handler: handler}
-	self407.processorMap["question_timu_by_id"] = &datanodeServiceProcessorQuestionTimuByID{handler: handler}
-	self407.processorMap["collect_timu"] = &datanodeServiceProcessorCollectTimu{handler: handler}
-	self407.processorMap["query_collect_timu"] = &datanodeServiceProcessorQueryCollectTimu{handler: handler}
-	self407.processorMap["modify_question"] = &datanodeServiceProcessorModifyQuestion{handler: handler}
-	self407.processorMap["modify_list"] = &datanodeServiceProcessorModifyList{handler: handler}
-	self407.processorMap["modify_count"] = &datanodeServiceProcessorModifyCount{handler: handler}
-	self407.processorMap["question_timu_add"] = &datanodeServiceProcessorQuestionTimuAdd{handler: handler}
-	self407.processorMap["add_list"] = &datanodeServiceProcessorAddList{handler: handler}
-	self407.processorMap["add_count"] = &datanodeServiceProcessorAddCount{handler: handler}
-	self407.processorMap["approve"] = &datanodeServiceProcessorApprove{handler: handler}
-	self407.processorMap["on_search"] = &datanodeServiceProcessorOnSearch{handler: handler}
-	self407.processorMap["grade_cate_add"] = &datanodeServiceProcessorGradeCateAdd{handler: handler}
-	self407.processorMap["grade_cate_count"] = &datanodeServiceProcessorGradeCateCount{handler: handler}
-	self407.processorMap["grade_cate_list"] = &datanodeServiceProcessorGradeCateList{handler: handler}
-	self407.processorMap["home_black_data"] = &datanodeServiceProcessorHomeBlackData{handler: handler}
-	self407.processorMap["grade_subject"] = &datanodeServiceProcessorGradeSubject{handler: handler}
-	self407.processorMap["school_roll_add"] = &datanodeServiceProcessorSchoolRollAdd{handler: handler}
-	self407.processorMap["school_roll_count"] = &datanodeServiceProcessorSchoolRollCount{handler: handler}
-	self407.processorMap["school_list"] = &datanodeServiceProcessorSchoolList{handler: handler}
-	self407.processorMap["subject_cate_add"] = &datanodeServiceProcessorSubjectCateAdd{handler: handler}
-	self407.processorMap["subject_cate_count"] = &datanodeServiceProcessorSubjectCateCount{handler: handler}
-	self407.processorMap["subject_cate_list"] = &datanodeServiceProcessorSubjectCateList{handler: handler}
-	self407.processorMap["set_user_info"] = &datanodeServiceProcessorSetUserInfo{handler: handler}
-	self407.processorMap["get_user_info"] = &datanodeServiceProcessorGetUserInfo{handler: handler}
-	self407.processorMap["set_wechat_uinfo"] = &datanodeServiceProcessorSetWechatUinfo{handler: handler}
-	self407.processorMap["get_wechat_uinfo"] = &datanodeServiceProcessorGetWechatUinfo{handler: handler}
-	self407.processorMap["set_alipay_uinfo"] = &datanodeServiceProcessorSetAlipayUinfo{handler: handler}
-	self407.processorMap["get_alipay_uinfo"] = &datanodeServiceProcessorGetAlipayUinfo{handler: handler}
-	self407.processorMap["set_baidu_entity"] = &datanodeServiceProcessorSetBaiduEntity{handler: handler}
-	self407.processorMap["baidu_entity"] = &datanodeServiceProcessorBaiduEntity{handler: handler}
-	self407.processorMap["search_history"] = &datanodeServiceProcessorSearchHistory{handler: handler}
-	self407.processorMap["search_item"] = &datanodeServiceProcessorSearchItem{handler: handler}
-	self407.processorMap["refresh_modify_reward"] = &datanodeServiceProcessorRefreshModifyReward{handler: handler}
-	self407.processorMap["refresh_add_reward"] = &datanodeServiceProcessorRefreshAddReward{handler: handler}
-	self407.processorMap["refresh_user_coin"] = &datanodeServiceProcessorRefreshUserCoin{handler: handler}
-	self407.processorMap["tixing_by_vid"] = &datanodeServiceProcessorTixingByVid{handler: handler}
-	self407.processorMap["source_by_vid"] = &datanodeServiceProcessorSourceByVid{handler: handler}
-	return self407
+	self436 := &DatanodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self436.processorMap["createUser"] = &datanodeServiceProcessorCreateUser{handler: handler}
+	self436.processorMap["userInfo"] = &datanodeServiceProcessorUserInfo{handler: handler}
+	self436.processorMap["searchUser"] = &datanodeServiceProcessorSearchUser{handler: handler}
+	self436.processorMap["updateUser"] = &datanodeServiceProcessorUpdateUser{handler: handler}
+	self436.processorMap["add_attention"] = &datanodeServiceProcessorAddAttention{handler: handler}
+	self436.processorMap["del_attention"] = &datanodeServiceProcessorDelAttention{handler: handler}
+	self436.processorMap["get_attention"] = &datanodeServiceProcessorGetAttention{handler: handler}
+	self436.processorMap["add_user_attention"] = &datanodeServiceProcessorAddUserAttention{handler: handler}
+	self436.processorMap["del_user_attention"] = &datanodeServiceProcessorDelUserAttention{handler: handler}
+	self436.processorMap["get_user_attention"] = &datanodeServiceProcessorGetUserAttention{handler: handler}
+	self436.processorMap["addFriends"] = &datanodeServiceProcessorAddFriends{handler: handler}
+	self436.processorMap["agreeFriends"] = &datanodeServiceProcessorAgreeFriends{handler: handler}
+	self436.processorMap["friendsList"] = &datanodeServiceProcessorFriendsList{handler: handler}
+	self436.processorMap["createGroup"] = &datanodeServiceProcessorCreateGroup{handler: handler}
+	self436.processorMap["renameGroup"] = &datanodeServiceProcessorRenameGroup{handler: handler}
+	self436.processorMap["addNoteFriend"] = &datanodeServiceProcessorAddNoteFriend{handler: handler}
+	self436.processorMap["moveToNewGroup"] = &datanodeServiceProcessorMoveToNewGroup{handler: handler}
+	self436.processorMap["removeFriend"] = &datanodeServiceProcessorRemoveFriend{handler: handler}
+	self436.processorMap["likesCount"] = &datanodeServiceProcessorLikesCount{handler: handler}
+	self436.processorMap["likesAdd"] = &datanodeServiceProcessorLikesAdd{handler: handler}
+	self436.processorMap["likesList"] = &datanodeServiceProcessorLikesList{handler: handler}
+	self436.processorMap["updateNote"] = &datanodeServiceProcessorUpdateNote{handler: handler}
+	self436.processorMap["noteMetaList"] = &datanodeServiceProcessorNoteMetaList{handler: handler}
+	self436.processorMap["noteListCount"] = &datanodeServiceProcessorNoteListCount{handler: handler}
+	self436.processorMap["noteData"] = &datanodeServiceProcessorNoteData{handler: handler}
+	self436.processorMap["noteHtml"] = &datanodeServiceProcessorNoteHtml{handler: handler}
+	self436.processorMap["momentsCount"] = &datanodeServiceProcessorMomentsCount{handler: handler}
+	self436.processorMap["momentsAdd"] = &datanodeServiceProcessorMomentsAdd{handler: handler}
+	self436.processorMap["momentsList"] = &datanodeServiceProcessorMomentsList{handler: handler}
+	self436.processorMap["fileDirOne"] = &datanodeServiceProcessorFileDirOne{handler: handler}
+	self436.processorMap["fileDirAdd"] = &datanodeServiceProcessorFileDirAdd{handler: handler}
+	self436.processorMap["addFile"] = &datanodeServiceProcessorAddFile{handler: handler}
+	self436.processorMap["yunSaveAttr"] = &datanodeServiceProcessorYunSaveAttr{handler: handler}
+	self436.processorMap["thumbnail"] = &datanodeServiceProcessorThumbnail{handler: handler}
+	self436.processorMap["setKeyValue"] = &datanodeServiceProcessorSetKeyValue{handler: handler}
+	self436.processorMap["getKeyValue"] = &datanodeServiceProcessorGetKeyValue{handler: handler}
+	self436.processorMap["delKeyValue"] = &datanodeServiceProcessorDelKeyValue{handler: handler}
+	self436.processorMap["question_version"] = &datanodeServiceProcessorQuestionVersion{handler: handler}
+	self436.processorMap["question_chapter"] = &datanodeServiceProcessorQuestionChapter{handler: handler}
+	self436.processorMap["subject_name"] = &datanodeServiceProcessorSubjectName{handler: handler}
+	self436.processorMap["question_source"] = &datanodeServiceProcessorQuestionSource{handler: handler}
+	self436.processorMap["question_tixing"] = &datanodeServiceProcessorQuestionTixing{handler: handler}
+	self436.processorMap["question_timu_count"] = &datanodeServiceProcessorQuestionTimuCount{handler: handler}
+	self436.processorMap["question_timu"] = &datanodeServiceProcessorQuestionTimu{handler: handler}
+	self436.processorMap["question_timu_by_id"] = &datanodeServiceProcessorQuestionTimuByID{handler: handler}
+	self436.processorMap["collect_timu"] = &datanodeServiceProcessorCollectTimu{handler: handler}
+	self436.processorMap["query_collect_timu"] = &datanodeServiceProcessorQueryCollectTimu{handler: handler}
+	self436.processorMap["modify_question"] = &datanodeServiceProcessorModifyQuestion{handler: handler}
+	self436.processorMap["modify_list"] = &datanodeServiceProcessorModifyList{handler: handler}
+	self436.processorMap["modify_count"] = &datanodeServiceProcessorModifyCount{handler: handler}
+	self436.processorMap["question_timu_add"] = &datanodeServiceProcessorQuestionTimuAdd{handler: handler}
+	self436.processorMap["add_list"] = &datanodeServiceProcessorAddList{handler: handler}
+	self436.processorMap["add_count"] = &datanodeServiceProcessorAddCount{handler: handler}
+	self436.processorMap["approve"] = &datanodeServiceProcessorApprove{handler: handler}
+	self436.processorMap["on_search"] = &datanodeServiceProcessorOnSearch{handler: handler}
+	self436.processorMap["grade_cate_add"] = &datanodeServiceProcessorGradeCateAdd{handler: handler}
+	self436.processorMap["grade_cate_count"] = &datanodeServiceProcessorGradeCateCount{handler: handler}
+	self436.processorMap["grade_cate_list"] = &datanodeServiceProcessorGradeCateList{handler: handler}
+	self436.processorMap["home_black_data"] = &datanodeServiceProcessorHomeBlackData{handler: handler}
+	self436.processorMap["grade_subject"] = &datanodeServiceProcessorGradeSubject{handler: handler}
+	self436.processorMap["school_roll_add"] = &datanodeServiceProcessorSchoolRollAdd{handler: handler}
+	self436.processorMap["school_roll_count"] = &datanodeServiceProcessorSchoolRollCount{handler: handler}
+	self436.processorMap["school_list"] = &datanodeServiceProcessorSchoolList{handler: handler}
+	self436.processorMap["subject_cate_add"] = &datanodeServiceProcessorSubjectCateAdd{handler: handler}
+	self436.processorMap["subject_cate_count"] = &datanodeServiceProcessorSubjectCateCount{handler: handler}
+	self436.processorMap["subject_cate_list"] = &datanodeServiceProcessorSubjectCateList{handler: handler}
+	self436.processorMap["set_user_info"] = &datanodeServiceProcessorSetUserInfo{handler: handler}
+	self436.processorMap["get_user_info"] = &datanodeServiceProcessorGetUserInfo{handler: handler}
+	self436.processorMap["set_wechat_uinfo"] = &datanodeServiceProcessorSetWechatUinfo{handler: handler}
+	self436.processorMap["get_wechat_uinfo"] = &datanodeServiceProcessorGetWechatUinfo{handler: handler}
+	self436.processorMap["set_alipay_uinfo"] = &datanodeServiceProcessorSetAlipayUinfo{handler: handler}
+	self436.processorMap["get_alipay_uinfo"] = &datanodeServiceProcessorGetAlipayUinfo{handler: handler}
+	self436.processorMap["set_baidu_entity"] = &datanodeServiceProcessorSetBaiduEntity{handler: handler}
+	self436.processorMap["baidu_entity"] = &datanodeServiceProcessorBaiduEntity{handler: handler}
+	self436.processorMap["search_history"] = &datanodeServiceProcessorSearchHistory{handler: handler}
+	self436.processorMap["search_item"] = &datanodeServiceProcessorSearchItem{handler: handler}
+	self436.processorMap["refresh_modify_reward"] = &datanodeServiceProcessorRefreshModifyReward{handler: handler}
+	self436.processorMap["refresh_add_reward"] = &datanodeServiceProcessorRefreshAddReward{handler: handler}
+	self436.processorMap["refresh_user_coin"] = &datanodeServiceProcessorRefreshUserCoin{handler: handler}
+	self436.processorMap["tixing_by_vid"] = &datanodeServiceProcessorTixingByVid{handler: handler}
+	self436.processorMap["source_by_vid"] = &datanodeServiceProcessorSourceByVid{handler: handler}
+	self436.processorMap["ident_add"] = &datanodeServiceProcessorIdentAdd{handler: handler}
+	self436.processorMap["ident_by_iid"] = &datanodeServiceProcessorIdentByIid{handler: handler}
+	self436.processorMap["ident_list"] = &datanodeServiceProcessorIdentList{handler: handler}
+	self436.processorMap["ident_count"] = &datanodeServiceProcessorIdentCount{handler: handler}
+	self436.processorMap["refresh_ident_reward"] = &datanodeServiceProcessorRefreshIdentReward{handler: handler}
+	return self436
 }
 
 func (p *DatanodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -34800,12 +37368,12 @@ func (p *DatanodeServiceProcessor) Process(ctx context.Context, iprot, oprot thr
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x408 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x437 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x408.Write(oprot)
+	x437.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x408
+	return false, x437
 
 }
 
@@ -38697,6 +41265,246 @@ func (p *datanodeServiceProcessorSourceByVid) Process(ctx context.Context, seqId
 	return true, err
 }
 
+type datanodeServiceProcessorIdentAdd struct {
+	handler DatanodeService
+}
+
+func (p *datanodeServiceProcessorIdentAdd) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := DatanodeServiceIdentAddArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("ident_add", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	result := DatanodeServiceIdentAddResult{}
+	var retval *IdentAddRes
+	var err2 error
+	if retval, err2 = p.handler.IdentAdd(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing ident_add: "+err2.Error())
+		oprot.WriteMessageBegin("ident_add", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("ident_add", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type datanodeServiceProcessorIdentByIid struct {
+	handler DatanodeService
+}
+
+func (p *datanodeServiceProcessorIdentByIid) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := DatanodeServiceIdentByIidArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("ident_by_iid", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	result := DatanodeServiceIdentByIidResult{}
+	var retval *IdentByIidRes
+	var err2 error
+	if retval, err2 = p.handler.IdentByIid(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing ident_by_iid: "+err2.Error())
+		oprot.WriteMessageBegin("ident_by_iid", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("ident_by_iid", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type datanodeServiceProcessorIdentList struct {
+	handler DatanodeService
+}
+
+func (p *datanodeServiceProcessorIdentList) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := DatanodeServiceIdentListArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("ident_list", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	result := DatanodeServiceIdentListResult{}
+	var retval *IdentListRes
+	var err2 error
+	if retval, err2 = p.handler.IdentList(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing ident_list: "+err2.Error())
+		oprot.WriteMessageBegin("ident_list", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("ident_list", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type datanodeServiceProcessorIdentCount struct {
+	handler DatanodeService
+}
+
+func (p *datanodeServiceProcessorIdentCount) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := DatanodeServiceIdentCountArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("ident_count", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	result := DatanodeServiceIdentCountResult{}
+	var retval *IdentCountRes
+	var err2 error
+	if retval, err2 = p.handler.IdentCount(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing ident_count: "+err2.Error())
+		oprot.WriteMessageBegin("ident_count", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("ident_count", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type datanodeServiceProcessorRefreshIdentReward struct {
+	handler DatanodeService
+}
+
+func (p *datanodeServiceProcessorRefreshIdentReward) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := DatanodeServiceRefreshIdentRewardArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("refresh_ident_reward", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	result := DatanodeServiceRefreshIdentRewardResult{}
+	var retval *RefreshIdentRewardRes
+	var err2 error
+	if retval, err2 = p.handler.RefreshIdentReward(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing refresh_ident_reward: "+err2.Error())
+		oprot.WriteMessageBegin("refresh_ident_reward", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("refresh_ident_reward", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
 // HELPER FUNCTIONS AND STRUCTURES
 
 // Attributes:
@@ -39304,11 +42112,11 @@ func (p *DatanodeServiceSearchUserResult) ReadField0(iprot thrift.TProtocol) err
 	tSlice := make([]*User, 0, size)
 	p.Success = tSlice
 	for i := 0; i < size; i++ {
-		_elem409 := &User{}
-		if err := _elem409.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem409), err)
+		_elem438 := &User{}
+		if err := _elem438.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem438), err)
 		}
-		p.Success = append(p.Success, _elem409)
+		p.Success = append(p.Success, _elem438)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
@@ -56915,4 +59723,1084 @@ func (p *DatanodeServiceSourceByVidResult) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("DatanodeServiceSourceByVidResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type DatanodeServiceIdentAddArgs struct {
+	Req *IdentAddReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewDatanodeServiceIdentAddArgs() *DatanodeServiceIdentAddArgs {
+	return &DatanodeServiceIdentAddArgs{}
+}
+
+var DatanodeServiceIdentAddArgs_Req_DEFAULT *IdentAddReq
+
+func (p *DatanodeServiceIdentAddArgs) GetReq() *IdentAddReq {
+	if !p.IsSetReq() {
+		return DatanodeServiceIdentAddArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *DatanodeServiceIdentAddArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DatanodeServiceIdentAddArgs) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentAddArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &IdentAddReq{}
+	if err := p.Req.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentAddArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("ident_add_args"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentAddArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+	}
+	return err
+}
+
+func (p *DatanodeServiceIdentAddArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DatanodeServiceIdentAddArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type DatanodeServiceIdentAddResult struct {
+	Success *IdentAddRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewDatanodeServiceIdentAddResult() *DatanodeServiceIdentAddResult {
+	return &DatanodeServiceIdentAddResult{}
+}
+
+var DatanodeServiceIdentAddResult_Success_DEFAULT *IdentAddRes
+
+func (p *DatanodeServiceIdentAddResult) GetSuccess() *IdentAddRes {
+	if !p.IsSetSuccess() {
+		return DatanodeServiceIdentAddResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *DatanodeServiceIdentAddResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DatanodeServiceIdentAddResult) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField0(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentAddResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &IdentAddRes{}
+	if err := p.Success.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentAddResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("ident_add_result"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField0(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentAddResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+		}
+		if err := oprot.WriteFieldEnd(); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err)
+		}
+	}
+	return err
+}
+
+func (p *DatanodeServiceIdentAddResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DatanodeServiceIdentAddResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type DatanodeServiceIdentByIidArgs struct {
+	Req *IdentByIidReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewDatanodeServiceIdentByIidArgs() *DatanodeServiceIdentByIidArgs {
+	return &DatanodeServiceIdentByIidArgs{}
+}
+
+var DatanodeServiceIdentByIidArgs_Req_DEFAULT *IdentByIidReq
+
+func (p *DatanodeServiceIdentByIidArgs) GetReq() *IdentByIidReq {
+	if !p.IsSetReq() {
+		return DatanodeServiceIdentByIidArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *DatanodeServiceIdentByIidArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DatanodeServiceIdentByIidArgs) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentByIidArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &IdentByIidReq{}
+	if err := p.Req.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentByIidArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("ident_by_iid_args"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentByIidArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+	}
+	return err
+}
+
+func (p *DatanodeServiceIdentByIidArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DatanodeServiceIdentByIidArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type DatanodeServiceIdentByIidResult struct {
+	Success *IdentByIidRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewDatanodeServiceIdentByIidResult() *DatanodeServiceIdentByIidResult {
+	return &DatanodeServiceIdentByIidResult{}
+}
+
+var DatanodeServiceIdentByIidResult_Success_DEFAULT *IdentByIidRes
+
+func (p *DatanodeServiceIdentByIidResult) GetSuccess() *IdentByIidRes {
+	if !p.IsSetSuccess() {
+		return DatanodeServiceIdentByIidResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *DatanodeServiceIdentByIidResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DatanodeServiceIdentByIidResult) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField0(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentByIidResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &IdentByIidRes{}
+	if err := p.Success.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentByIidResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("ident_by_iid_result"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField0(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentByIidResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+		}
+		if err := oprot.WriteFieldEnd(); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err)
+		}
+	}
+	return err
+}
+
+func (p *DatanodeServiceIdentByIidResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DatanodeServiceIdentByIidResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type DatanodeServiceIdentListArgs struct {
+	Req *IdentListReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewDatanodeServiceIdentListArgs() *DatanodeServiceIdentListArgs {
+	return &DatanodeServiceIdentListArgs{}
+}
+
+var DatanodeServiceIdentListArgs_Req_DEFAULT *IdentListReq
+
+func (p *DatanodeServiceIdentListArgs) GetReq() *IdentListReq {
+	if !p.IsSetReq() {
+		return DatanodeServiceIdentListArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *DatanodeServiceIdentListArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DatanodeServiceIdentListArgs) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentListArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &IdentListReq{}
+	if err := p.Req.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentListArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("ident_list_args"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentListArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+	}
+	return err
+}
+
+func (p *DatanodeServiceIdentListArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DatanodeServiceIdentListArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type DatanodeServiceIdentListResult struct {
+	Success *IdentListRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewDatanodeServiceIdentListResult() *DatanodeServiceIdentListResult {
+	return &DatanodeServiceIdentListResult{}
+}
+
+var DatanodeServiceIdentListResult_Success_DEFAULT *IdentListRes
+
+func (p *DatanodeServiceIdentListResult) GetSuccess() *IdentListRes {
+	if !p.IsSetSuccess() {
+		return DatanodeServiceIdentListResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *DatanodeServiceIdentListResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DatanodeServiceIdentListResult) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField0(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentListResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &IdentListRes{}
+	if err := p.Success.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentListResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("ident_list_result"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField0(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentListResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+		}
+		if err := oprot.WriteFieldEnd(); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err)
+		}
+	}
+	return err
+}
+
+func (p *DatanodeServiceIdentListResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DatanodeServiceIdentListResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type DatanodeServiceIdentCountArgs struct {
+	Req *IdentCountReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewDatanodeServiceIdentCountArgs() *DatanodeServiceIdentCountArgs {
+	return &DatanodeServiceIdentCountArgs{}
+}
+
+var DatanodeServiceIdentCountArgs_Req_DEFAULT *IdentCountReq
+
+func (p *DatanodeServiceIdentCountArgs) GetReq() *IdentCountReq {
+	if !p.IsSetReq() {
+		return DatanodeServiceIdentCountArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *DatanodeServiceIdentCountArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DatanodeServiceIdentCountArgs) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentCountArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &IdentCountReq{}
+	if err := p.Req.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentCountArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("ident_count_args"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentCountArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+	}
+	return err
+}
+
+func (p *DatanodeServiceIdentCountArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DatanodeServiceIdentCountArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type DatanodeServiceIdentCountResult struct {
+	Success *IdentCountRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewDatanodeServiceIdentCountResult() *DatanodeServiceIdentCountResult {
+	return &DatanodeServiceIdentCountResult{}
+}
+
+var DatanodeServiceIdentCountResult_Success_DEFAULT *IdentCountRes
+
+func (p *DatanodeServiceIdentCountResult) GetSuccess() *IdentCountRes {
+	if !p.IsSetSuccess() {
+		return DatanodeServiceIdentCountResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *DatanodeServiceIdentCountResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DatanodeServiceIdentCountResult) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField0(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentCountResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &IdentCountRes{}
+	if err := p.Success.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentCountResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("ident_count_result"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField0(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceIdentCountResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+		}
+		if err := oprot.WriteFieldEnd(); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err)
+		}
+	}
+	return err
+}
+
+func (p *DatanodeServiceIdentCountResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DatanodeServiceIdentCountResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type DatanodeServiceRefreshIdentRewardArgs struct {
+	Req *RefreshIdentRewardReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewDatanodeServiceRefreshIdentRewardArgs() *DatanodeServiceRefreshIdentRewardArgs {
+	return &DatanodeServiceRefreshIdentRewardArgs{}
+}
+
+var DatanodeServiceRefreshIdentRewardArgs_Req_DEFAULT *RefreshIdentRewardReq
+
+func (p *DatanodeServiceRefreshIdentRewardArgs) GetReq() *RefreshIdentRewardReq {
+	if !p.IsSetReq() {
+		return DatanodeServiceRefreshIdentRewardArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *DatanodeServiceRefreshIdentRewardArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DatanodeServiceRefreshIdentRewardArgs) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceRefreshIdentRewardArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &RefreshIdentRewardReq{}
+	if err := p.Req.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceRefreshIdentRewardArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("refresh_ident_reward_args"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceRefreshIdentRewardArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+	}
+	return err
+}
+
+func (p *DatanodeServiceRefreshIdentRewardArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DatanodeServiceRefreshIdentRewardArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type DatanodeServiceRefreshIdentRewardResult struct {
+	Success *RefreshIdentRewardRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewDatanodeServiceRefreshIdentRewardResult() *DatanodeServiceRefreshIdentRewardResult {
+	return &DatanodeServiceRefreshIdentRewardResult{}
+}
+
+var DatanodeServiceRefreshIdentRewardResult_Success_DEFAULT *RefreshIdentRewardRes
+
+func (p *DatanodeServiceRefreshIdentRewardResult) GetSuccess() *RefreshIdentRewardRes {
+	if !p.IsSetSuccess() {
+		return DatanodeServiceRefreshIdentRewardResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *DatanodeServiceRefreshIdentRewardResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DatanodeServiceRefreshIdentRewardResult) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField0(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceRefreshIdentRewardResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &RefreshIdentRewardRes{}
+	if err := p.Success.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceRefreshIdentRewardResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("refresh_ident_reward_result"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField0(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *DatanodeServiceRefreshIdentRewardResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+		}
+		if err := oprot.WriteFieldEnd(); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err)
+		}
+	}
+	return err
+}
+
+func (p *DatanodeServiceRefreshIdentRewardResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DatanodeServiceRefreshIdentRewardResult(%+v)", *p)
 }

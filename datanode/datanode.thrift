@@ -948,6 +948,75 @@ struct source_by_vid_res {
     4:map<string,string>    extra,
 }
 
+struct ident_add_req {
+    1:i64                       uid,
+    2:string                    log_id,
+    3:common.baidu_result_item  result,
+    4:map<string,string>        extra,
+}
+
+struct ident_add_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:map<string,string>    extra,
+}
+
+struct ident_by_iid_req {
+   1:i64                    uid,
+   2:string                 iid, 
+   3:map<string,string>     extra,
+}
+
+struct ident_by_iid_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:common.baidu_result_item  result,
+    4:map<string,string>        extra,
+}
+
+struct ident_list_req {
+    1:i64       uid,
+    2:i32       page,
+    3:i32       size,
+    4:string    sorted,
+    5:string    status,
+    6:string    iid,
+}
+
+struct ident_list_res {
+    1:rescode.code                      rescode,
+    2:string                            resmsg,
+    3:list<common.baidu_result_item>    results,
+    4:map<string,string>                extra,
+}
+
+struct ident_count_req {
+    1:i64       uid,
+    2:string    status,
+    3:map<string,string> extra, 
+}
+
+struct ident_count_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:i32                count,
+    4:map<string,string> extra, 
+}
+
+struct refresh_ident_reward_req {
+    1:string                auth,
+    2:string                iid,
+    3:double                reward,
+    4:map<string,string>    extra,
+} 
+
+struct refresh_ident_reward_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:string                code,
+    4:map<string,string>    extra,
+}
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -1135,4 +1204,15 @@ service datanode_service {
 
     // 通过版本id获取来源
     source_by_vid_res source_by_vid(1:source_by_vid_req req),
+
+    // 添加识别记录
+    ident_add_res ident_add(1:ident_add_req req),
+    // 根据识别id获取识别记录
+    ident_by_iid_res ident_by_iid(1:ident_by_iid_req req),
+    // 获取识别列表
+    ident_list_res ident_list(1:ident_list_req req),
+    // 获取识别列表熟数量
+    ident_count_res ident_count(1:ident_count_req req),
+    // 刷新识别奖励
+    refresh_ident_reward_res refresh_ident_reward(1:refresh_ident_reward_req req),
 }

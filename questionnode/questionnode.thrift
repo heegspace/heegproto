@@ -433,6 +433,52 @@ struct source_by_vid_res {
     4:map<string,string>    extra,
 }
 
+
+struct ident_by_iid_req {
+    1:common.authorize       auth,
+    2:i64                    uid,
+    3:string                 iid, 
+    4:map<string,string>     extra,
+}
+
+struct ident_by_iid_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:common.baidu_result_item  result,
+    4:map<string,string>        extra,
+}
+
+struct ident_list_req {
+    1:common.authorize          auth,
+    2:i64       uid,
+    3:i32       page,
+    4:i32       size,
+    5:string    sorted,
+    6:string    status,
+    7:string    iid,
+}
+
+struct ident_list_res {
+    1:rescode.code                      rescode,
+    2:string                            resmsg,
+    3:list<common.baidu_result_item>    results,
+    4:map<string,string>                extra,
+}
+
+struct ident_count_req {
+    1:common.authorize          auth,
+    2:i64       uid,
+    3:string    status,
+    4:map<string,string> extra, 
+}
+
+struct ident_count_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:i32                count,
+    4:map<string,string> extra, 
+}
+
 service questionnode_service {
     // 添加年纪信息
     grade_cate_add_res grade_cate_add(1:grade_cate_add_req req),
@@ -499,4 +545,11 @@ service questionnode_service {
 
     // 通过版本id获取来源
     source_by_vid_res source_by_vid(1:source_by_vid_req req),
+
+    // 根据识别id获取识别记录
+    ident_by_iid_res ident_by_iid(1:ident_by_iid_req req),
+    // 获取识别列表
+    ident_list_res ident_list(1:ident_list_req req),
+    // 获取识别列表熟数量
+    ident_count_res ident_count(1:ident_count_req req),
 }
