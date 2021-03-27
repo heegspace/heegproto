@@ -368,11 +368,11 @@ struct baidu_doc_analysis {
 }
 
 struct baidu_ident_item {
-    1:i64                   uid,
-    2:string                iid,
-    3:string                sign,
-    4:string                status,
-    5:baidu_result_item     result,
-    6:string                create_at,
-    7:string                update_at,
+    1:i64                           uid,
+    2:string                        iid,
+    3:string                        sign,
+    4:string                        status,
+    5:list<baidu_result_item>       result,
+    6:string                        create_at,
+    7:string                        update_at,
 }
