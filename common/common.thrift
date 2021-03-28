@@ -376,4 +376,5 @@ struct baidu_ident_item {
     6:string                        create_at,
     7:string                        update_at,
     8:double                        reward,
+    9:string                        image_url,
 }

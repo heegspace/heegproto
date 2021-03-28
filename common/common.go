@@ -12034,6 +12034,7 @@ func (p *BaiduDocAnalysis) String() string {
 //  - CreateAt
 //  - UpdateAt
 //  - Reward
+//  - ImageURL
 type BaiduIdentItem struct {
 	UID      int64             `thrift:"uid,1" db:"uid" json:"uid"`
 	Iid      string            `thrift:"iid,2" db:"iid" json:"iid"`
@@ -12043,6 +12044,7 @@ type BaiduIdentItem struct {
 	CreateAt string            `thrift:"create_at,6" db:"create_at" json:"create_at"`
 	UpdateAt string            `thrift:"update_at,7" db:"update_at" json:"update_at"`
 	Reward   float64           `thrift:"reward,8" db:"reward" json:"reward"`
+	ImageURL string            `thrift:"image_url,9" db:"image_url" json:"image_url"`
 }
 
 func NewBaiduIdentItem() *BaiduIdentItem {
@@ -12084,6 +12086,10 @@ func (p *BaiduIdentItem) GetUpdateAt() string {
 
 func (p *BaiduIdentItem) GetReward() float64 {
 	return p.Reward
+}
+
+func (p *BaiduIdentItem) GetImageURL() string {
+	return p.ImageURL
 }
 func (p *BaiduIdentItem) IsSetResult_() bool {
 	return p.Result_ != nil
@@ -12183,6 +12189,16 @@ func (p *BaiduIdentItem) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
+		case 9:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField9(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
 		default:
 			if err := iprot.Skip(fieldTypeId); err != nil {
 				return err
@@ -12269,6 +12285,15 @@ func (p *BaiduIdentItem) ReadField8(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *BaiduIdentItem) ReadField9(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 9: ", err)
+	} else {
+		p.ImageURL = v
+	}
+	return nil
+}
+
 func (p *BaiduIdentItem) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("baidu_ident_item"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -12296,6 +12321,9 @@ func (p *BaiduIdentItem) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField8(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField9(oprot); err != nil {
 			return err
 		}
 	}
@@ -12408,6 +12436,19 @@ func (p *BaiduIdentItem) writeField8(oprot thrift.TProtocol) (err error) {
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 8:reward: ", p), err)
+	}
+	return err
+}
+
+func (p *BaiduIdentItem) writeField9(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("image_url", thrift.STRING, 9); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 9:image_url: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.ImageURL)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.image_url (9) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 9:image_url: ", p), err)
 	}
 	return err
 }
