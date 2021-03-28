@@ -987,7 +987,7 @@ struct ident_list_req {
 struct ident_list_res {
     1:rescode.code                      rescode,
     2:string                            resmsg,
-    3:list<common.baidu_ident_item>    results,
+    3:list<common.baidu_ident_item>     results,
     4:map<string,string>                extra,
 }
 

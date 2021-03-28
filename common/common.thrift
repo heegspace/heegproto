@@ -375,4 +375,5 @@ struct baidu_ident_item {
     5:baidu_doc_analysis            result,
     6:string                        create_at,
     7:string                        update_at,
+    8:double                        reward,
 }
