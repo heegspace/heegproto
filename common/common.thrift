@@ -15,6 +15,15 @@ enum Role {
     SUPEROR         = 99,       // 超级用户
 }
 
+enum vip_level {
+    VIP_NOT         = 0,
+    VIP_1LEVEL      = 1,        // 1 month
+    VIP_2LEVEL      = 2,        // 6 month
+    VIP_3LEVEL      = 3,        // 1 year
+
+    VIP_16LEVEL     = 15,       // forever
+}
+
 enum user_status {
     FROM_PLATOM      =  0x00000,    // 平台帐号
     FROM_WECHAT      =  0x00001,    // wechat帐号

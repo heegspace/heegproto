@@ -88,6 +88,79 @@ func (p *Role) Value() (driver.Value, error) {
 	return int64(*p), nil
 }
 
+type VipLevel int64
+
+const (
+	VipLevel_VIP_NOT     VipLevel = 0
+	VipLevel_VIP_1LEVEL  VipLevel = 1
+	VipLevel_VIP_2LEVEL  VipLevel = 2
+	VipLevel_VIP_3LEVEL  VipLevel = 3
+	VipLevel_VIP_16LEVEL VipLevel = 15
+)
+
+func (p VipLevel) String() string {
+	switch p {
+	case VipLevel_VIP_NOT:
+		return "VIP_NOT"
+	case VipLevel_VIP_1LEVEL:
+		return "VIP_1LEVEL"
+	case VipLevel_VIP_2LEVEL:
+		return "VIP_2LEVEL"
+	case VipLevel_VIP_3LEVEL:
+		return "VIP_3LEVEL"
+	case VipLevel_VIP_16LEVEL:
+		return "VIP_16LEVEL"
+	}
+	return "<UNSET>"
+}
+
+func VipLevelFromString(s string) (VipLevel, error) {
+	switch s {
+	case "VIP_NOT":
+		return VipLevel_VIP_NOT, nil
+	case "VIP_1LEVEL":
+		return VipLevel_VIP_1LEVEL, nil
+	case "VIP_2LEVEL":
+		return VipLevel_VIP_2LEVEL, nil
+	case "VIP_3LEVEL":
+		return VipLevel_VIP_3LEVEL, nil
+	case "VIP_16LEVEL":
+		return VipLevel_VIP_16LEVEL, nil
+	}
+	return VipLevel(0), fmt.Errorf("not a valid VipLevel string")
+}
+
+func VipLevelPtr(v VipLevel) *VipLevel { return &v }
+
+func (p VipLevel) MarshalText() ([]byte, error) {
+	return []byte(p.String()), nil
+}
+
+func (p *VipLevel) UnmarshalText(text []byte) error {
+	q, err := VipLevelFromString(string(text))
+	if err != nil {
+		return err
+	}
+	*p = q
+	return nil
+}
+
+func (p *VipLevel) Scan(value interface{}) error {
+	v, ok := value.(int64)
+	if !ok {
+		return errors.New("Scan value is not int64")
+	}
+	*p = VipLevel(v)
+	return nil
+}
+
+func (p *VipLevel) Value() (driver.Value, error) {
+	if p == nil {
+		return nil, nil
+	}
+	return int64(*p), nil
+}
+
 type UserStatus int64
 
 const (

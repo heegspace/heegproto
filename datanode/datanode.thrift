@@ -1018,6 +1018,20 @@ struct refresh_ident_reward_res {
     4:map<string,string>    extra,
 }
 
+struct refresh_user_vip_req {
+    1:string                auth,
+    2:i64                   userid,
+    3:i64                   vip,
+    4:map<string,string>    extra,
+}
+
+struct refresh_user_vip_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:string                code,
+    4:map<string,string>    extra,
+}
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -1216,4 +1230,7 @@ service datanode_service {
     ident_count_res ident_count(1:ident_count_req req),
     // 刷新识别奖励
     refresh_ident_reward_res refresh_ident_reward(1:refresh_ident_reward_req req),
+
+    // 更新用户vip
+    refresh_user_vip_res refresh_user_vip(1:refresh_user_vip_req req),
 }

@@ -2075,6 +2075,520 @@ func (p *RefreshIdentRewardRes) String() string {
 	return fmt.Sprintf("RefreshIdentRewardRes(%+v)", *p)
 }
 
+// Attributes:
+//  - Auth
+//  - Userid
+//  - Level
+//  - Extra
+type RefreshUserVipReq struct {
+	Auth   *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	Userid int64             `thrift:"userid,2" db:"userid" json:"userid"`
+	Level  common.VipLevel   `thrift:"level,3" db:"level" json:"level"`
+	Extra  map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
+}
+
+func NewRefreshUserVipReq() *RefreshUserVipReq {
+	return &RefreshUserVipReq{}
+}
+
+var RefreshUserVipReq_Auth_DEFAULT *common.Authorize
+
+func (p *RefreshUserVipReq) GetAuth() *common.Authorize {
+	if !p.IsSetAuth() {
+		return RefreshUserVipReq_Auth_DEFAULT
+	}
+	return p.Auth
+}
+
+func (p *RefreshUserVipReq) GetUserid() int64 {
+	return p.Userid
+}
+
+func (p *RefreshUserVipReq) GetLevel() common.VipLevel {
+	return p.Level
+}
+
+func (p *RefreshUserVipReq) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *RefreshUserVipReq) IsSetAuth() bool {
+	return p.Auth != nil
+}
+
+func (p *RefreshUserVipReq) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *RefreshUserVipReq) ReadField1(iprot thrift.TProtocol) error {
+	p.Auth = &common.Authorize{}
+	if err := p.Auth.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
+	}
+	return nil
+}
+
+func (p *RefreshUserVipReq) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Userid = v
+	}
+	return nil
+}
+
+func (p *RefreshUserVipReq) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		temp := common.VipLevel(v)
+		p.Level = temp
+	}
+	return nil
+}
+
+func (p *RefreshUserVipReq) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key16 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key16 = v
+		}
+		var _val17 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val17 = v
+		}
+		p.Extra[_key16] = _val17
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *RefreshUserVipReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("refresh_user_vip_req"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *RefreshUserVipReq) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("auth", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:auth: ", p), err)
+	}
+	if err := p.Auth.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Auth), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:auth: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshUserVipReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("userid", thrift.I64, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:userid: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.Userid)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.userid (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:userid: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshUserVipReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("level", thrift.I32, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:level: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Level)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.level (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:level: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshUserVipReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshUserVipReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("RefreshUserVipReq(%+v)", *p)
+}
+
+// Attributes:
+//  - Rescode
+//  - Resmsg
+//  - Code
+//  - Extra
+type RefreshUserVipRes struct {
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Code    string            `thrift:"code,3" db:"code" json:"code"`
+	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
+}
+
+func NewRefreshUserVipRes() *RefreshUserVipRes {
+	return &RefreshUserVipRes{}
+}
+
+func (p *RefreshUserVipRes) GetRescode() rescode.Code {
+	return p.Rescode
+}
+
+func (p *RefreshUserVipRes) GetResmsg() string {
+	return p.Resmsg
+}
+
+func (p *RefreshUserVipRes) GetCode() string {
+	return p.Code
+}
+
+func (p *RefreshUserVipRes) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *RefreshUserVipRes) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *RefreshUserVipRes) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		temp := rescode.Code(v)
+		p.Rescode = temp
+	}
+	return nil
+}
+
+func (p *RefreshUserVipRes) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Resmsg = v
+	}
+	return nil
+}
+
+func (p *RefreshUserVipRes) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Code = v
+	}
+	return nil
+}
+
+func (p *RefreshUserVipRes) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key18 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key18 = v
+		}
+		var _val19 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val19 = v
+		}
+		p.Extra[_key18] = _val19
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *RefreshUserVipRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("refresh_user_vip_res"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *RefreshUserVipRes) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Rescode)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.rescode (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:rescode: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshUserVipRes) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshUserVipRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("code", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:code: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Code)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.code (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:code: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshUserVipRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *RefreshUserVipRes) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("RefreshUserVipRes(%+v)", *p)
+}
+
 type SensinodeService interface {
 	// Parameters:
 	//  - Req
@@ -2088,6 +2602,9 @@ type SensinodeService interface {
 	// Parameters:
 	//  - Req
 	RefreshIdentReward(ctx context.Context, req *RefreshIdentRewardReq) (r *RefreshIdentRewardRes, err error)
+	// Parameters:
+	//  - Req
+	RefreshUserVip(ctx context.Context, req *RefreshUserVipReq) (r *RefreshUserVipRes, err error)
 }
 
 type SensinodeServiceClient struct {
@@ -2119,34 +2636,10 @@ func (p *SensinodeServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Req
 func (p *SensinodeServiceClient) RefreshModifyReward(ctx context.Context, req *RefreshModifyRewardReq) (r *RefreshModifyRewardRes, err error) {
-	var _args16 SensinodeServiceRefreshModifyRewardArgs
-	_args16.Req = req
-	var _result17 SensinodeServiceRefreshModifyRewardResult
-	if err = p.Client_().Call(ctx, "refresh_modify_reward", &_args16, &_result17); err != nil {
-		return
-	}
-	return _result17.GetSuccess(), nil
-}
-
-// Parameters:
-//  - Req
-func (p *SensinodeServiceClient) RefreshAddReward(ctx context.Context, req *RefreshAddRewardReq) (r *RefreshAddRewardRes, err error) {
-	var _args18 SensinodeServiceRefreshAddRewardArgs
-	_args18.Req = req
-	var _result19 SensinodeServiceRefreshAddRewardResult
-	if err = p.Client_().Call(ctx, "refresh_add_reward", &_args18, &_result19); err != nil {
-		return
-	}
-	return _result19.GetSuccess(), nil
-}
-
-// Parameters:
-//  - Req
-func (p *SensinodeServiceClient) RefreshUserCoin(ctx context.Context, req *RefreshUserCoinReq) (r *RefreshUserCoinRes, err error) {
-	var _args20 SensinodeServiceRefreshUserCoinArgs
+	var _args20 SensinodeServiceRefreshModifyRewardArgs
 	_args20.Req = req
-	var _result21 SensinodeServiceRefreshUserCoinResult
-	if err = p.Client_().Call(ctx, "refresh_user_coin", &_args20, &_result21); err != nil {
+	var _result21 SensinodeServiceRefreshModifyRewardResult
+	if err = p.Client_().Call(ctx, "refresh_modify_reward", &_args20, &_result21); err != nil {
 		return
 	}
 	return _result21.GetSuccess(), nil
@@ -2154,14 +2647,50 @@ func (p *SensinodeServiceClient) RefreshUserCoin(ctx context.Context, req *Refre
 
 // Parameters:
 //  - Req
-func (p *SensinodeServiceClient) RefreshIdentReward(ctx context.Context, req *RefreshIdentRewardReq) (r *RefreshIdentRewardRes, err error) {
-	var _args22 SensinodeServiceRefreshIdentRewardArgs
+func (p *SensinodeServiceClient) RefreshAddReward(ctx context.Context, req *RefreshAddRewardReq) (r *RefreshAddRewardRes, err error) {
+	var _args22 SensinodeServiceRefreshAddRewardArgs
 	_args22.Req = req
-	var _result23 SensinodeServiceRefreshIdentRewardResult
-	if err = p.Client_().Call(ctx, "refresh_ident_reward", &_args22, &_result23); err != nil {
+	var _result23 SensinodeServiceRefreshAddRewardResult
+	if err = p.Client_().Call(ctx, "refresh_add_reward", &_args22, &_result23); err != nil {
 		return
 	}
 	return _result23.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *SensinodeServiceClient) RefreshUserCoin(ctx context.Context, req *RefreshUserCoinReq) (r *RefreshUserCoinRes, err error) {
+	var _args24 SensinodeServiceRefreshUserCoinArgs
+	_args24.Req = req
+	var _result25 SensinodeServiceRefreshUserCoinResult
+	if err = p.Client_().Call(ctx, "refresh_user_coin", &_args24, &_result25); err != nil {
+		return
+	}
+	return _result25.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *SensinodeServiceClient) RefreshIdentReward(ctx context.Context, req *RefreshIdentRewardReq) (r *RefreshIdentRewardRes, err error) {
+	var _args26 SensinodeServiceRefreshIdentRewardArgs
+	_args26.Req = req
+	var _result27 SensinodeServiceRefreshIdentRewardResult
+	if err = p.Client_().Call(ctx, "refresh_ident_reward", &_args26, &_result27); err != nil {
+		return
+	}
+	return _result27.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *SensinodeServiceClient) RefreshUserVip(ctx context.Context, req *RefreshUserVipReq) (r *RefreshUserVipRes, err error) {
+	var _args28 SensinodeServiceRefreshUserVipArgs
+	_args28.Req = req
+	var _result29 SensinodeServiceRefreshUserVipResult
+	if err = p.Client_().Call(ctx, "refresh_user_vip", &_args28, &_result29); err != nil {
+		return
+	}
+	return _result29.GetSuccess(), nil
 }
 
 type SensinodeServiceProcessor struct {
@@ -2184,12 +2713,13 @@ func (p *SensinodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorF
 
 func NewSensinodeServiceProcessor(handler SensinodeService) *SensinodeServiceProcessor {
 
-	self24 := &SensinodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self24.processorMap["refresh_modify_reward"] = &sensinodeServiceProcessorRefreshModifyReward{handler: handler}
-	self24.processorMap["refresh_add_reward"] = &sensinodeServiceProcessorRefreshAddReward{handler: handler}
-	self24.processorMap["refresh_user_coin"] = &sensinodeServiceProcessorRefreshUserCoin{handler: handler}
-	self24.processorMap["refresh_ident_reward"] = &sensinodeServiceProcessorRefreshIdentReward{handler: handler}
-	return self24
+	self30 := &SensinodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self30.processorMap["refresh_modify_reward"] = &sensinodeServiceProcessorRefreshModifyReward{handler: handler}
+	self30.processorMap["refresh_add_reward"] = &sensinodeServiceProcessorRefreshAddReward{handler: handler}
+	self30.processorMap["refresh_user_coin"] = &sensinodeServiceProcessorRefreshUserCoin{handler: handler}
+	self30.processorMap["refresh_ident_reward"] = &sensinodeServiceProcessorRefreshIdentReward{handler: handler}
+	self30.processorMap["refresh_user_vip"] = &sensinodeServiceProcessorRefreshUserVip{handler: handler}
+	return self30
 }
 
 func (p *SensinodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -2202,12 +2732,12 @@ func (p *SensinodeServiceProcessor) Process(ctx context.Context, iprot, oprot th
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x25 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x31 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x25.Write(oprot)
+	x31.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x25
+	return false, x31
 
 }
 
@@ -2386,6 +2916,54 @@ func (p *sensinodeServiceProcessorRefreshIdentReward) Process(ctx context.Contex
 		result.Success = retval
 	}
 	if err2 = oprot.WriteMessageBegin("refresh_ident_reward", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type sensinodeServiceProcessorRefreshUserVip struct {
+	handler SensinodeService
+}
+
+func (p *sensinodeServiceProcessorRefreshUserVip) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := SensinodeServiceRefreshUserVipArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("refresh_user_vip", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	result := SensinodeServiceRefreshUserVipResult{}
+	var retval *RefreshUserVipRes
+	var err2 error
+	if retval, err2 = p.handler.RefreshUserVip(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing refresh_user_vip: "+err2.Error())
+		oprot.WriteMessageBegin("refresh_user_vip", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("refresh_user_vip", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -3267,4 +3845,220 @@ func (p *SensinodeServiceRefreshIdentRewardResult) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("SensinodeServiceRefreshIdentRewardResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type SensinodeServiceRefreshUserVipArgs struct {
+	Req *RefreshUserVipReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewSensinodeServiceRefreshUserVipArgs() *SensinodeServiceRefreshUserVipArgs {
+	return &SensinodeServiceRefreshUserVipArgs{}
+}
+
+var SensinodeServiceRefreshUserVipArgs_Req_DEFAULT *RefreshUserVipReq
+
+func (p *SensinodeServiceRefreshUserVipArgs) GetReq() *RefreshUserVipReq {
+	if !p.IsSetReq() {
+		return SensinodeServiceRefreshUserVipArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *SensinodeServiceRefreshUserVipArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *SensinodeServiceRefreshUserVipArgs) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *SensinodeServiceRefreshUserVipArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &RefreshUserVipReq{}
+	if err := p.Req.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+	}
+	return nil
+}
+
+func (p *SensinodeServiceRefreshUserVipArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("refresh_user_vip_args"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *SensinodeServiceRefreshUserVipArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+	}
+	return err
+}
+
+func (p *SensinodeServiceRefreshUserVipArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SensinodeServiceRefreshUserVipArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type SensinodeServiceRefreshUserVipResult struct {
+	Success *RefreshUserVipRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewSensinodeServiceRefreshUserVipResult() *SensinodeServiceRefreshUserVipResult {
+	return &SensinodeServiceRefreshUserVipResult{}
+}
+
+var SensinodeServiceRefreshUserVipResult_Success_DEFAULT *RefreshUserVipRes
+
+func (p *SensinodeServiceRefreshUserVipResult) GetSuccess() *RefreshUserVipRes {
+	if !p.IsSetSuccess() {
+		return SensinodeServiceRefreshUserVipResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *SensinodeServiceRefreshUserVipResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *SensinodeServiceRefreshUserVipResult) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField0(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *SensinodeServiceRefreshUserVipResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &RefreshUserVipRes{}
+	if err := p.Success.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+	}
+	return nil
+}
+
+func (p *SensinodeServiceRefreshUserVipResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("refresh_user_vip_result"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField0(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *SensinodeServiceRefreshUserVipResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+		}
+		if err := oprot.WriteFieldEnd(); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err)
+		}
+	}
+	return err
+}
+
+func (p *SensinodeServiceRefreshUserVipResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SensinodeServiceRefreshUserVipResult(%+v)", *p)
 }

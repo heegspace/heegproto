@@ -72,6 +72,7 @@
 <li><a href="#Fn_datanode_service_refresh_ident_reward">refresh_ident_reward</a></li>
 <li><a href="#Fn_datanode_service_refresh_modify_reward">refresh_modify_reward</a></li>
 <li><a href="#Fn_datanode_service_refresh_user_coin">refresh_user_coin</a></li>
+<li><a href="#Fn_datanode_service_refresh_user_vip">refresh_user_vip</a></li>
 <li><a href="#Fn_datanode_service_removeFriend">removeFriend</a></li>
 <li><a href="#Fn_datanode_service_renameGroup">renameGroup</a></li>
 <li><a href="#Fn_datanode_service_school_list">school_list</a></li>
@@ -203,6 +204,8 @@
 <a href="#Struct_refresh_modify_reward_res">refresh_modify_reward_res</a><br/>
 <a href="#Struct_refresh_user_coin_req">refresh_user_coin_req</a><br/>
 <a href="#Struct_refresh_user_coin_res">refresh_user_coin_res</a><br/>
+<a href="#Struct_refresh_user_vip_req">refresh_user_vip_req</a><br/>
+<a href="#Struct_refresh_user_vip_res">refresh_user_vip_res</a><br/>
 <a href="#Struct_remove_friend_req">remove_friend_req</a><br/>
 <a href="#Struct_remove_friend_res">remove_friend_res</a><br/>
 <a href="#Struct_rename_group_req">rename_group_req</a><br/>
@@ -1116,6 +1119,18 @@
 <tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>code</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_refresh_user_vip_req">Struct: refresh_user_vip_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>auth</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>userid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>vip</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_refresh_user_vip_res">Struct: refresh_user_vip_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>code</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_datanode_service">Service: datanode_service</h3>
 <div class="definition"><h4 id="Fn_datanode_service_createUser">Function: datanode_service.createUser</h4>
@@ -1315,4 +1330,6 @@
 <pre><code><a href="#Struct_ident_count_res">ident_count_res</a></code> ident_count(<code><a href="#Struct_ident_count_req">ident_count_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_datanode_service_refresh_ident_reward">Function: datanode_service.refresh_ident_reward</h4>
 <pre><code><a href="#Struct_refresh_ident_reward_res">refresh_ident_reward_res</a></code> refresh_ident_reward(<code><a href="#Struct_refresh_ident_reward_req">refresh_ident_reward_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_refresh_user_vip">Function: datanode_service.refresh_user_vip</h4>
+<pre><code><a href="#Struct_refresh_user_vip_res">refresh_user_vip_res</a></code> refresh_user_vip(<code><a href="#Struct_refresh_user_vip_req">refresh_user_vip_req</a></code> req)
 </pre></div></div></body></html>
