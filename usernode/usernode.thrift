@@ -23,6 +23,7 @@ struct user_obj {
     12:string   province,
     13:string   city,
     14:string   country,
+    15:bool     vip_expire,
 }
 
 struct update_username_req {

@@ -98,21 +98,23 @@ func (p *AttentionOpType) Value() (driver.Value, error) {
 //  - Province
 //  - City
 //  - Country
+//  - VipExpire
 type UserObj struct {
-	Phone    string  `thrift:"phone,1" db:"phone" json:"phone"`
-	Email    string  `thrift:"email,2" db:"email" json:"email"`
-	Account  string  `thrift:"account,3" db:"account" json:"account"`
-	Status   int16   `thrift:"status,4" db:"status" json:"status"`
-	Role     int64   `thrift:"role,5" db:"role" json:"role"`
-	Vip      int64   `thrift:"vip,6" db:"vip" json:"vip"`
-	Coin     float64 `thrift:"coin,7" db:"coin" json:"coin"`
-	RegAt    string  `thrift:"reg_at,8" db:"reg_at" json:"reg_at"`
-	NickName string  `thrift:"nick_name,9" db:"nick_name" json:"nick_name"`
-	Avatar   string  `thrift:"avatar,10" db:"avatar" json:"avatar"`
-	Sex      int32   `thrift:"sex,11" db:"sex" json:"sex"`
-	Province string  `thrift:"province,12" db:"province" json:"province"`
-	City     string  `thrift:"city,13" db:"city" json:"city"`
-	Country  string  `thrift:"country,14" db:"country" json:"country"`
+	Phone     string  `thrift:"phone,1" db:"phone" json:"phone"`
+	Email     string  `thrift:"email,2" db:"email" json:"email"`
+	Account   string  `thrift:"account,3" db:"account" json:"account"`
+	Status    int16   `thrift:"status,4" db:"status" json:"status"`
+	Role      int64   `thrift:"role,5" db:"role" json:"role"`
+	Vip       int64   `thrift:"vip,6" db:"vip" json:"vip"`
+	Coin      float64 `thrift:"coin,7" db:"coin" json:"coin"`
+	RegAt     string  `thrift:"reg_at,8" db:"reg_at" json:"reg_at"`
+	NickName  string  `thrift:"nick_name,9" db:"nick_name" json:"nick_name"`
+	Avatar    string  `thrift:"avatar,10" db:"avatar" json:"avatar"`
+	Sex       int32   `thrift:"sex,11" db:"sex" json:"sex"`
+	Province  string  `thrift:"province,12" db:"province" json:"province"`
+	City      string  `thrift:"city,13" db:"city" json:"city"`
+	Country   string  `thrift:"country,14" db:"country" json:"country"`
+	VipExpire bool    `thrift:"vip_expire,15" db:"vip_expire" json:"vip_expire"`
 }
 
 func NewUserObj() *UserObj {
@@ -173,6 +175,10 @@ func (p *UserObj) GetCity() string {
 
 func (p *UserObj) GetCountry() string {
 	return p.Country
+}
+
+func (p *UserObj) GetVipExpire() bool {
+	return p.VipExpire
 }
 func (p *UserObj) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -328,6 +334,16 @@ func (p *UserObj) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
+		case 15:
+			if fieldTypeId == thrift.BOOL {
+				if err := p.ReadField15(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
 		default:
 			if err := iprot.Skip(fieldTypeId); err != nil {
 				return err
@@ -469,6 +485,15 @@ func (p *UserObj) ReadField14(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *UserObj) ReadField15(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadBool(); err != nil {
+		return thrift.PrependError("error reading field 15: ", err)
+	} else {
+		p.VipExpire = v
+	}
+	return nil
+}
+
 func (p *UserObj) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("user_obj"); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
@@ -514,6 +539,9 @@ func (p *UserObj) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField14(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField15(oprot); err != nil {
 			return err
 		}
 	}
@@ -704,6 +732,19 @@ func (p *UserObj) writeField14(oprot thrift.TProtocol) (err error) {
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 14:country: ", p), err)
+	}
+	return err
+}
+
+func (p *UserObj) writeField15(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("vip_expire", thrift.BOOL, 15); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 15:vip_expire: ", p), err)
+	}
+	if err := oprot.WriteBool(bool(p.VipExpire)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.vip_expire (15) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 15:vip_expire: ", p), err)
 	}
 	return err
 }

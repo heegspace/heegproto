@@ -8,4 +8,5 @@ cp -rf gen-go/usernode/* ./
 rm -rf gen-go
 
 thrift -r -gen html *.thrift
+rm -rf ../docs/usernode
 mv gen-html ../docs/usernode
