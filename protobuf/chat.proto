@@ -1,0 +1,22 @@
+syntax = "proto3";
+package protocol;
+
+enum Chat_Type {
+    TEXT        = 0;
+    IMAGE       = 2;
+    IMAGE_URL   = 3;
+}
+
+message SendChat {
+    int32   type = 1;       // 消息类型; 
+    string  to = 2;
+    int64   to_uid = 3;
+    bytes   data = 6;
+}
+
+message RecvChat {
+    int32   type = 1;       // 消息类型
+    string  from = 2;
+    int64   from_uid = 3;
+    bytes   data = 4;
+}

@@ -1,0 +1,30 @@
+syntax = "proto3";
+package protocol;
+
+// 系统通知
+message SysNotify {
+    string          from = 1;       // 推送者
+    string          message = 2;    // 推送的消息
+    string          url = 3;        // 消息的url
+    repeated string images = 4;     // 消息的图片
+}
+
+// 广告通知
+message AdNotify {
+    string          message = 1;    // 推送的消息
+    string          url = 2;        // 消息的url
+    repeated string images = 3;     // 消息的图片
+}
+
+// vip通知
+message VipNotify {
+    int32           type = 1;       // vip消息类型；    0: vip过期  1:开通成功  2：续费成功
+    int32           level = 2;      // vip等级
+    string          expire = 3;     // 过期时间
+    string          desc = 4;       // 描述
+}
+
+// 用户动态通知
+message UserNotify {
+    int32           type = 1;
+}

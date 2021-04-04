@@ -1,0 +1,45 @@
+## protocol gen
+### 1. install proto 
+### 2. install go plugins
+    因为这里不关注grpc的问题，只需要关心数据的编解码，所以安装protoc-gen-gofast。
+    ```
+    go get -u github.com/gogo/protobuf/protoc-gen-gofast
+    ```
+
+### 3. gen protocol code
+    ```
+    protoc -I. --gofast_out=.  xxx.proto
+    ```
+
+
+```
+import (
+	"fmt"
+	"github.com/golang/protobuf/proto"
+	"testing"
+)
+
+func TestProtocolBuffer(t *testing.T) {
+	// MessageEnvelope是models.pb.go的结构体
+	oldData := &MessageEnvelope{
+		TargetId: 1,
+		ID:       "1",
+		Type:     "2",
+		Payload:  []byte("ITDragon protobuf"),
+	}
+
+	data, err := proto.Marshal(oldData)
+	if err != nil {
+		fmt.Println("marshal error: ", err.Error())
+	}
+	fmt.Println("marshal data : ", data)
+
+	newData := &MessageEnvelope{}
+	err = proto.Unmarshal(data, newData)
+	if err != nil {
+		fmt.Println("unmarshal err:", err)
+	}
+	fmt.Println("unmarshal data : ", newData)
+
+}
+```

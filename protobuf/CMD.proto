@@ -1,0 +1,22 @@
+syntax = "proto3";
+package protocol;
+
+// 流协议号定义
+enum Stream_Procol_Num {
+    // 心跳协议
+    HEART           = 0;
+
+    // 接受聊天信息
+    CHAT_RECV       = 50;
+    // 发送聊天信息
+    CHAT_SEND       = 51;
+
+    // 系统消息通知
+    NOTIFY_SYS      = 100;  
+    // 广告消息通知
+    NOTIFY_AD       = 101; 
+    // 用户vip通知 
+    NOTIFY_VIP      = 102;
+    // 用户动态通知  
+    NOTIFY_USER     = 103;  
+}
