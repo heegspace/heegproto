@@ -1,10 +1,19 @@
 syntax = "proto3";
 package protocol;
 
+// 聊天协议类型
 enum Chat_Type {
-    TEXT        = 0;
+    NONE        = 0;
+    TEXT        = 1;
     IMAGE       = 2;
     IMAGE_URL   = 3;
+    SOUND       = 4;
+    SOUND_URL   = 5;
+    VIDEO       = 6;
+    VIDEO_URL   = 7;
+    HTML        = 8;
+    HTML_URL    = 9;
+    EMOJII      = 10;
 }
 
 message SendChat {
