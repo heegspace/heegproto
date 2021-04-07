@@ -24,7 +24,7 @@ message SendChat {
     int32   type    = 1;    // 消息类型
     string  to      = 2;    // 目标           
     int64   to_uid  = 3;    // 目标id
-    bytes   data    = 6;    // 发送数据
+    bytes   data    = 4;    // 发送数据
 }
 
 // 接收消息
