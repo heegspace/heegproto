@@ -1,31 +1,36 @@
 syntax = "proto3";
 package protocol;
 
-// 聊天协议类型
+// 聊天数据类型
 enum Chat_Type {
-    NONE        = 0;
-    TEXT        = 1;
-    IMAGE       = 2;
-    IMAGE_URL   = 3;
-    SOUND       = 4;
-    SOUND_URL   = 5;
-    VIDEO       = 6;
-    VIDEO_URL   = 7;
-    HTML        = 8;
-    HTML_URL    = 9;
-    EMOJII      = 10;
+    NONE            = 0;    // 无法识别
+    TEXT            = 1;    // 文本
+    IMAGE           = 2;    // 图像数据
+    IMAGE_URL       = 3;    // 图像url地址
+    IMAGE_BASE64    = 4;    // 图像bas64编码
+    SOUND           = 5;    // 音频数据
+    SOUND_URL       = 6;    // 音频地址
+    VIDEO           = 7;    // 视频数据
+    VIDEO_URL       = 8;    // 视频地址
+    HTML            = 9;    // html数据
+    HTML_URL        = 10;   // html url地址
+    EMOJII          = 11;   // 表情数据
+    EMOJII_URL      = 12;   // 表情url
+    EMOJII_BASE64   = 13;   // 表情base64编码数据
 }
 
+// 发送消息
 message SendChat {
-    int32   type = 1;       // 消息类型; 
-    string  to = 2;
-    int64   to_uid = 3;
-    bytes   data = 6;
+    int32   type    = 1;    // 消息类型
+    string  to      = 2;    // 目标           
+    int64   to_uid  = 3;    // 目标id
+    bytes   data    = 6;    // 发送数据
 }
 
+// 接收消息
 message RecvChat {
-    int32   type = 1;       // 消息类型
-    string  from = 2;
-    int64   from_uid = 3;
-    bytes   data = 4;
+    int32   type        = 1;    // 消息类型
+    string  from        = 2;    // 来源    
+    int64   from_uid    = 3;    // 来源id
+    bytes   data        = 4;    // 来源数据
 }
