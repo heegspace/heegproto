@@ -22,7 +22,7 @@ enum Chat_Type {
 // 发送消息
 message SendChat {
     int32   type    = 1;    // 消息类型
-    int32   to_uid  = 2;    // 目标id
+    int64   to_uid  = 2;    // 目标id
     string  to      = 3;    // 目标           
     bytes   data    = 4;    // 发送数据
 }
@@ -30,7 +30,7 @@ message SendChat {
 // 接收消息
 message RecvChat {
     int32   type        = 1;    // 消息类型
-    int32   from_uid    = 2;    // 来源id
+    int64   from_uid    = 2;    // 来源id
     string  from        = 3;    // 来源    
     bytes   data        = 4;    // 来源数据
 }
