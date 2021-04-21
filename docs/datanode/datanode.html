@@ -28,10 +28,12 @@
 <li><a href="#Fn_datanode_service_del_user_attention">del_user_attention</a></li>
 <li><a href="#Fn_datanode_service_fileDirAdd">fileDirAdd</a></li>
 <li><a href="#Fn_datanode_service_fileDirOne">fileDirOne</a></li>
+<li><a href="#Fn_datanode_service_focus_teacher">focus_teacher</a></li>
 <li><a href="#Fn_datanode_service_friendsList">friendsList</a></li>
 <li><a href="#Fn_datanode_service_getKeyValue">getKeyValue</a></li>
 <li><a href="#Fn_datanode_service_get_alipay_uinfo">get_alipay_uinfo</a></li>
 <li><a href="#Fn_datanode_service_get_attention">get_attention</a></li>
+<li><a href="#Fn_datanode_service_get_teacher">get_teacher</a></li>
 <li><a href="#Fn_datanode_service_get_user_attention">get_user_attention</a></li>
 <li><a href="#Fn_datanode_service_get_user_info">get_user_info</a></li>
 <li><a href="#Fn_datanode_service_get_wechat_uinfo">get_wechat_uinfo</a></li>
@@ -95,6 +97,7 @@
 <li><a href="#Fn_datanode_service_tixing_by_vid">tixing_by_vid</a></li>
 <li><a href="#Fn_datanode_service_updateNote">updateNote</a></li>
 <li><a href="#Fn_datanode_service_updateUser">updateUser</a></li>
+<li><a href="#Fn_datanode_service_update_teacher">update_teacher</a></li>
 <li><a href="#Fn_datanode_service_userInfo">userInfo</a></li>
 <li><a href="#Fn_datanode_service_yunSaveAttr">yunSaveAttr</a></li>
 </ul>
@@ -144,6 +147,10 @@
 <a href="#Struct_extra">extra</a><br/>
 <a href="#Struct_file_attr_res">file_attr_res</a><br/>
 <a href="#Struct_file_dir_res">file_dir_res</a><br/>
+<a href="#Struct_find_teacher_req">find_teacher_req</a><br/>
+<a href="#Struct_find_teacher_res">find_teacher_res</a><br/>
+<a href="#Struct_focus_teacher_req">focus_teacher_req</a><br/>
+<a href="#Struct_focus_teacher_res">focus_teacher_res</a><br/>
 <a href="#Struct_friend">friend</a><br/>
 <a href="#Struct_friend_item">friend_item</a><br/>
 <a href="#Struct_friend_res">friend_res</a><br/>
@@ -239,6 +246,7 @@
 <a href="#Struct_subject_cate_list_req">subject_cate_list_req</a><br/>
 <a href="#Struct_subject_cate_list_res">subject_cate_list_res</a><br/>
 <a href="#Struct_subject_name_res">subject_name_res</a><br/>
+<a href="#Struct_teacher_item">teacher_item</a><br/>
 <a href="#Struct_thumbnail_res">thumbnail_res</a><br/>
 <a href="#Struct_timu_add_req">timu_add_req</a><br/>
 <a href="#Struct_timu_add_res">timu_add_res</a><br/>
@@ -251,6 +259,8 @@
 <a href="#Struct_tixing_res">tixing_res</a><br/>
 <a href="#Struct_update_note_req">update_note_req</a><br/>
 <a href="#Struct_update_req">update_req</a><br/>
+<a href="#Struct_update_teacher_req">update_teacher_req</a><br/>
+<a href="#Struct_update_teacher_res">update_teacher_res</a><br/>
 <a href="#Struct_user">user</a><br/>
 <a href="#Struct_user_info_req">user_info_req</a><br/>
 <a href="#Struct_user_res">user_res</a><br/>
@@ -1131,6 +1141,48 @@
 <tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>code</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_teacher_item">Struct: teacher_item</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>tag</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>resume</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>subject</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>status</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>tmlong</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_update_teacher_req">Struct: update_teacher_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>teacher</td><td><code><a href="#Struct_teacher_item">teacher_item</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_update_teacher_res">Struct: update_teacher_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_find_teacher_req">Struct: find_teacher_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>tuid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>uuid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>subject</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>page</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>size</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>sorted</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_find_teacher_res">Struct: find_teacher_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>teachers</td><td><code>list&lt;<code><a href="#Struct_teacher_item">teacher_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_focus_teacher_req">Struct: focus_teacher_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>tuid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>uuid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>status</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_focus_teacher_res">Struct: focus_teacher_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_datanode_service">Service: datanode_service</h3>
 <div class="definition"><h4 id="Fn_datanode_service_createUser">Function: datanode_service.createUser</h4>
@@ -1332,4 +1384,10 @@
 <pre><code><a href="#Struct_refresh_ident_reward_res">refresh_ident_reward_res</a></code> refresh_ident_reward(<code><a href="#Struct_refresh_ident_reward_req">refresh_ident_reward_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_datanode_service_refresh_user_vip">Function: datanode_service.refresh_user_vip</h4>
 <pre><code><a href="#Struct_refresh_user_vip_res">refresh_user_vip_res</a></code> refresh_user_vip(<code><a href="#Struct_refresh_user_vip_req">refresh_user_vip_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_update_teacher">Function: datanode_service.update_teacher</h4>
+<pre><code><a href="#Struct_update_teacher_res">update_teacher_res</a></code> update_teacher(<code><a href="#Struct_update_teacher_req">update_teacher_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_get_teacher">Function: datanode_service.get_teacher</h4>
+<pre><code><a href="#Struct_find_teacher_res">find_teacher_res</a></code> get_teacher(<code><a href="#Struct_find_teacher_req">find_teacher_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_focus_teacher">Function: datanode_service.focus_teacher</h4>
+<pre><code><a href="#Struct_focus_teacher_res">focus_teacher_res</a></code> focus_teacher(<code><a href="#Struct_focus_teacher_req">focus_teacher_req</a></code> req)
 </pre></div></div></body></html>
