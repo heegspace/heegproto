@@ -1032,6 +1032,55 @@ struct refresh_user_vip_res {
     4:map<string,string>    extra,
 }
 
+struct teacher_item {
+    1:i64                   uid,
+    2:string                tag,
+    3:string                resume,
+    4:string                subject,
+    5:i32                   status,
+    6:i64                   tmlong,
+}
+
+struct update_teacher_req {
+    1:teacher_item          teacher,
+    2:map<string,string>    extra,
+}
+
+struct update_teacher_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:map<string,string> extra, 
+}
+
+struct find_teacher_req {
+    1:i64               tuid,
+    2:i64               uuid,
+    3:string            subject,
+    4:i32               page,
+    5:i32               size,
+    6:string            sorted,
+}
+
+struct find_teacher_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:list<teacher_item> teachers,
+    4:map<string,string> extra,
+}
+
+struct focus_teacher_req {
+    1:i64                   tuid,
+    2:i64                   uuid,
+    3:i32                   status,
+    4:map<string,string>    extra,
+}
+
+struct focus_teacher_res {
+    1:rescode.code       rescode,
+    2:string             resmsg,
+    3:map<string,string> extra,
+}
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -1233,4 +1282,13 @@ service datanode_service {
 
     // 更新用户vip
     refresh_user_vip_res refresh_user_vip(1:refresh_user_vip_req req),
+
+    // 添加或者根据教师信息
+    update_teacher_res update_teacher(1:update_teacher_req req),
+
+    // 查询教师信息
+    find_teacher_res get_teacher(1:find_teacher_req req),
+
+    // 关注/取消关注教师
+    focus_teacher_res focus_teacher(1:focus_teacher_req req),
 }

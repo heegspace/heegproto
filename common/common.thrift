@@ -387,3 +387,20 @@ struct baidu_ident_item {
     8:double                        reward,
     9:string                        image_url,
 }
+
+struct user_info {
+    1:string    phone,
+    2:string    email,
+    3:string    account,
+    4:i16       status,
+    5:i64       role,
+    6:i64       vip,
+    7:string    reg_at,
+    8:string    nick_name,
+    9:string   avatar,
+    10:i32      sex,
+    11:string   province,
+    12:string   city,
+    13:string   country,
+    14:bool     vip_expire,
+}
