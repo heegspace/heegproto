@@ -10,6 +10,7 @@ struct authorize {
 enum Role {
     NORMAL          = 0,        // 普通用户
     COOPERATOR      = 1,        // 企业用户
+    TEACHER         = 2,        // 教师用户
     
     STAFFOR         = 98,       // 员工同事
     SUPEROR         = 99,       // 超级用户
