@@ -8,12 +8,12 @@ struct authorize {
 
 
 enum Role {
-    NORMAL          = 0,        // 普通用户
-    COOPERATOR      = 1,        // 企业用户
-    TEACHER         = 2,        // 教师用户
+    NORMAL          = 0x0000,        // 普通用户
+    COOPERATOR      = 0x0001,        // 企业用户
+    TEACHER         = 0x0002,        // 教师用户
     
-    STAFFOR         = 98,       // 员工同事
-    SUPEROR         = 99,       // 超级用户
+    STAFFOR         = 0x0100,       // 员工同事
+    SUPEROR         = 0x0200,       // 超级用户
 }
 
 enum vip_level {
@@ -49,6 +49,21 @@ enum search_tyle {
 enum approve_dest {
     APPROVE_TIMU_MODIFY  = 0x0000,  // 审核修改试题
     APPROVE_TIMU_ADD     = 0x0001,  // 审核试题添加
+}
+
+// 教师用户的状态
+enum teacher_status {
+    CREATE          =   0x0000,     // 创建
+    APPROVING       =   0x0001,     // 审核中
+    APPOVED         =   0x0002,     // 已经审核
+    PASSED          =   0x0004,     // 审核通过
+    NOPASS          =   0x0008,     // 审核未通过
+    LOGOUT          =   0x0010,     // 已注销
+}
+
+enum teacher2user_status {
+    FOCUS           =   0x0000,     // 关注
+    CANCEL          =   0x0001,     // 取消关注
 }
 
 struct question_query {
