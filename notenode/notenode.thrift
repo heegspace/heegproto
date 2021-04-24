@@ -26,9 +26,12 @@ struct note_meta_res {
 struct note_meta_list_req {
     1:common.authorize             auth,
     2:i64                   uid,
-    3:i32                   page,
-    4:i32                   size,
-    5:map<string,string> extra,
+    3:i64                   userid,
+    4:string                tag,
+    5:i64                   status,
+    6:i32                   page,
+    7:i32                   size,
+    7:map<string,string>    extra,
 }
 
 struct note_meta_list_res {
@@ -39,9 +42,12 @@ struct note_meta_list_res {
 }
 
 struct note_list_count_req {
-    1:common.authorize             auth,
+    1:common.authorize      auth,
     2:i64                   uid,
-    3:map<string,string>    extra,
+    3:i64                   userid,
+    4:string                tag,
+    5:i64                   status,
+    6:map<string,string>    extra,
 }
 
 struct note_list_count_res {

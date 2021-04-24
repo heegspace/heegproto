@@ -212,6 +212,16 @@ struct note_meta_res {
     4:map<string,string> extra,
 }
 
+struct note_meta_list_req {
+    1:i64                   uid,
+    2:i64                   userid,
+    3:string                tag,
+    4:i64                   status,
+    5:i32                   page,
+    6:i32                   size,
+    7:map<string,string>    extra,
+}
+
 struct note_meta_list_res {
     1:rescode.code      rescode,
     2:string            resmsg,
@@ -1122,9 +1132,9 @@ service datanode_service {
     //更新或者添加笔记信息
     note_meta_res updateNote(1:i64 uid, 2:update_note_req req),
     // 获取笔记列表
-    note_meta_list_res noteMetaList(1:i64 uid, 2:i32 page, 3:i32 size),
+    note_meta_list_res noteMetaList(1:note_meta_list_req req),
     // 获取用户笔记数量
-    note_list_count_res noteListCount(1:i64 uid),
+    note_list_count_res noteListCount(1:note_meta_list_req req),
     // 获取笔记数据列
     note_data_res noteData(1:i64 uid, 2:i64 nid),
     // 获取笔记html数据
