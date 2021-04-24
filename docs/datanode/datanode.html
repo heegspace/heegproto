@@ -200,6 +200,7 @@
 <a href="#Struct_note_data_res">note_data_res</a><br/>
 <a href="#Struct_note_html_res">note_html_res</a><br/>
 <a href="#Struct_note_list_count_res">note_list_count_res</a><br/>
+<a href="#Struct_note_meta_list_req">note_meta_list_req</a><br/>
 <a href="#Struct_note_meta_list_res">note_meta_list_res</a><br/>
 <a href="#Struct_note_meta_res">note_meta_res</a><br/>
 <a href="#Struct_refresh_add_reward_req">refresh_add_reward_req</a><br/>
@@ -447,6 +448,15 @@
 <tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>meta</td><td><code><a href="common.html#Struct_note_meta">common.note_meta</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_note_meta_list_req">Struct: note_meta_list_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>userid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>tag</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>status</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>page</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>size</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>7</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><div class="definition"><h3 id="Struct_note_meta_list_res">Struct: note_meta_list_res</h3>
 <table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
 <tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
@@ -1231,11 +1241,9 @@
 <pre><code><a href="#Struct_note_meta_res">note_meta_res</a></code> updateNote(<code>i64</code> uid,
                          <code><a href="#Struct_update_note_req">update_note_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_datanode_service_noteMetaList">Function: datanode_service.noteMetaList</h4>
-<pre><code><a href="#Struct_note_meta_list_res">note_meta_list_res</a></code> noteMetaList(<code>i64</code> uid,
-                                <code>i32</code> page,
-                                <code>i32</code> size)
+<pre><code><a href="#Struct_note_meta_list_res">note_meta_list_res</a></code> noteMetaList(<code><a href="#Struct_note_meta_list_req">note_meta_list_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_datanode_service_noteListCount">Function: datanode_service.noteListCount</h4>
-<pre><code><a href="#Struct_note_list_count_res">note_list_count_res</a></code> noteListCount(<code>i64</code> uid)
+<pre><code><a href="#Struct_note_list_count_res">note_list_count_res</a></code> noteListCount(<code><a href="#Struct_note_meta_list_req">note_meta_list_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_datanode_service_noteData">Function: datanode_service.noteData</h4>
 <pre><code><a href="#Struct_note_data_res">note_data_res</a></code> noteData(<code>i64</code> uid,
                        <code>i64</code> nid)

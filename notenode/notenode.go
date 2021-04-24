@@ -737,15 +737,21 @@ func (p *NoteMetaRes) String() string {
 // Attributes:
 //  - Auth
 //  - UID
+//  - Userid
+//  - Tag
+//  - Status
 //  - Page
 //  - Size
 //  - Extra
 type NoteMetaListReq struct {
-	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
-	UID   int64             `thrift:"uid,2" db:"uid" json:"uid"`
-	Page  int32             `thrift:"page,3" db:"page" json:"page"`
-	Size  int32             `thrift:"size,4" db:"size" json:"size"`
-	Extra map[string]string `thrift:"extra,5" db:"extra" json:"extra"`
+	Auth   *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	UID    int64             `thrift:"uid,2" db:"uid" json:"uid"`
+	Userid int64             `thrift:"userid,3" db:"userid" json:"userid"`
+	Tag    string            `thrift:"tag,4" db:"tag" json:"tag"`
+	Status int64             `thrift:"status,5" db:"status" json:"status"`
+	Page   int32             `thrift:"page,6" db:"page" json:"page"`
+	Size   int32             `thrift:"size,7" db:"size" json:"size"`
+	Extra  map[string]string `thrift:"extra,8" db:"extra" json:"extra"`
 }
 
 func NewNoteMetaListReq() *NoteMetaListReq {
@@ -763,6 +769,18 @@ func (p *NoteMetaListReq) GetAuth() *common.Authorize {
 
 func (p *NoteMetaListReq) GetUID() int64 {
 	return p.UID
+}
+
+func (p *NoteMetaListReq) GetUserid() int64 {
+	return p.Userid
+}
+
+func (p *NoteMetaListReq) GetTag() string {
+	return p.Tag
+}
+
+func (p *NoteMetaListReq) GetStatus() int64 {
+	return p.Status
 }
 
 func (p *NoteMetaListReq) GetPage() int32 {
@@ -815,7 +833,7 @@ func (p *NoteMetaListReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 3:
-			if fieldTypeId == thrift.I32 {
+			if fieldTypeId == thrift.I64 {
 				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
@@ -825,7 +843,7 @@ func (p *NoteMetaListReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 4:
-			if fieldTypeId == thrift.I32 {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
@@ -835,8 +853,38 @@ func (p *NoteMetaListReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 5:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.I64 {
 				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 6:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField6(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 7:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField7(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 8:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField8(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -877,24 +925,51 @@ func (p *NoteMetaListReq) ReadField2(iprot thrift.TProtocol) error {
 }
 
 func (p *NoteMetaListReq) ReadField3(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadI32(); err != nil {
+	if v, err := iprot.ReadI64(); err != nil {
 		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Userid = v
+	}
+	return nil
+}
+
+func (p *NoteMetaListReq) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.Tag = v
+	}
+	return nil
+}
+
+func (p *NoteMetaListReq) ReadField5(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 5: ", err)
+	} else {
+		p.Status = v
+	}
+	return nil
+}
+
+func (p *NoteMetaListReq) ReadField6(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 6: ", err)
 	} else {
 		p.Page = v
 	}
 	return nil
 }
 
-func (p *NoteMetaListReq) ReadField4(iprot thrift.TProtocol) error {
+func (p *NoteMetaListReq) ReadField7(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
-		return thrift.PrependError("error reading field 4: ", err)
+		return thrift.PrependError("error reading field 7: ", err)
 	} else {
 		p.Size = v
 	}
 	return nil
 }
 
-func (p *NoteMetaListReq) ReadField5(iprot thrift.TProtocol) error {
+func (p *NoteMetaListReq) ReadField8(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -942,6 +1017,15 @@ func (p *NoteMetaListReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField5(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField6(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField7(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField8(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -979,34 +1063,73 @@ func (p *NoteMetaListReq) writeField2(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *NoteMetaListReq) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("page", thrift.I32, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:page: ", p), err)
+	if err := oprot.WriteFieldBegin("userid", thrift.I64, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:userid: ", p), err)
 	}
-	if err := oprot.WriteI32(int32(p.Page)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.page (3) field write error: ", p), err)
+	if err := oprot.WriteI64(int64(p.Userid)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.userid (3) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:page: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:userid: ", p), err)
 	}
 	return err
 }
 
 func (p *NoteMetaListReq) writeField4(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("size", thrift.I32, 4); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:size: ", p), err)
+	if err := oprot.WriteFieldBegin("tag", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:tag: ", p), err)
 	}
-	if err := oprot.WriteI32(int32(p.Size)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.size (4) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Tag)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.tag (4) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:size: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:tag: ", p), err)
 	}
 	return err
 }
 
 func (p *NoteMetaListReq) writeField5(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 5); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("status", thrift.I64, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:status: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.Status)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.status (5) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:status: ", p), err)
+	}
+	return err
+}
+
+func (p *NoteMetaListReq) writeField6(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("page", thrift.I32, 6); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:page: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Page)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.page (6) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:page: ", p), err)
+	}
+	return err
+}
+
+func (p *NoteMetaListReq) writeField7(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("size", thrift.I32, 7); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:size: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Size)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.size (7) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 7:size: ", p), err)
+	}
+	return err
+}
+
+func (p *NoteMetaListReq) writeField8(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 8); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 8:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -1023,7 +1146,7 @@ func (p *NoteMetaListReq) writeField5(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 8:extra: ", p), err)
 	}
 	return err
 }
@@ -1310,11 +1433,17 @@ func (p *NoteMetaListRes) String() string {
 // Attributes:
 //  - Auth
 //  - UID
+//  - Userid
+//  - Tag
+//  - Status
 //  - Extra
 type NoteListCountReq struct {
-	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
-	UID   int64             `thrift:"uid,2" db:"uid" json:"uid"`
-	Extra map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
+	Auth   *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	UID    int64             `thrift:"uid,2" db:"uid" json:"uid"`
+	Userid int64             `thrift:"userid,3" db:"userid" json:"userid"`
+	Tag    string            `thrift:"tag,4" db:"tag" json:"tag"`
+	Status int64             `thrift:"status,5" db:"status" json:"status"`
+	Extra  map[string]string `thrift:"extra,6" db:"extra" json:"extra"`
 }
 
 func NewNoteListCountReq() *NoteListCountReq {
@@ -1332,6 +1461,18 @@ func (p *NoteListCountReq) GetAuth() *common.Authorize {
 
 func (p *NoteListCountReq) GetUID() int64 {
 	return p.UID
+}
+
+func (p *NoteListCountReq) GetUserid() int64 {
+	return p.Userid
+}
+
+func (p *NoteListCountReq) GetTag() string {
+	return p.Tag
+}
+
+func (p *NoteListCountReq) GetStatus() int64 {
+	return p.Status
 }
 
 func (p *NoteListCountReq) GetExtra() map[string]string {
@@ -1376,8 +1517,38 @@ func (p *NoteListCountReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 3:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.I64 {
 				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 6:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField6(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -1418,6 +1589,33 @@ func (p *NoteListCountReq) ReadField2(iprot thrift.TProtocol) error {
 }
 
 func (p *NoteListCountReq) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Userid = v
+	}
+	return nil
+}
+
+func (p *NoteListCountReq) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.Tag = v
+	}
+	return nil
+}
+
+func (p *NoteListCountReq) ReadField5(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 5: ", err)
+	} else {
+		p.Status = v
+	}
+	return nil
+}
+
+func (p *NoteListCountReq) ReadField6(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -1459,6 +1657,15 @@ func (p *NoteListCountReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField6(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -1496,8 +1703,47 @@ func (p *NoteListCountReq) writeField2(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *NoteListCountReq) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("userid", thrift.I64, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:userid: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.Userid)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.userid (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:userid: ", p), err)
+	}
+	return err
+}
+
+func (p *NoteListCountReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("tag", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:tag: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Tag)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.tag (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:tag: ", p), err)
+	}
+	return err
+}
+
+func (p *NoteListCountReq) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("status", thrift.I64, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:status: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.Status)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.status (5) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:status: ", p), err)
+	}
+	return err
+}
+
+func (p *NoteListCountReq) writeField6(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 6); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -1514,7 +1760,7 @@ func (p *NoteListCountReq) writeField3(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:extra: ", p), err)
 	}
 	return err
 }

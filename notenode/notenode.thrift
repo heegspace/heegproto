@@ -31,7 +31,7 @@ struct note_meta_list_req {
     5:i64                   status,
     6:i32                   page,
     7:i32                   size,
-    7:map<string,string>    extra,
+    8:map<string,string>    extra,
 }
 
 struct note_meta_list_res {
