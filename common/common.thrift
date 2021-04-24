@@ -66,6 +66,11 @@ enum teacher2user_status {
     CANCEL          =   0x0001,     // 取消关注
 }
 
+enum note_status {
+    CREATE          =   0x0000,     // Create
+    DELETE          =   0x0001,     // Delete
+}
+
 struct question_query {
     1:string        roll_id (go.tag = 'form:"roll_id" json:"roll_id"'),
     2:string        roll_name   (go.tag = 'form:"roll_name" json:"roll_name"'),
@@ -406,15 +411,16 @@ struct baidu_ident_item {
 }
 
 struct note_meta {
-    1:i64 uid,
-    2:i64 user_id,
-    3:string title,
-    4:string thumb,
-    5:string desc,
-    6:string sign,
-    7:string create_at,
-    8:string update_at,
-    9:string tag,
-    10:string data1,
-    11:string data2,
+    1:i64           uid,
+    2:i64           user_id,
+    3:string        title,
+    4:string        thumb,
+    5:string        desc,
+    6:string        sign,
+    7:string        create_at,
+    8:string        update_at,
+    9:string        tag,
+    10:string       data1,
+    11:string       data2,
+    12:i64          status,
 }
