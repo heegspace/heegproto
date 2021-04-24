@@ -404,3 +404,17 @@ struct baidu_ident_item {
     8:double                        reward,
     9:string                        image_url,
 }
+
+struct note_meta {
+    1:i64 uid,
+    2:i64 user_id,
+    3:string title,
+    4:string thumb,
+    5:string desc,
+    6:string sign,
+    7:string create_at,
+    8:string update_at,
+    9:string tag,
+    10:string data1,
+    11:string data2,
+}
