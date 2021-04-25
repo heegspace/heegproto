@@ -8,4 +8,5 @@ cp -rf gen-go/notenode/* ./
 rm -rf gen-go
 
 thrift -r -gen html *.thrift
+rm -rf ../docs/notenode
 mv gen-html ../docs/notenode
