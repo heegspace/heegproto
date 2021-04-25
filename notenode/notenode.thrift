@@ -7,6 +7,9 @@ struct note_item {
     1:i64                   nid,
     2:string                data,
     3:string                html,
+    4:string                tag,
+    5:string                bgcolor,
+    6:i64                   note_type,
 }
 
 struct update_note_req {
@@ -19,19 +22,20 @@ struct update_note_req {
 struct note_meta_res {
     1:rescode.code      rescode,
     2:string            resmsg,
-    3:common.note_meta         meta,
+    3:common.note_meta  meta,
     4:map<string,string> extra,
 }
  
 struct note_meta_list_req {
-    1:common.authorize             auth,
+    1:common.authorize      auth,
     2:i64                   uid,
     3:i64                   userid,
     4:string                tag,
     5:i64                   status,
     6:i32                   page,
     7:i32                   size,
-    8:map<string,string>    extra,
+    8:i64                   note_type,
+    9:map<string,string>    extra,
 }
 
 struct note_meta_list_res {

@@ -202,7 +202,10 @@ struct update_note_req {
     1:i64       uid,
     2:string    data,
     3:string    html,
-    4:map<string,string> extra,
+    4:string    tag,
+    5:string    bgcolor,
+    6:i64       note_type,
+    7:map<string,string> extra,
 }
 
 struct note_meta_res {
@@ -219,7 +222,8 @@ struct note_meta_list_req {
     4:i64                   status,
     5:i32                   page,
     6:i32                   size,
-    7:map<string,string>    extra,
+    7:i64                   note_type,
+    8:map<string,string>    extra,
 }
 
 struct note_meta_list_res {

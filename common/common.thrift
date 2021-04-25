@@ -423,4 +423,6 @@ struct note_meta {
     10:string       data1,
     11:string       data2,
     12:i64          status,
+    13:string       bg_color,
+    14:i64          note_type,
 }
