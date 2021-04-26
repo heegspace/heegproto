@@ -7,14 +7,14 @@ struct note_item {
     1:i64                   nid,
     2:string                data,
     3:string                html,
-    4:string                tag,
+    4:list<string>          tag,
     5:string                bgcolor,
     6:i64                   note_type,
 }
 
 struct update_note_req {
     1:common.authorize             auth,
-    2:i64                   uid,
+    2:i64                       uid,
     3:note_item             note,
     5:map<string,string>    extra,
 }

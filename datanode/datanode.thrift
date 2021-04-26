@@ -199,12 +199,12 @@ struct likes_list_res {
 }
 
 struct update_note_req {
-    1:i64       uid,
-    2:string    data,
-    3:string    html,
-    4:string    tag,
-    5:string    bgcolor,
-    6:i64       note_type,
+    1:i64               uid,
+    2:string            data,
+    3:string            html,
+    4:list<string>      tag,
+    5:string            bgcolor,
+    6:i64               note_type,
     7:map<string,string> extra,
 }
 
