@@ -419,7 +419,7 @@ struct note_meta {
     6:string        sign,
     7:string        create_at,
     8:string        update_at,
-    9:string        tag,
+    9:list<string>  tag,
     10:string       data1,
     11:string       data2,
     12:i64          status,

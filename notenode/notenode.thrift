@@ -51,7 +51,8 @@ struct note_list_count_req {
     3:i64                   userid,
     4:string                tag,
     5:i64                   status,
-    6:map<string,string>    extra,
+    6:i64                   note_type,
+    7:map<string,string>    extra,
 }
 
 struct note_list_count_res {
@@ -89,6 +90,52 @@ struct note_html_res {
     4:map<string,string> extra,
 }
 
+
+struct note_cooper_req {
+    1:common.authorize             auth,
+    2:i64                   nid,
+    3:i64                   userid,
+    4:list<string>          user,
+    5:map<string,string>    extra,
+}
+
+struct note_cooper_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+    3:list<user>         user,
+    4:map<string,string> extra,
+}
+
+struct note_tag_req {
+    1:common.authorize             auth,
+    2:i64                   nid,
+    3:i64                   userid,
+    4:list<string>          tags,
+    5:map<string,string>    extra,
+}
+
+struct note_tag_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+    3:list<string>      tags,
+    4:map<string,string> extra,
+}
+
+struct note_bgcolor_req {
+    1:common.authorize             auth,
+    2:i64                   nid,
+    3:i64                   userid,
+    4:string                bgcolor,
+    5:map<string,string>    extra,
+} 
+
+struct note_bgcolor_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+    3:string             bgcolor,
+    4:map<string,string> extra,
+}
+
 service notenode_service {
     //更新或者添加笔记信息
     note_meta_res updateNote(1:update_note_req req),
@@ -104,4 +151,10 @@ service notenode_service {
 
     // 获取笔记html数据
     note_html_res noteHtml(1:note_html_req req),
+
+
+    // 更新笔记的协作者、标签、颜色
+    note_cooper_res note_cooper(1:note_cooper_req req),
+    note_tag_res note_tag(1:note_tag_req req),
+    note_bgcolor_res note_bgcolor(1:note_bgcolor_req req),
 }

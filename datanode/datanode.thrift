@@ -1084,6 +1084,49 @@ struct focus_teacher_res {
     3:map<string,string> extra,
 }
 
+struct note_cooper_req {
+    1:i64                   nid,
+    2:i64                   userid,
+    3:list<string>          user,
+    4:map<string,string>    extra,
+}
+
+struct note_cooper_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+    3:list<user>         user,
+    4:map<string,string> extra,
+}
+
+struct note_tag_req {
+    1:i64                   nid,
+    2:i64                   userid,
+    3:list<string>          tags,
+    4:map<string,string>    extra,
+}
+
+struct note_tag_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+    3:list<string>      tags,
+    4:map<string,string> extra,
+}
+
+struct note_bgcolor_req {
+    1:i64                   nid,
+    2:i64                   userid,
+    3:string                bgcolor,
+    4:map<string,string>    extra,
+} 
+
+struct note_bgcolor_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+    3:string             bgcolor,
+    4:map<string,string> extra,
+}
+
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -1294,4 +1337,9 @@ service datanode_service {
 
     // 关注/取消关注教师
     focus_teacher_res focus_teacher(1:focus_teacher_req req),
+
+    // 更新笔记的协作者、标签、颜色
+    note_cooper_res note_cooper(1:note_cooper_req req),
+    note_tag_res note_tag(1:note_tag_req req),
+    note_bgcolor_res note_bgcolor(1:note_bgcolor_req req),
 }
