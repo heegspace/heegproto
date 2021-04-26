@@ -4545,13 +4545,13 @@ func (p *NoteBgcolorRes) String() string {
 //  - Auth
 //  - Userid
 //  - Cn
-//  - Ng
+//  - Eg
 //  - Extra
 type NoteTagAddReq struct {
   Auth *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
   Userid int64 `thrift:"userid,2" db:"userid" json:"userid"`
   Cn string `thrift:"cn,3" db:"cn" json:"cn"`
-  Ng string `thrift:"ng,4" db:"ng" json:"ng"`
+  Eg string `thrift:"eg,4" db:"eg" json:"eg"`
   Extra map[string]string `thrift:"extra,5" db:"extra" json:"extra"`
 }
 
@@ -4575,8 +4575,8 @@ func (p *NoteTagAddReq) GetCn() string {
   return p.Cn
 }
 
-func (p *NoteTagAddReq) GetNg() string {
-  return p.Ng
+func (p *NoteTagAddReq) GetEg() string {
+  return p.Eg
 }
 
 func (p *NoteTagAddReq) GetExtra() map[string]string {
@@ -4694,7 +4694,7 @@ func (p *NoteTagAddReq)  ReadField4(iprot thrift.TProtocol) error {
   if v, err := iprot.ReadString(); err != nil {
   return thrift.PrependError("error reading field 4: ", err)
 } else {
-  p.Ng = v
+  p.Eg = v
 }
   return nil
 }
@@ -4776,12 +4776,12 @@ func (p *NoteTagAddReq) writeField3(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *NoteTagAddReq) writeField4(oprot thrift.TProtocol) (err error) {
-  if err := oprot.WriteFieldBegin("ng", thrift.STRING, 4); err != nil {
-    return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:ng: ", p), err) }
-  if err := oprot.WriteString(string(p.Ng)); err != nil {
-  return thrift.PrependError(fmt.Sprintf("%T.ng (4) field write error: ", p), err) }
+  if err := oprot.WriteFieldBegin("eg", thrift.STRING, 4); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:eg: ", p), err) }
+  if err := oprot.WriteString(string(p.Eg)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.eg (4) field write error: ", p), err) }
   if err := oprot.WriteFieldEnd(); err != nil {
-    return thrift.PrependError(fmt.Sprintf("%T write field end error 4:ng: ", p), err) }
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 4:eg: ", p), err) }
   return err
 }
 
@@ -5351,12 +5351,12 @@ func (p *NoteTagListReq) String() string {
 // Attributes:
 //  - Rescode
 //  - Resmsg
-//  - Bgcolor
+//  - Tags
 //  - Extra
 type NoteTagListRes struct {
   Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
   Resmsg string `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
-  Bgcolor []*common.NoteTag `thrift:"bgcolor,3" db:"bgcolor" json:"bgcolor"`
+  Tags []*common.NoteTag `thrift:"tags,3" db:"tags" json:"tags"`
   Extra map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
@@ -5373,8 +5373,8 @@ func (p *NoteTagListRes) GetResmsg() string {
   return p.Resmsg
 }
 
-func (p *NoteTagListRes) GetBgcolor() []*common.NoteTag {
-  return p.Bgcolor
+func (p *NoteTagListRes) GetTags() []*common.NoteTag {
+  return p.Tags
 }
 
 func (p *NoteTagListRes) GetExtra() map[string]string {
@@ -5473,13 +5473,13 @@ func (p *NoteTagListRes)  ReadField3(iprot thrift.TProtocol) error {
     return thrift.PrependError("error reading list begin: ", err)
   }
   tSlice := make([]*common.NoteTag, 0, size)
-  p.Bgcolor =  tSlice
+  p.Tags =  tSlice
   for i := 0; i < size; i ++ {
     _elem44 := &common.NoteTag{}
     if err := _elem44.Read(iprot); err != nil {
       return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem44), err)
     }
-    p.Bgcolor = append(p.Bgcolor, _elem44)
+    p.Tags = append(p.Tags, _elem44)
   }
   if err := iprot.ReadListEnd(); err != nil {
     return thrift.PrependError("error reading list end: ", err)
@@ -5552,12 +5552,12 @@ func (p *NoteTagListRes) writeField2(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *NoteTagListRes) writeField3(oprot thrift.TProtocol) (err error) {
-  if err := oprot.WriteFieldBegin("bgcolor", thrift.LIST, 3); err != nil {
-    return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:bgcolor: ", p), err) }
-  if err := oprot.WriteListBegin(thrift.STRUCT, len(p.Bgcolor)); err != nil {
+  if err := oprot.WriteFieldBegin("tags", thrift.LIST, 3); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:tags: ", p), err) }
+  if err := oprot.WriteListBegin(thrift.STRUCT, len(p.Tags)); err != nil {
     return thrift.PrependError("error writing list begin: ", err)
   }
-  for _, v := range p.Bgcolor {
+  for _, v := range p.Tags {
     if err := v.Write(oprot); err != nil {
       return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", v), err)
     }
@@ -5566,7 +5566,7 @@ func (p *NoteTagListRes) writeField3(oprot thrift.TProtocol) (err error) {
     return thrift.PrependError("error writing list end: ", err)
   }
   if err := oprot.WriteFieldEnd(); err != nil {
-    return thrift.PrependError(fmt.Sprintf("%T write field end error 3:bgcolor: ", p), err) }
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 3:tags: ", p), err) }
   return err
 }
 

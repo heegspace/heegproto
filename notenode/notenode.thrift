@@ -141,7 +141,7 @@ struct note_tag_add_req {
     1:common.authorize          auth,
     2:i64                   userid,
     3:string                cn,
-    4:string                ng,
+    4:string                eg,
     5:map<string,string>    extra,
 }
 
@@ -164,7 +164,7 @@ struct note_tag_list_req {
 struct note_tag_list_res {
     1:rescode.code              rescode,
     2:string                    resmsg,
-    3:list<common.note_tag>     bgcolor,
+    3:list<common.note_tag>     tags,
     4:map<string,string>        extra,
 }
 

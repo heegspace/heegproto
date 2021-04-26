@@ -1129,7 +1129,7 @@ struct note_bgcolor_res {
 struct note_tag_add_req {
     1:i64                   userid,
     2:string                cn,
-    3:string                ng,
+    3:string                eg,
     4:map<string,string>    extra,
 }
 
@@ -1151,7 +1151,7 @@ struct note_tag_list_req {
 struct note_tag_list_res {
     1:rescode.code              rescode,
     2:string                    resmsg,
-    3:list<common.note_tag>     bgcolor,
+    3:list<common.note_tag>     tags,
     4:map<string,string>        extra,
 }
 
