@@ -102,7 +102,7 @@ struct note_cooper_req {
 struct note_cooper_res {
     1:rescode.code      rescode,
     2:string            resmsg,
-    3:list<user>         user,
+    3:list<common.user_info>         user,
     4:map<string,string> extra,
 }
 
