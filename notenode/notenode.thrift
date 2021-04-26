@@ -122,7 +122,7 @@ struct note_tag_res {
 }
 
 struct note_bgcolor_req {
-    1:common.authorize             auth,
+    1:common.authorize          auth,
     2:i64                   nid,
     3:i64                   userid,
     4:string                bgcolor,
@@ -134,6 +134,38 @@ struct note_bgcolor_res {
     2:string            resmsg,
     3:string             bgcolor,
     4:map<string,string> extra,
+}
+
+
+struct note_tag_add_req {
+    1:common.authorize          auth,
+    2:i64                   userid,
+    3:string                cn,
+    4:string                ng,
+    5:map<string,string>    extra,
+}
+
+struct note_tag_add_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+    3:map<string,string> extra,
+}
+
+struct note_tag_list_req {
+    1:common.authorize          auth,
+    2:i64                   user_id,
+    3:string                lang,
+    4:i64                   status,
+    5:i32                   page,
+    6:i32                   size,
+    7:map<string,string>    extra,
+}
+
+struct note_tag_list_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:list<common.note_tag>     bgcolor,
+    4:map<string,string>        extra,
 }
 
 service notenode_service {
@@ -157,4 +189,7 @@ service notenode_service {
     note_cooper_res note_cooper(1:note_cooper_req req),
     note_tag_res note_tag(1:note_tag_req req),
     note_bgcolor_res note_bgcolor(1:note_bgcolor_req req),
+
+    note_tag_add_res note_tag_add(1:note_tag_add_req req),
+    note_tag_list_res note_tag_list(1:note_tag_list_req req),
 }

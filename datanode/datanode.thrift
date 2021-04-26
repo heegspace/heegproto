@@ -1126,6 +1126,34 @@ struct note_bgcolor_res {
     4:map<string,string> extra,
 }
 
+struct note_tag_add_req {
+    1:i64                   userid,
+    2:string                cn,
+    3:string                ng,
+    4:map<string,string>    extra,
+}
+
+struct note_tag_add_res {
+    1:rescode.code      rescode,
+    2:string            resmsg,
+    3:map<string,string> extra,
+}
+
+struct note_tag_list_req {
+    1:i64                   user_id,
+    2:string                lang,
+    3:i64                   status,
+    4:i32                   page,
+    5:i32                   size,
+    6:map<string,string>    extra,
+}
+
+struct note_tag_list_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:list<common.note_tag>     bgcolor,
+    4:map<string,string>        extra,
+}
 
 service datanode_service {
     // ---------- 用户接口 ------- //
@@ -1342,4 +1370,7 @@ service datanode_service {
     note_cooper_res note_cooper(1:note_cooper_req req),
     note_tag_res note_tag(1:note_tag_req req),
     note_bgcolor_res note_bgcolor(1:note_bgcolor_req req),
+
+    note_tag_add_res note_tag_add(1:note_tag_add_req req),
+    note_tag_list_res note_tag_list(1:note_tag_list_req req),
 }

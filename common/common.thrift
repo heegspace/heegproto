@@ -426,3 +426,12 @@ struct note_meta {
     13:string       bg_color,
     14:i64          note_type,
 }
+
+struct note_tag {
+    1:i64       id,
+    2:i64       user_id,
+    3:string    tag,
+    4:string    lang,
+    5:i64       status,
+    6:i64       create_at,
+}

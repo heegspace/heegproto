@@ -63,6 +63,8 @@
 <li><a href="#Fn_datanode_service_note_bgcolor">note_bgcolor</a></li>
 <li><a href="#Fn_datanode_service_note_cooper">note_cooper</a></li>
 <li><a href="#Fn_datanode_service_note_tag">note_tag</a></li>
+<li><a href="#Fn_datanode_service_note_tag_add">note_tag_add</a></li>
+<li><a href="#Fn_datanode_service_note_tag_list">note_tag_list</a></li>
 <li><a href="#Fn_datanode_service_on_search">on_search</a></li>
 <li><a href="#Fn_datanode_service_query_collect_timu">query_collect_timu</a></li>
 <li><a href="#Fn_datanode_service_question_chapter">question_chapter</a></li>
@@ -210,6 +212,10 @@
 <a href="#Struct_note_meta_list_req">note_meta_list_req</a><br/>
 <a href="#Struct_note_meta_list_res">note_meta_list_res</a><br/>
 <a href="#Struct_note_meta_res">note_meta_res</a><br/>
+<a href="#Struct_note_tag_add_req">note_tag_add_req</a><br/>
+<a href="#Struct_note_tag_add_res">note_tag_add_res</a><br/>
+<a href="#Struct_note_tag_list_req">note_tag_list_req</a><br/>
+<a href="#Struct_note_tag_list_res">note_tag_list_res</a><br/>
 <a href="#Struct_note_tag_req">note_tag_req</a><br/>
 <a href="#Struct_note_tag_res">note_tag_res</a><br/>
 <a href="#Struct_refresh_add_reward_req">refresh_add_reward_req</a><br/>
@@ -1231,6 +1237,31 @@
 <tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>bgcolor</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_note_tag_add_req">Struct: note_tag_add_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>userid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>cn</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>ng</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_note_tag_add_res">Struct: note_tag_add_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_note_tag_list_req">Struct: note_tag_list_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>user_id</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>lang</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>status</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>page</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>size</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_note_tag_list_res">Struct: note_tag_list_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>bgcolor</td><td><code>list&lt;<code><a href="common.html#Struct_note_tag">common.note_tag</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_datanode_service">Service: datanode_service</h3>
 <div class="definition"><h4 id="Fn_datanode_service_createUser">Function: datanode_service.createUser</h4>
@@ -1442,4 +1473,8 @@
 <pre><code><a href="#Struct_note_tag_res">note_tag_res</a></code> note_tag(<code><a href="#Struct_note_tag_req">note_tag_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_datanode_service_note_bgcolor">Function: datanode_service.note_bgcolor</h4>
 <pre><code><a href="#Struct_note_bgcolor_res">note_bgcolor_res</a></code> note_bgcolor(<code><a href="#Struct_note_bgcolor_req">note_bgcolor_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_note_tag_add">Function: datanode_service.note_tag_add</h4>
+<pre><code><a href="#Struct_note_tag_add_res">note_tag_add_res</a></code> note_tag_add(<code><a href="#Struct_note_tag_add_req">note_tag_add_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_note_tag_list">Function: datanode_service.note_tag_list</h4>
+<pre><code><a href="#Struct_note_tag_list_res">note_tag_list_res</a></code> note_tag_list(<code><a href="#Struct_note_tag_list_req">note_tag_list_req</a></code> req)
 </pre></div></div></body></html>

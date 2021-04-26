@@ -4541,6 +4541,1062 @@ func (p *NoteBgcolorRes) String() string {
   return fmt.Sprintf("NoteBgcolorRes(%+v)", *p)
 }
 
+// Attributes:
+//  - Auth
+//  - Userid
+//  - Cn
+//  - Ng
+//  - Extra
+type NoteTagAddReq struct {
+  Auth *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+  Userid int64 `thrift:"userid,2" db:"userid" json:"userid"`
+  Cn string `thrift:"cn,3" db:"cn" json:"cn"`
+  Ng string `thrift:"ng,4" db:"ng" json:"ng"`
+  Extra map[string]string `thrift:"extra,5" db:"extra" json:"extra"`
+}
+
+func NewNoteTagAddReq() *NoteTagAddReq {
+  return &NoteTagAddReq{}
+}
+
+var NoteTagAddReq_Auth_DEFAULT *common.Authorize
+func (p *NoteTagAddReq) GetAuth() *common.Authorize {
+  if !p.IsSetAuth() {
+    return NoteTagAddReq_Auth_DEFAULT
+  }
+return p.Auth
+}
+
+func (p *NoteTagAddReq) GetUserid() int64 {
+  return p.Userid
+}
+
+func (p *NoteTagAddReq) GetCn() string {
+  return p.Cn
+}
+
+func (p *NoteTagAddReq) GetNg() string {
+  return p.Ng
+}
+
+func (p *NoteTagAddReq) GetExtra() map[string]string {
+  return p.Extra
+}
+func (p *NoteTagAddReq) IsSetAuth() bool {
+  return p.Auth != nil
+}
+
+func (p *NoteTagAddReq) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 1:
+      if fieldTypeId == thrift.STRUCT {
+        if err := p.ReadField1(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 2:
+      if fieldTypeId == thrift.I64 {
+        if err := p.ReadField2(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 3:
+      if fieldTypeId == thrift.STRING {
+        if err := p.ReadField3(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 4:
+      if fieldTypeId == thrift.STRING {
+        if err := p.ReadField4(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 5:
+      if fieldTypeId == thrift.MAP {
+        if err := p.ReadField5(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *NoteTagAddReq)  ReadField1(iprot thrift.TProtocol) error {
+  p.Auth = &common.Authorize{}
+  if err := p.Auth.Read(iprot); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
+  }
+  return nil
+}
+
+func (p *NoteTagAddReq)  ReadField2(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadI64(); err != nil {
+  return thrift.PrependError("error reading field 2: ", err)
+} else {
+  p.Userid = v
+}
+  return nil
+}
+
+func (p *NoteTagAddReq)  ReadField3(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadString(); err != nil {
+  return thrift.PrependError("error reading field 3: ", err)
+} else {
+  p.Cn = v
+}
+  return nil
+}
+
+func (p *NoteTagAddReq)  ReadField4(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadString(); err != nil {
+  return thrift.PrependError("error reading field 4: ", err)
+} else {
+  p.Ng = v
+}
+  return nil
+}
+
+func (p *NoteTagAddReq)  ReadField5(iprot thrift.TProtocol) error {
+  _, _, size, err := iprot.ReadMapBegin()
+  if err != nil {
+    return thrift.PrependError("error reading map begin: ", err)
+  }
+  tMap := make(map[string]string, size)
+  p.Extra =  tMap
+  for i := 0; i < size; i ++ {
+var _key38 string
+    if v, err := iprot.ReadString(); err != nil {
+    return thrift.PrependError("error reading field 0: ", err)
+} else {
+    _key38 = v
+}
+var _val39 string
+    if v, err := iprot.ReadString(); err != nil {
+    return thrift.PrependError("error reading field 0: ", err)
+} else {
+    _val39 = v
+}
+    p.Extra[_key38] = _val39
+  }
+  if err := iprot.ReadMapEnd(); err != nil {
+    return thrift.PrependError("error reading map end: ", err)
+  }
+  return nil
+}
+
+func (p *NoteTagAddReq) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("note_tag_add_req"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField1(oprot); err != nil { return err }
+    if err := p.writeField2(oprot); err != nil { return err }
+    if err := p.writeField3(oprot); err != nil { return err }
+    if err := p.writeField4(oprot); err != nil { return err }
+    if err := p.writeField5(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *NoteTagAddReq) writeField1(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("auth", thrift.STRUCT, 1); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:auth: ", p), err) }
+  if err := p.Auth.Write(oprot); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Auth), err)
+  }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 1:auth: ", p), err) }
+  return err
+}
+
+func (p *NoteTagAddReq) writeField2(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("userid", thrift.I64, 2); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:userid: ", p), err) }
+  if err := oprot.WriteI64(int64(p.Userid)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.userid (2) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 2:userid: ", p), err) }
+  return err
+}
+
+func (p *NoteTagAddReq) writeField3(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("cn", thrift.STRING, 3); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:cn: ", p), err) }
+  if err := oprot.WriteString(string(p.Cn)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.cn (3) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 3:cn: ", p), err) }
+  return err
+}
+
+func (p *NoteTagAddReq) writeField4(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("ng", thrift.STRING, 4); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:ng: ", p), err) }
+  if err := oprot.WriteString(string(p.Ng)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.ng (4) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 4:ng: ", p), err) }
+  return err
+}
+
+func (p *NoteTagAddReq) writeField5(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("extra", thrift.MAP, 5); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:extra: ", p), err) }
+  if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+    return thrift.PrependError("error writing map begin: ", err)
+  }
+  for k, v := range p.Extra {
+    if err := oprot.WriteString(string(k)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err) }
+    if err := oprot.WriteString(string(v)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err) }
+  }
+  if err := oprot.WriteMapEnd(); err != nil {
+    return thrift.PrependError("error writing map end: ", err)
+  }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 5:extra: ", p), err) }
+  return err
+}
+
+func (p *NoteTagAddReq) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("NoteTagAddReq(%+v)", *p)
+}
+
+// Attributes:
+//  - Rescode
+//  - Resmsg
+//  - Extra
+type NoteTagAddRes struct {
+  Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
+  Resmsg string `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+  Extra map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
+}
+
+func NewNoteTagAddRes() *NoteTagAddRes {
+  return &NoteTagAddRes{}
+}
+
+
+func (p *NoteTagAddRes) GetRescode() rescode.Code {
+  return p.Rescode
+}
+
+func (p *NoteTagAddRes) GetResmsg() string {
+  return p.Resmsg
+}
+
+func (p *NoteTagAddRes) GetExtra() map[string]string {
+  return p.Extra
+}
+func (p *NoteTagAddRes) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 1:
+      if fieldTypeId == thrift.I32 {
+        if err := p.ReadField1(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 2:
+      if fieldTypeId == thrift.STRING {
+        if err := p.ReadField2(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 3:
+      if fieldTypeId == thrift.MAP {
+        if err := p.ReadField3(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *NoteTagAddRes)  ReadField1(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadI32(); err != nil {
+  return thrift.PrependError("error reading field 1: ", err)
+} else {
+  temp := rescode.Code(v)
+  p.Rescode = temp
+}
+  return nil
+}
+
+func (p *NoteTagAddRes)  ReadField2(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadString(); err != nil {
+  return thrift.PrependError("error reading field 2: ", err)
+} else {
+  p.Resmsg = v
+}
+  return nil
+}
+
+func (p *NoteTagAddRes)  ReadField3(iprot thrift.TProtocol) error {
+  _, _, size, err := iprot.ReadMapBegin()
+  if err != nil {
+    return thrift.PrependError("error reading map begin: ", err)
+  }
+  tMap := make(map[string]string, size)
+  p.Extra =  tMap
+  for i := 0; i < size; i ++ {
+var _key40 string
+    if v, err := iprot.ReadString(); err != nil {
+    return thrift.PrependError("error reading field 0: ", err)
+} else {
+    _key40 = v
+}
+var _val41 string
+    if v, err := iprot.ReadString(); err != nil {
+    return thrift.PrependError("error reading field 0: ", err)
+} else {
+    _val41 = v
+}
+    p.Extra[_key40] = _val41
+  }
+  if err := iprot.ReadMapEnd(); err != nil {
+    return thrift.PrependError("error reading map end: ", err)
+  }
+  return nil
+}
+
+func (p *NoteTagAddRes) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("note_tag_add_res"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField1(oprot); err != nil { return err }
+    if err := p.writeField2(oprot); err != nil { return err }
+    if err := p.writeField3(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *NoteTagAddRes) writeField1(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err) }
+  if err := oprot.WriteI32(int32(p.Rescode)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.rescode (1) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 1:rescode: ", p), err) }
+  return err
+}
+
+func (p *NoteTagAddRes) writeField2(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err) }
+  if err := oprot.WriteString(string(p.Resmsg)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err) }
+  return err
+}
+
+func (p *NoteTagAddRes) writeField3(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err) }
+  if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+    return thrift.PrependError("error writing map begin: ", err)
+  }
+  for k, v := range p.Extra {
+    if err := oprot.WriteString(string(k)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err) }
+    if err := oprot.WriteString(string(v)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err) }
+  }
+  if err := oprot.WriteMapEnd(); err != nil {
+    return thrift.PrependError("error writing map end: ", err)
+  }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err) }
+  return err
+}
+
+func (p *NoteTagAddRes) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("NoteTagAddRes(%+v)", *p)
+}
+
+// Attributes:
+//  - Auth
+//  - UserID
+//  - Lang
+//  - Status
+//  - Page
+//  - Size
+//  - Extra
+type NoteTagListReq struct {
+  Auth *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+  UserID int64 `thrift:"user_id,2" db:"user_id" json:"user_id"`
+  Lang string `thrift:"lang,3" db:"lang" json:"lang"`
+  Status int64 `thrift:"status,4" db:"status" json:"status"`
+  Page int32 `thrift:"page,5" db:"page" json:"page"`
+  Size int32 `thrift:"size,6" db:"size" json:"size"`
+  Extra map[string]string `thrift:"extra,7" db:"extra" json:"extra"`
+}
+
+func NewNoteTagListReq() *NoteTagListReq {
+  return &NoteTagListReq{}
+}
+
+var NoteTagListReq_Auth_DEFAULT *common.Authorize
+func (p *NoteTagListReq) GetAuth() *common.Authorize {
+  if !p.IsSetAuth() {
+    return NoteTagListReq_Auth_DEFAULT
+  }
+return p.Auth
+}
+
+func (p *NoteTagListReq) GetUserID() int64 {
+  return p.UserID
+}
+
+func (p *NoteTagListReq) GetLang() string {
+  return p.Lang
+}
+
+func (p *NoteTagListReq) GetStatus() int64 {
+  return p.Status
+}
+
+func (p *NoteTagListReq) GetPage() int32 {
+  return p.Page
+}
+
+func (p *NoteTagListReq) GetSize() int32 {
+  return p.Size
+}
+
+func (p *NoteTagListReq) GetExtra() map[string]string {
+  return p.Extra
+}
+func (p *NoteTagListReq) IsSetAuth() bool {
+  return p.Auth != nil
+}
+
+func (p *NoteTagListReq) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 1:
+      if fieldTypeId == thrift.STRUCT {
+        if err := p.ReadField1(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 2:
+      if fieldTypeId == thrift.I64 {
+        if err := p.ReadField2(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 3:
+      if fieldTypeId == thrift.STRING {
+        if err := p.ReadField3(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 4:
+      if fieldTypeId == thrift.I64 {
+        if err := p.ReadField4(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 5:
+      if fieldTypeId == thrift.I32 {
+        if err := p.ReadField5(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 6:
+      if fieldTypeId == thrift.I32 {
+        if err := p.ReadField6(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 7:
+      if fieldTypeId == thrift.MAP {
+        if err := p.ReadField7(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *NoteTagListReq)  ReadField1(iprot thrift.TProtocol) error {
+  p.Auth = &common.Authorize{}
+  if err := p.Auth.Read(iprot); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
+  }
+  return nil
+}
+
+func (p *NoteTagListReq)  ReadField2(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadI64(); err != nil {
+  return thrift.PrependError("error reading field 2: ", err)
+} else {
+  p.UserID = v
+}
+  return nil
+}
+
+func (p *NoteTagListReq)  ReadField3(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadString(); err != nil {
+  return thrift.PrependError("error reading field 3: ", err)
+} else {
+  p.Lang = v
+}
+  return nil
+}
+
+func (p *NoteTagListReq)  ReadField4(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadI64(); err != nil {
+  return thrift.PrependError("error reading field 4: ", err)
+} else {
+  p.Status = v
+}
+  return nil
+}
+
+func (p *NoteTagListReq)  ReadField5(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadI32(); err != nil {
+  return thrift.PrependError("error reading field 5: ", err)
+} else {
+  p.Page = v
+}
+  return nil
+}
+
+func (p *NoteTagListReq)  ReadField6(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadI32(); err != nil {
+  return thrift.PrependError("error reading field 6: ", err)
+} else {
+  p.Size = v
+}
+  return nil
+}
+
+func (p *NoteTagListReq)  ReadField7(iprot thrift.TProtocol) error {
+  _, _, size, err := iprot.ReadMapBegin()
+  if err != nil {
+    return thrift.PrependError("error reading map begin: ", err)
+  }
+  tMap := make(map[string]string, size)
+  p.Extra =  tMap
+  for i := 0; i < size; i ++ {
+var _key42 string
+    if v, err := iprot.ReadString(); err != nil {
+    return thrift.PrependError("error reading field 0: ", err)
+} else {
+    _key42 = v
+}
+var _val43 string
+    if v, err := iprot.ReadString(); err != nil {
+    return thrift.PrependError("error reading field 0: ", err)
+} else {
+    _val43 = v
+}
+    p.Extra[_key42] = _val43
+  }
+  if err := iprot.ReadMapEnd(); err != nil {
+    return thrift.PrependError("error reading map end: ", err)
+  }
+  return nil
+}
+
+func (p *NoteTagListReq) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("note_tag_list_req"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField1(oprot); err != nil { return err }
+    if err := p.writeField2(oprot); err != nil { return err }
+    if err := p.writeField3(oprot); err != nil { return err }
+    if err := p.writeField4(oprot); err != nil { return err }
+    if err := p.writeField5(oprot); err != nil { return err }
+    if err := p.writeField6(oprot); err != nil { return err }
+    if err := p.writeField7(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *NoteTagListReq) writeField1(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("auth", thrift.STRUCT, 1); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:auth: ", p), err) }
+  if err := p.Auth.Write(oprot); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Auth), err)
+  }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 1:auth: ", p), err) }
+  return err
+}
+
+func (p *NoteTagListReq) writeField2(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("user_id", thrift.I64, 2); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:user_id: ", p), err) }
+  if err := oprot.WriteI64(int64(p.UserID)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.user_id (2) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 2:user_id: ", p), err) }
+  return err
+}
+
+func (p *NoteTagListReq) writeField3(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("lang", thrift.STRING, 3); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:lang: ", p), err) }
+  if err := oprot.WriteString(string(p.Lang)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.lang (3) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 3:lang: ", p), err) }
+  return err
+}
+
+func (p *NoteTagListReq) writeField4(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("status", thrift.I64, 4); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:status: ", p), err) }
+  if err := oprot.WriteI64(int64(p.Status)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.status (4) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 4:status: ", p), err) }
+  return err
+}
+
+func (p *NoteTagListReq) writeField5(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("page", thrift.I32, 5); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:page: ", p), err) }
+  if err := oprot.WriteI32(int32(p.Page)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.page (5) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 5:page: ", p), err) }
+  return err
+}
+
+func (p *NoteTagListReq) writeField6(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("size", thrift.I32, 6); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:size: ", p), err) }
+  if err := oprot.WriteI32(int32(p.Size)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.size (6) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 6:size: ", p), err) }
+  return err
+}
+
+func (p *NoteTagListReq) writeField7(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("extra", thrift.MAP, 7); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:extra: ", p), err) }
+  if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+    return thrift.PrependError("error writing map begin: ", err)
+  }
+  for k, v := range p.Extra {
+    if err := oprot.WriteString(string(k)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err) }
+    if err := oprot.WriteString(string(v)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err) }
+  }
+  if err := oprot.WriteMapEnd(); err != nil {
+    return thrift.PrependError("error writing map end: ", err)
+  }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 7:extra: ", p), err) }
+  return err
+}
+
+func (p *NoteTagListReq) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("NoteTagListReq(%+v)", *p)
+}
+
+// Attributes:
+//  - Rescode
+//  - Resmsg
+//  - Bgcolor
+//  - Extra
+type NoteTagListRes struct {
+  Rescode rescode.Code `thrift:"rescode,1" db:"rescode" json:"rescode"`
+  Resmsg string `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+  Bgcolor []*common.NoteTag `thrift:"bgcolor,3" db:"bgcolor" json:"bgcolor"`
+  Extra map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
+}
+
+func NewNoteTagListRes() *NoteTagListRes {
+  return &NoteTagListRes{}
+}
+
+
+func (p *NoteTagListRes) GetRescode() rescode.Code {
+  return p.Rescode
+}
+
+func (p *NoteTagListRes) GetResmsg() string {
+  return p.Resmsg
+}
+
+func (p *NoteTagListRes) GetBgcolor() []*common.NoteTag {
+  return p.Bgcolor
+}
+
+func (p *NoteTagListRes) GetExtra() map[string]string {
+  return p.Extra
+}
+func (p *NoteTagListRes) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 1:
+      if fieldTypeId == thrift.I32 {
+        if err := p.ReadField1(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 2:
+      if fieldTypeId == thrift.STRING {
+        if err := p.ReadField2(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 3:
+      if fieldTypeId == thrift.LIST {
+        if err := p.ReadField3(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 4:
+      if fieldTypeId == thrift.MAP {
+        if err := p.ReadField4(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *NoteTagListRes)  ReadField1(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadI32(); err != nil {
+  return thrift.PrependError("error reading field 1: ", err)
+} else {
+  temp := rescode.Code(v)
+  p.Rescode = temp
+}
+  return nil
+}
+
+func (p *NoteTagListRes)  ReadField2(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadString(); err != nil {
+  return thrift.PrependError("error reading field 2: ", err)
+} else {
+  p.Resmsg = v
+}
+  return nil
+}
+
+func (p *NoteTagListRes)  ReadField3(iprot thrift.TProtocol) error {
+  _, size, err := iprot.ReadListBegin()
+  if err != nil {
+    return thrift.PrependError("error reading list begin: ", err)
+  }
+  tSlice := make([]*common.NoteTag, 0, size)
+  p.Bgcolor =  tSlice
+  for i := 0; i < size; i ++ {
+    _elem44 := &common.NoteTag{}
+    if err := _elem44.Read(iprot); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem44), err)
+    }
+    p.Bgcolor = append(p.Bgcolor, _elem44)
+  }
+  if err := iprot.ReadListEnd(); err != nil {
+    return thrift.PrependError("error reading list end: ", err)
+  }
+  return nil
+}
+
+func (p *NoteTagListRes)  ReadField4(iprot thrift.TProtocol) error {
+  _, _, size, err := iprot.ReadMapBegin()
+  if err != nil {
+    return thrift.PrependError("error reading map begin: ", err)
+  }
+  tMap := make(map[string]string, size)
+  p.Extra =  tMap
+  for i := 0; i < size; i ++ {
+var _key45 string
+    if v, err := iprot.ReadString(); err != nil {
+    return thrift.PrependError("error reading field 0: ", err)
+} else {
+    _key45 = v
+}
+var _val46 string
+    if v, err := iprot.ReadString(); err != nil {
+    return thrift.PrependError("error reading field 0: ", err)
+} else {
+    _val46 = v
+}
+    p.Extra[_key45] = _val46
+  }
+  if err := iprot.ReadMapEnd(); err != nil {
+    return thrift.PrependError("error reading map end: ", err)
+  }
+  return nil
+}
+
+func (p *NoteTagListRes) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("note_tag_list_res"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField1(oprot); err != nil { return err }
+    if err := p.writeField2(oprot); err != nil { return err }
+    if err := p.writeField3(oprot); err != nil { return err }
+    if err := p.writeField4(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *NoteTagListRes) writeField1(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err) }
+  if err := oprot.WriteI32(int32(p.Rescode)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.rescode (1) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 1:rescode: ", p), err) }
+  return err
+}
+
+func (p *NoteTagListRes) writeField2(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err) }
+  if err := oprot.WriteString(string(p.Resmsg)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err) }
+  return err
+}
+
+func (p *NoteTagListRes) writeField3(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("bgcolor", thrift.LIST, 3); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:bgcolor: ", p), err) }
+  if err := oprot.WriteListBegin(thrift.STRUCT, len(p.Bgcolor)); err != nil {
+    return thrift.PrependError("error writing list begin: ", err)
+  }
+  for _, v := range p.Bgcolor {
+    if err := v.Write(oprot); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", v), err)
+    }
+  }
+  if err := oprot.WriteListEnd(); err != nil {
+    return thrift.PrependError("error writing list end: ", err)
+  }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 3:bgcolor: ", p), err) }
+  return err
+}
+
+func (p *NoteTagListRes) writeField4(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err) }
+  if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+    return thrift.PrependError("error writing map begin: ", err)
+  }
+  for k, v := range p.Extra {
+    if err := oprot.WriteString(string(k)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err) }
+    if err := oprot.WriteString(string(v)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err) }
+  }
+  if err := oprot.WriteMapEnd(); err != nil {
+    return thrift.PrependError("error writing map end: ", err)
+  }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err) }
+  return err
+}
+
+func (p *NoteTagListRes) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("NoteTagListRes(%+v)", *p)
+}
+
 type NotenodeService interface {
   // Parameters:
   //  - Req
@@ -4566,6 +5622,12 @@ type NotenodeService interface {
   // Parameters:
   //  - Req
   NoteBgcolor(ctx context.Context, req *NoteBgcolorReq) (r *NoteBgcolorRes, err error)
+  // Parameters:
+  //  - Req
+  NoteTagAdd(ctx context.Context, req *NoteTagAddReq) (r *NoteTagAddRes, err error)
+  // Parameters:
+  //  - Req
+  NoteTagList(ctx context.Context, req *NoteTagListReq) (r *NoteTagListRes, err error)
 }
 
 type NotenodeServiceClient struct {
@@ -4596,97 +5658,121 @@ func (p *NotenodeServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Req
 func (p *NotenodeServiceClient) UpdateNote(ctx context.Context, req *UpdateNoteReq) (r *NoteMetaRes, err error) {
-  var _args38 NotenodeServiceUpdateNoteArgs
-  _args38.Req = req
-  var _result39 NotenodeServiceUpdateNoteResult
-  if err = p.Client_().Call(ctx, "updateNote", &_args38, &_result39); err != nil {
+  var _args47 NotenodeServiceUpdateNoteArgs
+  _args47.Req = req
+  var _result48 NotenodeServiceUpdateNoteResult
+  if err = p.Client_().Call(ctx, "updateNote", &_args47, &_result48); err != nil {
     return
   }
-  return _result39.GetSuccess(), nil
+  return _result48.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *NotenodeServiceClient) NoteMetaList(ctx context.Context, req *NoteMetaListReq) (r *NoteMetaListRes, err error) {
-  var _args40 NotenodeServiceNoteMetaListArgs
-  _args40.Req = req
-  var _result41 NotenodeServiceNoteMetaListResult
-  if err = p.Client_().Call(ctx, "noteMetaList", &_args40, &_result41); err != nil {
+  var _args49 NotenodeServiceNoteMetaListArgs
+  _args49.Req = req
+  var _result50 NotenodeServiceNoteMetaListResult
+  if err = p.Client_().Call(ctx, "noteMetaList", &_args49, &_result50); err != nil {
     return
   }
-  return _result41.GetSuccess(), nil
+  return _result50.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *NotenodeServiceClient) NoteListCount(ctx context.Context, req *NoteListCountReq) (r *NoteListCountRes, err error) {
-  var _args42 NotenodeServiceNoteListCountArgs
-  _args42.Req = req
-  var _result43 NotenodeServiceNoteListCountResult
-  if err = p.Client_().Call(ctx, "noteListCount", &_args42, &_result43); err != nil {
+  var _args51 NotenodeServiceNoteListCountArgs
+  _args51.Req = req
+  var _result52 NotenodeServiceNoteListCountResult
+  if err = p.Client_().Call(ctx, "noteListCount", &_args51, &_result52); err != nil {
     return
   }
-  return _result43.GetSuccess(), nil
+  return _result52.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *NotenodeServiceClient) NoteData(ctx context.Context, req *NoteDataReq) (r *NoteDataRes, err error) {
-  var _args44 NotenodeServiceNoteDataArgs
-  _args44.Req = req
-  var _result45 NotenodeServiceNoteDataResult
-  if err = p.Client_().Call(ctx, "noteData", &_args44, &_result45); err != nil {
+  var _args53 NotenodeServiceNoteDataArgs
+  _args53.Req = req
+  var _result54 NotenodeServiceNoteDataResult
+  if err = p.Client_().Call(ctx, "noteData", &_args53, &_result54); err != nil {
     return
   }
-  return _result45.GetSuccess(), nil
+  return _result54.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *NotenodeServiceClient) NoteHtml(ctx context.Context, req *NoteHTMLReq) (r *NoteHTMLRes, err error) {
-  var _args46 NotenodeServiceNoteHtmlArgs
-  _args46.Req = req
-  var _result47 NotenodeServiceNoteHtmlResult
-  if err = p.Client_().Call(ctx, "noteHtml", &_args46, &_result47); err != nil {
+  var _args55 NotenodeServiceNoteHtmlArgs
+  _args55.Req = req
+  var _result56 NotenodeServiceNoteHtmlResult
+  if err = p.Client_().Call(ctx, "noteHtml", &_args55, &_result56); err != nil {
     return
   }
-  return _result47.GetSuccess(), nil
+  return _result56.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *NotenodeServiceClient) NoteCooper(ctx context.Context, req *NoteCooperReq) (r *NoteCooperRes, err error) {
-  var _args48 NotenodeServiceNoteCooperArgs
-  _args48.Req = req
-  var _result49 NotenodeServiceNoteCooperResult
-  if err = p.Client_().Call(ctx, "note_cooper", &_args48, &_result49); err != nil {
+  var _args57 NotenodeServiceNoteCooperArgs
+  _args57.Req = req
+  var _result58 NotenodeServiceNoteCooperResult
+  if err = p.Client_().Call(ctx, "note_cooper", &_args57, &_result58); err != nil {
     return
   }
-  return _result49.GetSuccess(), nil
+  return _result58.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *NotenodeServiceClient) NoteTag(ctx context.Context, req *NoteTagReq) (r *NoteTagRes, err error) {
-  var _args50 NotenodeServiceNoteTagArgs
-  _args50.Req = req
-  var _result51 NotenodeServiceNoteTagResult
-  if err = p.Client_().Call(ctx, "note_tag", &_args50, &_result51); err != nil {
+  var _args59 NotenodeServiceNoteTagArgs
+  _args59.Req = req
+  var _result60 NotenodeServiceNoteTagResult
+  if err = p.Client_().Call(ctx, "note_tag", &_args59, &_result60); err != nil {
     return
   }
-  return _result51.GetSuccess(), nil
+  return _result60.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *NotenodeServiceClient) NoteBgcolor(ctx context.Context, req *NoteBgcolorReq) (r *NoteBgcolorRes, err error) {
-  var _args52 NotenodeServiceNoteBgcolorArgs
-  _args52.Req = req
-  var _result53 NotenodeServiceNoteBgcolorResult
-  if err = p.Client_().Call(ctx, "note_bgcolor", &_args52, &_result53); err != nil {
+  var _args61 NotenodeServiceNoteBgcolorArgs
+  _args61.Req = req
+  var _result62 NotenodeServiceNoteBgcolorResult
+  if err = p.Client_().Call(ctx, "note_bgcolor", &_args61, &_result62); err != nil {
     return
   }
-  return _result53.GetSuccess(), nil
+  return _result62.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *NotenodeServiceClient) NoteTagAdd(ctx context.Context, req *NoteTagAddReq) (r *NoteTagAddRes, err error) {
+  var _args63 NotenodeServiceNoteTagAddArgs
+  _args63.Req = req
+  var _result64 NotenodeServiceNoteTagAddResult
+  if err = p.Client_().Call(ctx, "note_tag_add", &_args63, &_result64); err != nil {
+    return
+  }
+  return _result64.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *NotenodeServiceClient) NoteTagList(ctx context.Context, req *NoteTagListReq) (r *NoteTagListRes, err error) {
+  var _args65 NotenodeServiceNoteTagListArgs
+  _args65.Req = req
+  var _result66 NotenodeServiceNoteTagListResult
+  if err = p.Client_().Call(ctx, "note_tag_list", &_args65, &_result66); err != nil {
+    return
+  }
+  return _result66.GetSuccess(), nil
 }
 
 type NotenodeServiceProcessor struct {
@@ -4709,16 +5795,18 @@ func (p *NotenodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFu
 
 func NewNotenodeServiceProcessor(handler NotenodeService) *NotenodeServiceProcessor {
 
-  self54 := &NotenodeServiceProcessor{handler:handler, processorMap:make(map[string]thrift.TProcessorFunction)}
-  self54.processorMap["updateNote"] = &notenodeServiceProcessorUpdateNote{handler:handler}
-  self54.processorMap["noteMetaList"] = &notenodeServiceProcessorNoteMetaList{handler:handler}
-  self54.processorMap["noteListCount"] = &notenodeServiceProcessorNoteListCount{handler:handler}
-  self54.processorMap["noteData"] = &notenodeServiceProcessorNoteData{handler:handler}
-  self54.processorMap["noteHtml"] = &notenodeServiceProcessorNoteHtml{handler:handler}
-  self54.processorMap["note_cooper"] = &notenodeServiceProcessorNoteCooper{handler:handler}
-  self54.processorMap["note_tag"] = &notenodeServiceProcessorNoteTag{handler:handler}
-  self54.processorMap["note_bgcolor"] = &notenodeServiceProcessorNoteBgcolor{handler:handler}
-return self54
+  self67 := &NotenodeServiceProcessor{handler:handler, processorMap:make(map[string]thrift.TProcessorFunction)}
+  self67.processorMap["updateNote"] = &notenodeServiceProcessorUpdateNote{handler:handler}
+  self67.processorMap["noteMetaList"] = &notenodeServiceProcessorNoteMetaList{handler:handler}
+  self67.processorMap["noteListCount"] = &notenodeServiceProcessorNoteListCount{handler:handler}
+  self67.processorMap["noteData"] = &notenodeServiceProcessorNoteData{handler:handler}
+  self67.processorMap["noteHtml"] = &notenodeServiceProcessorNoteHtml{handler:handler}
+  self67.processorMap["note_cooper"] = &notenodeServiceProcessorNoteCooper{handler:handler}
+  self67.processorMap["note_tag"] = &notenodeServiceProcessorNoteTag{handler:handler}
+  self67.processorMap["note_bgcolor"] = &notenodeServiceProcessorNoteBgcolor{handler:handler}
+  self67.processorMap["note_tag_add"] = &notenodeServiceProcessorNoteTagAdd{handler:handler}
+  self67.processorMap["note_tag_list"] = &notenodeServiceProcessorNoteTagList{handler:handler}
+return self67
 }
 
 func (p *NotenodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -4729,12 +5817,12 @@ func (p *NotenodeServiceProcessor) Process(ctx context.Context, iprot, oprot thr
   }
   iprot.Skip(thrift.STRUCT)
   iprot.ReadMessageEnd()
-  x55 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function " + name)
+  x68 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function " + name)
   oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-  x55.Write(oprot)
+  x68.Write(oprot)
   oprot.WriteMessageEnd()
   oprot.Flush(ctx)
-  return false, x55
+  return false, x68
 
 }
 
@@ -5105,6 +6193,102 @@ var retval *NoteBgcolorRes
     result.Success = retval
 }
   if err2 = oprot.WriteMessageBegin("note_bgcolor", thrift.REPLY, seqId); err2 != nil {
+    err = err2
+  }
+  if err2 = result.Write(oprot); err == nil && err2 != nil {
+    err = err2
+  }
+  if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+    err = err2
+  }
+  if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+    err = err2
+  }
+  if err != nil {
+    return
+  }
+  return true, err
+}
+
+type notenodeServiceProcessorNoteTagAdd struct {
+  handler NotenodeService
+}
+
+func (p *notenodeServiceProcessorNoteTagAdd) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+  args := NotenodeServiceNoteTagAddArgs{}
+  if err = args.Read(iprot); err != nil {
+    iprot.ReadMessageEnd()
+    x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+    oprot.WriteMessageBegin("note_tag_add", thrift.EXCEPTION, seqId)
+    x.Write(oprot)
+    oprot.WriteMessageEnd()
+    oprot.Flush(ctx)
+    return false, err
+  }
+
+  iprot.ReadMessageEnd()
+  result := NotenodeServiceNoteTagAddResult{}
+var retval *NoteTagAddRes
+  var err2 error
+  if retval, err2 = p.handler.NoteTagAdd(ctx, args.Req); err2 != nil {
+    x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing note_tag_add: " + err2.Error())
+    oprot.WriteMessageBegin("note_tag_add", thrift.EXCEPTION, seqId)
+    x.Write(oprot)
+    oprot.WriteMessageEnd()
+    oprot.Flush(ctx)
+    return true, err2
+  } else {
+    result.Success = retval
+}
+  if err2 = oprot.WriteMessageBegin("note_tag_add", thrift.REPLY, seqId); err2 != nil {
+    err = err2
+  }
+  if err2 = result.Write(oprot); err == nil && err2 != nil {
+    err = err2
+  }
+  if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+    err = err2
+  }
+  if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+    err = err2
+  }
+  if err != nil {
+    return
+  }
+  return true, err
+}
+
+type notenodeServiceProcessorNoteTagList struct {
+  handler NotenodeService
+}
+
+func (p *notenodeServiceProcessorNoteTagList) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+  args := NotenodeServiceNoteTagListArgs{}
+  if err = args.Read(iprot); err != nil {
+    iprot.ReadMessageEnd()
+    x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+    oprot.WriteMessageBegin("note_tag_list", thrift.EXCEPTION, seqId)
+    x.Write(oprot)
+    oprot.WriteMessageEnd()
+    oprot.Flush(ctx)
+    return false, err
+  }
+
+  iprot.ReadMessageEnd()
+  result := NotenodeServiceNoteTagListResult{}
+var retval *NoteTagListRes
+  var err2 error
+  if retval, err2 = p.handler.NoteTagList(ctx, args.Req); err2 != nil {
+    x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing note_tag_list: " + err2.Error())
+    oprot.WriteMessageBegin("note_tag_list", thrift.EXCEPTION, seqId)
+    x.Write(oprot)
+    oprot.WriteMessageEnd()
+    oprot.Flush(ctx)
+    return true, err2
+  } else {
+    result.Success = retval
+}
+  if err2 = oprot.WriteMessageBegin("note_tag_list", thrift.REPLY, seqId); err2 != nil {
     err = err2
   }
   if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -6707,6 +7891,402 @@ func (p *NotenodeServiceNoteBgcolorResult) String() string {
     return "<nil>"
   }
   return fmt.Sprintf("NotenodeServiceNoteBgcolorResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type NotenodeServiceNoteTagAddArgs struct {
+  Req *NoteTagAddReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewNotenodeServiceNoteTagAddArgs() *NotenodeServiceNoteTagAddArgs {
+  return &NotenodeServiceNoteTagAddArgs{}
+}
+
+var NotenodeServiceNoteTagAddArgs_Req_DEFAULT *NoteTagAddReq
+func (p *NotenodeServiceNoteTagAddArgs) GetReq() *NoteTagAddReq {
+  if !p.IsSetReq() {
+    return NotenodeServiceNoteTagAddArgs_Req_DEFAULT
+  }
+return p.Req
+}
+func (p *NotenodeServiceNoteTagAddArgs) IsSetReq() bool {
+  return p.Req != nil
+}
+
+func (p *NotenodeServiceNoteTagAddArgs) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 1:
+      if fieldTypeId == thrift.STRUCT {
+        if err := p.ReadField1(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *NotenodeServiceNoteTagAddArgs)  ReadField1(iprot thrift.TProtocol) error {
+  p.Req = &NoteTagAddReq{}
+  if err := p.Req.Read(iprot); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+  }
+  return nil
+}
+
+func (p *NotenodeServiceNoteTagAddArgs) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("note_tag_add_args"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField1(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *NotenodeServiceNoteTagAddArgs) writeField1(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err) }
+  if err := p.Req.Write(oprot); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+  }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err) }
+  return err
+}
+
+func (p *NotenodeServiceNoteTagAddArgs) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("NotenodeServiceNoteTagAddArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type NotenodeServiceNoteTagAddResult struct {
+  Success *NoteTagAddRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewNotenodeServiceNoteTagAddResult() *NotenodeServiceNoteTagAddResult {
+  return &NotenodeServiceNoteTagAddResult{}
+}
+
+var NotenodeServiceNoteTagAddResult_Success_DEFAULT *NoteTagAddRes
+func (p *NotenodeServiceNoteTagAddResult) GetSuccess() *NoteTagAddRes {
+  if !p.IsSetSuccess() {
+    return NotenodeServiceNoteTagAddResult_Success_DEFAULT
+  }
+return p.Success
+}
+func (p *NotenodeServiceNoteTagAddResult) IsSetSuccess() bool {
+  return p.Success != nil
+}
+
+func (p *NotenodeServiceNoteTagAddResult) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 0:
+      if fieldTypeId == thrift.STRUCT {
+        if err := p.ReadField0(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *NotenodeServiceNoteTagAddResult)  ReadField0(iprot thrift.TProtocol) error {
+  p.Success = &NoteTagAddRes{}
+  if err := p.Success.Read(iprot); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+  }
+  return nil
+}
+
+func (p *NotenodeServiceNoteTagAddResult) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("note_tag_add_result"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField0(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *NotenodeServiceNoteTagAddResult) writeField0(oprot thrift.TProtocol) (err error) {
+  if p.IsSetSuccess() {
+    if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err) }
+    if err := p.Success.Write(oprot); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+    }
+    if err := oprot.WriteFieldEnd(); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err) }
+  }
+  return err
+}
+
+func (p *NotenodeServiceNoteTagAddResult) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("NotenodeServiceNoteTagAddResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type NotenodeServiceNoteTagListArgs struct {
+  Req *NoteTagListReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewNotenodeServiceNoteTagListArgs() *NotenodeServiceNoteTagListArgs {
+  return &NotenodeServiceNoteTagListArgs{}
+}
+
+var NotenodeServiceNoteTagListArgs_Req_DEFAULT *NoteTagListReq
+func (p *NotenodeServiceNoteTagListArgs) GetReq() *NoteTagListReq {
+  if !p.IsSetReq() {
+    return NotenodeServiceNoteTagListArgs_Req_DEFAULT
+  }
+return p.Req
+}
+func (p *NotenodeServiceNoteTagListArgs) IsSetReq() bool {
+  return p.Req != nil
+}
+
+func (p *NotenodeServiceNoteTagListArgs) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 1:
+      if fieldTypeId == thrift.STRUCT {
+        if err := p.ReadField1(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *NotenodeServiceNoteTagListArgs)  ReadField1(iprot thrift.TProtocol) error {
+  p.Req = &NoteTagListReq{}
+  if err := p.Req.Read(iprot); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+  }
+  return nil
+}
+
+func (p *NotenodeServiceNoteTagListArgs) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("note_tag_list_args"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField1(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *NotenodeServiceNoteTagListArgs) writeField1(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err) }
+  if err := p.Req.Write(oprot); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+  }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err) }
+  return err
+}
+
+func (p *NotenodeServiceNoteTagListArgs) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("NotenodeServiceNoteTagListArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type NotenodeServiceNoteTagListResult struct {
+  Success *NoteTagListRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewNotenodeServiceNoteTagListResult() *NotenodeServiceNoteTagListResult {
+  return &NotenodeServiceNoteTagListResult{}
+}
+
+var NotenodeServiceNoteTagListResult_Success_DEFAULT *NoteTagListRes
+func (p *NotenodeServiceNoteTagListResult) GetSuccess() *NoteTagListRes {
+  if !p.IsSetSuccess() {
+    return NotenodeServiceNoteTagListResult_Success_DEFAULT
+  }
+return p.Success
+}
+func (p *NotenodeServiceNoteTagListResult) IsSetSuccess() bool {
+  return p.Success != nil
+}
+
+func (p *NotenodeServiceNoteTagListResult) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 0:
+      if fieldTypeId == thrift.STRUCT {
+        if err := p.ReadField0(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *NotenodeServiceNoteTagListResult)  ReadField0(iprot thrift.TProtocol) error {
+  p.Success = &NoteTagListRes{}
+  if err := p.Success.Read(iprot); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+  }
+  return nil
+}
+
+func (p *NotenodeServiceNoteTagListResult) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("note_tag_list_result"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField0(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *NotenodeServiceNoteTagListResult) writeField0(oprot thrift.TProtocol) (err error) {
+  if p.IsSetSuccess() {
+    if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err) }
+    if err := p.Success.Write(oprot); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+    }
+    if err := oprot.WriteFieldEnd(); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err) }
+  }
+  return err
+}
+
+func (p *NotenodeServiceNoteTagListResult) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("NotenodeServiceNoteTagListResult(%+v)", *p)
 }
 
 
