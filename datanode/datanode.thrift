@@ -1155,6 +1155,60 @@ struct note_tag_list_res {
     4:map<string,string>        extra,
 }
 
+struct submit_cert_req {
+    1:i64                   submitor,
+    2:common.person_cert    cert,
+    3:map<string,string>    extra,
+}
+
+struct submit_cert_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:map<string,string>    extra,
+}
+
+struct cert_status_req {
+    1:i64                   uid,
+    2:i64                   approvor,
+    3:string                status,
+    4:string                info,
+    5:map<string,string>    extra,
+}
+
+struct cert_status_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:common.person_cert    cert,
+    4:map<string,string>    extra,
+}
+
+struct cert_info_req {
+    1:i64                   uid,
+    2:map<string,string>    extra,
+}
+
+struct cert_info_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:common.person_cert    cert,
+    4:map<string,string>    extra,
+}
+
+struct cert_flow_req {
+    1:i64                   uid,
+    2:i32                   page,
+    3:i32                   size,
+    4:map<string,string>    extra,
+}
+
+struct cert_flow_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:list<common.person_cert>  cert,
+    4:map<string,string>        extra,
+}
+
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -1373,4 +1427,13 @@ service datanode_service {
 
     note_tag_add_res note_tag_add(1:note_tag_add_req req),
     note_tag_list_res note_tag_list(1:note_tag_list_req req),
+
+    // 提交实名
+    submit_cert_res submit_cert(1:submit_cert_req req),
+    // 更新实名状态
+    cert_status_res cert_status(1:cert_status_req req),
+    // 获取实名信息
+    cert_info_res cert_info(1:cert_info_req req),
+    // 实名日志记录
+    cert_flow_res cert_flow(1:cert_flow_req req),
 }

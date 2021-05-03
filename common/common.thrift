@@ -71,6 +71,17 @@ enum note_status {
     DELETE          =   0x0001,     // Delete
 }
 
+enum cert_tyoe {
+    ID              =   0x0000,     // 身份证实名
+    FACE            =   0x0001,     // 刷脸实名
+}
+
+enum cert_status {
+    SUBMIT          =   "S0I",      // 提交
+    SUCCESS         =   "S0A",      // 实名通过
+    FAILUARE        =   "S0X",      // 审核失败
+}
+
 struct question_query {
     1:string        roll_id (go.tag = 'form:"roll_id" json:"roll_id"'),
     2:string        roll_name   (go.tag = 'form:"roll_name" json:"roll_name"'),
@@ -434,4 +445,25 @@ struct note_tag {
     4:string    lang,
     5:i64       status,
     6:i64       create_at,
+}
+
+struct person_cert {
+    1:i64                   uid,
+    2:string                idname,
+    3:string                idnum,
+    4:string                image_up,
+    5:string                image_down,
+    6:string                image_face,
+    7:i32                   cert_type,
+    8:string                status,
+    9:string                info,
+    10:string               mark,
+    11:i64                  approv_id,
+    12:string               approv_name,
+    13:i64                  submit_at,
+    14:i64                  create_at,
+    15:i64                  update_at,
+    16:string               data1,
+    17:string               data2,
+    18:map<string,string>   extra,
 }
