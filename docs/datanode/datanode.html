@@ -20,6 +20,9 @@
 <li><a href="#Fn_datanode_service_agreeFriends">agreeFriends</a></li>
 <li><a href="#Fn_datanode_service_approve">approve</a></li>
 <li><a href="#Fn_datanode_service_baidu_entity">baidu_entity</a></li>
+<li><a href="#Fn_datanode_service_cert_flow">cert_flow</a></li>
+<li><a href="#Fn_datanode_service_cert_info">cert_info</a></li>
+<li><a href="#Fn_datanode_service_cert_status">cert_status</a></li>
 <li><a href="#Fn_datanode_service_collect_timu">collect_timu</a></li>
 <li><a href="#Fn_datanode_service_createGroup">createGroup</a></li>
 <li><a href="#Fn_datanode_service_createUser">createUser</a></li>
@@ -98,6 +101,7 @@
 <li><a href="#Fn_datanode_service_subject_cate_count">subject_cate_count</a></li>
 <li><a href="#Fn_datanode_service_subject_cate_list">subject_cate_list</a></li>
 <li><a href="#Fn_datanode_service_subject_name">subject_name</a></li>
+<li><a href="#Fn_datanode_service_submit_cert">submit_cert</a></li>
 <li><a href="#Fn_datanode_service_thumbnail">thumbnail</a></li>
 <li><a href="#Fn_datanode_service_tixing_by_vid">tixing_by_vid</a></li>
 <li><a href="#Fn_datanode_service_updateNote">updateNote</a></li>
@@ -135,6 +139,12 @@
 <a href="#Struct_attention_item">attention_item</a><br/>
 <a href="#Struct_baidu_entity_req">baidu_entity_req</a><br/>
 <a href="#Struct_baidu_entity_res">baidu_entity_res</a><br/>
+<a href="#Struct_cert_flow_req">cert_flow_req</a><br/>
+<a href="#Struct_cert_flow_res">cert_flow_res</a><br/>
+<a href="#Struct_cert_info_req">cert_info_req</a><br/>
+<a href="#Struct_cert_info_res">cert_info_res</a><br/>
+<a href="#Struct_cert_status_req">cert_status_req</a><br/>
+<a href="#Struct_cert_status_res">cert_status_res</a><br/>
 <a href="#Struct_chapter_res">chapter_res</a><br/>
 <a href="#Struct_chapter_res_item">chapter_res_item</a><br/>
 <a href="#Struct_collect_list_req">collect_list_req</a><br/>
@@ -261,6 +271,8 @@
 <a href="#Struct_subject_cate_list_req">subject_cate_list_req</a><br/>
 <a href="#Struct_subject_cate_list_res">subject_cate_list_res</a><br/>
 <a href="#Struct_subject_name_res">subject_name_res</a><br/>
+<a href="#Struct_submit_cert_req">submit_cert_req</a><br/>
+<a href="#Struct_submit_cert_res">submit_cert_res</a><br/>
 <a href="#Struct_teacher_item">teacher_item</a><br/>
 <a href="#Struct_thumbnail_res">thumbnail_res</a><br/>
 <a href="#Struct_timu_add_req">timu_add_req</a><br/>
@@ -1262,6 +1274,51 @@
 <tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>tags</td><td><code>list&lt;<code><a href="common.html#Struct_note_tag">common.note_tag</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_submit_cert_req">Struct: submit_cert_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>cert</td><td><code><a href="common.html#Struct_person_cert">common.person_cert</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_submit_cert_res">Struct: submit_cert_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_cert_status_req">Struct: cert_status_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>cert_uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>cert_name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>status</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>info</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_cert_status_res">Struct: cert_status_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>cert</td><td><code><a href="common.html#Struct_person_cert">common.person_cert</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_cert_info_req">Struct: cert_info_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_cert_info_res">Struct: cert_info_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>cert</td><td><code><a href="common.html#Struct_person_cert">common.person_cert</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_cert_flow_req">Struct: cert_flow_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>page</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>size</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_cert_flow_res">Struct: cert_flow_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>cert</td><td><code>list&lt;<code><a href="common.html#Struct_person_cert">common.person_cert</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_datanode_service">Service: datanode_service</h3>
 <div class="definition"><h4 id="Fn_datanode_service_createUser">Function: datanode_service.createUser</h4>
@@ -1477,4 +1534,12 @@
 <pre><code><a href="#Struct_note_tag_add_res">note_tag_add_res</a></code> note_tag_add(<code><a href="#Struct_note_tag_add_req">note_tag_add_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_datanode_service_note_tag_list">Function: datanode_service.note_tag_list</h4>
 <pre><code><a href="#Struct_note_tag_list_res">note_tag_list_res</a></code> note_tag_list(<code><a href="#Struct_note_tag_list_req">note_tag_list_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_submit_cert">Function: datanode_service.submit_cert</h4>
+<pre><code><a href="#Struct_submit_cert_res">submit_cert_res</a></code> submit_cert(<code><a href="#Struct_submit_cert_req">submit_cert_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_cert_status">Function: datanode_service.cert_status</h4>
+<pre><code><a href="#Struct_cert_status_res">cert_status_res</a></code> cert_status(<code><a href="#Struct_cert_status_req">cert_status_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_cert_info">Function: datanode_service.cert_info</h4>
+<pre><code><a href="#Struct_cert_info_res">cert_info_res</a></code> cert_info(<code><a href="#Struct_cert_info_req">cert_info_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_cert_flow">Function: datanode_service.cert_flow</h4>
+<pre><code><a href="#Struct_cert_flow_res">cert_flow_res</a></code> cert_flow(<code><a href="#Struct_cert_flow_req">cert_flow_req</a></code> req)
 </pre></div></div></body></html>

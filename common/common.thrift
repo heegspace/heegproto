@@ -76,12 +76,6 @@ enum cert_tyoe {
     FACE            =   0x0001,     // 刷脸实名
 }
 
-enum cert_status {
-    SUBMIT          =   "S0I",      // 提交
-    SUCCESS         =   "S0A",      // 实名通过
-    FAILUARE        =   "S0X",      // 审核失败
-}
-
 struct question_query {
     1:string        roll_id (go.tag = 'form:"roll_id" json:"roll_id"'),
     2:string        roll_name   (go.tag = 'form:"roll_name" json:"roll_name"'),
