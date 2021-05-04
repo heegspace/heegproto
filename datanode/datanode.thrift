@@ -1156,9 +1156,8 @@ struct note_tag_list_res {
 }
 
 struct submit_cert_req {
-    1:i64                   submitor,
-    2:common.person_cert    cert,
-    3:map<string,string>    extra,
+    1:common.person_cert    cert,
+    2:map<string,string>    extra,
 }
 
 struct submit_cert_res {
@@ -1169,10 +1168,11 @@ struct submit_cert_res {
 
 struct cert_status_req {
     1:i64                   uid,
-    2:i64                   approvor,
-    3:string                status,
-    4:string                info,
-    5:map<string,string>    extra,
+    2:i64                   cert_uid,
+    3:string                cert_name,
+    4:string                status,
+    5:string                info,
+    6:map<string,string>    extra,
 }
 
 struct cert_status_res {
@@ -1207,7 +1207,6 @@ struct cert_flow_res {
     3:list<common.person_cert>  cert,
     4:map<string,string>        extra,
 }
-
 
 service datanode_service {
     // ---------- 用户接口 ------- //

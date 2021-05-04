@@ -5,9 +5,8 @@ include "../common/common.thrift"
 
 struct submit_cert_req {
     1:common.authorize      auth,
-    2:i64                   submitor,
-    3:common.person_cert    cert,
-    4:map<string,string>    extra,
+    2:common.person_cert    cert,
+    3:map<string,string>    extra,
 }
 
 struct submit_cert_res {
@@ -19,9 +18,10 @@ struct submit_cert_res {
 struct cert_approved_req {
     1:common.authorize      auth,
     2:i64                   uid,
-    3:i64                   approvor,
-    4:string                info,
-    5:map<string,string>    extra,
+    3:i64                   approve_uid,
+    4:string                approve_name,
+    5:string                info,
+    6:map<string,string>    extra,
 }
 
 struct cert_approved_res {
@@ -34,9 +34,10 @@ struct cert_approved_res {
 struct cert_refuse_req {
     1:common.authorize      auth,
     2:i64                   uid,
-    3:i64                   refusor,
-    4:string                info,
-    5:map<string,string>    extra,
+    3:i64                   refuse_uid,
+    4:string                refuse_name
+    5:string                info,
+    6:map<string,string>    extra,
 }
 
 struct cert_refuse_res {
