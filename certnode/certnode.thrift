@@ -76,6 +76,20 @@ struct cert_flow_res {
     4:map<string,string>        extra,
 }
 
+struct cert_cache_req {
+    1:common.authorize      auth,
+    2:string                key,
+    3:string                value,
+    4:string                expire,
+    5:map<string,string>    extra,
+}
+
+struct cert_cache_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:map<string,string>        extra,
+}
+
 service certnode_service {
     // 提交实名
     submit_cert_res submit_cert(1:submit_cert_req req),
@@ -92,4 +106,7 @@ service certnode_service {
     cert_approved_res cert_approved(1:cert_approved_req req),
     // 实名失败 
     cert_refuse_res cert_refuse(1:cert_refuse_req req),
+
+    // 实名缓存
+    cert_cache_res cert_cache(1:cert_cache_req req),
 }

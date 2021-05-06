@@ -2721,6 +2721,519 @@ func (p *CertFlowRes) String() string {
 	return fmt.Sprintf("CertFlowRes(%+v)", *p)
 }
 
+// Attributes:
+//  - Auth
+//  - Key
+//  - Value
+//  - Expire
+//  - Extra
+type CertCacheReq struct {
+	Auth   *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	Key    string            `thrift:"key,2" db:"key" json:"key"`
+	Value  string            `thrift:"value,3" db:"value" json:"value"`
+	Expire string            `thrift:"expire,4" db:"expire" json:"expire"`
+	Extra  map[string]string `thrift:"extra,5" db:"extra" json:"extra"`
+}
+
+func NewCertCacheReq() *CertCacheReq {
+	return &CertCacheReq{}
+}
+
+var CertCacheReq_Auth_DEFAULT *common.Authorize
+
+func (p *CertCacheReq) GetAuth() *common.Authorize {
+	if !p.IsSetAuth() {
+		return CertCacheReq_Auth_DEFAULT
+	}
+	return p.Auth
+}
+
+func (p *CertCacheReq) GetKey() string {
+	return p.Key
+}
+
+func (p *CertCacheReq) GetValue() string {
+	return p.Value
+}
+
+func (p *CertCacheReq) GetExpire() string {
+	return p.Expire
+}
+
+func (p *CertCacheReq) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *CertCacheReq) IsSetAuth() bool {
+	return p.Auth != nil
+}
+
+func (p *CertCacheReq) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *CertCacheReq) ReadField1(iprot thrift.TProtocol) error {
+	p.Auth = &common.Authorize{}
+	if err := p.Auth.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
+	}
+	return nil
+}
+
+func (p *CertCacheReq) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Key = v
+	}
+	return nil
+}
+
+func (p *CertCacheReq) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Value = v
+	}
+	return nil
+}
+
+func (p *CertCacheReq) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.Expire = v
+	}
+	return nil
+}
+
+func (p *CertCacheReq) ReadField5(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key21 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key21 = v
+		}
+		var _val22 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val22 = v
+		}
+		p.Extra[_key21] = _val22
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *CertCacheReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("cert_cache_req"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *CertCacheReq) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("auth", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:auth: ", p), err)
+	}
+	if err := p.Auth.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Auth), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:auth: ", p), err)
+	}
+	return err
+}
+
+func (p *CertCacheReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("key", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:key: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Key)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.key (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:key: ", p), err)
+	}
+	return err
+}
+
+func (p *CertCacheReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("value", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:value: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Value)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.value (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:value: ", p), err)
+	}
+	return err
+}
+
+func (p *CertCacheReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("expire", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:expire: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Expire)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.expire (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:expire: ", p), err)
+	}
+	return err
+}
+
+func (p *CertCacheReq) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *CertCacheReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CertCacheReq(%+v)", *p)
+}
+
+// Attributes:
+//  - Rescode
+//  - Resmsg
+//  - Extra
+type CertCacheRes struct {
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Extra   map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
+}
+
+func NewCertCacheRes() *CertCacheRes {
+	return &CertCacheRes{}
+}
+
+func (p *CertCacheRes) GetRescode() rescode.Code {
+	return p.Rescode
+}
+
+func (p *CertCacheRes) GetResmsg() string {
+	return p.Resmsg
+}
+
+func (p *CertCacheRes) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *CertCacheRes) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *CertCacheRes) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		temp := rescode.Code(v)
+		p.Rescode = temp
+	}
+	return nil
+}
+
+func (p *CertCacheRes) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Resmsg = v
+	}
+	return nil
+}
+
+func (p *CertCacheRes) ReadField3(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key23 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key23 = v
+		}
+		var _val24 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val24 = v
+		}
+		p.Extra[_key23] = _val24
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *CertCacheRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("cert_cache_res"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *CertCacheRes) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Rescode)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.rescode (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:rescode: ", p), err)
+	}
+	return err
+}
+
+func (p *CertCacheRes) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err)
+	}
+	return err
+}
+
+func (p *CertCacheRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *CertCacheRes) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CertCacheRes(%+v)", *p)
+}
+
 type CertnodeService interface {
 	// Parameters:
 	//  - Req
@@ -2737,6 +3250,9 @@ type CertnodeService interface {
 	// Parameters:
 	//  - Req
 	CertRefuse(ctx context.Context, req *CertRefuseReq) (r *CertRefuseRes, err error)
+	// Parameters:
+	//  - Req
+	CertCache(ctx context.Context, req *CertCacheReq) (r *CertCacheRes, err error)
 }
 
 type CertnodeServiceClient struct {
@@ -2768,34 +3284,10 @@ func (p *CertnodeServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Req
 func (p *CertnodeServiceClient) SubmitCert(ctx context.Context, req *SubmitCertReq) (r *SubmitCertRes, err error) {
-	var _args21 CertnodeServiceSubmitCertArgs
-	_args21.Req = req
-	var _result22 CertnodeServiceSubmitCertResult
-	if err = p.Client_().Call(ctx, "submit_cert", &_args21, &_result22); err != nil {
-		return
-	}
-	return _result22.GetSuccess(), nil
-}
-
-// Parameters:
-//  - Req
-func (p *CertnodeServiceClient) CertInfo(ctx context.Context, req *CertInfoReq) (r *CertInfoRes, err error) {
-	var _args23 CertnodeServiceCertInfoArgs
-	_args23.Req = req
-	var _result24 CertnodeServiceCertInfoResult
-	if err = p.Client_().Call(ctx, "cert_info", &_args23, &_result24); err != nil {
-		return
-	}
-	return _result24.GetSuccess(), nil
-}
-
-// Parameters:
-//  - Req
-func (p *CertnodeServiceClient) CertFlow(ctx context.Context, req *CertFlowReq) (r *CertFlowRes, err error) {
-	var _args25 CertnodeServiceCertFlowArgs
+	var _args25 CertnodeServiceSubmitCertArgs
 	_args25.Req = req
-	var _result26 CertnodeServiceCertFlowResult
-	if err = p.Client_().Call(ctx, "cert_flow", &_args25, &_result26); err != nil {
+	var _result26 CertnodeServiceSubmitCertResult
+	if err = p.Client_().Call(ctx, "submit_cert", &_args25, &_result26); err != nil {
 		return
 	}
 	return _result26.GetSuccess(), nil
@@ -2803,11 +3295,11 @@ func (p *CertnodeServiceClient) CertFlow(ctx context.Context, req *CertFlowReq) 
 
 // Parameters:
 //  - Req
-func (p *CertnodeServiceClient) CertApproved(ctx context.Context, req *CertApprovedReq) (r *CertApprovedRes, err error) {
-	var _args27 CertnodeServiceCertApprovedArgs
+func (p *CertnodeServiceClient) CertInfo(ctx context.Context, req *CertInfoReq) (r *CertInfoRes, err error) {
+	var _args27 CertnodeServiceCertInfoArgs
 	_args27.Req = req
-	var _result28 CertnodeServiceCertApprovedResult
-	if err = p.Client_().Call(ctx, "cert_approved", &_args27, &_result28); err != nil {
+	var _result28 CertnodeServiceCertInfoResult
+	if err = p.Client_().Call(ctx, "cert_info", &_args27, &_result28); err != nil {
 		return
 	}
 	return _result28.GetSuccess(), nil
@@ -2815,14 +3307,50 @@ func (p *CertnodeServiceClient) CertApproved(ctx context.Context, req *CertAppro
 
 // Parameters:
 //  - Req
-func (p *CertnodeServiceClient) CertRefuse(ctx context.Context, req *CertRefuseReq) (r *CertRefuseRes, err error) {
-	var _args29 CertnodeServiceCertRefuseArgs
+func (p *CertnodeServiceClient) CertFlow(ctx context.Context, req *CertFlowReq) (r *CertFlowRes, err error) {
+	var _args29 CertnodeServiceCertFlowArgs
 	_args29.Req = req
-	var _result30 CertnodeServiceCertRefuseResult
-	if err = p.Client_().Call(ctx, "cert_refuse", &_args29, &_result30); err != nil {
+	var _result30 CertnodeServiceCertFlowResult
+	if err = p.Client_().Call(ctx, "cert_flow", &_args29, &_result30); err != nil {
 		return
 	}
 	return _result30.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *CertnodeServiceClient) CertApproved(ctx context.Context, req *CertApprovedReq) (r *CertApprovedRes, err error) {
+	var _args31 CertnodeServiceCertApprovedArgs
+	_args31.Req = req
+	var _result32 CertnodeServiceCertApprovedResult
+	if err = p.Client_().Call(ctx, "cert_approved", &_args31, &_result32); err != nil {
+		return
+	}
+	return _result32.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *CertnodeServiceClient) CertRefuse(ctx context.Context, req *CertRefuseReq) (r *CertRefuseRes, err error) {
+	var _args33 CertnodeServiceCertRefuseArgs
+	_args33.Req = req
+	var _result34 CertnodeServiceCertRefuseResult
+	if err = p.Client_().Call(ctx, "cert_refuse", &_args33, &_result34); err != nil {
+		return
+	}
+	return _result34.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *CertnodeServiceClient) CertCache(ctx context.Context, req *CertCacheReq) (r *CertCacheRes, err error) {
+	var _args35 CertnodeServiceCertCacheArgs
+	_args35.Req = req
+	var _result36 CertnodeServiceCertCacheResult
+	if err = p.Client_().Call(ctx, "cert_cache", &_args35, &_result36); err != nil {
+		return
+	}
+	return _result36.GetSuccess(), nil
 }
 
 type CertnodeServiceProcessor struct {
@@ -2845,13 +3373,14 @@ func (p *CertnodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFu
 
 func NewCertnodeServiceProcessor(handler CertnodeService) *CertnodeServiceProcessor {
 
-	self31 := &CertnodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self31.processorMap["submit_cert"] = &certnodeServiceProcessorSubmitCert{handler: handler}
-	self31.processorMap["cert_info"] = &certnodeServiceProcessorCertInfo{handler: handler}
-	self31.processorMap["cert_flow"] = &certnodeServiceProcessorCertFlow{handler: handler}
-	self31.processorMap["cert_approved"] = &certnodeServiceProcessorCertApproved{handler: handler}
-	self31.processorMap["cert_refuse"] = &certnodeServiceProcessorCertRefuse{handler: handler}
-	return self31
+	self37 := &CertnodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self37.processorMap["submit_cert"] = &certnodeServiceProcessorSubmitCert{handler: handler}
+	self37.processorMap["cert_info"] = &certnodeServiceProcessorCertInfo{handler: handler}
+	self37.processorMap["cert_flow"] = &certnodeServiceProcessorCertFlow{handler: handler}
+	self37.processorMap["cert_approved"] = &certnodeServiceProcessorCertApproved{handler: handler}
+	self37.processorMap["cert_refuse"] = &certnodeServiceProcessorCertRefuse{handler: handler}
+	self37.processorMap["cert_cache"] = &certnodeServiceProcessorCertCache{handler: handler}
+	return self37
 }
 
 func (p *CertnodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -2864,12 +3393,12 @@ func (p *CertnodeServiceProcessor) Process(ctx context.Context, iprot, oprot thr
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x32 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x38 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x32.Write(oprot)
+	x38.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x32
+	return false, x38
 
 }
 
@@ -3096,6 +3625,54 @@ func (p *certnodeServiceProcessorCertRefuse) Process(ctx context.Context, seqId 
 		result.Success = retval
 	}
 	if err2 = oprot.WriteMessageBegin("cert_refuse", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type certnodeServiceProcessorCertCache struct {
+	handler CertnodeService
+}
+
+func (p *certnodeServiceProcessorCertCache) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := CertnodeServiceCertCacheArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("cert_cache", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	result := CertnodeServiceCertCacheResult{}
+	var retval *CertCacheRes
+	var err2 error
+	if retval, err2 = p.handler.CertCache(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing cert_cache: "+err2.Error())
+		oprot.WriteMessageBegin("cert_cache", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("cert_cache", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -4193,4 +4770,220 @@ func (p *CertnodeServiceCertRefuseResult) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("CertnodeServiceCertRefuseResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type CertnodeServiceCertCacheArgs struct {
+	Req *CertCacheReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewCertnodeServiceCertCacheArgs() *CertnodeServiceCertCacheArgs {
+	return &CertnodeServiceCertCacheArgs{}
+}
+
+var CertnodeServiceCertCacheArgs_Req_DEFAULT *CertCacheReq
+
+func (p *CertnodeServiceCertCacheArgs) GetReq() *CertCacheReq {
+	if !p.IsSetReq() {
+		return CertnodeServiceCertCacheArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *CertnodeServiceCertCacheArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CertnodeServiceCertCacheArgs) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *CertnodeServiceCertCacheArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &CertCacheReq{}
+	if err := p.Req.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+	}
+	return nil
+}
+
+func (p *CertnodeServiceCertCacheArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("cert_cache_args"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *CertnodeServiceCertCacheArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+	}
+	return err
+}
+
+func (p *CertnodeServiceCertCacheArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CertnodeServiceCertCacheArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type CertnodeServiceCertCacheResult struct {
+	Success *CertCacheRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewCertnodeServiceCertCacheResult() *CertnodeServiceCertCacheResult {
+	return &CertnodeServiceCertCacheResult{}
+}
+
+var CertnodeServiceCertCacheResult_Success_DEFAULT *CertCacheRes
+
+func (p *CertnodeServiceCertCacheResult) GetSuccess() *CertCacheRes {
+	if !p.IsSetSuccess() {
+		return CertnodeServiceCertCacheResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *CertnodeServiceCertCacheResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CertnodeServiceCertCacheResult) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField0(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *CertnodeServiceCertCacheResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &CertCacheRes{}
+	if err := p.Success.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+	}
+	return nil
+}
+
+func (p *CertnodeServiceCertCacheResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("cert_cache_result"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField0(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *CertnodeServiceCertCacheResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+		}
+		if err := oprot.WriteFieldEnd(); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err)
+		}
+	}
+	return err
+}
+
+func (p *CertnodeServiceCertCacheResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CertnodeServiceCertCacheResult(%+v)", *p)
 }

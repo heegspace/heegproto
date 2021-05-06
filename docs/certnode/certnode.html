@@ -11,6 +11,7 @@
 <td>certnode</td><td><a href="#Svc_certnode_service">certnode_service</a><br/>
 <ul>
 <li><a href="#Fn_certnode_service_cert_approved">cert_approved</a></li>
+<li><a href="#Fn_certnode_service_cert_cache">cert_cache</a></li>
 <li><a href="#Fn_certnode_service_cert_flow">cert_flow</a></li>
 <li><a href="#Fn_certnode_service_cert_info">cert_info</a></li>
 <li><a href="#Fn_certnode_service_cert_refuse">cert_refuse</a></li>
@@ -19,6 +20,8 @@
 </td>
 <td><a href="#Struct_cert_approved_req">cert_approved_req</a><br/>
 <a href="#Struct_cert_approved_res">cert_approved_res</a><br/>
+<a href="#Struct_cert_cache_req">cert_cache_req</a><br/>
+<a href="#Struct_cert_cache_res">cert_cache_res</a><br/>
 <a href="#Struct_cert_flow_req">cert_flow_req</a><br/>
 <a href="#Struct_cert_flow_res">cert_flow_res</a><br/>
 <a href="#Struct_cert_info_req">cert_info_req</a><br/>
@@ -93,6 +96,18 @@
 <tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>cert</td><td><code>list&lt;<code><a href="common.html#Struct_person_cert">common.person_cert</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_cert_cache_req">Struct: cert_cache_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>key</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>value</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>expire</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_cert_cache_res">Struct: cert_cache_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_certnode_service">Service: certnode_service</h3>
 <div class="definition"><h4 id="Fn_certnode_service_submit_cert">Function: certnode_service.submit_cert</h4>
@@ -105,4 +120,6 @@
 <pre><code><a href="#Struct_cert_approved_res">cert_approved_res</a></code> cert_approved(<code><a href="#Struct_cert_approved_req">cert_approved_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_certnode_service_cert_refuse">Function: certnode_service.cert_refuse</h4>
 <pre><code><a href="#Struct_cert_refuse_res">cert_refuse_res</a></code> cert_refuse(<code><a href="#Struct_cert_refuse_req">cert_refuse_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_certnode_service_cert_cache">Function: certnode_service.cert_cache</h4>
+<pre><code><a href="#Struct_cert_cache_res">cert_cache_res</a></code> cert_cache(<code><a href="#Struct_cert_cache_req">cert_cache_req</a></code> req)
 </pre></div></div></body></html>
