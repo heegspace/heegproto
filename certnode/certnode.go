@@ -2731,7 +2731,7 @@ type CertCacheReq struct {
 	Auth   *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
 	Key    string            `thrift:"key,2" db:"key" json:"key"`
 	Value  string            `thrift:"value,3" db:"value" json:"value"`
-	Expire string            `thrift:"expire,4" db:"expire" json:"expire"`
+	Expire int64             `thrift:"expire,4" db:"expire" json:"expire"`
 	Extra  map[string]string `thrift:"extra,5" db:"extra" json:"extra"`
 }
 
@@ -2756,7 +2756,7 @@ func (p *CertCacheReq) GetValue() string {
 	return p.Value
 }
 
-func (p *CertCacheReq) GetExpire() string {
+func (p *CertCacheReq) GetExpire() int64 {
 	return p.Expire
 }
 
@@ -2812,7 +2812,7 @@ func (p *CertCacheReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 4:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I64 {
 				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
@@ -2873,7 +2873,7 @@ func (p *CertCacheReq) ReadField3(iprot thrift.TProtocol) error {
 }
 
 func (p *CertCacheReq) ReadField4(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
+	if v, err := iprot.ReadI64(); err != nil {
 		return thrift.PrependError("error reading field 4: ", err)
 	} else {
 		p.Expire = v
@@ -2979,10 +2979,10 @@ func (p *CertCacheReq) writeField3(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *CertCacheReq) writeField4(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("expire", thrift.STRING, 4); err != nil {
+	if err := oprot.WriteFieldBegin("expire", thrift.I64, 4); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:expire: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Expire)); err != nil {
+	if err := oprot.WriteI64(int64(p.Expire)); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T.expire (4) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {

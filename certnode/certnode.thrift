@@ -80,7 +80,7 @@ struct cert_cache_req {
     1:common.authorize      auth,
     2:string                key,
     3:string                value,
-    4:string                expire,
+    4:i64                  expire,
     5:map<string,string>    extra,
 }
 
