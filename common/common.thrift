@@ -461,3 +461,14 @@ struct person_cert {
     17:string               data2,
     18:map<string,string>   extra,
 }
+
+struct baidu_idcard_ident {
+    1:i32                   image_status, // 0:成功  1:失败
+    2:string                idname,
+    3:string                idnum,
+    4:string                address,
+    5:string                brithday,
+    6:string                sex,
+    7:string                ethnic, // 民族
+    8:map<string,string>    extra,
+}

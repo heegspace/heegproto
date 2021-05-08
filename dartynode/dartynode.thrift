@@ -153,6 +153,20 @@ struct baidu_doc_analysis_res {
     4:map<string,string>                extra,
 }
 
+struct baidu_idcard_ident_req {
+    1:i64                   uid,
+    2:string                idcard_side,
+    3:string                image_base64,
+    4:map<string,string>    extra,
+}
+
+struct baidu_idcard_ident_res {
+    1:rescode.code                      rescode,
+    2:string                            resmsg,
+    3:common.baidu_idcard_ident         ident,
+    4:map<string,string>                extra,
+}
+
 service dartynode_service {
     // 登录微信
     login_wechat_res login_wechat(1:login_wechat_req req),
@@ -183,4 +197,7 @@ service dartynode_service {
 
     // 试卷识别
     baidu_doc_analysis_res baidu_doc_analysis(1:baidu_doc_analysis_req req),
+
+    // 身份证识别
+    baidu_idcard_ident_res baidu_idcard_ident(1:baidu_idcard_ident_req req),
 }
