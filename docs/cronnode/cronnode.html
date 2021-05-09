@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css"/>
+<title>Thrift module: cronnode</title></head><body>
+<div class="container-fluid">
+<h1>Thrift module: cronnode</h1>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Module</th><th>Services</th><th>Data types</th><th>Constants</th></tr></thead><tbody>
+<tr>
+<td>cronnode</td><td><a href="#Svc_cronnode_service">cronnode_service</a><br/>
+<ul>
+<li><a href="#Fn_cronnode_service_cron_call">cron_call</a></li>
+</ul>
+</td>
+<td><a href="#Struct_cron_call_req">cron_call_req</a><br/>
+<a href="#Struct_cron_call_res">cron_call_res</a><br/>
+</td>
+<td></td>
+</tr></tbody></table>
+<hr/><h2 id="Structs">Data structures</h2>
+<div class="definition"><h3 id="Struct_cron_call_req">Struct: cron_call_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>func</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>call_time</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_cron_call_res">Struct: cron_call_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><hr/><h2 id="Services">Services</h2>
+<h3 id="Svc_cronnode_service">Service: cronnode_service</h3>
+<div class="definition"><h4 id="Fn_cronnode_service_cron_call">Function: cronnode_service.cron_call</h4>
+<pre><code><a href="#Struct_cron_call_res">cron_call_res</a></code> cron_call(<code><a href="#Struct_cron_call_req">cron_call_req</a></code> req)
+</pre></div></div></body></html>
