@@ -58,6 +58,8 @@ const (
 	Code_ALIPAY_USERINFO_ERR      Code = 30034
 	Code_BAIDU_ACCESS_TOKEN_ERROR Code = 30061
 	Code_BAIDU_ENTITY_ERROR       Code = 30062
+	Code_BAIDU_IDIDENT_ERROR      Code = 30063
+	Code_BAIDU_IDIDENT_FAIL       Code = 30084
 )
 
 func (p Code) String() string {
@@ -132,6 +134,10 @@ func (p Code) String() string {
 		return "BAIDU_ACCESS_TOKEN_ERROR"
 	case Code_BAIDU_ENTITY_ERROR:
 		return "BAIDU_ENTITY_ERROR"
+	case Code_BAIDU_IDIDENT_ERROR:
+		return "BAIDU_IDIDENT_ERROR"
+	case Code_BAIDU_IDIDENT_FAIL:
+		return "BAIDU_IDIDENT_FAIL"
 	}
 	return "<UNSET>"
 }
@@ -208,6 +214,10 @@ func CodeFromString(s string) (Code, error) {
 		return Code_BAIDU_ACCESS_TOKEN_ERROR, nil
 	case "BAIDU_ENTITY_ERROR":
 		return Code_BAIDU_ENTITY_ERROR, nil
+	case "BAIDU_IDIDENT_ERROR":
+		return Code_BAIDU_IDIDENT_ERROR, nil
+	case "BAIDU_IDIDENT_FAIL":
+		return Code_BAIDU_IDIDENT_FAIL, nil
 	}
 	return Code(0), fmt.Errorf("not a valid Code string")
 }

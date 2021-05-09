@@ -45,4 +45,6 @@ enum code {
 
     BAIDU_ACCESS_TOKEN_ERROR = 30061,   // 百度accesstoken错误
     BAIDU_ENTITY_ERROR = 30062,         // 百度entity请求错误
+    BAIDU_IDIDENT_ERROR = 30063,        // 百度身份证识别请求错误
+    BAIDU_IDIDENT_FAIL = 30084,         // 百度身份证识别失败
 }
