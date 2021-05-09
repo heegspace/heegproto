@@ -1893,10 +1893,10 @@ func (p *CertInfoReq) String() string {
 //  - Cert
 //  - Extra
 type CertInfoRes struct {
-	Rescode rescode.Code       `thrift:"rescode,1" db:"rescode" json:"rescode"`
-	Resmsg  string             `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
-	Cert    *common.PersonCert `thrift:"cert,3" db:"cert" json:"cert"`
-	Extra   map[string]string  `thrift:"extra,4" db:"extra" json:"extra"`
+	Rescode rescode.Code         `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string               `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Cert    []*common.PersonCert `thrift:"cert,3" db:"cert" json:"cert"`
+	Extra   map[string]string    `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewCertInfoRes() *CertInfoRes {
@@ -1911,22 +1911,13 @@ func (p *CertInfoRes) GetResmsg() string {
 	return p.Resmsg
 }
 
-var CertInfoRes_Cert_DEFAULT *common.PersonCert
-
-func (p *CertInfoRes) GetCert() *common.PersonCert {
-	if !p.IsSetCert() {
-		return CertInfoRes_Cert_DEFAULT
-	}
+func (p *CertInfoRes) GetCert() []*common.PersonCert {
 	return p.Cert
 }
 
 func (p *CertInfoRes) GetExtra() map[string]string {
 	return p.Extra
 }
-func (p *CertInfoRes) IsSetCert() bool {
-	return p.Cert != nil
-}
-
 func (p *CertInfoRes) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
@@ -1962,7 +1953,7 @@ func (p *CertInfoRes) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 3:
-			if fieldTypeId == thrift.STRUCT {
+			if fieldTypeId == thrift.LIST {
 				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
@@ -2016,9 +2007,21 @@ func (p *CertInfoRes) ReadField2(iprot thrift.TProtocol) error {
 }
 
 func (p *CertInfoRes) ReadField3(iprot thrift.TProtocol) error {
-	p.Cert = &common.PersonCert{}
-	if err := p.Cert.Read(iprot); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Cert), err)
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
+		return thrift.PrependError("error reading list begin: ", err)
+	}
+	tSlice := make([]*common.PersonCert, 0, size)
+	p.Cert = tSlice
+	for i := 0; i < size; i++ {
+		_elem14 := &common.PersonCert{}
+		if err := _elem14.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem14), err)
+		}
+		p.Cert = append(p.Cert, _elem14)
+	}
+	if err := iprot.ReadListEnd(); err != nil {
+		return thrift.PrependError("error reading list end: ", err)
 	}
 	return nil
 }
@@ -2031,19 +2034,19 @@ func (p *CertInfoRes) ReadField4(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key14 string
+		var _key15 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key14 = v
+			_key15 = v
 		}
-		var _val15 string
+		var _val16 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val15 = v
+			_val16 = v
 		}
-		p.Extra[_key14] = _val15
+		p.Extra[_key15] = _val16
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -2105,11 +2108,19 @@ func (p *CertInfoRes) writeField2(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *CertInfoRes) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("cert", thrift.STRUCT, 3); err != nil {
+	if err := oprot.WriteFieldBegin("cert", thrift.LIST, 3); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:cert: ", p), err)
 	}
-	if err := p.Cert.Write(oprot); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Cert), err)
+	if err := oprot.WriteListBegin(thrift.STRUCT, len(p.Cert)); err != nil {
+		return thrift.PrependError("error writing list begin: ", err)
+	}
+	for _, v := range p.Cert {
+		if err := v.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", v), err)
+		}
+	}
+	if err := oprot.WriteListEnd(); err != nil {
+		return thrift.PrependError("error writing list end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:cert: ", p), err)
@@ -2316,19 +2327,19 @@ func (p *CertFlowReq) ReadField5(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key16 string
+		var _key17 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key16 = v
+			_key17 = v
 		}
-		var _val17 string
+		var _val18 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val17 = v
+			_val18 = v
 		}
-		p.Extra[_key16] = _val17
+		p.Extra[_key17] = _val18
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -2576,11 +2587,11 @@ func (p *CertFlowRes) ReadField3(iprot thrift.TProtocol) error {
 	tSlice := make([]*common.PersonCert, 0, size)
 	p.Cert = tSlice
 	for i := 0; i < size; i++ {
-		_elem18 := &common.PersonCert{}
-		if err := _elem18.Read(iprot); err != nil {
-			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem18), err)
+		_elem19 := &common.PersonCert{}
+		if err := _elem19.Read(iprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem19), err)
 		}
-		p.Cert = append(p.Cert, _elem18)
+		p.Cert = append(p.Cert, _elem19)
 	}
 	if err := iprot.ReadListEnd(); err != nil {
 		return thrift.PrependError("error reading list end: ", err)
@@ -2596,19 +2607,19 @@ func (p *CertFlowRes) ReadField4(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key19 string
+		var _key20 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key19 = v
+			_key20 = v
 		}
-		var _val20 string
+		var _val21 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val20 = v
+			_val21 = v
 		}
-		p.Extra[_key19] = _val20
+		p.Extra[_key20] = _val21
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -2889,19 +2900,19 @@ func (p *CertCacheReq) ReadField5(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key21 string
+		var _key22 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key21 = v
+			_key22 = v
 		}
-		var _val22 string
+		var _val23 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val22 = v
+			_val23 = v
 		}
-		p.Extra[_key21] = _val22
+		p.Extra[_key22] = _val23
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -3133,19 +3144,19 @@ func (p *CertCacheRes) ReadField3(iprot thrift.TProtocol) error {
 	tMap := make(map[string]string, size)
 	p.Extra = tMap
 	for i := 0; i < size; i++ {
-		var _key23 string
+		var _key24 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_key23 = v
+			_key24 = v
 		}
-		var _val24 string
+		var _val25 string
 		if v, err := iprot.ReadString(); err != nil {
 			return thrift.PrependError("error reading field 0: ", err)
 		} else {
-			_val24 = v
+			_val25 = v
 		}
-		p.Extra[_key23] = _val24
+		p.Extra[_key24] = _val25
 	}
 	if err := iprot.ReadMapEnd(); err != nil {
 		return thrift.PrependError("error reading map end: ", err)
@@ -3284,73 +3295,73 @@ func (p *CertnodeServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Req
 func (p *CertnodeServiceClient) SubmitCert(ctx context.Context, req *SubmitCertReq) (r *SubmitCertRes, err error) {
-	var _args25 CertnodeServiceSubmitCertArgs
-	_args25.Req = req
-	var _result26 CertnodeServiceSubmitCertResult
-	if err = p.Client_().Call(ctx, "submit_cert", &_args25, &_result26); err != nil {
+	var _args26 CertnodeServiceSubmitCertArgs
+	_args26.Req = req
+	var _result27 CertnodeServiceSubmitCertResult
+	if err = p.Client_().Call(ctx, "submit_cert", &_args26, &_result27); err != nil {
 		return
 	}
-	return _result26.GetSuccess(), nil
+	return _result27.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *CertnodeServiceClient) CertInfo(ctx context.Context, req *CertInfoReq) (r *CertInfoRes, err error) {
-	var _args27 CertnodeServiceCertInfoArgs
-	_args27.Req = req
-	var _result28 CertnodeServiceCertInfoResult
-	if err = p.Client_().Call(ctx, "cert_info", &_args27, &_result28); err != nil {
+	var _args28 CertnodeServiceCertInfoArgs
+	_args28.Req = req
+	var _result29 CertnodeServiceCertInfoResult
+	if err = p.Client_().Call(ctx, "cert_info", &_args28, &_result29); err != nil {
 		return
 	}
-	return _result28.GetSuccess(), nil
+	return _result29.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *CertnodeServiceClient) CertFlow(ctx context.Context, req *CertFlowReq) (r *CertFlowRes, err error) {
-	var _args29 CertnodeServiceCertFlowArgs
-	_args29.Req = req
-	var _result30 CertnodeServiceCertFlowResult
-	if err = p.Client_().Call(ctx, "cert_flow", &_args29, &_result30); err != nil {
+	var _args30 CertnodeServiceCertFlowArgs
+	_args30.Req = req
+	var _result31 CertnodeServiceCertFlowResult
+	if err = p.Client_().Call(ctx, "cert_flow", &_args30, &_result31); err != nil {
 		return
 	}
-	return _result30.GetSuccess(), nil
+	return _result31.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *CertnodeServiceClient) CertApproved(ctx context.Context, req *CertApprovedReq) (r *CertApprovedRes, err error) {
-	var _args31 CertnodeServiceCertApprovedArgs
-	_args31.Req = req
-	var _result32 CertnodeServiceCertApprovedResult
-	if err = p.Client_().Call(ctx, "cert_approved", &_args31, &_result32); err != nil {
+	var _args32 CertnodeServiceCertApprovedArgs
+	_args32.Req = req
+	var _result33 CertnodeServiceCertApprovedResult
+	if err = p.Client_().Call(ctx, "cert_approved", &_args32, &_result33); err != nil {
 		return
 	}
-	return _result32.GetSuccess(), nil
+	return _result33.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *CertnodeServiceClient) CertRefuse(ctx context.Context, req *CertRefuseReq) (r *CertRefuseRes, err error) {
-	var _args33 CertnodeServiceCertRefuseArgs
-	_args33.Req = req
-	var _result34 CertnodeServiceCertRefuseResult
-	if err = p.Client_().Call(ctx, "cert_refuse", &_args33, &_result34); err != nil {
+	var _args34 CertnodeServiceCertRefuseArgs
+	_args34.Req = req
+	var _result35 CertnodeServiceCertRefuseResult
+	if err = p.Client_().Call(ctx, "cert_refuse", &_args34, &_result35); err != nil {
 		return
 	}
-	return _result34.GetSuccess(), nil
+	return _result35.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *CertnodeServiceClient) CertCache(ctx context.Context, req *CertCacheReq) (r *CertCacheRes, err error) {
-	var _args35 CertnodeServiceCertCacheArgs
-	_args35.Req = req
-	var _result36 CertnodeServiceCertCacheResult
-	if err = p.Client_().Call(ctx, "cert_cache", &_args35, &_result36); err != nil {
+	var _args36 CertnodeServiceCertCacheArgs
+	_args36.Req = req
+	var _result37 CertnodeServiceCertCacheResult
+	if err = p.Client_().Call(ctx, "cert_cache", &_args36, &_result37); err != nil {
 		return
 	}
-	return _result36.GetSuccess(), nil
+	return _result37.GetSuccess(), nil
 }
 
 type CertnodeServiceProcessor struct {
@@ -3373,14 +3384,14 @@ func (p *CertnodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFu
 
 func NewCertnodeServiceProcessor(handler CertnodeService) *CertnodeServiceProcessor {
 
-	self37 := &CertnodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self37.processorMap["submit_cert"] = &certnodeServiceProcessorSubmitCert{handler: handler}
-	self37.processorMap["cert_info"] = &certnodeServiceProcessorCertInfo{handler: handler}
-	self37.processorMap["cert_flow"] = &certnodeServiceProcessorCertFlow{handler: handler}
-	self37.processorMap["cert_approved"] = &certnodeServiceProcessorCertApproved{handler: handler}
-	self37.processorMap["cert_refuse"] = &certnodeServiceProcessorCertRefuse{handler: handler}
-	self37.processorMap["cert_cache"] = &certnodeServiceProcessorCertCache{handler: handler}
-	return self37
+	self38 := &CertnodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self38.processorMap["submit_cert"] = &certnodeServiceProcessorSubmitCert{handler: handler}
+	self38.processorMap["cert_info"] = &certnodeServiceProcessorCertInfo{handler: handler}
+	self38.processorMap["cert_flow"] = &certnodeServiceProcessorCertFlow{handler: handler}
+	self38.processorMap["cert_approved"] = &certnodeServiceProcessorCertApproved{handler: handler}
+	self38.processorMap["cert_refuse"] = &certnodeServiceProcessorCertRefuse{handler: handler}
+	self38.processorMap["cert_cache"] = &certnodeServiceProcessorCertCache{handler: handler}
+	return self38
 }
 
 func (p *CertnodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -3393,12 +3404,12 @@ func (p *CertnodeServiceProcessor) Process(ctx context.Context, iprot, oprot thr
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x38 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x39 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x38.Write(oprot)
+	x39.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x38
+	return false, x39
 
 }
 

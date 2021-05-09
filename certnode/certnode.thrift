@@ -55,10 +55,10 @@ struct cert_info_req {
 }
 
 struct cert_info_res {
-    1:rescode.code          rescode,
-    2:string                resmsg,
-    3:common.person_cert    cert,
-    4:map<string,string>    extra,
+    1:rescode.code                  rescode,
+    2:string                        resmsg,
+    3:list<common.person_cert>      cert,
+    4:map<string,string>            extra,
 }
 
 struct cert_flow_req {
