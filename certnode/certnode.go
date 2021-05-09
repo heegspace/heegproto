@@ -1671,11 +1671,21 @@ func (p *CertRefuseRes) String() string {
 // Attributes:
 //  - Auth
 //  - UID
+//  - Status
+//  - Idname
+//  - Idnum
+//  - Page
+//  - Size
 //  - Extra
 type CertInfoReq struct {
-	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
-	UID   int64             `thrift:"uid,2" db:"uid" json:"uid"`
-	Extra map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
+	Auth   *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	UID    int64             `thrift:"uid,2" db:"uid" json:"uid"`
+	Status string            `thrift:"status,3" db:"status" json:"status"`
+	Idname string            `thrift:"idname,4" db:"idname" json:"idname"`
+	Idnum  string            `thrift:"idnum,5" db:"idnum" json:"idnum"`
+	Page   int32             `thrift:"page,6" db:"page" json:"page"`
+	Size   int32             `thrift:"size,7" db:"size" json:"size"`
+	Extra  map[string]string `thrift:"extra,8" db:"extra" json:"extra"`
 }
 
 func NewCertInfoReq() *CertInfoReq {
@@ -1693,6 +1703,26 @@ func (p *CertInfoReq) GetAuth() *common.Authorize {
 
 func (p *CertInfoReq) GetUID() int64 {
 	return p.UID
+}
+
+func (p *CertInfoReq) GetStatus() string {
+	return p.Status
+}
+
+func (p *CertInfoReq) GetIdname() string {
+	return p.Idname
+}
+
+func (p *CertInfoReq) GetIdnum() string {
+	return p.Idnum
+}
+
+func (p *CertInfoReq) GetPage() int32 {
+	return p.Page
+}
+
+func (p *CertInfoReq) GetSize() int32 {
+	return p.Size
 }
 
 func (p *CertInfoReq) GetExtra() map[string]string {
@@ -1737,8 +1767,58 @@ func (p *CertInfoReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 3:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 6:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField6(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 7:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField7(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 8:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField8(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -1779,6 +1859,51 @@ func (p *CertInfoReq) ReadField2(iprot thrift.TProtocol) error {
 }
 
 func (p *CertInfoReq) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Status = v
+	}
+	return nil
+}
+
+func (p *CertInfoReq) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.Idname = v
+	}
+	return nil
+}
+
+func (p *CertInfoReq) ReadField5(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 5: ", err)
+	} else {
+		p.Idnum = v
+	}
+	return nil
+}
+
+func (p *CertInfoReq) ReadField6(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 6: ", err)
+	} else {
+		p.Page = v
+	}
+	return nil
+}
+
+func (p *CertInfoReq) ReadField7(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 7: ", err)
+	} else {
+		p.Size = v
+	}
+	return nil
+}
+
+func (p *CertInfoReq) ReadField8(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -1820,6 +1945,21 @@ func (p *CertInfoReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField6(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField7(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField8(oprot); err != nil {
+			return err
+		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -1857,8 +1997,73 @@ func (p *CertInfoReq) writeField2(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *CertInfoReq) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("status", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:status: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Status)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.status (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:status: ", p), err)
+	}
+	return err
+}
+
+func (p *CertInfoReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("idname", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:idname: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Idname)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.idname (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:idname: ", p), err)
+	}
+	return err
+}
+
+func (p *CertInfoReq) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("idnum", thrift.STRING, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:idnum: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Idnum)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.idnum (5) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:idnum: ", p), err)
+	}
+	return err
+}
+
+func (p *CertInfoReq) writeField6(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("page", thrift.I32, 6); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:page: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Page)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.page (6) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:page: ", p), err)
+	}
+	return err
+}
+
+func (p *CertInfoReq) writeField7(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("size", thrift.I32, 7); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:size: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Size)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.size (7) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 7:size: ", p), err)
+	}
+	return err
+}
+
+func (p *CertInfoReq) writeField8(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 8); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 8:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -1875,7 +2080,7 @@ func (p *CertInfoReq) writeField3(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 8:extra: ", p), err)
 	}
 	return err
 }

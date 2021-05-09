@@ -51,7 +51,12 @@ struct cert_refuse_res {
 struct cert_info_req {
     1:common.authorize      auth,
     2:i64                   uid,
-    3:map<string,string>    extra,
+    3:string                status,
+    4:string                idname,
+    5:string                idnum,
+    6:i32                   page,
+    7:i32                   size,
+    8:map<string,string>    extra,
 }
 
 struct cert_info_res {

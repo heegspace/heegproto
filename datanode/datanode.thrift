@@ -1185,7 +1185,11 @@ struct cert_status_res {
 struct cert_info_req {
     1:i64                   uid,
     2:string                status,
-    3:map<string,string>    extra,
+    3:string                idname,
+    4:string                idnum,
+    5:i32                   page,
+    6:i32                   size,
+    7:map<string,string>    extra,
 }
 
 struct cert_info_res {
