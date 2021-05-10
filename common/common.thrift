@@ -472,3 +472,12 @@ struct baidu_idcard_ident {
     7:string                ethnic, // 民族
     8:map<string,string>    extra,
 }
+
+// 用户日志
+struct user_log {
+    1:i64       id,
+    2:i64       uid,
+    3:i32       log_type,
+    4:string    log_info,
+    5:string    create_at,
+}

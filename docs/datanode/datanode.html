@@ -17,6 +17,7 @@
 <li><a href="#Fn_datanode_service_add_count">add_count</a></li>
 <li><a href="#Fn_datanode_service_add_list">add_list</a></li>
 <li><a href="#Fn_datanode_service_add_user_attention">add_user_attention</a></li>
+<li><a href="#Fn_datanode_service_add_user_log">add_user_log</a></li>
 <li><a href="#Fn_datanode_service_agreeFriends">agreeFriends</a></li>
 <li><a href="#Fn_datanode_service_approve">approve</a></li>
 <li><a href="#Fn_datanode_service_baidu_entity">baidu_entity</a></li>
@@ -70,6 +71,7 @@
 <li><a href="#Fn_datanode_service_note_tag_list">note_tag_list</a></li>
 <li><a href="#Fn_datanode_service_on_search">on_search</a></li>
 <li><a href="#Fn_datanode_service_query_collect_timu">query_collect_timu</a></li>
+<li><a href="#Fn_datanode_service_query_user_log">query_user_log</a></li>
 <li><a href="#Fn_datanode_service_question_chapter">question_chapter</a></li>
 <li><a href="#Fn_datanode_service_question_source">question_source</a></li>
 <li><a href="#Fn_datanode_service_question_timu">question_timu</a></li>
@@ -132,6 +134,8 @@
 <a href="#Struct_add_question_res">add_question_res</a><br/>
 <a href="#Struct_add_user_attention_req">add_user_attention_req</a><br/>
 <a href="#Struct_add_user_attention_res">add_user_attention_res</a><br/>
+<a href="#Struct_add_user_log_req">add_user_log_req</a><br/>
+<a href="#Struct_add_user_log_res">add_user_log_res</a><br/>
 <a href="#Struct_agree_friend_req">agree_friend_req</a><br/>
 <a href="#Struct_agree_friend_res">agree_friend_res</a><br/>
 <a href="#Struct_approve_req">approve_req</a><br/>
@@ -228,6 +232,8 @@
 <a href="#Struct_note_tag_list_res">note_tag_list_res</a><br/>
 <a href="#Struct_note_tag_req">note_tag_req</a><br/>
 <a href="#Struct_note_tag_res">note_tag_res</a><br/>
+<a href="#Struct_query_user_log_req">query_user_log_req</a><br/>
+<a href="#Struct_query_user_log_res">query_user_log_res</a><br/>
 <a href="#Struct_refresh_add_reward_req">refresh_add_reward_req</a><br/>
 <a href="#Struct_refresh_add_reward_res">refresh_add_reward_res</a><br/>
 <a href="#Struct_refresh_ident_reward_req">refresh_ident_reward_req</a><br/>
@@ -1324,6 +1330,32 @@
 <tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>cert</td><td><code>list&lt;<code><a href="common.html#Struct_person_cert">common.person_cert</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_user_log_req">Struct: add_user_log_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>log_type</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>log_info</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>create_at</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_user_log_res">Struct: add_user_log_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_query_user_log_req">Struct: query_user_log_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>id</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>log_type</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>page</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>size</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_query_user_log_res">Struct: query_user_log_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>logs</td><td><code>list&lt;<code><a href="common.html#Struct_user_log">common.user_log</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_datanode_service">Service: datanode_service</h3>
 <div class="definition"><h4 id="Fn_datanode_service_createUser">Function: datanode_service.createUser</h4>
@@ -1547,4 +1579,8 @@
 <pre><code><a href="#Struct_cert_info_res">cert_info_res</a></code> cert_info(<code><a href="#Struct_cert_info_req">cert_info_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_datanode_service_cert_flow">Function: datanode_service.cert_flow</h4>
 <pre><code><a href="#Struct_cert_flow_res">cert_flow_res</a></code> cert_flow(<code><a href="#Struct_cert_flow_req">cert_flow_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_add_user_log">Function: datanode_service.add_user_log</h4>
+<pre><code><a href="#Struct_add_user_log_res">add_user_log_res</a></code> add_user_log(<code><a href="#Struct_add_user_log_req">add_user_log_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_query_user_log">Function: datanode_service.query_user_log</h4>
+<pre><code><a href="#Struct_query_user_log_res">query_user_log_res</a></code> query_user_log(<code><a href="#Struct_query_user_log_req">query_user_log_req</a></code> req)
 </pre></div></div></body></html>

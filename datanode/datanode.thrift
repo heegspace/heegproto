@@ -1213,6 +1213,36 @@ struct cert_flow_res {
     4:map<string,string>        extra,
 }
 
+struct add_user_log_req {
+    1:i64                   uid,
+    2:i32                   log_type,
+    3:string                log_info,
+    4:string                create_at,
+    5:map<string,string>    extra,
+}
+
+struct add_user_log_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:map<string,string>        extra,
+}
+
+struct query_user_log_req {
+    1:i64                   id,
+    2:i64                   uid,
+    3:i32                   log_type,
+    4:i32                   page,
+    5:i32                   size,
+    6:map<string,string>    extra,
+}
+
+struct query_user_log_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:list<common.user_log>     logs,
+    4:map<string,string>        extra,
+}
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -1440,4 +1470,9 @@ service datanode_service {
     cert_info_res cert_info(1:cert_info_req req),
     // 实名日志记录
     cert_flow_res cert_flow(1:cert_flow_req req),
+
+    // 添加日志
+    add_user_log_res add_user_log(1:add_user_log_req req),
+    // 获取日志
+    query_user_log_res query_user_log(1:query_user_log_req req),
 }
