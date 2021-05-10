@@ -473,6 +473,14 @@ struct baidu_idcard_ident {
     8:map<string,string>    extra,
 }
 
+// 日志类型
+enum log_type {
+    CREATE_USER         =   0x0001, // 用户创建
+    UPDATE_USER         =   0x0002, // 用户更新
+    LOGIN_USER          =   0x0004, // 用户登录
+    CERT_USER           =   0x0008, // 用户实名
+}
+
 // 用户日志
 struct user_log {
     1:i64       id,
