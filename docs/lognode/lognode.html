@@ -12,12 +12,15 @@
 <ul>
 <li><a href="#Fn_lognode_service_call_log">call_log</a></li>
 <li><a href="#Fn_lognode_service_log">log</a></li>
+<li><a href="#Fn_lognode_service_query_user_log">query_user_log</a></li>
 </ul>
 </td>
 <td><a href="#Struct_call_log_req">call_log_req</a><br/>
 <a href="#Enum_log_desc">log_desc</a><br/>
 <a href="#Enum_log_level">log_level</a><br/>
 <a href="#Struct_log_req">log_req</a><br/>
+<a href="#Struct_query_user_log_req">query_user_log_req</a><br/>
+<a href="#Struct_query_user_log_res">query_user_log_res</a><br/>
 </td>
 <td></td>
 </tr></tbody></table>
@@ -65,10 +68,27 @@
 <tr><td>6</td><td>func</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>7</td><td>info</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>8</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_query_user_log_req">Struct: query_user_log_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>id</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>log_type</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>page</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>size</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>7</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_query_user_log_res">Struct: query_user_log_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>logs</td><td><code>list&lt;<code><a href="common.html#Struct_user_log">common.user_log</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_lognode_service">Service: lognode_service</h3>
 <div class="definition"><h4 id="Fn_lognode_service_log">Function: lognode_service.log</h4>
 <pre><code>void</code> log(<code><a href="#Struct_log_req">log_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_lognode_service_call_log">Function: lognode_service.call_log</h4>
 <pre><code>void</code> call_log(<code><a href="#Struct_call_log_req">call_log_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_lognode_service_query_user_log">Function: lognode_service.query_user_log</h4>
+<pre><code><a href="#Struct_query_user_log_res">query_user_log_res</a></code> query_user_log(<code><a href="#Struct_query_user_log_req">query_user_log_req</a></code> req)
 </pre></div></div></body></html>

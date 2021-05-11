@@ -9,4 +9,5 @@ rm -rf gen-go
 
 
 thrift -r -gen html *.thrift
+rm -rf ../docs/lognode
 mv gen-html ../docs/lognode

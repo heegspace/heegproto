@@ -7,6 +7,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/heegspace/heegproto/common"
 	"github.com/heegspace/heegproto/rescode"
 	"github.com/heegspace/thrift"
 	"reflect"
@@ -20,6 +21,7 @@ var _ = reflect.DeepEqual
 var _ = bytes.Equal
 
 var _ = rescode.GoUnusedProtection__
+var _ = common.GoUnusedProtection__
 
 func init() {
 }
