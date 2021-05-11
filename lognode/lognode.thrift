@@ -40,6 +40,26 @@ struct log_req {
     8:map<string,string>    extra, 
 }
 
+struct user_log_item {
+    1:i64                   id,
+    2:i64                   uid,
+    3:string                username,
+    4:string                ip,
+    5:string                country,
+    6:string                province,
+    7:string                city,
+    8:string                district,
+    9:string                platom,
+    10:string               appid,
+    11:string               info,
+    12:string               old_info,
+    13:string               new_info,
+    14:string               mark,
+    15:string               create_at,
+    16:i64                  log_type,
+    17:string               type_info,
+}
+
 struct query_user_log_req {
     1:common.authorize      auth,
     2:i64                   id,
@@ -51,10 +71,10 @@ struct query_user_log_req {
 }
 
 struct query_user_log_res {
-    1:rescode.code              rescode,
-    2:string                    resmsg,
-    3:list<common.user_log>     logs,
-    4:map<string,string>        extra,
+    1:rescode.code                  rescode,
+    2:string                        resmsg,
+    3:list<user_log_item>    logs,
+    4:map<string,string>            extra,
 }
 
 service lognode_service {
