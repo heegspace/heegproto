@@ -5,12 +5,12 @@ include "../common/common.thrift"
 
 struct ip_to_address_req {
     1:common.authorize      auth,
-    2:i64                   ip,
+    2:string                ip,
     3:map<string,string>    extra,
 }
 
 struct address_item {
-    1:i32                   ip,
+    1:string                ip,
     2:string                country,
     3:string                province,
     4:string                city,

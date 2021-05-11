@@ -29,7 +29,7 @@ var _ = common.GoUnusedProtection__
 //  - Extra
 type IPToAddressReq struct {
 	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
-	IP    int64             `thrift:"ip,2" db:"ip" json:"ip"`
+	IP    string            `thrift:"ip,2" db:"ip" json:"ip"`
 	Extra map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
@@ -46,7 +46,7 @@ func (p *IPToAddressReq) GetAuth() *common.Authorize {
 	return p.Auth
 }
 
-func (p *IPToAddressReq) GetIP() int64 {
+func (p *IPToAddressReq) GetIP() string {
 	return p.IP
 }
 
@@ -82,7 +82,7 @@ func (p *IPToAddressReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 2:
-			if fieldTypeId == thrift.I64 {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
@@ -125,7 +125,7 @@ func (p *IPToAddressReq) ReadField1(iprot thrift.TProtocol) error {
 }
 
 func (p *IPToAddressReq) ReadField2(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadI64(); err != nil {
+	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 2: ", err)
 	} else {
 		p.IP = v
@@ -199,10 +199,10 @@ func (p *IPToAddressReq) writeField1(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *IPToAddressReq) writeField2(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("ip", thrift.I64, 2); err != nil {
+	if err := oprot.WriteFieldBegin("ip", thrift.STRING, 2); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:ip: ", p), err)
 	}
-	if err := oprot.WriteI64(int64(p.IP)); err != nil {
+	if err := oprot.WriteString(string(p.IP)); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T.ip (2) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
@@ -251,7 +251,7 @@ func (p *IPToAddressReq) String() string {
 //  - Isp
 //  - CountryCode
 type AddressItem struct {
-	IP           int32  `thrift:"ip,1" db:"ip" json:"ip"`
+	IP           string `thrift:"ip,1" db:"ip" json:"ip"`
 	Country      string `thrift:"country,2" db:"country" json:"country"`
 	Province     string `thrift:"province,3" db:"province" json:"province"`
 	City         string `thrift:"city,4" db:"city" json:"city"`
@@ -264,7 +264,7 @@ func NewAddressItem() *AddressItem {
 	return &AddressItem{}
 }
 
-func (p *AddressItem) GetIP() int32 {
+func (p *AddressItem) GetIP() string {
 	return p.IP
 }
 
@@ -306,7 +306,7 @@ func (p *AddressItem) Read(iprot thrift.TProtocol) error {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.I32 {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField1(iprot); err != nil {
 					return err
 				}
@@ -391,7 +391,7 @@ func (p *AddressItem) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *AddressItem) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadI32(); err != nil {
+	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 1: ", err)
 	} else {
 		p.IP = v
@@ -490,10 +490,10 @@ func (p *AddressItem) Write(oprot thrift.TProtocol) error {
 }
 
 func (p *AddressItem) writeField1(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("ip", thrift.I32, 1); err != nil {
+	if err := oprot.WriteFieldBegin("ip", thrift.STRING, 1); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:ip: ", p), err)
 	}
-	if err := oprot.WriteI32(int32(p.IP)); err != nil {
+	if err := oprot.WriteString(string(p.IP)); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T.ip (1) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
