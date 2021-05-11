@@ -9,4 +9,5 @@ rm -rf gen-go
 
 
 thrift -r -gen html *.thrift
+rm -rf ../docs/macipnode
 mv gen-html ../docs/macipnode
