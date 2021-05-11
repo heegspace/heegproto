@@ -247,6 +247,7 @@ func (p *IPToAddressReq) String() string {
 //  - Country
 //  - Province
 //  - City
+//  - District
 //  - Organization
 //  - Isp
 //  - CountryCode
@@ -255,9 +256,10 @@ type AddressItem struct {
 	Country      string `thrift:"country,2" db:"country" json:"country"`
 	Province     string `thrift:"province,3" db:"province" json:"province"`
 	City         string `thrift:"city,4" db:"city" json:"city"`
-	Organization string `thrift:"organization,5" db:"organization" json:"organization"`
-	Isp          string `thrift:"isp,6" db:"isp" json:"isp"`
-	CountryCode  string `thrift:"country_code,7" db:"country_code" json:"country_code"`
+	District     string `thrift:"district,5" db:"district" json:"district"`
+	Organization string `thrift:"organization,6" db:"organization" json:"organization"`
+	Isp          string `thrift:"isp,7" db:"isp" json:"isp"`
+	CountryCode  string `thrift:"country_code,8" db:"country_code" json:"country_code"`
 }
 
 func NewAddressItem() *AddressItem {
@@ -278,6 +280,10 @@ func (p *AddressItem) GetProvince() string {
 
 func (p *AddressItem) GetCity() string {
 	return p.City
+}
+
+func (p *AddressItem) GetDistrict() string {
+	return p.District
 }
 
 func (p *AddressItem) GetOrganization() string {
@@ -375,6 +381,16 @@ func (p *AddressItem) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
+		case 8:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField8(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
 		default:
 			if err := iprot.Skip(fieldTypeId); err != nil {
 				return err
@@ -430,7 +446,7 @@ func (p *AddressItem) ReadField5(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 5: ", err)
 	} else {
-		p.Organization = v
+		p.District = v
 	}
 	return nil
 }
@@ -439,7 +455,7 @@ func (p *AddressItem) ReadField6(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 6: ", err)
 	} else {
-		p.Isp = v
+		p.Organization = v
 	}
 	return nil
 }
@@ -447,6 +463,15 @@ func (p *AddressItem) ReadField6(iprot thrift.TProtocol) error {
 func (p *AddressItem) ReadField7(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return thrift.PrependError("error reading field 7: ", err)
+	} else {
+		p.Isp = v
+	}
+	return nil
+}
+
+func (p *AddressItem) ReadField8(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 8: ", err)
 	} else {
 		p.CountryCode = v
 	}
@@ -477,6 +502,9 @@ func (p *AddressItem) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField7(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField8(oprot); err != nil {
 			return err
 		}
 	}
@@ -542,40 +570,53 @@ func (p *AddressItem) writeField4(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *AddressItem) writeField5(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("organization", thrift.STRING, 5); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:organization: ", p), err)
+	if err := oprot.WriteFieldBegin("district", thrift.STRING, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:district: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Organization)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.organization (5) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.District)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.district (5) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:organization: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:district: ", p), err)
 	}
 	return err
 }
 
 func (p *AddressItem) writeField6(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("isp", thrift.STRING, 6); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:isp: ", p), err)
+	if err := oprot.WriteFieldBegin("organization", thrift.STRING, 6); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:organization: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.Isp)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.isp (6) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Organization)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.organization (6) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:isp: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:organization: ", p), err)
 	}
 	return err
 }
 
 func (p *AddressItem) writeField7(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("country_code", thrift.STRING, 7); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:country_code: ", p), err)
+	if err := oprot.WriteFieldBegin("isp", thrift.STRING, 7); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:isp: ", p), err)
 	}
-	if err := oprot.WriteString(string(p.CountryCode)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.country_code (7) field write error: ", p), err)
+	if err := oprot.WriteString(string(p.Isp)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.isp (7) field write error: ", p), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 7:country_code: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 7:isp: ", p), err)
+	}
+	return err
+}
+
+func (p *AddressItem) writeField8(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("country_code", thrift.STRING, 8); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 8:country_code: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.CountryCode)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.country_code (8) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 8:country_code: ", p), err)
 	}
 	return err
 }

@@ -14,9 +14,10 @@ struct address_item {
     2:string                country,
     3:string                province,
     4:string                city,
-    5:string                organization,
-    6:string                isp,
-    7:string                country_code,
+    5:string                district,
+    6:string                organization,
+    7:string                isp,
+    8:string                country_code,
 }
 
 struct ip_to_address_res {
