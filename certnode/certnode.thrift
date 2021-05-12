@@ -119,7 +119,7 @@ service certnode_service {
     cert_flow_res cert_flow(1:cert_flow_req req),
 
     // 取消实名
-    cert_cache_res cert_cancel(1:cert_cancel_req req),
+    cert_cancel_res cert_cancel(1:cert_cancel_req req),
 
 
     //--------------需要授权--------------//

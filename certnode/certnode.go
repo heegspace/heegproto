@@ -3934,7 +3934,7 @@ type CertnodeService interface {
 	CertFlow(ctx context.Context, req *CertFlowReq) (r *CertFlowRes, err error)
 	// Parameters:
 	//  - Req
-	CertCancel(ctx context.Context, req *CertCancelReq) (r *CertCacheRes, err error)
+	CertCancel(ctx context.Context, req *CertCancelReq) (r *CertCancelRes, err error)
 	// Parameters:
 	//  - Req
 	CertApproved(ctx context.Context, req *CertApprovedReq) (r *CertApprovedRes, err error)
@@ -4010,7 +4010,7 @@ func (p *CertnodeServiceClient) CertFlow(ctx context.Context, req *CertFlowReq) 
 
 // Parameters:
 //  - Req
-func (p *CertnodeServiceClient) CertCancel(ctx context.Context, req *CertCancelReq) (r *CertCacheRes, err error) {
+func (p *CertnodeServiceClient) CertCancel(ctx context.Context, req *CertCancelReq) (r *CertCancelRes, err error) {
 	var _args36 CertnodeServiceCertCancelArgs
 	_args36.Req = req
 	var _result37 CertnodeServiceCertCancelResult
@@ -4268,7 +4268,7 @@ func (p *certnodeServiceProcessorCertCancel) Process(ctx context.Context, seqId 
 
 	iprot.ReadMessageEnd()
 	result := CertnodeServiceCertCancelResult{}
-	var retval *CertCacheRes
+	var retval *CertCancelRes
 	var err2 error
 	if retval, err2 = p.handler.CertCancel(ctx, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing cert_cancel: "+err2.Error())
@@ -5202,16 +5202,16 @@ func (p *CertnodeServiceCertCancelArgs) String() string {
 // Attributes:
 //  - Success
 type CertnodeServiceCertCancelResult struct {
-	Success *CertCacheRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+	Success *CertCancelRes `thrift:"success,0" db:"success" json:"success,omitempty"`
 }
 
 func NewCertnodeServiceCertCancelResult() *CertnodeServiceCertCancelResult {
 	return &CertnodeServiceCertCancelResult{}
 }
 
-var CertnodeServiceCertCancelResult_Success_DEFAULT *CertCacheRes
+var CertnodeServiceCertCancelResult_Success_DEFAULT *CertCancelRes
 
-func (p *CertnodeServiceCertCancelResult) GetSuccess() *CertCacheRes {
+func (p *CertnodeServiceCertCancelResult) GetSuccess() *CertCancelRes {
 	if !p.IsSetSuccess() {
 		return CertnodeServiceCertCancelResult_Success_DEFAULT
 	}
@@ -5261,7 +5261,7 @@ func (p *CertnodeServiceCertCancelResult) Read(iprot thrift.TProtocol) error {
 }
 
 func (p *CertnodeServiceCertCancelResult) ReadField0(iprot thrift.TProtocol) error {
-	p.Success = &CertCacheRes{}
+	p.Success = &CertCancelRes{}
 	if err := p.Success.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
 	}
