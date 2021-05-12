@@ -81,6 +81,19 @@ struct cert_flow_res {
     4:map<string,string>        extra,
 }
 
+struct cert_cancel_req {
+    1:common.authorize      auth,
+    2:i64                   uid,
+    3:string                info,
+    4:map<string,string>    extra,
+}
+
+struct cert_cancel_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:map<string,string>        extra,
+}
+
 struct cert_cache_req {
     1:common.authorize      auth,
     2:string                key,
@@ -105,10 +118,14 @@ service certnode_service {
     // 实名日志记录
     cert_flow_res cert_flow(1:cert_flow_req req),
 
+    // 取消实名
+    cert_cache_res cert_cancel(1:cert_cancel_req req),
+
 
     //--------------需要授权--------------//
     // 审核通过
     cert_approved_res cert_approved(1:cert_approved_req req),
+
     // 实名失败 
     cert_refuse_res cert_refuse(1:cert_refuse_req req),
 

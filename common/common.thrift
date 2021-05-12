@@ -473,12 +473,19 @@ struct baidu_idcard_ident {
     8:map<string,string>    extra,
 }
 
-// 日志类型
+// 日志类型,日志类型并不重复，所有采用对应的整型
 enum log_type {
     CREATE_USER         =   0x0001, // 用户创建
     UPDATE_USER         =   0x0002, // 用户更新
-    LOGIN_USER          =   0x0004, // 用户登录
-    CERT_USER           =   0x0008, // 用户实名
+    LOGIN_USER          =   0x0003, // 用户登录
+    LOGOUT_USER         =   0x0004, // 用户退出
+    SUBMIT_CERT         =   0x0005, // 提交实名
+    CANCEL_CERT         =   0x0006, // 取消实名
+    CERT_FAIL           =   0x0007, // 实名失败
+    CERT_SUCCESS        =   0x0008, // 实名成功
+    VIP_LEVELUP         =   0x0009, // 升级vip
+    COIN_APPEND         =   0x000A, // 增加coin
+    COIN_USED           =   0x000B, // 减少coin
 }
 
 // 用户日志

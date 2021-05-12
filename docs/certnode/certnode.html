@@ -12,6 +12,7 @@
 <ul>
 <li><a href="#Fn_certnode_service_cert_approved">cert_approved</a></li>
 <li><a href="#Fn_certnode_service_cert_cache">cert_cache</a></li>
+<li><a href="#Fn_certnode_service_cert_cancel">cert_cancel</a></li>
 <li><a href="#Fn_certnode_service_cert_flow">cert_flow</a></li>
 <li><a href="#Fn_certnode_service_cert_info">cert_info</a></li>
 <li><a href="#Fn_certnode_service_cert_refuse">cert_refuse</a></li>
@@ -22,6 +23,8 @@
 <a href="#Struct_cert_approved_res">cert_approved_res</a><br/>
 <a href="#Struct_cert_cache_req">cert_cache_req</a><br/>
 <a href="#Struct_cert_cache_res">cert_cache_res</a><br/>
+<a href="#Struct_cert_cancel_req">cert_cancel_req</a><br/>
+<a href="#Struct_cert_cancel_res">cert_cancel_res</a><br/>
 <a href="#Struct_cert_flow_req">cert_flow_req</a><br/>
 <a href="#Struct_cert_flow_res">cert_flow_res</a><br/>
 <a href="#Struct_cert_info_req">cert_info_req</a><br/>
@@ -101,6 +104,17 @@
 <tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>cert</td><td><code>list&lt;<code><a href="common.html#Struct_person_cert">common.person_cert</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_cert_cancel_req">Struct: cert_cancel_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>info</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_cert_cancel_res">Struct: cert_cancel_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><div class="definition"><h3 id="Struct_cert_cache_req">Struct: cert_cache_req</h3>
 <table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
 <tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
@@ -121,6 +135,8 @@
 <pre><code><a href="#Struct_cert_info_res">cert_info_res</a></code> cert_info(<code><a href="#Struct_cert_info_req">cert_info_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_certnode_service_cert_flow">Function: certnode_service.cert_flow</h4>
 <pre><code><a href="#Struct_cert_flow_res">cert_flow_res</a></code> cert_flow(<code><a href="#Struct_cert_flow_req">cert_flow_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_certnode_service_cert_cancel">Function: certnode_service.cert_cancel</h4>
+<pre><code><a href="#Struct_cert_cache_res">cert_cache_res</a></code> cert_cancel(<code><a href="#Struct_cert_cancel_req">cert_cancel_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_certnode_service_cert_approved">Function: certnode_service.cert_approved</h4>
 <pre><code><a href="#Struct_cert_approved_res">cert_approved_res</a></code> cert_approved(<code><a href="#Struct_cert_approved_req">cert_approved_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_certnode_service_cert_refuse">Function: certnode_service.cert_refuse</h4>
