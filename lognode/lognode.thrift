@@ -77,10 +77,26 @@ struct query_user_log_res {
     4:map<string,string>            extra,
 }
 
+struct user_log_count_req {
+    1:common.authorize      auth,
+    2:i64                   uid,
+    3:i32                   log_type,
+    4:map<string,string>    extra,
+}
+
+struct user_log_count_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:i64                       count,
+    4:map<string,string>        extra,
+}
+
 service lognode_service {
     void log(1:log_req req),
     void call_log(1:call_log_req req),
 
     // 获取日志
     query_user_log_res query_user_log(1:query_user_log_req req),
+    // 日志数量
+    user_log_count_res user_log_count(1:user_log_count_req req),
 }

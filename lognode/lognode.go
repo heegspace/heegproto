@@ -2484,6 +2484,519 @@ func (p *QueryUserLogRes) String() string {
 	return fmt.Sprintf("QueryUserLogRes(%+v)", *p)
 }
 
+// Attributes:
+//  - Auth
+//  - UID
+//  - LogType
+//  - Extra
+type UserLogCountReq struct {
+	Auth    *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	UID     int64             `thrift:"uid,2" db:"uid" json:"uid"`
+	LogType int32             `thrift:"log_type,3" db:"log_type" json:"log_type"`
+	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
+}
+
+func NewUserLogCountReq() *UserLogCountReq {
+	return &UserLogCountReq{}
+}
+
+var UserLogCountReq_Auth_DEFAULT *common.Authorize
+
+func (p *UserLogCountReq) GetAuth() *common.Authorize {
+	if !p.IsSetAuth() {
+		return UserLogCountReq_Auth_DEFAULT
+	}
+	return p.Auth
+}
+
+func (p *UserLogCountReq) GetUID() int64 {
+	return p.UID
+}
+
+func (p *UserLogCountReq) GetLogType() int32 {
+	return p.LogType
+}
+
+func (p *UserLogCountReq) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *UserLogCountReq) IsSetAuth() bool {
+	return p.Auth != nil
+}
+
+func (p *UserLogCountReq) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *UserLogCountReq) ReadField1(iprot thrift.TProtocol) error {
+	p.Auth = &common.Authorize{}
+	if err := p.Auth.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
+	}
+	return nil
+}
+
+func (p *UserLogCountReq) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.UID = v
+	}
+	return nil
+}
+
+func (p *UserLogCountReq) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.LogType = v
+	}
+	return nil
+}
+
+func (p *UserLogCountReq) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key9 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key9 = v
+		}
+		var _val10 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val10 = v
+		}
+		p.Extra[_key9] = _val10
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *UserLogCountReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("user_log_count_req"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *UserLogCountReq) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("auth", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:auth: ", p), err)
+	}
+	if err := p.Auth.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Auth), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:auth: ", p), err)
+	}
+	return err
+}
+
+func (p *UserLogCountReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("uid", thrift.I64, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:uid: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.UID)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.uid (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:uid: ", p), err)
+	}
+	return err
+}
+
+func (p *UserLogCountReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("log_type", thrift.I32, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:log_type: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.LogType)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.log_type (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:log_type: ", p), err)
+	}
+	return err
+}
+
+func (p *UserLogCountReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *UserLogCountReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserLogCountReq(%+v)", *p)
+}
+
+// Attributes:
+//  - Rescode
+//  - Resmsg
+//  - Count
+//  - Extra
+type UserLogCountRes struct {
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Count   int64             `thrift:"count,3" db:"count" json:"count"`
+	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
+}
+
+func NewUserLogCountRes() *UserLogCountRes {
+	return &UserLogCountRes{}
+}
+
+func (p *UserLogCountRes) GetRescode() rescode.Code {
+	return p.Rescode
+}
+
+func (p *UserLogCountRes) GetResmsg() string {
+	return p.Resmsg
+}
+
+func (p *UserLogCountRes) GetCount() int64 {
+	return p.Count
+}
+
+func (p *UserLogCountRes) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *UserLogCountRes) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *UserLogCountRes) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		temp := rescode.Code(v)
+		p.Rescode = temp
+	}
+	return nil
+}
+
+func (p *UserLogCountRes) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Resmsg = v
+	}
+	return nil
+}
+
+func (p *UserLogCountRes) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Count = v
+	}
+	return nil
+}
+
+func (p *UserLogCountRes) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key11 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key11 = v
+		}
+		var _val12 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val12 = v
+		}
+		p.Extra[_key11] = _val12
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *UserLogCountRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("user_log_count_res"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *UserLogCountRes) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Rescode)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.rescode (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:rescode: ", p), err)
+	}
+	return err
+}
+
+func (p *UserLogCountRes) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err)
+	}
+	return err
+}
+
+func (p *UserLogCountRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("count", thrift.I64, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:count: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.Count)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.count (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:count: ", p), err)
+	}
+	return err
+}
+
+func (p *UserLogCountRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *UserLogCountRes) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserLogCountRes(%+v)", *p)
+}
+
 type LognodeService interface {
 	// Parameters:
 	//  - Req
@@ -2494,6 +3007,9 @@ type LognodeService interface {
 	// Parameters:
 	//  - Req
 	QueryUserLog(ctx context.Context, req *QueryUserLogReq) (r *QueryUserLogRes, err error)
+	// Parameters:
+	//  - Req
+	UserLogCount(ctx context.Context, req *UserLogCountReq) (r *UserLogCountRes, err error)
 }
 
 type LognodeServiceClient struct {
@@ -2525,10 +3041,10 @@ func (p *LognodeServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Req
 func (p *LognodeServiceClient) Log(ctx context.Context, req *LogReq) (err error) {
-	var _args9 LognodeServiceLogArgs
-	_args9.Req = req
-	var _result10 LognodeServiceLogResult
-	if err = p.Client_().Call(ctx, "log", &_args9, &_result10); err != nil {
+	var _args13 LognodeServiceLogArgs
+	_args13.Req = req
+	var _result14 LognodeServiceLogResult
+	if err = p.Client_().Call(ctx, "log", &_args13, &_result14); err != nil {
 		return
 	}
 	return nil
@@ -2537,10 +3053,10 @@ func (p *LognodeServiceClient) Log(ctx context.Context, req *LogReq) (err error)
 // Parameters:
 //  - Req
 func (p *LognodeServiceClient) CallLog(ctx context.Context, req *CallLogReq) (err error) {
-	var _args11 LognodeServiceCallLogArgs
-	_args11.Req = req
-	var _result12 LognodeServiceCallLogResult
-	if err = p.Client_().Call(ctx, "call_log", &_args11, &_result12); err != nil {
+	var _args15 LognodeServiceCallLogArgs
+	_args15.Req = req
+	var _result16 LognodeServiceCallLogResult
+	if err = p.Client_().Call(ctx, "call_log", &_args15, &_result16); err != nil {
 		return
 	}
 	return nil
@@ -2549,13 +3065,25 @@ func (p *LognodeServiceClient) CallLog(ctx context.Context, req *CallLogReq) (er
 // Parameters:
 //  - Req
 func (p *LognodeServiceClient) QueryUserLog(ctx context.Context, req *QueryUserLogReq) (r *QueryUserLogRes, err error) {
-	var _args13 LognodeServiceQueryUserLogArgs
-	_args13.Req = req
-	var _result14 LognodeServiceQueryUserLogResult
-	if err = p.Client_().Call(ctx, "query_user_log", &_args13, &_result14); err != nil {
+	var _args17 LognodeServiceQueryUserLogArgs
+	_args17.Req = req
+	var _result18 LognodeServiceQueryUserLogResult
+	if err = p.Client_().Call(ctx, "query_user_log", &_args17, &_result18); err != nil {
 		return
 	}
-	return _result14.GetSuccess(), nil
+	return _result18.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *LognodeServiceClient) UserLogCount(ctx context.Context, req *UserLogCountReq) (r *UserLogCountRes, err error) {
+	var _args19 LognodeServiceUserLogCountArgs
+	_args19.Req = req
+	var _result20 LognodeServiceUserLogCountResult
+	if err = p.Client_().Call(ctx, "user_log_count", &_args19, &_result20); err != nil {
+		return
+	}
+	return _result20.GetSuccess(), nil
 }
 
 type LognodeServiceProcessor struct {
@@ -2578,11 +3106,12 @@ func (p *LognodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFun
 
 func NewLognodeServiceProcessor(handler LognodeService) *LognodeServiceProcessor {
 
-	self15 := &LognodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self15.processorMap["log"] = &lognodeServiceProcessorLog{handler: handler}
-	self15.processorMap["call_log"] = &lognodeServiceProcessorCallLog{handler: handler}
-	self15.processorMap["query_user_log"] = &lognodeServiceProcessorQueryUserLog{handler: handler}
-	return self15
+	self21 := &LognodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self21.processorMap["log"] = &lognodeServiceProcessorLog{handler: handler}
+	self21.processorMap["call_log"] = &lognodeServiceProcessorCallLog{handler: handler}
+	self21.processorMap["query_user_log"] = &lognodeServiceProcessorQueryUserLog{handler: handler}
+	self21.processorMap["user_log_count"] = &lognodeServiceProcessorUserLogCount{handler: handler}
+	return self21
 }
 
 func (p *LognodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -2595,12 +3124,12 @@ func (p *LognodeServiceProcessor) Process(ctx context.Context, iprot, oprot thri
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x16 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x22 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x16.Write(oprot)
+	x22.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x16
+	return false, x22
 
 }
 
@@ -2725,6 +3254,54 @@ func (p *lognodeServiceProcessorQueryUserLog) Process(ctx context.Context, seqId
 		result.Success = retval
 	}
 	if err2 = oprot.WriteMessageBegin("query_user_log", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type lognodeServiceProcessorUserLogCount struct {
+	handler LognodeService
+}
+
+func (p *lognodeServiceProcessorUserLogCount) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := LognodeServiceUserLogCountArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("user_log_count", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	result := LognodeServiceUserLogCountResult{}
+	var retval *UserLogCountRes
+	var err2 error
+	if retval, err2 = p.handler.UserLogCount(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing user_log_count: "+err2.Error())
+		oprot.WriteMessageBegin("user_log_count", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("user_log_count", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -3282,4 +3859,220 @@ func (p *LognodeServiceQueryUserLogResult) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("LognodeServiceQueryUserLogResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type LognodeServiceUserLogCountArgs struct {
+	Req *UserLogCountReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewLognodeServiceUserLogCountArgs() *LognodeServiceUserLogCountArgs {
+	return &LognodeServiceUserLogCountArgs{}
+}
+
+var LognodeServiceUserLogCountArgs_Req_DEFAULT *UserLogCountReq
+
+func (p *LognodeServiceUserLogCountArgs) GetReq() *UserLogCountReq {
+	if !p.IsSetReq() {
+		return LognodeServiceUserLogCountArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *LognodeServiceUserLogCountArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *LognodeServiceUserLogCountArgs) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *LognodeServiceUserLogCountArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &UserLogCountReq{}
+	if err := p.Req.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+	}
+	return nil
+}
+
+func (p *LognodeServiceUserLogCountArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("user_log_count_args"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *LognodeServiceUserLogCountArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+	}
+	return err
+}
+
+func (p *LognodeServiceUserLogCountArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("LognodeServiceUserLogCountArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type LognodeServiceUserLogCountResult struct {
+	Success *UserLogCountRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewLognodeServiceUserLogCountResult() *LognodeServiceUserLogCountResult {
+	return &LognodeServiceUserLogCountResult{}
+}
+
+var LognodeServiceUserLogCountResult_Success_DEFAULT *UserLogCountRes
+
+func (p *LognodeServiceUserLogCountResult) GetSuccess() *UserLogCountRes {
+	if !p.IsSetSuccess() {
+		return LognodeServiceUserLogCountResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *LognodeServiceUserLogCountResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *LognodeServiceUserLogCountResult) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField0(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *LognodeServiceUserLogCountResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &UserLogCountRes{}
+	if err := p.Success.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+	}
+	return nil
+}
+
+func (p *LognodeServiceUserLogCountResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("user_log_count_result"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField0(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *LognodeServiceUserLogCountResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+		}
+		if err := oprot.WriteFieldEnd(); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err)
+		}
+	}
+	return err
+}
+
+func (p *LognodeServiceUserLogCountResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("LognodeServiceUserLogCountResult(%+v)", *p)
 }

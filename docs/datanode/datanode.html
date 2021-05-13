@@ -110,6 +110,7 @@
 <li><a href="#Fn_datanode_service_updateUser">updateUser</a></li>
 <li><a href="#Fn_datanode_service_update_teacher">update_teacher</a></li>
 <li><a href="#Fn_datanode_service_userInfo">userInfo</a></li>
+<li><a href="#Fn_datanode_service_user_log_count">user_log_count</a></li>
 <li><a href="#Fn_datanode_service_yunSaveAttr">yunSaveAttr</a></li>
 </ul>
 </td>
@@ -296,6 +297,8 @@
 <a href="#Struct_update_teacher_res">update_teacher_res</a><br/>
 <a href="#Struct_user">user</a><br/>
 <a href="#Struct_user_info_req">user_info_req</a><br/>
+<a href="#Struct_user_log_count_req">user_log_count_req</a><br/>
+<a href="#Struct_user_log_count_res">user_log_count_res</a><br/>
 <a href="#Struct_user_res">user_res</a><br/>
 <a href="#Struct_version_res">version_res</a><br/>
 </td>
@@ -1356,6 +1359,17 @@
 <tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>logs</td><td><code>list&lt;<code><a href="common.html#Struct_user_log">common.user_log</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_user_log_count_req">Struct: user_log_count_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>log_type</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_user_log_count_res">Struct: user_log_count_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>count</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_datanode_service">Service: datanode_service</h3>
 <div class="definition"><h4 id="Fn_datanode_service_createUser">Function: datanode_service.createUser</h4>
@@ -1583,4 +1597,6 @@
 <pre><code><a href="#Struct_add_user_log_res">add_user_log_res</a></code> add_user_log(<code><a href="#Struct_add_user_log_req">add_user_log_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_datanode_service_query_user_log">Function: datanode_service.query_user_log</h4>
 <pre><code><a href="#Struct_query_user_log_res">query_user_log_res</a></code> query_user_log(<code><a href="#Struct_query_user_log_req">query_user_log_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_datanode_service_user_log_count">Function: datanode_service.user_log_count</h4>
+<pre><code><a href="#Struct_user_log_count_res">user_log_count_res</a></code> user_log_count(<code><a href="#Struct_user_log_count_req">user_log_count_req</a></code> req)
 </pre></div></div></body></html>
