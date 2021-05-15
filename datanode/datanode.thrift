@@ -1256,6 +1256,33 @@ struct user_log_count_res {
     4:map<string,string>        extra,
 }
 
+
+struct add_task_req {
+    1:common.cron_item      cron,
+    2:string                admin,
+    3:map<string,string>    extra,
+}
+
+struct add_task_res {
+    1:rescode.code          rescode,
+    2:string                resmsg,
+    3:map<string,string>    extra,
+}
+
+struct get_task_req {
+    1:bool                  repeated,
+    2:bool                  mutitask,
+    3:string                start_at,
+    4:map<string,string>    extra,
+}
+
+struct get_task_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:list<common.cron_item>    crons,
+    4:map<string,string>        extra,
+}
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户

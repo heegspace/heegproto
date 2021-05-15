@@ -496,3 +496,13 @@ struct user_log {
     4:string    log_info,
     5:string    create_at,
 }
+
+struct cron_item {
+    1:string                interval,
+    2:string                start_at,
+    3:bool                  repeadted,
+    4:string                func,
+    5:bool                  mutitask,
+    6:string                info,
+    7:map<string,string>    extra,    
+}

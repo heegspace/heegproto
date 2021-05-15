@@ -133,6 +133,8 @@
 <a href="#Struct_add_moments_res">add_moments_res</a><br/>
 <a href="#Struct_add_question_req">add_question_req</a><br/>
 <a href="#Struct_add_question_res">add_question_res</a><br/>
+<a href="#Struct_add_task_req">add_task_req</a><br/>
+<a href="#Struct_add_task_res">add_task_res</a><br/>
 <a href="#Struct_add_user_attention_req">add_user_attention_req</a><br/>
 <a href="#Struct_add_user_attention_res">add_user_attention_res</a><br/>
 <a href="#Struct_add_user_log_req">add_user_log_req</a><br/>
@@ -180,6 +182,8 @@
 <a href="#Struct_get_attention_res">get_attention_res</a><br/>
 <a href="#Struct_get_keyvalue_req">get_keyvalue_req</a><br/>
 <a href="#Struct_get_keyvalue_res">get_keyvalue_res</a><br/>
+<a href="#Struct_get_task_req">get_task_req</a><br/>
+<a href="#Struct_get_task_res">get_task_res</a><br/>
 <a href="#Struct_get_user_attention_req">get_user_attention_req</a><br/>
 <a href="#Struct_get_user_attention_res">get_user_attention_res</a><br/>
 <a href="#Struct_get_user_info_req">get_user_info_req</a><br/>
@@ -1369,6 +1373,28 @@
 <tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>count</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_task_req">Struct: add_task_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>cron</td><td><code><a href="common.html#Struct_cron_item">common.cron_item</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>admin</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_add_task_res">Struct: add_task_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_get_task_req">Struct: get_task_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>repeated</td><td><code>bool</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>mutitask</td><td><code>bool</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>start_at</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_get_task_res">Struct: get_task_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>crons</td><td><code>list&lt;<code><a href="common.html#Struct_cron_item">common.cron_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_datanode_service">Service: datanode_service</h3>
