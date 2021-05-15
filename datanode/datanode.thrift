@@ -1283,6 +1283,20 @@ struct get_task_res {
     4:map<string,string>        extra,
 }
 
+struct get_task_count_req {
+    1:bool                  repeated,
+    2:bool                  mutitask,
+    3:string                start_at,
+    4:map<string,string>    extra,
+}
+
+struct get_task_count_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:i64                       count,
+    4:map<string,string>        extra,
+}
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -1523,4 +1537,7 @@ service datanode_service {
 
     // 获取任务
     get_task_res get_task(1:get_task_req req),
+
+    // 获取任务数量
+    get_task_count_res get_task_count(1:get_task_count_req req),
 }

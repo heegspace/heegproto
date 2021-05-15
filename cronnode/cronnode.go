@@ -455,8 +455,7 @@ type AddTaskReq struct {
 	Auth  *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
 	Cron  *common.CronItem  `thrift:"cron,2" db:"cron" json:"cron"`
 	Admin string            `thrift:"admin,3" db:"admin" json:"admin"`
-	// unused field # 4
-	Extra map[string]string `thrift:"extra,5" db:"extra" json:"extra"`
+	Extra map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
 }
 
 func NewAddTaskReq() *AddTaskReq {
@@ -540,9 +539,9 @@ func (p *AddTaskReq) Read(iprot thrift.TProtocol) error {
 					return err
 				}
 			}
-		case 5:
+		case 4:
 			if fieldTypeId == thrift.MAP {
-				if err := p.ReadField5(iprot); err != nil {
+				if err := p.ReadField4(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -590,7 +589,7 @@ func (p *AddTaskReq) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *AddTaskReq) ReadField5(iprot thrift.TProtocol) error {
+func (p *AddTaskReq) ReadField4(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -632,7 +631,7 @@ func (p *AddTaskReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
-		if err := p.writeField5(oprot); err != nil {
+		if err := p.writeField4(oprot); err != nil {
 			return err
 		}
 	}
@@ -684,9 +683,9 @@ func (p *AddTaskReq) writeField3(oprot thrift.TProtocol) (err error) {
 	return err
 }
 
-func (p *AddTaskReq) writeField5(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 5); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:extra: ", p), err)
+func (p *AddTaskReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -703,7 +702,7 @@ func (p *AddTaskReq) writeField5(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
 	}
 	return err
 }
@@ -1500,6 +1499,560 @@ func (p *GetTaskRes) String() string {
 	return fmt.Sprintf("GetTaskRes(%+v)", *p)
 }
 
+// Attributes:
+//  - Auth
+//  - Repeated
+//  - Mutitask
+//  - StartAt
+//  - Extra
+type GetTaskCountReq struct {
+	Auth     *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	Repeated bool              `thrift:"repeated,2" db:"repeated" json:"repeated"`
+	Mutitask bool              `thrift:"mutitask,3" db:"mutitask" json:"mutitask"`
+	StartAt  string            `thrift:"start_at,4" db:"start_at" json:"start_at"`
+	Extra    map[string]string `thrift:"extra,5" db:"extra" json:"extra"`
+}
+
+func NewGetTaskCountReq() *GetTaskCountReq {
+	return &GetTaskCountReq{}
+}
+
+var GetTaskCountReq_Auth_DEFAULT *common.Authorize
+
+func (p *GetTaskCountReq) GetAuth() *common.Authorize {
+	if !p.IsSetAuth() {
+		return GetTaskCountReq_Auth_DEFAULT
+	}
+	return p.Auth
+}
+
+func (p *GetTaskCountReq) GetRepeated() bool {
+	return p.Repeated
+}
+
+func (p *GetTaskCountReq) GetMutitask() bool {
+	return p.Mutitask
+}
+
+func (p *GetTaskCountReq) GetStartAt() string {
+	return p.StartAt
+}
+
+func (p *GetTaskCountReq) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *GetTaskCountReq) IsSetAuth() bool {
+	return p.Auth != nil
+}
+
+func (p *GetTaskCountReq) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.BOOL {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.BOOL {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *GetTaskCountReq) ReadField1(iprot thrift.TProtocol) error {
+	p.Auth = &common.Authorize{}
+	if err := p.Auth.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
+	}
+	return nil
+}
+
+func (p *GetTaskCountReq) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadBool(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Repeated = v
+	}
+	return nil
+}
+
+func (p *GetTaskCountReq) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadBool(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Mutitask = v
+	}
+	return nil
+}
+
+func (p *GetTaskCountReq) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.StartAt = v
+	}
+	return nil
+}
+
+func (p *GetTaskCountReq) ReadField5(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key13 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key13 = v
+		}
+		var _val14 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val14 = v
+		}
+		p.Extra[_key13] = _val14
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *GetTaskCountReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("get_task_count_req"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *GetTaskCountReq) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("auth", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:auth: ", p), err)
+	}
+	if err := p.Auth.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Auth), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:auth: ", p), err)
+	}
+	return err
+}
+
+func (p *GetTaskCountReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("repeated", thrift.BOOL, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:repeated: ", p), err)
+	}
+	if err := oprot.WriteBool(bool(p.Repeated)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.repeated (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:repeated: ", p), err)
+	}
+	return err
+}
+
+func (p *GetTaskCountReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("mutitask", thrift.BOOL, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:mutitask: ", p), err)
+	}
+	if err := oprot.WriteBool(bool(p.Mutitask)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.mutitask (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:mutitask: ", p), err)
+	}
+	return err
+}
+
+func (p *GetTaskCountReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("start_at", thrift.STRING, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:start_at: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.StartAt)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.start_at (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:start_at: ", p), err)
+	}
+	return err
+}
+
+func (p *GetTaskCountReq) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *GetTaskCountReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("GetTaskCountReq(%+v)", *p)
+}
+
+// Attributes:
+//  - Rescode
+//  - Resmsg
+//  - Count
+//  - Extra
+type GetTaskCountRes struct {
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Count   int64             `thrift:"count,3" db:"count" json:"count"`
+	Extra   map[string]string `thrift:"extra,4" db:"extra" json:"extra"`
+}
+
+func NewGetTaskCountRes() *GetTaskCountRes {
+	return &GetTaskCountRes{}
+}
+
+func (p *GetTaskCountRes) GetRescode() rescode.Code {
+	return p.Rescode
+}
+
+func (p *GetTaskCountRes) GetResmsg() string {
+	return p.Resmsg
+}
+
+func (p *GetTaskCountRes) GetCount() int64 {
+	return p.Count
+}
+
+func (p *GetTaskCountRes) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *GetTaskCountRes) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *GetTaskCountRes) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		temp := rescode.Code(v)
+		p.Rescode = temp
+	}
+	return nil
+}
+
+func (p *GetTaskCountRes) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Resmsg = v
+	}
+	return nil
+}
+
+func (p *GetTaskCountRes) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Count = v
+	}
+	return nil
+}
+
+func (p *GetTaskCountRes) ReadField4(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key15 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key15 = v
+		}
+		var _val16 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val16 = v
+		}
+		p.Extra[_key15] = _val16
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *GetTaskCountRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("get_task_count_res"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *GetTaskCountRes) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Rescode)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.rescode (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:rescode: ", p), err)
+	}
+	return err
+}
+
+func (p *GetTaskCountRes) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err)
+	}
+	return err
+}
+
+func (p *GetTaskCountRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("count", thrift.I64, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:count: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.Count)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.count (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:count: ", p), err)
+	}
+	return err
+}
+
+func (p *GetTaskCountRes) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *GetTaskCountRes) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("GetTaskCountRes(%+v)", *p)
+}
+
 type CronnodeService interface {
 	// Parameters:
 	//  - Req
@@ -1510,6 +2063,9 @@ type CronnodeService interface {
 	// Parameters:
 	//  - Req
 	GetTask(ctx context.Context, req *GetTaskReq) (r *GetTaskRes, err error)
+	// Parameters:
+	//  - Req
+	GetTaskCount(ctx context.Context, req *GetTaskCountReq) (r *GetTaskCountRes, err error)
 }
 
 type CronnodeServiceClient struct {
@@ -1541,37 +2097,49 @@ func (p *CronnodeServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Req
 func (p *CronnodeServiceClient) CronCall(ctx context.Context, req *CronCallReq) (r *CronCallRes, err error) {
-	var _args13 CronnodeServiceCronCallArgs
-	_args13.Req = req
-	var _result14 CronnodeServiceCronCallResult
-	if err = p.Client_().Call(ctx, "cron_call", &_args13, &_result14); err != nil {
+	var _args17 CronnodeServiceCronCallArgs
+	_args17.Req = req
+	var _result18 CronnodeServiceCronCallResult
+	if err = p.Client_().Call(ctx, "cron_call", &_args17, &_result18); err != nil {
 		return
 	}
-	return _result14.GetSuccess(), nil
+	return _result18.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *CronnodeServiceClient) AddTask(ctx context.Context, req *AddTaskReq) (r *AddTaskRes, err error) {
-	var _args15 CronnodeServiceAddTaskArgs
-	_args15.Req = req
-	var _result16 CronnodeServiceAddTaskResult
-	if err = p.Client_().Call(ctx, "add_task", &_args15, &_result16); err != nil {
+	var _args19 CronnodeServiceAddTaskArgs
+	_args19.Req = req
+	var _result20 CronnodeServiceAddTaskResult
+	if err = p.Client_().Call(ctx, "add_task", &_args19, &_result20); err != nil {
 		return
 	}
-	return _result16.GetSuccess(), nil
+	return _result20.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Req
 func (p *CronnodeServiceClient) GetTask(ctx context.Context, req *GetTaskReq) (r *GetTaskRes, err error) {
-	var _args17 CronnodeServiceGetTaskArgs
-	_args17.Req = req
-	var _result18 CronnodeServiceGetTaskResult
-	if err = p.Client_().Call(ctx, "get_task", &_args17, &_result18); err != nil {
+	var _args21 CronnodeServiceGetTaskArgs
+	_args21.Req = req
+	var _result22 CronnodeServiceGetTaskResult
+	if err = p.Client_().Call(ctx, "get_task", &_args21, &_result22); err != nil {
 		return
 	}
-	return _result18.GetSuccess(), nil
+	return _result22.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *CronnodeServiceClient) GetTaskCount(ctx context.Context, req *GetTaskCountReq) (r *GetTaskCountRes, err error) {
+	var _args23 CronnodeServiceGetTaskCountArgs
+	_args23.Req = req
+	var _result24 CronnodeServiceGetTaskCountResult
+	if err = p.Client_().Call(ctx, "get_task_count", &_args23, &_result24); err != nil {
+		return
+	}
+	return _result24.GetSuccess(), nil
 }
 
 type CronnodeServiceProcessor struct {
@@ -1594,11 +2162,12 @@ func (p *CronnodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFu
 
 func NewCronnodeServiceProcessor(handler CronnodeService) *CronnodeServiceProcessor {
 
-	self19 := &CronnodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self19.processorMap["cron_call"] = &cronnodeServiceProcessorCronCall{handler: handler}
-	self19.processorMap["add_task"] = &cronnodeServiceProcessorAddTask{handler: handler}
-	self19.processorMap["get_task"] = &cronnodeServiceProcessorGetTask{handler: handler}
-	return self19
+	self25 := &CronnodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self25.processorMap["cron_call"] = &cronnodeServiceProcessorCronCall{handler: handler}
+	self25.processorMap["add_task"] = &cronnodeServiceProcessorAddTask{handler: handler}
+	self25.processorMap["get_task"] = &cronnodeServiceProcessorGetTask{handler: handler}
+	self25.processorMap["get_task_count"] = &cronnodeServiceProcessorGetTaskCount{handler: handler}
+	return self25
 }
 
 func (p *CronnodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -1611,12 +2180,12 @@ func (p *CronnodeServiceProcessor) Process(ctx context.Context, iprot, oprot thr
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x20 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x26 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x20.Write(oprot)
+	x26.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x20
+	return false, x26
 
 }
 
@@ -1747,6 +2316,54 @@ func (p *cronnodeServiceProcessorGetTask) Process(ctx context.Context, seqId int
 		result.Success = retval
 	}
 	if err2 = oprot.WriteMessageBegin("get_task", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type cronnodeServiceProcessorGetTaskCount struct {
+	handler CronnodeService
+}
+
+func (p *cronnodeServiceProcessorGetTaskCount) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := CronnodeServiceGetTaskCountArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("get_task_count", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	result := CronnodeServiceGetTaskCountResult{}
+	var retval *GetTaskCountRes
+	var err2 error
+	if retval, err2 = p.handler.GetTaskCount(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing get_task_count: "+err2.Error())
+		oprot.WriteMessageBegin("get_task_count", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("get_task_count", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -2412,4 +3029,220 @@ func (p *CronnodeServiceGetTaskResult) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("CronnodeServiceGetTaskResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type CronnodeServiceGetTaskCountArgs struct {
+	Req *GetTaskCountReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewCronnodeServiceGetTaskCountArgs() *CronnodeServiceGetTaskCountArgs {
+	return &CronnodeServiceGetTaskCountArgs{}
+}
+
+var CronnodeServiceGetTaskCountArgs_Req_DEFAULT *GetTaskCountReq
+
+func (p *CronnodeServiceGetTaskCountArgs) GetReq() *GetTaskCountReq {
+	if !p.IsSetReq() {
+		return CronnodeServiceGetTaskCountArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *CronnodeServiceGetTaskCountArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CronnodeServiceGetTaskCountArgs) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *CronnodeServiceGetTaskCountArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &GetTaskCountReq{}
+	if err := p.Req.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+	}
+	return nil
+}
+
+func (p *CronnodeServiceGetTaskCountArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("get_task_count_args"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *CronnodeServiceGetTaskCountArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+	}
+	return err
+}
+
+func (p *CronnodeServiceGetTaskCountArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CronnodeServiceGetTaskCountArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type CronnodeServiceGetTaskCountResult struct {
+	Success *GetTaskCountRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewCronnodeServiceGetTaskCountResult() *CronnodeServiceGetTaskCountResult {
+	return &CronnodeServiceGetTaskCountResult{}
+}
+
+var CronnodeServiceGetTaskCountResult_Success_DEFAULT *GetTaskCountRes
+
+func (p *CronnodeServiceGetTaskCountResult) GetSuccess() *GetTaskCountRes {
+	if !p.IsSetSuccess() {
+		return CronnodeServiceGetTaskCountResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *CronnodeServiceGetTaskCountResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CronnodeServiceGetTaskCountResult) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField0(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *CronnodeServiceGetTaskCountResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &GetTaskCountRes{}
+	if err := p.Success.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+	}
+	return nil
+}
+
+func (p *CronnodeServiceGetTaskCountResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("get_task_count_result"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField0(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *CronnodeServiceGetTaskCountResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+		}
+		if err := oprot.WriteFieldEnd(); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err)
+		}
+	}
+	return err
+}
+
+func (p *CronnodeServiceGetTaskCountResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CronnodeServiceGetTaskCountResult(%+v)", *p)
 }

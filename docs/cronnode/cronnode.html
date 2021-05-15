@@ -13,12 +13,15 @@
 <li><a href="#Fn_cronnode_service_add_task">add_task</a></li>
 <li><a href="#Fn_cronnode_service_cron_call">cron_call</a></li>
 <li><a href="#Fn_cronnode_service_get_task">get_task</a></li>
+<li><a href="#Fn_cronnode_service_get_task_count">get_task_count</a></li>
 </ul>
 </td>
 <td><a href="#Struct_add_task_req">add_task_req</a><br/>
 <a href="#Struct_add_task_res">add_task_res</a><br/>
 <a href="#Struct_cron_call_req">cron_call_req</a><br/>
 <a href="#Struct_cron_call_res">cron_call_res</a><br/>
+<a href="#Struct_get_task_count_req">get_task_count_req</a><br/>
+<a href="#Struct_get_task_count_res">get_task_count_res</a><br/>
 <a href="#Struct_get_task_req">get_task_req</a><br/>
 <a href="#Struct_get_task_res">get_task_res</a><br/>
 </td>
@@ -40,7 +43,7 @@
 <tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>cron</td><td><code><a href="common.html#Struct_cron_item">common.cron_item</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>admin</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>5</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><div class="definition"><h3 id="Struct_add_task_res">Struct: add_task_res</h3>
 <table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
 <tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
@@ -59,6 +62,19 @@
 <tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>crons</td><td><code>list&lt;<code><a href="common.html#Struct_cron_item">common.cron_item</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_get_task_count_req">Struct: get_task_count_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>repeated</td><td><code>bool</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>mutitask</td><td><code>bool</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>start_at</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_get_task_count_res">Struct: get_task_count_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>count</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_cronnode_service">Service: cronnode_service</h3>
 <div class="definition"><h4 id="Fn_cronnode_service_cron_call">Function: cronnode_service.cron_call</h4>
@@ -67,4 +83,6 @@
 <pre><code><a href="#Struct_add_task_res">add_task_res</a></code> add_task(<code><a href="#Struct_add_task_req">add_task_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_cronnode_service_get_task">Function: cronnode_service.get_task</h4>
 <pre><code><a href="#Struct_get_task_res">get_task_res</a></code> get_task(<code><a href="#Struct_get_task_req">get_task_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_cronnode_service_get_task_count">Function: cronnode_service.get_task_count</h4>
+<pre><code><a href="#Struct_get_task_count_res">get_task_count_res</a></code> get_task_count(<code><a href="#Struct_get_task_count_req">get_task_count_req</a></code> req)
 </pre></div></div></body></html>
