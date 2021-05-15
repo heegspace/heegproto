@@ -1517,4 +1517,10 @@ service datanode_service {
     query_user_log_res query_user_log(1:query_user_log_req req),
     // 日志数量
     user_log_count_res user_log_count(1:user_log_count_req req),
+
+    // 添加任务
+    add_task_res add_task(1:add_task_req req),
+
+    // 获取任务
+    get_task_res get_task(1:get_task_req req),
 }
