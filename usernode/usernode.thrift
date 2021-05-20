@@ -64,11 +64,8 @@ struct user_info_res {
 
 struct update_userinfo_req {
     1:common.authorize                  auth,
-    2:i64                               uid,
-    3:common.update_userinfo_field      field,
-    4:string                            new_value,
-    5:string                            old_value,
-    6:map<string,string>                extra,
+    2:common.update_userinfo_item       info,
+    3:map<string,string>                extra,
 }
 
 struct update_userinfo_res {

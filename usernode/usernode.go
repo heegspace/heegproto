@@ -2075,18 +2075,12 @@ func (p *UserInfoRes) String() string {
 
 // Attributes:
 //  - Auth
-//  - UID
-//  - Field
-//  - NewValue_
-//  - OldValue
+//  - Info
 //  - Extra
 type UpdateUserinfoReq struct {
-	Auth      *common.Authorize          `thrift:"auth,1" db:"auth" json:"auth"`
-	UID       int64                      `thrift:"uid,2" db:"uid" json:"uid"`
-	Field     common.UpdateUserinfoField `thrift:"field,3" db:"field" json:"field"`
-	NewValue_ string                     `thrift:"new_value,4" db:"new_value" json:"new_value"`
-	OldValue  string                     `thrift:"old_value,5" db:"old_value" json:"old_value"`
-	Extra     map[string]string          `thrift:"extra,6" db:"extra" json:"extra"`
+	Auth  *common.Authorize          `thrift:"auth,1" db:"auth" json:"auth"`
+	Info  *common.UpdateUserinfoItem `thrift:"info,2" db:"info" json:"info"`
+	Extra map[string]string          `thrift:"extra,3" db:"extra" json:"extra"`
 }
 
 func NewUpdateUserinfoReq() *UpdateUserinfoReq {
@@ -2102,20 +2096,13 @@ func (p *UpdateUserinfoReq) GetAuth() *common.Authorize {
 	return p.Auth
 }
 
-func (p *UpdateUserinfoReq) GetUID() int64 {
-	return p.UID
-}
+var UpdateUserinfoReq_Info_DEFAULT *common.UpdateUserinfoItem
 
-func (p *UpdateUserinfoReq) GetField() common.UpdateUserinfoField {
-	return p.Field
-}
-
-func (p *UpdateUserinfoReq) GetNewValue_() string {
-	return p.NewValue_
-}
-
-func (p *UpdateUserinfoReq) GetOldValue() string {
-	return p.OldValue
+func (p *UpdateUserinfoReq) GetInfo() *common.UpdateUserinfoItem {
+	if !p.IsSetInfo() {
+		return UpdateUserinfoReq_Info_DEFAULT
+	}
+	return p.Info
 }
 
 func (p *UpdateUserinfoReq) GetExtra() map[string]string {
@@ -2123,6 +2110,10 @@ func (p *UpdateUserinfoReq) GetExtra() map[string]string {
 }
 func (p *UpdateUserinfoReq) IsSetAuth() bool {
 	return p.Auth != nil
+}
+
+func (p *UpdateUserinfoReq) IsSetInfo() bool {
+	return p.Info != nil
 }
 
 func (p *UpdateUserinfoReq) Read(iprot thrift.TProtocol) error {
@@ -2150,7 +2141,7 @@ func (p *UpdateUserinfoReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 2:
-			if fieldTypeId == thrift.I64 {
+			if fieldTypeId == thrift.STRUCT {
 				if err := p.ReadField2(iprot); err != nil {
 					return err
 				}
@@ -2160,38 +2151,8 @@ func (p *UpdateUserinfoReq) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 3:
-			if fieldTypeId == thrift.I32 {
-				if err := p.ReadField3(iprot); err != nil {
-					return err
-				}
-			} else {
-				if err := iprot.Skip(fieldTypeId); err != nil {
-					return err
-				}
-			}
-		case 4:
-			if fieldTypeId == thrift.STRING {
-				if err := p.ReadField4(iprot); err != nil {
-					return err
-				}
-			} else {
-				if err := iprot.Skip(fieldTypeId); err != nil {
-					return err
-				}
-			}
-		case 5:
-			if fieldTypeId == thrift.STRING {
-				if err := p.ReadField5(iprot); err != nil {
-					return err
-				}
-			} else {
-				if err := iprot.Skip(fieldTypeId); err != nil {
-					return err
-				}
-			}
-		case 6:
 			if fieldTypeId == thrift.MAP {
-				if err := p.ReadField6(iprot); err != nil {
+				if err := p.ReadField3(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -2223,43 +2184,14 @@ func (p *UpdateUserinfoReq) ReadField1(iprot thrift.TProtocol) error {
 }
 
 func (p *UpdateUserinfoReq) ReadField2(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadI64(); err != nil {
-		return thrift.PrependError("error reading field 2: ", err)
-	} else {
-		p.UID = v
+	p.Info = &common.UpdateUserinfoItem{}
+	if err := p.Info.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Info), err)
 	}
 	return nil
 }
 
 func (p *UpdateUserinfoReq) ReadField3(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadI32(); err != nil {
-		return thrift.PrependError("error reading field 3: ", err)
-	} else {
-		temp := common.UpdateUserinfoField(v)
-		p.Field = temp
-	}
-	return nil
-}
-
-func (p *UpdateUserinfoReq) ReadField4(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return thrift.PrependError("error reading field 4: ", err)
-	} else {
-		p.NewValue_ = v
-	}
-	return nil
-}
-
-func (p *UpdateUserinfoReq) ReadField5(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return thrift.PrependError("error reading field 5: ", err)
-	} else {
-		p.OldValue = v
-	}
-	return nil
-}
-
-func (p *UpdateUserinfoReq) ReadField6(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -2301,15 +2233,6 @@ func (p *UpdateUserinfoReq) Write(oprot thrift.TProtocol) error {
 		if err := p.writeField3(oprot); err != nil {
 			return err
 		}
-		if err := p.writeField4(oprot); err != nil {
-			return err
-		}
-		if err := p.writeField5(oprot); err != nil {
-			return err
-		}
-		if err := p.writeField6(oprot); err != nil {
-			return err
-		}
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
 		return thrift.PrependError("write field stop error: ", err)
@@ -2334,60 +2257,21 @@ func (p *UpdateUserinfoReq) writeField1(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *UpdateUserinfoReq) writeField2(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("uid", thrift.I64, 2); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:uid: ", p), err)
+	if err := oprot.WriteFieldBegin("info", thrift.STRUCT, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:info: ", p), err)
 	}
-	if err := oprot.WriteI64(int64(p.UID)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.uid (2) field write error: ", p), err)
+	if err := p.Info.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Info), err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:uid: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:info: ", p), err)
 	}
 	return err
 }
 
 func (p *UpdateUserinfoReq) writeField3(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("field", thrift.I32, 3); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:field: ", p), err)
-	}
-	if err := oprot.WriteI32(int32(p.Field)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.field (3) field write error: ", p), err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:field: ", p), err)
-	}
-	return err
-}
-
-func (p *UpdateUserinfoReq) writeField4(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("new_value", thrift.STRING, 4); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:new_value: ", p), err)
-	}
-	if err := oprot.WriteString(string(p.NewValue_)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.new_value (4) field write error: ", p), err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:new_value: ", p), err)
-	}
-	return err
-}
-
-func (p *UpdateUserinfoReq) writeField5(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("old_value", thrift.STRING, 5); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:old_value: ", p), err)
-	}
-	if err := oprot.WriteString(string(p.OldValue)); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T.old_value (5) field write error: ", p), err)
-	}
-	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:old_value: ", p), err)
-	}
-	return err
-}
-
-func (p *UpdateUserinfoReq) writeField6(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 6); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -2404,7 +2288,7 @@ func (p *UpdateUserinfoReq) writeField6(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 6:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
 	}
 	return err
 }

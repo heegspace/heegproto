@@ -1285,11 +1285,8 @@ struct get_task_count_res {
 }
 
 struct update_userinfo_req {
-    1:i64                               uid,
-    2:common.update_userinfo_field      field,
-    3:string                            new_value,
-    4:string                            old_value,
-    5:map<string,string>                extra,
+    1:common.update_userinfo_item       info,
+    2:map<string,string>                extra,
 }
 
 struct update_userinfo_res {

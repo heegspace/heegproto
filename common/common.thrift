@@ -84,6 +84,14 @@ enum update_userinfo_field {
     USER_SEX        =   0x0005,     //  用户性别
 }
 
+struct update_userinfo_item {
+    1:i64                               uid,
+    2:update_userinfo_field             field,
+    3:string                            new_value,
+    4:string                            old_value,
+    5:map<string,string>                extra,
+}
+
 struct question_query {
     1:string        roll_id (go.tag = 'form:"roll_id" json:"roll_id"'),
     2:string        roll_name   (go.tag = 'form:"roll_name" json:"roll_name"'),
