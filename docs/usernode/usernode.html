@@ -13,6 +13,7 @@
 <li><a href="#Fn_usernode_service_updateUserInfo">updateUserInfo</a></li>
 <li><a href="#Fn_usernode_service_update_attention">update_attention</a></li>
 <li><a href="#Fn_usernode_service_update_cardid">update_cardid</a></li>
+<li><a href="#Fn_usernode_service_user_cache">user_cache</a></li>
 <li><a href="#Fn_usernode_service_user_info">user_info</a></li>
 </ul>
 </td>
@@ -22,6 +23,8 @@
 <a href="#Struct_update_user_res">update_user_res</a><br/>
 <a href="#Struct_update_userinfo_req">update_userinfo_req</a><br/>
 <a href="#Struct_update_userinfo_res">update_userinfo_res</a><br/>
+<a href="#Struct_user_cache_req">user_cache_req</a><br/>
+<a href="#Struct_user_cache_res">user_cache_res</a><br/>
 <a href="#Struct_user_info_req">user_info_req</a><br/>
 <a href="#Struct_user_info_res">user_info_res</a><br/>
 <a href="#Struct_user_obj">user_obj</a><br/>
@@ -95,6 +98,18 @@
 <tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>value</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_user_cache_req">Struct: user_cache_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>key</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>value</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>expire</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_user_cache_res">Struct: user_cache_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_usernode_service">Service: usernode_service</h3>
 <div class="definition"><h4 id="Fn_usernode_service_updateUserInfo">Function: usernode_service.updateUserInfo</h4>
@@ -105,4 +120,6 @@
 <pre><code><a href="#Struct_update_user_res">update_user_res</a></code> update_attention(<code><a href="#Struct_update_attention_req">update_attention_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_usernode_service_user_info">Function: usernode_service.user_info</h4>
 <pre><code><a href="#Struct_user_info_res">user_info_res</a></code> user_info(<code><a href="#Struct_user_info_req">user_info_req</a></code> req)
+</pre></div><div class="definition"><h4 id="Fn_usernode_service_user_cache">Function: usernode_service.user_cache</h4>
+<pre><code><a href="#Struct_user_cache_res">user_cache_res</a></code> user_cache(<code><a href="#Struct_user_cache_req">user_cache_req</a></code> req)
 </pre></div></div></body></html>

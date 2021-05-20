@@ -2553,6 +2553,519 @@ func (p *UpdateUserinfoRes) String() string {
 	return fmt.Sprintf("UpdateUserinfoRes(%+v)", *p)
 }
 
+// Attributes:
+//  - Auth
+//  - Key
+//  - Value
+//  - Expire
+//  - Extra
+type UserCacheReq struct {
+	Auth   *common.Authorize `thrift:"auth,1" db:"auth" json:"auth"`
+	Key    string            `thrift:"key,2" db:"key" json:"key"`
+	Value  string            `thrift:"value,3" db:"value" json:"value"`
+	Expire int64             `thrift:"expire,4" db:"expire" json:"expire"`
+	Extra  map[string]string `thrift:"extra,5" db:"extra" json:"extra"`
+}
+
+func NewUserCacheReq() *UserCacheReq {
+	return &UserCacheReq{}
+}
+
+var UserCacheReq_Auth_DEFAULT *common.Authorize
+
+func (p *UserCacheReq) GetAuth() *common.Authorize {
+	if !p.IsSetAuth() {
+		return UserCacheReq_Auth_DEFAULT
+	}
+	return p.Auth
+}
+
+func (p *UserCacheReq) GetKey() string {
+	return p.Key
+}
+
+func (p *UserCacheReq) GetValue() string {
+	return p.Value
+}
+
+func (p *UserCacheReq) GetExpire() int64 {
+	return p.Expire
+}
+
+func (p *UserCacheReq) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *UserCacheReq) IsSetAuth() bool {
+	return p.Auth != nil
+}
+
+func (p *UserCacheReq) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.I64 {
+				if err := p.ReadField4(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField5(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *UserCacheReq) ReadField1(iprot thrift.TProtocol) error {
+	p.Auth = &common.Authorize{}
+	if err := p.Auth.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Auth), err)
+	}
+	return nil
+}
+
+func (p *UserCacheReq) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Key = v
+	}
+	return nil
+}
+
+func (p *UserCacheReq) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 3: ", err)
+	} else {
+		p.Value = v
+	}
+	return nil
+}
+
+func (p *UserCacheReq) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return thrift.PrependError("error reading field 4: ", err)
+	} else {
+		p.Expire = v
+	}
+	return nil
+}
+
+func (p *UserCacheReq) ReadField5(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key15 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key15 = v
+		}
+		var _val16 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val16 = v
+		}
+		p.Extra[_key15] = _val16
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *UserCacheReq) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("user_cache_req"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField4(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField5(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *UserCacheReq) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("auth", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:auth: ", p), err)
+	}
+	if err := p.Auth.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Auth), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:auth: ", p), err)
+	}
+	return err
+}
+
+func (p *UserCacheReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("key", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:key: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Key)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.key (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:key: ", p), err)
+	}
+	return err
+}
+
+func (p *UserCacheReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("value", thrift.STRING, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:value: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Value)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.value (3) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:value: ", p), err)
+	}
+	return err
+}
+
+func (p *UserCacheReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("expire", thrift.I64, 4); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 4:expire: ", p), err)
+	}
+	if err := oprot.WriteI64(int64(p.Expire)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.expire (4) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 4:expire: ", p), err)
+	}
+	return err
+}
+
+func (p *UserCacheReq) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 5); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 5:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *UserCacheReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserCacheReq(%+v)", *p)
+}
+
+// Attributes:
+//  - Rescode
+//  - Resmsg
+//  - Extra
+type UserCacheRes struct {
+	Rescode rescode.Code      `thrift:"rescode,1" db:"rescode" json:"rescode"`
+	Resmsg  string            `thrift:"resmsg,2" db:"resmsg" json:"resmsg"`
+	Extra   map[string]string `thrift:"extra,3" db:"extra" json:"extra"`
+}
+
+func NewUserCacheRes() *UserCacheRes {
+	return &UserCacheRes{}
+}
+
+func (p *UserCacheRes) GetRescode() rescode.Code {
+	return p.Rescode
+}
+
+func (p *UserCacheRes) GetResmsg() string {
+	return p.Resmsg
+}
+
+func (p *UserCacheRes) GetExtra() map[string]string {
+	return p.Extra
+}
+func (p *UserCacheRes) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err := p.ReadField2(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField3(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *UserCacheRes) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return thrift.PrependError("error reading field 1: ", err)
+	} else {
+		temp := rescode.Code(v)
+		p.Rescode = temp
+	}
+	return nil
+}
+
+func (p *UserCacheRes) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 2: ", err)
+	} else {
+		p.Resmsg = v
+	}
+	return nil
+}
+
+func (p *UserCacheRes) ReadField3(iprot thrift.TProtocol) error {
+	_, _, size, err := iprot.ReadMapBegin()
+	if err != nil {
+		return thrift.PrependError("error reading map begin: ", err)
+	}
+	tMap := make(map[string]string, size)
+	p.Extra = tMap
+	for i := 0; i < size; i++ {
+		var _key17 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_key17 = v
+		}
+		var _val18 string
+		if v, err := iprot.ReadString(); err != nil {
+			return thrift.PrependError("error reading field 0: ", err)
+		} else {
+			_val18 = v
+		}
+		p.Extra[_key17] = _val18
+	}
+	if err := iprot.ReadMapEnd(); err != nil {
+		return thrift.PrependError("error reading map end: ", err)
+	}
+	return nil
+}
+
+func (p *UserCacheRes) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("user_cache_res"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField2(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField3(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *UserCacheRes) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("rescode", thrift.I32, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:rescode: ", p), err)
+	}
+	if err := oprot.WriteI32(int32(p.Rescode)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.rescode (1) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:rescode: ", p), err)
+	}
+	return err
+}
+
+func (p *UserCacheRes) writeField2(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("resmsg", thrift.STRING, 2); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:resmsg: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Resmsg)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.resmsg (2) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 2:resmsg: ", p), err)
+	}
+	return err
+}
+
+func (p *UserCacheRes) writeField3(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 3); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:extra: ", p), err)
+	}
+	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
+		return thrift.PrependError("error writing map begin: ", err)
+	}
+	for k, v := range p.Extra {
+		if err := oprot.WriteString(string(k)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+		if err := oprot.WriteString(string(v)); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err)
+		}
+	}
+	if err := oprot.WriteMapEnd(); err != nil {
+		return thrift.PrependError("error writing map end: ", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 3:extra: ", p), err)
+	}
+	return err
+}
+
+func (p *UserCacheRes) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserCacheRes(%+v)", *p)
+}
+
 type UsernodeService interface {
 	// Parameters:
 	//  - Req
@@ -2566,6 +3079,9 @@ type UsernodeService interface {
 	// Parameters:
 	//  - Req
 	UserInfo(ctx context.Context, req *UserInfoReq) (r *UserInfoRes, err error)
+	// Parameters:
+	//  - Req
+	UserCache(ctx context.Context, req *UserCacheReq) (r *UserCacheRes, err error)
 }
 
 type UsernodeServiceClient struct {
@@ -2597,34 +3113,10 @@ func (p *UsernodeServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Req
 func (p *UsernodeServiceClient) UpdateUserInfo(ctx context.Context, req *UpdateUserinfoReq) (r *UpdateUserinfoRes, err error) {
-	var _args15 UsernodeServiceUpdateUserInfoArgs
-	_args15.Req = req
-	var _result16 UsernodeServiceUpdateUserInfoResult
-	if err = p.Client_().Call(ctx, "updateUserInfo", &_args15, &_result16); err != nil {
-		return
-	}
-	return _result16.GetSuccess(), nil
-}
-
-// Parameters:
-//  - Req
-func (p *UsernodeServiceClient) UpdateCardid(ctx context.Context, req *UpdateCardidReq) (r *UpdateUserRes, err error) {
-	var _args17 UsernodeServiceUpdateCardidArgs
-	_args17.Req = req
-	var _result18 UsernodeServiceUpdateCardidResult
-	if err = p.Client_().Call(ctx, "update_cardid", &_args17, &_result18); err != nil {
-		return
-	}
-	return _result18.GetSuccess(), nil
-}
-
-// Parameters:
-//  - Req
-func (p *UsernodeServiceClient) UpdateAttention(ctx context.Context, req *UpdateAttentionReq) (r *UpdateUserRes, err error) {
-	var _args19 UsernodeServiceUpdateAttentionArgs
+	var _args19 UsernodeServiceUpdateUserInfoArgs
 	_args19.Req = req
-	var _result20 UsernodeServiceUpdateAttentionResult
-	if err = p.Client_().Call(ctx, "update_attention", &_args19, &_result20); err != nil {
+	var _result20 UsernodeServiceUpdateUserInfoResult
+	if err = p.Client_().Call(ctx, "updateUserInfo", &_args19, &_result20); err != nil {
 		return
 	}
 	return _result20.GetSuccess(), nil
@@ -2632,14 +3124,50 @@ func (p *UsernodeServiceClient) UpdateAttention(ctx context.Context, req *Update
 
 // Parameters:
 //  - Req
-func (p *UsernodeServiceClient) UserInfo(ctx context.Context, req *UserInfoReq) (r *UserInfoRes, err error) {
-	var _args21 UsernodeServiceUserInfoArgs
+func (p *UsernodeServiceClient) UpdateCardid(ctx context.Context, req *UpdateCardidReq) (r *UpdateUserRes, err error) {
+	var _args21 UsernodeServiceUpdateCardidArgs
 	_args21.Req = req
-	var _result22 UsernodeServiceUserInfoResult
-	if err = p.Client_().Call(ctx, "user_info", &_args21, &_result22); err != nil {
+	var _result22 UsernodeServiceUpdateCardidResult
+	if err = p.Client_().Call(ctx, "update_cardid", &_args21, &_result22); err != nil {
 		return
 	}
 	return _result22.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *UsernodeServiceClient) UpdateAttention(ctx context.Context, req *UpdateAttentionReq) (r *UpdateUserRes, err error) {
+	var _args23 UsernodeServiceUpdateAttentionArgs
+	_args23.Req = req
+	var _result24 UsernodeServiceUpdateAttentionResult
+	if err = p.Client_().Call(ctx, "update_attention", &_args23, &_result24); err != nil {
+		return
+	}
+	return _result24.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *UsernodeServiceClient) UserInfo(ctx context.Context, req *UserInfoReq) (r *UserInfoRes, err error) {
+	var _args25 UsernodeServiceUserInfoArgs
+	_args25.Req = req
+	var _result26 UsernodeServiceUserInfoResult
+	if err = p.Client_().Call(ctx, "user_info", &_args25, &_result26); err != nil {
+		return
+	}
+	return _result26.GetSuccess(), nil
+}
+
+// Parameters:
+//  - Req
+func (p *UsernodeServiceClient) UserCache(ctx context.Context, req *UserCacheReq) (r *UserCacheRes, err error) {
+	var _args27 UsernodeServiceUserCacheArgs
+	_args27.Req = req
+	var _result28 UsernodeServiceUserCacheResult
+	if err = p.Client_().Call(ctx, "user_cache", &_args27, &_result28); err != nil {
+		return
+	}
+	return _result28.GetSuccess(), nil
 }
 
 type UsernodeServiceProcessor struct {
@@ -2662,12 +3190,13 @@ func (p *UsernodeServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFu
 
 func NewUsernodeServiceProcessor(handler UsernodeService) *UsernodeServiceProcessor {
 
-	self23 := &UsernodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self23.processorMap["updateUserInfo"] = &usernodeServiceProcessorUpdateUserInfo{handler: handler}
-	self23.processorMap["update_cardid"] = &usernodeServiceProcessorUpdateCardid{handler: handler}
-	self23.processorMap["update_attention"] = &usernodeServiceProcessorUpdateAttention{handler: handler}
-	self23.processorMap["user_info"] = &usernodeServiceProcessorUserInfo{handler: handler}
-	return self23
+	self29 := &UsernodeServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self29.processorMap["updateUserInfo"] = &usernodeServiceProcessorUpdateUserInfo{handler: handler}
+	self29.processorMap["update_cardid"] = &usernodeServiceProcessorUpdateCardid{handler: handler}
+	self29.processorMap["update_attention"] = &usernodeServiceProcessorUpdateAttention{handler: handler}
+	self29.processorMap["user_info"] = &usernodeServiceProcessorUserInfo{handler: handler}
+	self29.processorMap["user_cache"] = &usernodeServiceProcessorUserCache{handler: handler}
+	return self29
 }
 
 func (p *UsernodeServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -2680,12 +3209,12 @@ func (p *UsernodeServiceProcessor) Process(ctx context.Context, iprot, oprot thr
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x24 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x30 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x24.Write(oprot)
+	x30.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush(ctx)
-	return false, x24
+	return false, x30
 
 }
 
@@ -2864,6 +3393,54 @@ func (p *usernodeServiceProcessorUserInfo) Process(ctx context.Context, seqId in
 		result.Success = retval
 	}
 	if err2 = oprot.WriteMessageBegin("user_info", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type usernodeServiceProcessorUserCache struct {
+	handler UsernodeService
+}
+
+func (p *usernodeServiceProcessorUserCache) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := UsernodeServiceUserCacheArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("user_cache", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	result := UsernodeServiceUserCacheResult{}
+	var retval *UserCacheRes
+	var err2 error
+	if retval, err2 = p.handler.UserCache(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing user_cache: "+err2.Error())
+		oprot.WriteMessageBegin("user_cache", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("user_cache", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -3745,4 +4322,220 @@ func (p *UsernodeServiceUserInfoResult) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("UsernodeServiceUserInfoResult(%+v)", *p)
+}
+
+// Attributes:
+//  - Req
+type UsernodeServiceUserCacheArgs struct {
+	Req *UserCacheReq `thrift:"req,1" db:"req" json:"req"`
+}
+
+func NewUsernodeServiceUserCacheArgs() *UsernodeServiceUserCacheArgs {
+	return &UsernodeServiceUserCacheArgs{}
+}
+
+var UsernodeServiceUserCacheArgs_Req_DEFAULT *UserCacheReq
+
+func (p *UsernodeServiceUserCacheArgs) GetReq() *UserCacheReq {
+	if !p.IsSetReq() {
+		return UsernodeServiceUserCacheArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *UsernodeServiceUserCacheArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UsernodeServiceUserCacheArgs) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField1(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *UsernodeServiceUserCacheArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = &UserCacheReq{}
+	if err := p.Req.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Req), err)
+	}
+	return nil
+}
+
+func (p *UsernodeServiceUserCacheArgs) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("user_cache_args"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField1(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *UsernodeServiceUserCacheArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:req: ", p), err)
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Req), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 1:req: ", p), err)
+	}
+	return err
+}
+
+func (p *UsernodeServiceUserCacheArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UsernodeServiceUserCacheArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type UsernodeServiceUserCacheResult struct {
+	Success *UserCacheRes `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewUsernodeServiceUserCacheResult() *UsernodeServiceUserCacheResult {
+	return &UsernodeServiceUserCacheResult{}
+}
+
+var UsernodeServiceUserCacheResult_Success_DEFAULT *UserCacheRes
+
+func (p *UsernodeServiceUserCacheResult) GetSuccess() *UserCacheRes {
+	if !p.IsSetSuccess() {
+		return UsernodeServiceUserCacheResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *UsernodeServiceUserCacheResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UsernodeServiceUserCacheResult) Read(iprot thrift.TProtocol) error {
+	if _, err := iprot.ReadStructBegin(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+		if err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err := p.ReadField0(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		default:
+			if err := iprot.Skip(fieldTypeId); err != nil {
+				return err
+			}
+		}
+		if err := iprot.ReadFieldEnd(); err != nil {
+			return err
+		}
+	}
+	if err := iprot.ReadStructEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+	}
+	return nil
+}
+
+func (p *UsernodeServiceUserCacheResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = &UserCacheRes{}
+	if err := p.Success.Read(iprot); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Success), err)
+	}
+	return nil
+}
+
+func (p *UsernodeServiceUserCacheResult) Write(oprot thrift.TProtocol) error {
+	if err := oprot.WriteStructBegin("user_cache_result"); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+	}
+	if p != nil {
+		if err := p.writeField0(oprot); err != nil {
+			return err
+		}
+	}
+	if err := oprot.WriteFieldStop(); err != nil {
+		return thrift.PrependError("write field stop error: ", err)
+	}
+	if err := oprot.WriteStructEnd(); err != nil {
+		return thrift.PrependError("write struct stop error: ", err)
+	}
+	return nil
+}
+
+func (p *UsernodeServiceUserCacheResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err := oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err)
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.Success), err)
+		}
+		if err := oprot.WriteFieldEnd(); err != nil {
+			return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err)
+		}
+	}
+	return err
+}
+
+func (p *UsernodeServiceUserCacheResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UsernodeServiceUserCacheResult(%+v)", *p)
 }

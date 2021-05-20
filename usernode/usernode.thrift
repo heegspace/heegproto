@@ -75,18 +75,33 @@ struct update_userinfo_res {
     4:map<string,string>        extra,
 }
 
+struct user_cache_req {
+    1:common.authorize      auth,
+    2:string                key,
+    3:string                value,
+    4:i64                  expire,
+    5:map<string,string>    extra,
+}
+
+struct user_cache_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:map<string,string>        extra,
+}
+
 service usernode_service {
     // 更新用户信息
     update_userinfo_res updateUserInfo(1:update_userinfo_req req),
 
-
     // 更新身份证号
     update_user_res update_cardid(1:update_cardid_req req),
-
 
     // 更新关注对象
     update_user_res update_attention(1:update_attention_req req),
 
     // 获取用户信息
     user_info_res user_info(1:user_info_req req), 
+
+    // 用户缓存
+    user_cache_res user_cache(1:user_cache_req req),
 }
