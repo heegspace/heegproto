@@ -50,19 +50,6 @@ struct user_res {
     4:map<string,string> extra,
 }
 
-struct update_req {
-    1:i64        uid,
-    2:string   phone,
-    3:string   email,
-    4:string    account,
-    5:string    pass_wd,
-    6:i16      status,
-    7:i64      role,
-    8:i64      vip,
-    9:double   coin
-    23:map<string,string> extra,
-}
-
 struct add_friend_req {
     1:string   phone,
     2:map<string,string> extra,
@@ -1297,6 +1284,21 @@ struct get_task_count_res {
     4:map<string,string>        extra,
 }
 
+struct update_userinfo_req {
+    1:i64                               uid,
+    2:common.update_userinfo_field      field,
+    3:string                            new_value,
+    4:string                            old_value,
+    5:map<string,string>                extra,
+}
+
+struct update_userinfo_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:string                    value,
+    4:map<string,string>        extra,
+}
+
 service datanode_service {
     // ---------- 用户接口 ------- //
     // 创建新用户
@@ -1306,7 +1308,8 @@ service datanode_service {
     // 搜索用户信息
     list<user> searchUser(1:search_user_req req),
     // 更新用户信息
-    user_res updateUser(1:update_req req),
+    update_userinfo_res updateUserInfo(1:update_userinfo_req req),
+
 
     // 关注对象操作
     add_attention_res add_attention(1:add_attention_req req),

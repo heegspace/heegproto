@@ -76,6 +76,14 @@ enum cert_tyoe {
     FACE            =   0x0001,     // 刷脸实名
 }
 
+enum update_userinfo_field {
+    USER_EMAIL      =   0x0001,     //  更新用户邮箱
+    USER_PASS       =   0x0002,     //  更新用户密码
+    USER_AVATAR     =   0x0003,     //  用户头像
+    USER_NICKNAME   =   0x0004,     //  用户名
+    USER_SEX        =   0x0005,     //  用户性别
+}
+
 struct question_query {
     1:string        roll_id (go.tag = 'form:"roll_id" json:"roll_id"'),
     2:string        roll_name   (go.tag = 'form:"roll_name" json:"roll_name"'),

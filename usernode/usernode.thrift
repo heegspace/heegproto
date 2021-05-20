@@ -26,20 +26,6 @@ struct user_obj {
     15:bool     vip_expire,
 }
 
-struct update_username_req {
-    1:common.authorize auth,
-    2:i64 uid,
-    3:string user_name
-    4:map<string,string> extra,
-}
-
-struct update_brithday_req {
-    1:common.authorize auth,
-    2:i64 uid,
-    3:string brithday
-    4:map<string,string> extra,
-}
-
 struct update_cardid_req {
     1:common.authorize auth,
     2:i64 uid,
@@ -47,12 +33,6 @@ struct update_cardid_req {
     4:map<string,string> extra,
 }
 
-struct update_avatar_req {
-    1:common.authorize auth,
-    2:i64 uid,
-    3:string avatar
-    4:map<string,string> extra,
-}
 
 struct update_attention_req {
     1:common.authorize auth,
@@ -82,18 +62,30 @@ struct user_info_res {
     4:map<string,string> extra,
 }
 
-service usernode_service {
-    // 更新用户名
-    update_user_res update_username(1:update_username_req req),
+struct update_userinfo_req {
+    1:common.authorize                  auth,
+    2:i64                               uid,
+    3:common.update_userinfo_field      field,
+    4:string                            new_value,
+    5:string                            old_value,
+    6:map<string,string>                extra,
+}
 
-    // 更新生日
-    update_user_res update_brithday(1:update_brithday_req req),
+struct update_userinfo_res {
+    1:rescode.code              rescode,
+    2:string                    resmsg,
+    3:string                    value,
+    4:map<string,string>        extra,
+}
+
+service usernode_service {
+    // 更新用户信息
+    update_userinfo_res updateUserInfo(1:update_userinfo_req req),
+
 
     // 更新身份证号
     update_user_res update_cardid(1:update_cardid_req req),
 
-    // 更新头像信息
-    update_user_res update_avatar(1:update_avatar_req req),
 
     // 更新关注对象
     update_user_res update_attention(1:update_attention_req req),

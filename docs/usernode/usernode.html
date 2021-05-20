@@ -10,21 +10,18 @@
 <tr>
 <td>usernode</td><td><a href="#Svc_usernode_service">usernode_service</a><br/>
 <ul>
+<li><a href="#Fn_usernode_service_updateUserInfo">updateUserInfo</a></li>
 <li><a href="#Fn_usernode_service_update_attention">update_attention</a></li>
-<li><a href="#Fn_usernode_service_update_avatar">update_avatar</a></li>
-<li><a href="#Fn_usernode_service_update_brithday">update_brithday</a></li>
 <li><a href="#Fn_usernode_service_update_cardid">update_cardid</a></li>
-<li><a href="#Fn_usernode_service_update_username">update_username</a></li>
 <li><a href="#Fn_usernode_service_user_info">user_info</a></li>
 </ul>
 </td>
 <td><a href="#Enum_attention_op_type">attention_op_type</a><br/>
 <a href="#Struct_update_attention_req">update_attention_req</a><br/>
-<a href="#Struct_update_avatar_req">update_avatar_req</a><br/>
-<a href="#Struct_update_brithday_req">update_brithday_req</a><br/>
 <a href="#Struct_update_cardid_req">update_cardid_req</a><br/>
 <a href="#Struct_update_user_res">update_user_res</a><br/>
-<a href="#Struct_update_username_req">update_username_req</a><br/>
+<a href="#Struct_update_userinfo_req">update_userinfo_req</a><br/>
+<a href="#Struct_update_userinfo_res">update_userinfo_res</a><br/>
 <a href="#Struct_user_info_req">user_info_req</a><br/>
 <a href="#Struct_user_info_res">user_info_res</a><br/>
 <a href="#Struct_user_obj">user_obj</a><br/>
@@ -57,29 +54,11 @@
 <tr><td>13</td><td>city</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>14</td><td>country</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>15</td><td>vip_expire</td><td><code>bool</code></td><td></td><td>default</td><td></td></tr>
-</tbody></table><br/></div><div class="definition"><h3 id="Struct_update_username_req">Struct: update_username_req</h3>
-<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
-<tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>3</td><td>user_name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
-</tbody></table><br/></div><div class="definition"><h3 id="Struct_update_brithday_req">Struct: update_brithday_req</h3>
-<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
-<tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>3</td><td>brithday</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><div class="definition"><h3 id="Struct_update_cardid_req">Struct: update_cardid_req</h3>
 <table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
 <tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>card_id</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
-</tbody></table><br/></div><div class="definition"><h3 id="Struct_update_avatar_req">Struct: update_avatar_req</h3>
-<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
-<tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>3</td><td>avatar</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><div class="definition"><h3 id="Struct_update_attention_req">Struct: update_attention_req</h3>
 <table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
@@ -105,16 +84,26 @@
 <tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>user</td><td><code><a href="#Struct_user_obj">user_obj</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_update_userinfo_req">Struct: update_userinfo_req</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>auth</td><td><code><a href="common.html#Struct_authorize">common.authorize</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>uid</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>field</td><td><code><a href="common.html#Enum_update_userinfo_field">common.update_userinfo_field</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>new_value</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>old_value</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</tbody></table><br/></div><div class="definition"><h3 id="Struct_update_userinfo_res">Struct: update_userinfo_res</h3>
+<table class="table-bordered table-striped table-condensed"><thead><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr></thead><tbody>
+<tr><td>1</td><td>rescode</td><td><code><a href="rescode.html#Enum_code">rescode.code</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>resmsg</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>value</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>extra</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </tbody></table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_usernode_service">Service: usernode_service</h3>
-<div class="definition"><h4 id="Fn_usernode_service_update_username">Function: usernode_service.update_username</h4>
-<pre><code><a href="#Struct_update_user_res">update_user_res</a></code> update_username(<code><a href="#Struct_update_username_req">update_username_req</a></code> req)
-</pre></div><div class="definition"><h4 id="Fn_usernode_service_update_brithday">Function: usernode_service.update_brithday</h4>
-<pre><code><a href="#Struct_update_user_res">update_user_res</a></code> update_brithday(<code><a href="#Struct_update_brithday_req">update_brithday_req</a></code> req)
+<div class="definition"><h4 id="Fn_usernode_service_updateUserInfo">Function: usernode_service.updateUserInfo</h4>
+<pre><code><a href="#Struct_update_userinfo_res">update_userinfo_res</a></code> updateUserInfo(<code><a href="#Struct_update_userinfo_req">update_userinfo_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_usernode_service_update_cardid">Function: usernode_service.update_cardid</h4>
 <pre><code><a href="#Struct_update_user_res">update_user_res</a></code> update_cardid(<code><a href="#Struct_update_cardid_req">update_cardid_req</a></code> req)
-</pre></div><div class="definition"><h4 id="Fn_usernode_service_update_avatar">Function: usernode_service.update_avatar</h4>
-<pre><code><a href="#Struct_update_user_res">update_user_res</a></code> update_avatar(<code><a href="#Struct_update_avatar_req">update_avatar_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_usernode_service_update_attention">Function: usernode_service.update_attention</h4>
 <pre><code><a href="#Struct_update_user_res">update_user_res</a></code> update_attention(<code><a href="#Struct_update_attention_req">update_attention_req</a></code> req)
 </pre></div><div class="definition"><h4 id="Fn_usernode_service_user_info">Function: usernode_service.user_info</h4>
