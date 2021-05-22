@@ -15770,6 +15770,7 @@ func (p *UserLog) String() string {
 //  - Func
 //  - Mutitask
 //  - Info
+//  - Version
 //  - Extra
 type CronItem struct {
 	Interval  string            `thrift:"interval,1" db:"interval" json:"interval"`
@@ -15778,7 +15779,8 @@ type CronItem struct {
 	Func      string            `thrift:"func,4" db:"func" json:"func"`
 	Mutitask  bool              `thrift:"mutitask,5" db:"mutitask" json:"mutitask"`
 	Info      string            `thrift:"info,6" db:"info" json:"info"`
-	Extra     map[string]string `thrift:"extra,7" db:"extra" json:"extra"`
+	Version   string            `thrift:"version,7" db:"version" json:"version"`
+	Extra     map[string]string `thrift:"extra,8" db:"extra" json:"extra"`
 }
 
 func NewCronItem() *CronItem {
@@ -15807,6 +15809,10 @@ func (p *CronItem) GetMutitask() bool {
 
 func (p *CronItem) GetInfo() string {
 	return p.Info
+}
+
+func (p *CronItem) GetVersion() string {
+	return p.Version
 }
 
 func (p *CronItem) GetExtra() map[string]string {
@@ -15887,8 +15893,18 @@ func (p *CronItem) Read(iprot thrift.TProtocol) error {
 				}
 			}
 		case 7:
-			if fieldTypeId == thrift.MAP {
+			if fieldTypeId == thrift.STRING {
 				if err := p.ReadField7(iprot); err != nil {
+					return err
+				}
+			} else {
+				if err := iprot.Skip(fieldTypeId); err != nil {
+					return err
+				}
+			}
+		case 8:
+			if fieldTypeId == thrift.MAP {
+				if err := p.ReadField8(iprot); err != nil {
 					return err
 				}
 			} else {
@@ -15966,6 +15982,15 @@ func (p *CronItem) ReadField6(iprot thrift.TProtocol) error {
 }
 
 func (p *CronItem) ReadField7(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return thrift.PrependError("error reading field 7: ", err)
+	} else {
+		p.Version = v
+	}
+	return nil
+}
+
+func (p *CronItem) ReadField8(iprot thrift.TProtocol) error {
 	_, _, size, err := iprot.ReadMapBegin()
 	if err != nil {
 		return thrift.PrependError("error reading map begin: ", err)
@@ -16017,6 +16042,9 @@ func (p *CronItem) Write(oprot thrift.TProtocol) error {
 			return err
 		}
 		if err := p.writeField7(oprot); err != nil {
+			return err
+		}
+		if err := p.writeField8(oprot); err != nil {
 			return err
 		}
 	}
@@ -16108,8 +16136,21 @@ func (p *CronItem) writeField6(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *CronItem) writeField7(oprot thrift.TProtocol) (err error) {
-	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 7); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:extra: ", p), err)
+	if err := oprot.WriteFieldBegin("version", thrift.STRING, 7); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:version: ", p), err)
+	}
+	if err := oprot.WriteString(string(p.Version)); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T.version (7) field write error: ", p), err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 7:version: ", p), err)
+	}
+	return err
+}
+
+func (p *CronItem) writeField8(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("extra", thrift.MAP, 8); err != nil {
+		return thrift.PrependError(fmt.Sprintf("%T write field begin error 8:extra: ", p), err)
 	}
 	if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRING, len(p.Extra)); err != nil {
 		return thrift.PrependError("error writing map begin: ", err)
@@ -16126,7 +16167,7 @@ func (p *CronItem) writeField7(oprot thrift.TProtocol) (err error) {
 		return thrift.PrependError("error writing map end: ", err)
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
-		return thrift.PrependError(fmt.Sprintf("%T write field end error 7:extra: ", p), err)
+		return thrift.PrependError(fmt.Sprintf("%T write field end error 8:extra: ", p), err)
 	}
 	return err
 }

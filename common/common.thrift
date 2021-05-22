@@ -520,5 +520,6 @@ struct cron_item {
     4:string                func,
     5:bool                  mutitask,
     6:string                info,
-    7:map<string,string>    extra,    
+    7:string                version,
+    8:map<string,string>    extra,    
 }
