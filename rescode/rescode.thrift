@@ -16,6 +16,7 @@ enum code {
     NOT_EXISTS = 400,    // 不存在
     
     NOT_DATA = 404,      // 没有数据
+    NODE_CREATE_ERR = 9999, // 节点创建失败
 
     SEND_CODE_ERR = 10000,  // 发送验证码错误
     CODE_ERROR  = 10001,    // 验证码错误

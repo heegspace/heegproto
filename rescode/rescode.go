@@ -34,6 +34,7 @@ const (
 	Code_IS_SELF                  Code = 101
 	Code_NOT_EXISTS               Code = 400
 	Code_NOT_DATA                 Code = 404
+	Code_NODE_CREATE_ERR          Code = 9999
 	Code_SEND_CODE_ERR            Code = 10000
 	Code_CODE_ERROR               Code = 10001
 	Code_CODE_EXPIRE              Code = 10002
@@ -86,6 +87,8 @@ func (p Code) String() string {
 		return "NOT_EXISTS"
 	case Code_NOT_DATA:
 		return "NOT_DATA"
+	case Code_NODE_CREATE_ERR:
+		return "NODE_CREATE_ERR"
 	case Code_SEND_CODE_ERR:
 		return "SEND_CODE_ERR"
 	case Code_CODE_ERROR:
@@ -166,6 +169,8 @@ func CodeFromString(s string) (Code, error) {
 		return Code_NOT_EXISTS, nil
 	case "NOT_DATA":
 		return Code_NOT_DATA, nil
+	case "NODE_CREATE_ERR":
+		return Code_NODE_CREATE_ERR, nil
 	case "SEND_CODE_ERR":
 		return Code_SEND_CODE_ERR, nil
 	case "CODE_ERROR":
