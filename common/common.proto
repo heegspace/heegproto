@@ -1,0 +1,559 @@
+syntax = "proto3";
+package common;
+import "rescode/rescode.proto";
+
+message authorize {
+    string              key = 1;
+    string              value = 2;
+    map<string,string>  extra = 3;
+}
+
+enum Role {
+    NORMAL          = 0x0000;        // 普通用户
+    COOPERATOR      = 0x0001;        // 企业用户
+    TEACHER         = 0x0002;        // 教师用户
+    
+    STAFFOR         = 0x0100;       // 员工同事
+    SUPEROR         = 0x0200;       // 超级用户 
+}
+
+
+enum vip_level {
+    vip_level_VIP_NOT         = 0;
+    vip_level_VIP_1LEVEL      = 1;        // 1 month
+    vip_level_VIP_2LEVEL      = 2;        // 6 month
+    vip_level_VIP_3LEVEL      = 3;        // 1 year
+    vip_level_VIP_16LEVEL     = 15;       // forever
+}
+
+enum user_status {
+    user_status_FROM_PLATOM      =  0x00000;    // 平台帐号
+    user_status_FROM_WECHAT      =  0x00001;    // wechat帐号
+    user_status_FROM_ALIPAY      =  0x00002;    // alipay帐号
+
+    user_status_FROM_INVALID     =  0x00801;    // 无效用户
+}
+
+enum from_platom {
+    from_platom_FROM_LOCAL      = 0x0000;     // 自己平台
+    from_platom_FROM_WECHAT     = 0x0001;    // 微信平台
+    from_platom_FROM_ALIPAY     = 0x0002;    // 支付宝平台
+}
+
+enum search_tyle {
+    FROM_QUESTION   = 0x0000;   // 来自试题
+    FROM_GRPAH      = 0x0001;   // 来自图谱
+    FROM_CLOUD      = 0x0002;   // 来自云盘
+    FROM_PRIVATE    = 0x0003;   // 来自自己
+}
+
+enum approve_dest {
+    search_tyle_APPROVE_TIMU_MODIFY  = 0x0000;  // 审核修改试题
+    search_tyle_APPROVE_TIMU_ADD     = 0x0001;  // 审核试题添加
+}
+
+// 教师用户的状态
+enum teacher_status {
+    teacher_status_CREATE          =   0x0000;     // 创建
+    teacher_status_APPROVING       =   0x0001;     // 审核中
+    teacher_status_APPOVED         =   0x0002;     // 已经审核
+    teacher_status_PASSED          =   0x0004;     // 审核通过
+    teacher_status_NOPASS          =   0x0008;     // 审核未通过
+    teacher_status_LOGOUT          =   0x0010;     // 已注销
+}
+
+enum teacher2user_status {
+    teacher2user_status_FOCUS           =   0x0000;     // 关注
+    teacher2user_status_CANCEL          =   0x0001;     // 取消关注
+}
+
+enum note_status {
+    note_status_CREATE          =   0x0000;     // Create
+    note_status_DELETE          =   0x0001;     // Delete
+}
+
+enum cert_tyoe {
+    cert_tyoe_ID              =   0x0000;     // 身份证实名
+    cert_tyoe_FACE            =   0x0001;     // 刷脸实名
+}
+
+enum update_userinfo_field {
+    update_userinfo_field_USER_NONE       =   0x0000;     //  
+    update_userinfo_field_USER_EMAIL      =   0x0001;     //  更新用户邮箱
+    update_userinfo_field_USER_PASS       =   0x0002;     //  更新用户密码
+    update_userinfo_field_USER_AVATAR     =   0x0003;     //  用户头像
+    update_userinfo_field_USER_NICKNAME   =   0x0004;     //  用户名
+    update_userinfo_field_USER_SEX        =   0x0005;     //  用户性别
+}
+
+message update_userinfo_item {
+    int64                               uid = 1;
+    update_userinfo_field             field = 2;
+    string                            new_value = 3;
+    string                            old_value = 4;
+    map<string,string>                extra = 5;
+}
+
+message question_query {
+    // @inject_tag: form:"roll_id"
+    string        roll_id = 1;
+    // @inject_tag: form:"roll_name"
+    string        roll_name = 2;
+    // @inject_tag: form:"grade_id"
+    string        grade_id = 3;
+    // @inject_tag: form:"grade_name"
+    string        grade_name = 4;
+    // @inject_tag: form:"subject_id"
+    string        subject_id = 5;
+    // @inject_tag: form:"subject_name"
+    string        subject_name = 6;
+    // @inject_tag: form:"version_id"
+    string        version_id = 7;
+    // @inject_tag: form:"version_name"
+    string        version_name = 8;
+    // @inject_tag: form:"chapter_id"
+    string        chapter_id = 9;
+    // @inject_tag: form:"chapter_name"
+    string       chapter_name = 10;
+    // @inject_tag: form:"ti_xing_id"
+    string       ti_xing_id = 11;
+    // @inject_tag: form:"ti_xing_name"
+    string       ti_xing_name  = 12;
+    // @inject_tag: form:"source_id"
+    string       source_id  = 13;
+    // @inject_tag: form:"source_name"
+    string       source_name = 14;
+    // @inject_tag: form:"page"
+    int32          page = 15;
+    // @inject_tag: form:"size"
+    int32          size = 16;
+    // @inject_tag: form:"extra"
+    map<string,string> extra = 17;
+}
+
+message version_item {
+    string    uid = 1;
+    string    subject_id = 2;
+    string    name = 3;
+    string    sign = 4;
+    string    create_at = 5;
+}
+
+message question_option {
+    // @inject_tag: form:"name"
+    string              name = 1;
+    // @inject_tag: form:"images"
+    repeated string     images = 2;
+}
+
+message question {
+    // @inject_tag: form:"timu"
+    string                  timu = 1;
+    // @inject_tag: form:"images"
+    repeated string          images = 2;
+    // @inject_tag: form:"options"
+    repeated question_option options = 3;
+}
+
+message timu_item {
+    string    uid = 1;
+    string    roll_id = 2;
+    string    roll_name = 3;
+    string    grade_id = 4;
+    string    grade_name = 5;
+    string    subject_id = 6;
+    string    subject_name = 7;
+    string    version_id = 8;
+    string    version_name = 9;
+    string   chapter_id = 10;
+    string   chapter_name = 11;
+    string   chapter_gd = 12;
+    string   source_id = 13;
+    string   source_name = 14;
+    string   ti_xing_id = 15;
+    string   ti_xing_name = 16;
+    string   sign = 17;
+    question data = 18;
+    bool     is_collect = 19;
+    string   create_at = 20;
+}
+
+
+message tixing_item {
+    string    uid = 1;
+    string    version_id = 2;
+    string    chapter_id = 3;
+    string    name = 4;
+    string    sign = 5;
+    string    create_at = 6;
+}
+
+message source_item {
+    string    uid = 1;
+    string    version_id = 2;
+    string    chapter_id = 3;
+    string    name = 4;
+    string    sign = 5;
+    string    create_at = 6;
+}
+
+message chapter_item {
+    string    uid = 1;
+    string    version_id = 2;
+    string    name = 3;
+    string    chapter_gd = 4;
+    string    sign = 5;
+    string    create_at = 6;
+}
+
+message modify_meta {
+    string    uid = 1;
+    string    roll_id = 2;
+    string    roll_name = 3;
+    string    grade_id = 4;
+    string    grade_name = 5;
+    string    subject_id = 6;
+    string    subject_name = 7;
+    string    version_id = 8;
+    string    version_name = 9;
+    string   chapter_id = 10;
+    string   chapter_name = 11;
+    string   chapter_gd = 12;
+    string   source_id = 13;
+    string   source_name = 14;
+    string   ti_xing_id = 15;
+    string   ti_xing_name = 16;
+    string   sign = 17;
+}
+
+message modify_item {
+    int64       id = 1;
+    int64       userid = 2;
+    string    ti_mu_id = 3;
+    question  source = 4;
+    question  data = 5;
+    string    sign = 6;
+    string    status = 7;
+    string    msg = 8;
+    modify_meta meta = 9;
+    string   confirmer = 10;
+    string   create_at = 11;
+    string   update_at = 12;
+    string   username = 13;
+    string   confirmname = 14;
+    double   reward = 15;
+}
+
+message search_hits_total {
+    int64       value = 1;
+    string    relation = 2;
+}
+
+message high_item {
+    repeated string high = 1;
+}
+
+message search_hits_item {
+    
+   string         index = 1;
+   string         type = 2;
+   string         id = 3;
+   double         score = 4;
+   timu_item      source = 5;
+   // proto not support map<string,repeated string>
+   map<string,high_item> high_light = 6;
+}
+
+message search_hits {
+    search_hits_total         total = 1;
+    double                    max_score = 2;
+    repeated search_hits_item    hits = 3;
+}
+
+message search_shards {
+    int64       total = 1;
+    int64       successful = 2;
+    int64       skipped = 3;
+    int64       failed = 4;
+}
+
+message search_topic {
+    int32           took = 1;
+    bool            time_out = 2;
+    search_shards   shards = 3;
+    search_hits     hits = 4;
+}
+
+message grade_cate {
+    string    uid = 1;
+    string    roll_id = 2;
+    int64     sort = 3;
+    string    name = 4;
+    string    create_at = 5;
+}
+
+message school_static {
+    int64               type = 1;
+    string              title = 2;
+    repeated string     content = 3;
+    string              href = 4;
+    string              target = 5;
+}
+
+message grade_item {
+    string       uid = 1;
+    string      name = 2;
+    int64       sort = 3;
+    string      href = 4;
+    string      heritid = 5;
+}
+
+
+message grade_subject {
+    string                  roll_uid = 1;
+    string                  grade_uid = 2;
+    string                  grade_name = 3;
+    int64                   sort = 4;
+    repeated grade_item     subjects = 5;
+}
+
+message school_roll {
+    string     uid = 1;
+    int64       index = 2;
+    string    name = 3;
+    string    create_at = 4;
+}
+
+message subject_cate {
+    string       uid = 1;
+    string    roll_id = 2;
+    string    grade_id = 3;
+    string    subject = 4;
+    int64       sort = 5;
+    string    href = 6;
+    string    create_at = 7;
+}
+
+message search_history_item {
+    string                keyword = 1;
+    double                weight = 2;
+    string                source = 3;
+    map<string,string>    extra = 4;
+}
+
+
+message user_info {
+    string                avatar = 1;
+    string                nickname = 2;
+    int32                   sex = 3;
+    string                province = 4;
+    string                city = 5;
+    string                country = 6;
+    int64                   vip = 7;
+}
+
+message wechat_userinfo {
+    string                openid = 1;
+    string                nickname = 2;
+    int32                   sex = 3;
+    string                province = 4;
+    string                city = 5;
+    string                country = 6;
+    string                headimgurl = 7;
+    repeated string         privilege = 8;
+    string                unionid = 9;
+}
+
+message alipay_userinfo {
+    string    code = 1;
+    string    msg = 2;
+    string    user_id = 3;
+    string    avatar = 4;
+    string    province = 5;
+    string    city = 6;
+    string    nick_name = 7;
+    string    gender = 8;
+}
+
+message baidu_concept {
+    string    level1 = 1; // 一级概
+    string    level2 = 2; // 二级概念
+}
+
+message baidu_entity {
+    string            status = 1;             // 用于对关联结果进行标识
+    string            confidence = 2;         // 实体关联至该@id的置信度
+    string            annoType = 3;           // 标注类型：Instance | Category | Property
+    baidu_concept    concept = 4;            // 概念标注结果
+    string            bdbkKgId = 5;           // 百科newid
+    string            mainReqRankList = 6;    // 主需求实体，列出所有候选实体信息，根据热度从高到低排列
+    string            bdbkUrl = 7;            // 百科url
+    string            offset = 8;
+    string            desc = 9;               // 实体的简介
+    string           mention = 10;            // 实体名
+}
+
+message add_timu_item {
+    string    roll_id = 1;
+    string    roll_name = 2;
+    string    grade_id = 3;
+    string    grade_name = 4;
+    string    subject_id = 5;
+    string    subject_name = 6;
+    string    version_id = 7;
+    string    version_name = 8;
+    string    chapter_id = 9;
+    string   chapter_name = 10;
+    string   chapter_gd = 11;
+    string   source_id = 12;
+    string   source_name = 13;
+    string   ti_xing_id = 14;
+    string   ti_xing_name = 15;
+    string   sign = 16;
+    question data = 17;
+    int64      user_id = 18;
+    string   user_name = 19;
+    int64      approvor = 20;
+    string   approvor_name = 21;
+    string   create_at = 22;
+    string   msg = 23;
+    string   status = 24;
+}
+
+message baidu_word_location {
+    int32   top = 1;
+    int32   left = 2;
+    int32   width = 3;
+    int32   height = 4;
+}
+
+message baidu_line_probability {
+
+}
+
+message baidu_words_item {
+    baidu_word_location     location = 1;
+    baidu_line_probability  probability = 2;
+    string            word = 3;
+}
+
+message baidu_result_item {
+    string                words_type = 1;
+    baidu_words_item      word = 2;
+}
+
+message baidu_doc_analysis {
+    int64                       log_id = 1;
+    int32                       img_direction = 2;
+    int32                       results_num = 3;
+    int32                       layouts_num = 4;
+    repeated baidu_result_item   results = 5;
+}
+
+
+message baidu_ident_item {
+    int64                           uid = 1;
+    string                        iid = 2;
+    string                        sign = 3;
+    string                        status = 4;
+    baidu_doc_analysis            result = 5;
+    string                        create_at = 6;
+    string                        update_at = 7;
+    double                        reward = 8;
+    string                        image_url = 9;
+}
+
+message note_meta {
+    int64           uid = 1;
+    int64           user_id = 2;
+    string        title = 3;
+    string        thumb = 4;
+    string        desc = 5;
+    string        sign = 6;
+    string        create_at = 7;
+    string        update_at = 8;
+    repeated string   tag = 9;
+    string       data1 = 10;
+    string       data2 = 11;
+    int64          status = 12;
+    string       bg_color = 13;
+    int64          note_type = 14;
+}
+
+message note_tag {
+    int64       id = 1;
+    int64       user_id = 2;
+    string    tag = 3;
+    string    lang = 4;
+    int64       status = 5;
+    int64       create_at = 6;
+}
+
+message person_cert {
+    int64                   uid = 1;
+    string                idname = 2;
+    string                idnum = 3;
+    string                image_up = 4;
+    string                image_down = 5;
+    string                image_face = 6;
+    int32                   cert_type = 7;
+    string                status = 8;
+    string                info = 9;
+    string               mark = 10;
+    int64                  approv_id = 11;
+    string               approv_name = 12;
+    int64                  submit_at = 13;
+    int64                  create_at = 14;
+    int64                  update_at = 15;
+    string               data1 = 16;
+    string               data2 = 17;
+    map<string,string>   extra = 18;
+}
+
+
+message baidu_idcard_ident {
+    int32                   image_status = 1; // 0:成功  1:失败
+    string                idname = 2;
+    string                idnum = 3;
+    string                address = 4;
+    string                brithday = 5;
+    string                sex = 6;
+    string                ethnic = 7; // 民族
+    map<string,string>    extra = 8;
+}
+
+// 日志类型,日志类型并不重复，所有采用对应的整型
+enum log_type {
+    log_type_NONE_USER           =   0x0000; // 
+    log_type_CREATE_USER         =   0x0001; // 用户创建
+    log_type_UPDATE_USER         =   0x0002; // 用户更新
+    log_type_LOGIN_USER          =   0x0003; // 用户登录
+    log_type_LOGOUT_USER         =   0x0004; // 用户退出
+    log_type_SUBMIT_CERT         =   0x0005; // 提交实名
+    log_type_CANCEL_CERT         =   0x0006; // 取消实名
+    log_type_CERT_FAIL           =   0x0007; // 实名失败
+    log_type_CERT_SUCCESS        =   0x0008; // 实名成功
+    log_type_VIP_LEVELUP         =   0x0009; // 升级vip
+    log_type_COIN_APPEND         =   0x000A; // 增加coin
+    log_type_COIN_USED           =   0x000B; // 减少coin
+}
+
+// 用户日志
+message user_log {
+    int64       id = 1;
+    int64       uid = 2;
+    int32       log_type = 3;
+    string    log_info = 4;
+    string    create_at = 5;
+}
+
+message cron_item {
+    string                interval = 1;
+    string                start_at = 2;
+    bool                  repeadted = 3;
+    string                func = 4;
+    bool                  mutitask = 5;
+    string                info = 6;
+    string                version = 7;
+    map<string,string>    extra = 8;
+}
