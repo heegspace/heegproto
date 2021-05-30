@@ -1,0 +1,49 @@
+syntax = "proto3";
+package registernode;
+import "rescode/rescode.proto";
+import "common/common.proto";
+
+
+message normal_user_req {
+    common.authorize auth = 1;
+    string    account = 2;
+    string    passwd = 3;
+    string    code = 4;
+    bool      policy = 5;
+    string    source = 6;
+    string    invitor = 7;
+    map<string,string> extra = 8;
+}
+
+message normal_user_res {
+    rescode.code          rescode = 1;
+    string                resmsg = 2;
+    map<string,string>    extra = 3;
+}
+
+message cooperator_user_req {
+    common.authorize auth = 1;
+    string    account = 2;
+    string    passwd = 3;
+    string    code = 4;
+    string    contactor = 5;  // 联系人
+    string    email = 6;
+    bool      policy = 7;
+    string    source = 8;
+    string    invitor = 9;
+    map<string,string> extra = 10;
+}
+
+message cooperator_user_res {
+    rescode.code          rescode = 1;
+    string                resmsg =  2;
+    map<string,string>    extra = 3;
+}
+
+service registernode_service {
+    // 创建普通用户
+    rpc    normal_user(normal_user_req) returns(normal_user_res) {}
+
+    // 创建合作用户
+    rpc  cooperator_user(cooperator_user_req) returns(cooperator_user_res) {}
+}
