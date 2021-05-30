@@ -10,7 +10,7 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
-	_ "rescode"
+	_ "github.com/heegspace/heegproto/rescode"
 	sync "sync"
 )
 

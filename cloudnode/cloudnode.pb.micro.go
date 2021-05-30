@@ -4,11 +4,11 @@
 package cloudnode
 
 import (
-	_ "common"
+	_ "github.com/heegspace/heegproto/common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
 	math "math"
-	_ "rescode"
+	_ "github.com/heegspace/heegproto/rescode"
 )
 
 import (

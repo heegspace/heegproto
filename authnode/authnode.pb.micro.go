@@ -4,11 +4,11 @@
 package authnode
 
 import (
-	_ "common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
 	math "math"
-	_ "rescode"
+	_ "github.com/heegspace/heegproto/common"
+	_ "github.com/heegspace/heegproto/rescode"
 )
 
 import (

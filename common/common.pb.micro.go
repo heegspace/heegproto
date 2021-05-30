@@ -7,7 +7,7 @@ import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
 	math "math"
-	_ "rescode"
+	_ "github.com/heegspace/heegproto/rescode"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
