@@ -301,7 +301,7 @@ message school_static {
 }
 
 message grade_item {
-    string       uid = 1;
+    string      uid = 1;
     string      name = 2;
     int64       sort = 3;
     string      href = 4;
@@ -318,18 +318,18 @@ message grade_subject {
 }
 
 message school_roll {
-    string     uid = 1;
-    int64       index = 2;
+    string    uid = 1;
+    int64     index = 2;
     string    name = 3;
     string    create_at = 4;
 }
 
 message subject_cate {
-    string       uid = 1;
+    string    uid = 1;
     string    roll_id = 2;
     string    grade_id = 3;
     string    subject = 4;
-    int64       sort = 5;
+    int64     sort = 5;
     string    href = 6;
     string    create_at = 7;
 }
@@ -345,22 +345,22 @@ message search_history_item {
 message user_info {
     string                avatar = 1;
     string                nickname = 2;
-    int32                   sex = 3;
+    int32                 sex = 3;
     string                province = 4;
     string                city = 5;
     string                country = 6;
-    int64                   vip = 7;
+    int64                 vip = 7;
 }
 
 message wechat_userinfo {
     string                openid = 1;
     string                nickname = 2;
-    int32                   sex = 3;
+    int32                 sex = 3;
     string                province = 4;
     string                city = 5;
     string                country = 6;
     string                headimgurl = 7;
-    repeated string         privilege = 8;
+    repeated string       privilege = 8;
     string                unionid = 9;
 }
 
@@ -384,25 +384,25 @@ message baidu_entity {
     string            status = 1;             // 用于对关联结果进行标识
     string            confidence = 2;         // 实体关联至该@id的置信度
     string            annoType = 3;           // 标注类型：Instance | Category | Property
-    baidu_concept    concept = 4;            // 概念标注结果
+    baidu_concept     concept = 4;            // 概念标注结果
     string            bdbkKgId = 5;           // 百科newid
     string            mainReqRankList = 6;    // 主需求实体，列出所有候选实体信息，根据热度从高到低排列
     string            bdbkUrl = 7;            // 百科url
     string            offset = 8;
     string            desc = 9;               // 实体的简介
-    string           mention = 10;            // 实体名
+    string            mention = 10;            // 实体名
 }
 
 message add_timu_item {
-    string    roll_id = 1;
-    string    roll_name = 2;
-    string    grade_id = 3;
-    string    grade_name = 4;
-    string    subject_id = 5;
-    string    subject_name = 6;
-    string    version_id = 7;
-    string    version_name = 8;
-    string    chapter_id = 9;
+    string   roll_id = 1;
+    string   roll_name = 2;
+    string   grade_id = 3;
+    string   grade_name = 4;
+    string   subject_id = 5;
+    string   subject_name = 6;
+    string   version_id = 7;
+    string   version_name = 8;
+    string   chapter_id = 9;
     string   chapter_name = 10;
     string   chapter_gd = 11;
     string   source_id = 12;
@@ -411,9 +411,9 @@ message add_timu_item {
     string   ti_xing_name = 15;
     string   sign = 16;
     question data = 17;
-    int64      user_id = 18;
+    int64    user_id = 18;
     string   user_name = 19;
-    int64      approvor = 20;
+    int64    approvor = 20;
     string   approvor_name = 21;
     string   create_at = 22;
     string   msg = 23;
@@ -434,7 +434,7 @@ message baidu_line_probability {
 message baidu_words_item {
     baidu_word_location     location = 1;
     baidu_line_probability  probability = 2;
-    string            word = 3;
+    string                  word = 3;
 }
 
 message baidu_result_item {
@@ -447,12 +447,12 @@ message baidu_doc_analysis {
     int32                       img_direction = 2;
     int32                       results_num = 3;
     int32                       layouts_num = 4;
-    repeated baidu_result_item   results = 5;
+    repeated baidu_result_item  results = 5;
 }
 
 
 message baidu_ident_item {
-    int64                           uid = 1;
+    int64                         uid = 1;
     string                        iid = 2;
     string                        sign = 3;
     string                        status = 4;
@@ -464,8 +464,8 @@ message baidu_ident_item {
 }
 
 message note_meta {
-    int64           uid = 1;
-    int64           user_id = 2;
+    int64         uid = 1;
+    int64         user_id = 2;
     string        title = 3;
     string        thumb = 4;
     string        desc = 5;
@@ -475,44 +475,44 @@ message note_meta {
     repeated string   tag = 9;
     string       data1 = 10;
     string       data2 = 11;
-    int64          status = 12;
+    int64        status = 12;
     string       bg_color = 13;
-    int64          note_type = 14;
+    int64        note_type = 14;
 }
 
 message note_tag {
-    int64       id = 1;
-    int64       user_id = 2;
+    int64     id = 1;
+    int64     user_id = 2;
     string    tag = 3;
     string    lang = 4;
-    int64       status = 5;
-    int64       create_at = 6;
+    int64     status = 5;
+    int64     create_at = 6;
 }
 
 message person_cert {
-    int64                   uid = 1;
+    int64                 uid = 1;
     string                idname = 2;
     string                idnum = 3;
     string                image_up = 4;
     string                image_down = 5;
     string                image_face = 6;
-    int32                   cert_type = 7;
+    int32                 cert_type = 7;
     string                status = 8;
     string                info = 9;
-    string               mark = 10;
-    int64                  approv_id = 11;
-    string               approv_name = 12;
-    int64                  submit_at = 13;
-    int64                  create_at = 14;
-    int64                  update_at = 15;
-    string               data1 = 16;
-    string               data2 = 17;
-    map<string,string>   extra = 18;
+    string                mark = 10;
+    int64                 approv_id = 11;
+    string                approv_name = 12;
+    int64                 submit_at = 13;
+    int64                 create_at = 14;
+    int64                 update_at = 15;
+    string                data1 = 16;
+    string                data2 = 17;
+    map<string,string>    extra = 18;
 }
 
 
 message baidu_idcard_ident {
-    int32                   image_status = 1; // 0:成功  1:失败
+    int32                 image_status = 1; // 0:成功  1:失败
     string                idname = 2;
     string                idnum = 3;
     string                address = 4;
