@@ -1,170 +1,171 @@
-syntax = "proto3";
+syntax  =  "proto3";
 package notenode;
 import "rescode/rescode.proto";
 import "common/common.proto";
+
 message note_item {
-    int64                   nid=1;
-    string                  data=2;
-    string                  html=3;
-    repeated string         tag=4;
-    string                  bgcolor=5;
-    int64                   note_type=6;
+    int64                   nid = 1;
+    string                  data = 2;
+    string                  html = 3;
+    repeated string         tag = 4;
+    string                  bgcolor = 5;
+    int64                   note_type = 6;
 }
 
 message update_note_req {
-    common.authorize            auth=1;
-    int64                       uid=2;
-    note_item                   note=3;
-    map<string,string>          extra=4;
+    common.authorize            auth = 1;
+    int64                       uid = 2;
+    note_item                   note = 3;
+    map<string,string>          extra = 4;
 }
 
 message note_meta_res {
-    rescode.code        rescode=1;
-    string              resmsg=2;
-    common.note_meta    meta=3;
-    map<string,string>  extra=4;
+    rescode.code        rescode = 1;
+    string              resmsg = 2;
+    common.note_meta    meta = 3;
+    map<string,string>  extra = 4;
 }
  
 message note_meta_list_req {
-    common.authorize        auth=1;
-    int64                   uid=2;
-    int64                   userid=3;
-    string                  tag=4;
-    int64                   status=5;
-    int32                   page=6;
-    int32                   size=7;
-    int64                   note_type=8;
-    map<string,string>      extra=10;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    int64                   userid = 3;
+    string                  tag = 4;
+    int64                   status = 5;
+    int32                   page = 6;
+    int32                   size = 7;
+    int64                   note_type = 8;
+    map<string,string>      extra = 10;
 }
 
 message note_meta_list_res {
-    rescode.code                    rescode=1;
-    string                          resmsg=2;
-    repeated common.note_meta       meta=3;
-    map<string,string>              extra=4;
+    rescode.code                    rescode = 1;
+    string                          resmsg = 2;
+    repeated common.note_meta       meta = 3;
+    map<string,string>              extra = 4;
 }
 
 message note_list_count_req {
-    common.authorize        auth=1;
-    int64                   uid=2;
-    int64                   userid=3;
-    string                  tag=3;
-    int64                   status=4;
-    int64                   note_type=5;
-    map<string,string>      extra=6;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    int64                   userid = 3;
+    string                  tag = 4;
+    int64                   status = 5;
+    int64                   note_type = 6;
+    map<string,string>      extra = 7;
 }
 
 message note_list_count_res {
-    rescode.code        rescode=1;
-    string              resmsg=2;
-    int32               count=3;
-    map<string,string>  extra=4;
+    rescode.code        rescode = 1;
+    string              resmsg = 2;
+    int32               count = 3;
+    map<string,string>  extra = 4;
 }
 
 message note_data_req {
-    common.authorize        auth=1;
-    int64                   uid=2;
-    int64                   nid=3;
-    map<string,string>      extra=4;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    int64                   nid = 3;
+    map<string,string>      extra = 4;
 }
 
 message note_data_res {
-    rescode.code        rescode=1;
-    string              resmsg=2;
-    string              data=3;
-    map<string,string>  extra=4;
+    rescode.code        rescode = 1;
+    string              resmsg = 2;
+    string              data = 3;
+    map<string,string>  extra = 4;
 }
 
 message note_html_req {
-    common.authorize        auth=1;
-    int64                   uid=2;
-    int64                   nid=3;
-    map<string,string>      extra=4;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    int64                   nid = 3;
+    map<string,string>      extra = 4;
 }
 
 message note_html_res {
-    rescode.code        rescode=1;
-    string              resmsg=2;
-    string              data=3;
-    map<string,string>  extra=4;
+    rescode.code        rescode = 1;
+    string              resmsg = 2;
+    string              data = 3;
+    map<string,string>  extra = 4;
 }
 
 
 message note_cooper_req {
-    common.authorize        auth=1;
-    int64                   nid=2;
-    int64                   userid=3;
-    repeated string         user=4;
-    map<string,string>      extra=5;
+    common.authorize        auth = 1;
+    int64                   nid = 2;
+    int64                   userid = 3;
+    repeated string         user = 4;
+    map<string,string>      extra = 5;
 }
 
 message note_cooper_res {
-    rescode.code                    rescode=1;
-    string                          resmsg=2;
-    repeated common.user_info       user=3;
-    map<string,string>              extra=4;
+    rescode.code                    rescode = 1;
+    string                          resmsg = 2;
+    repeated common.user_info       user = 3;
+    map<string,string>              extra = 4;
 }
 
 message note_tag_req {
-    common.authorize      auth=1;
-    int64                 nid=2;
-    int64                 userid=3;
-    repeated string       tags=4;
-    map<string,string>    extra=5;
+    common.authorize      auth = 1;
+    int64                 nid = 2;
+    int64                 userid = 3;
+    repeated string       tags = 4;
+    map<string,string>    extra = 5;
 }
 
 message note_tag_res {
-    rescode.code       rescode=1;
-    string             resmsg=2;
-    repeated string    tags=3;
-    map<string,string> extra=4;
+    rescode.code       rescode = 1;
+    string             resmsg = 2;
+    repeated string    tags = 3;
+    map<string,string> extra = 4;
 }
 
 message note_bgcolor_req {
-    common.authorize      auth=1;
-    int64                 nid=2;
-    int64                 userid=3;
-    string                bgcolor=4;
-    map<string,string>    extra=5;
+    common.authorize      auth = 1;
+    int64                 nid = 2;
+    int64                 userid = 3;
+    string                bgcolor = 4;
+    map<string,string>    extra = 5;
 } 
 
 message note_bgcolor_res {
-    rescode.code       rescode=1;
-    string             resmsg=2;
-    string             bgcolor=3;
-    map<string,string> extra=4;
+    rescode.code       rescode = 1;
+    string             resmsg = 2;
+    string             bgcolor = 3;
+    map<string,string> extra = 4;
 }
 
 
 message note_tag_add_req {
-    common.authorize      auth=1;
-    int64                 userid=2;
-    string                cn=3;
-    string                eg=4;
-    map<string,string>    extra=5;
+    common.authorize      auth = 1;
+    int64                 userid = 2;
+    string                cn = 3;
+    string                eg = 4;
+    map<string,string>    extra = 5;
 }
 
 message note_tag_add_res {
-    rescode.code      rescode=1;
-    string            resmsg=2;
-    map<string,string> extra=3;
+    rescode.code      rescode = 1;
+    string            resmsg = 2;
+    map<string,string> extra = 3;
 }
 
 message note_tag_list_req {
-    common.authorize        auth=1;
-    int64                   user_id=2;
-    string                  lang=3;
-    int64                   status=4;
-    int32                   page=5;
-    int32                   size=6;
-    map<string,string>      extra=7;
+    common.authorize        auth = 1;
+    int64                   user_id = 2;
+    string                  lang = 3;
+    int64                   status = 4;
+    int32                   page = 5;
+    int32                   size = 6;
+    map<string,string>      extra = 7;
 }
 
 message note_tag_list_res {
-    rescode.code              rescode=1;
-    string                    resmsg=2;
-    repeated common.note_tag  tags=3;
-    map<string,string>        extra=4;
+    rescode.code              rescode = 1;
+    string                    resmsg = 2;
+    repeated common.note_tag  tags = 3;
+    map<string,string>        extra = 4;
 }
 
 service notenode_service {

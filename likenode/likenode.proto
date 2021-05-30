@@ -1,51 +1,52 @@
 
-syntax = "proto3";
+syntax  =  "proto3";
 package likenode;
 import "rescode/rescode.proto";
 import "common/common.proto";
+
 message likes_count_req {
-    common.authorize     auth=1;
-    int64                uid=2;
-    string               mid=3;
+    common.authorize     auth = 1;
+    int64                uid = 2;
+    string               mid = 3;
 }
 
 message likes_count_res {
-    rescode.code      rescode=1;
-    int32             count=2;
-    string            resmsg=3;
-    map<string,string> extra=4;
+    rescode.code      rescode = 1;
+    int32             count = 2;
+    string            resmsg = 3;
+    map<string,string> extra = 4;
 }
 
 message likes_add_req {
-    common.authorize     auth=1;
-    int64                uid=2;
-    string               mid=3;
+    common.authorize     auth = 1;
+    int64                uid = 2;
+    string               mid = 3;
 }
 
 message likes_add_res {
-    rescode.code          rescode=1;
-    string                resmsg=2;
-    map<string,string>    extra=3;
+    rescode.code          rescode = 1;
+    string                resmsg = 2;
+    map<string,string>    extra = 3;
 }
 
 message likes_list_req {
-    common.authorize auth=1;
-    int64            uid=2;
-    string           mid=3;
-    int32            page=4;
-    int32            size=5;
+    common.authorize auth = 1;
+    int64            uid = 2;
+    string           mid = 3;
+    int32            page = 4;
+    int32            size = 5;
 }
 
 message likes {
-    int64               uid=1;
-    int64               create_at=2;
+    int64               uid = 1;
+    int64               create_at = 2;
 }
 
 message likes_list_res {
-    rescode.code      rescode=1;
-    string            resmsg=2;
-    repeated likes    data=3;
-    map<string,string> extra=4;
+    rescode.code      rescode = 1;
+    string            resmsg = 2;
+    repeated likes    data = 3;
+    map<string,string> extra = 4;
 }
 
 service likenode_service {

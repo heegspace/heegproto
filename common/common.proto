@@ -8,6 +8,14 @@ message authorize {
     map<string,string>  extra = 3;
 }
 
+message Request {
+    map<string,string>  extra = 1;
+}
+
+message Response {
+    map<string,string>  extra = 1;
+}
+
 enum Role {
     NORMAL          = 0x0000;        // 普通用户
     COOPERATOR      = 0x0001;        // 企业用户
@@ -127,8 +135,10 @@ message question_query {
     int32          page = 15;
     // @inject_tag: form:"size"
     int32          size = 16;
+    // @inject_tag: form:"user_id"
+    string        user_id = 17;
     // @inject_tag: form:"extra"
-    map<string,string> extra = 17;
+    map<string,string> extra = 18;
 }
 
 message version_item {

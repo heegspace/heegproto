@@ -1,100 +1,101 @@
-syntax = "proto3";
+syntax  =  "proto3";
 package lognode;
 import "rescode/rescode.proto";
 import "common/common.proto";
+
 enum log_level {
-    INFO  = 0;
-    DEBUG = 1;
-    WARN  = 2;
-    ERROR = 3;
+    INFO   =  0;
+    DEBUG  =  1;
+    WARN   =  2;
+    ERROR  =  3;
 }
 
 enum log_desc {
-    CONSOLE = 0;
-    FILE = 1;
-    DB = 2;
+    CONSOLE  =  0;
+    FILE  =  1;
+    DB  =  2;
 }
 
 message call_log_req {
-     log_level level=1;
-     log_desc  desc=2;
-     string    server_name=3;
-     string    ip=4;
-     string    func=5;
-     string    timestamp=6;
-     string    status=7;
-     string    req=8;
-     string    res=9;
-     map<string,string> extra=10;
+     log_level level = 1;
+     log_desc  desc = 2;
+     string    server_name = 3;
+     string    ip = 4;
+     string    func = 5;
+     string    timestamp = 6;
+     string    status = 7;
+     string    req = 8;
+     string    res = 9;
+     map<string,string> extra = 10;
 }
 
 message log_req {
-     log_level             level=1;
-     log_desc              desc=2;
-     string                server_name=3;
-     string                ip=3;
-     string                timestamp=4;
-     string                func=5;
-     string                info=6;
-     map<string,string>    extra=7; 
+     log_level             level = 1;
+     log_desc              desc = 2;
+     string                server_name = 3;
+     string                ip = 4;
+     string                timestamp = 5;
+     string                func = 6;
+     string                info = 7;
+     map<string,string>    extra = 8; 
 }
 
 message user_log_item {
-     int64                id=1;
-     int64                uid=2;
-     string               username=3;
-     string               ip=4;
-     string               country=5;
-     string               province=6;
-     string               city=7;
-     string               district=8;
-     string               platom=9;
-     string               appid=10;
-     string               info=11;
-     string               old_info=12;
-     string               new_info=13;
-     string               mark=14;
-     string               create_at=15;
-     int64                log_type=16;
-     string               type_info=17;
+     int64                id = 1;
+     int64                uid = 2;
+     string               username = 3;
+     string               ip = 4;
+     string               country = 5;
+     string               province = 6;
+     string               city = 7;
+     string               district = 8;
+     string               platom = 9;
+     string               appid = 10;
+     string               info = 11;
+     string               old_info = 12;
+     string               new_info = 13;
+     string               mark = 14;
+     string               create_at = 15;
+     int64                log_type = 16;
+     string               type_info = 17;
 }
 
 message query_user_log_req {
-     common.authorize        auth=1;
-     int64                   id=2;
-     int64                   uid=3;
-     int32                   log_type=3;
-     int32                   page=4;
-     int32                   size=5;
-     map<string,string>      extra=6;
+     common.authorize        auth = 1;
+     int64                   id = 2;
+     int64                   uid = 3;
+     int32                   log_type = 4;
+     int32                   page = 5;
+     int32                   size = 6;
+     map<string,string>      extra = 7;
 }
 
 message query_user_log_res {
-     rescode.code                  rescode=1;
-     string                        resmsg=2;
-     repeated user_log_item        logs=3;
-     map<string,string>            extra=4;
+     rescode.code                  rescode = 1;
+     string                        resmsg = 2;
+     repeated user_log_item        logs = 3;
+     map<string,string>            extra = 4;
 }
 
 message user_log_count_req {
-     common.authorize      auth=1;
-     int64                 uid=2;
-     int32                 log_type=3;
-     map<string,string>    extra=4;
+     common.authorize      auth = 1;
+     int64                 uid = 2;
+     int32                 log_type = 3;
+     map<string,string>    extra = 4;
 }
 
 message user_log_count_res {
-     rescode.code              rescode=1;
-     string                    resmsg=2;
-     int64                     count=3;
-     map<string,string>        extra=4;
+     rescode.code              rescode = 1;
+     string                    resmsg = 2;
+     int64                     count = 3;
+     map<string,string>        extra = 4;
 }
 
 service lognode_service {
-	rpc  log( log_req);
-	rpc  call_log( call_log_req);
+	rpc  log( log_req) returns(common.Response) {}
+	rpc  call_log( call_log_req) returns (common.Response){}
 	// 获取日志
-	rpc query_user_log_res query_user_log( query_user_log_req) returns (query_user_log_res) {}
+	rpc  query_user_log( query_user_log_req) returns (query_user_log_res) {}
 	// 日志数量
-	rpc user_log_count_res user_log_count( user_log_count_req) returns (user_log_count_res) {}
+	rpc  user_log_count( user_log_count_req) returns (user_log_count_res) {}
 }

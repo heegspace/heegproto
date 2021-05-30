@@ -1,110 +1,111 @@
-syntax = "proto3";
+syntax  =  "proto3";
 package certnode;
 import "rescode/rescode.proto";
 import "common/common.proto";
+
 message submit_cert_req {
-    common.authorize      auth=1;
-    common.person_cert    cert=2;
-    map<string,string>    extra=3;
+    common.authorize      auth = 1;
+    common.person_cert    cert = 2;
+    map<string,string>    extra = 3;
 }
 
 message submit_cert_res {
-    rescode.code          rescode=1;
-    string                resmsg=2;
-    map<string,string>    extra=3;
+    rescode.code          rescode = 1;
+    string                resmsg = 2;
+    map<string,string>    extra = 3;
 }
 
 message cert_approved_req {
-    common.authorize      auth=1;
-    int64                 uid=2;
-    int64                 approve_uid=3;
-    string                approve_name=4;
-    string                info=5;
-    map<string,string>    extra=6;
+    common.authorize      auth = 1;
+    int64                 uid = 2;
+    int64                 approve_uid = 3;
+    string                approve_name = 4;
+    string                info = 5;
+    map<string,string>    extra = 6;
 }
 
 message cert_approved_res {
-    rescode.code          rescode=1;
-    string                resmsg=2;
-    common.person_cert    cert=3;
-    map<string,string>    extra=4;
+    rescode.code          rescode = 1;
+    string                resmsg = 2;
+    common.person_cert    cert = 3;
+    map<string,string>    extra = 4;
 }
 
 message cert_refuse_req {
-    common.authorize      auth=1;
-    int64                 uid=2;
-    int64                 refuse_uid=3;
-    string                refuse_name=4;
-    string                info=5;
-    map<string,string>    extra=6;
+    common.authorize      auth = 1;
+    int64                 uid = 2;
+    int64                 refuse_uid = 3;
+    string                refuse_name = 4;
+    string                info = 5;
+    map<string,string>    extra = 6;
 }
 
 message cert_refuse_res {
-    rescode.code          rescode=1;
-    string                resmsg=2;
-    common.person_cert    cert=3;
-    map<string,string>    extra=4;
+    rescode.code          rescode = 1;
+    string                resmsg = 2;
+    common.person_cert    cert = 3;
+    map<string,string>    extra = 4;
 }
 
 
 message cert_info_req {
-    common.authorize      auth=1;
-    int64                 uid=2;
-    string                status=3;
-    string                idname=4;
-    string                idnum=5;
-    int32                 page=6;
-    int32                 size=7;
-    map<string,string>    extra=8;
+    common.authorize      auth = 1;
+    int64                 uid = 2;
+    string                status = 3;
+    string                idname = 4;
+    string                idnum = 5;
+    int32                 page = 6;
+    int32                 size = 7;
+    map<string,string>    extra = 8;
 }
 
 message cert_info_res {
-    rescode.code                  rescode=1;
-    string                        resmsg=2;
-    repeated common.person_cert   cert=3;
-    map<string,string>            extra=4;
+    rescode.code                  rescode = 1;
+    string                        resmsg = 2;
+    repeated common.person_cert   cert = 3;
+    map<string,string>            extra = 4;
 }
 
 message cert_flow_req {
-    common.authorize      auth=1;
-    int64                 uid=2;
-    int32                 page=3;
-    int32                 size=4;
-    map<string,string>    extra=5;
+    common.authorize      auth = 1;
+    int64                 uid = 2;
+    int32                 page = 3;
+    int32                 size = 4;
+    map<string,string>    extra = 5;
 }
 
 message cert_flow_res {
-    rescode.code                 rescode=1;
-    string                       resmsg=2;
-    repeated common.person_cert  cert=3;
-    map<string,string>           extra=4;
+    rescode.code                 rescode = 1;
+    string                       resmsg = 2;
+    repeated common.person_cert  cert = 3;
+    map<string,string>           extra = 4;
 }
 
 message cert_cancel_req {
-    common.authorize      auth=1;
-    int64                 uid=2;
-    string                info=3;
-    map<string,string>    extra=4;
+    common.authorize      auth = 1;
+    int64                 uid = 2;
+    string                info = 3;
+    map<string,string>    extra = 4;
 }
 
 message cert_cancel_res {
-    rescode.code              rescode=1;
-    string                    resmsg=2;
-    map<string,string>        extra=3;
+    rescode.code              rescode = 1;
+    string                    resmsg = 2;
+    map<string,string>        extra = 3;
 }
 
 message cert_cache_req {
-    common.authorize      auth=1;
-    string                key=2;
-    string                value=3;
-    int64                 expire=4;
-    map<string,string>    extra=5;
+    common.authorize      auth = 1;
+    string                key = 2;
+    string                value = 3;
+    int64                 expire = 4;
+    map<string,string>    extra = 5;
 }
 
 message cert_cache_res {
-    rescode.code              rescode=1;
-    string                    resmsg=2;
-    map<string,string>        extra=3;
+    rescode.code              rescode = 1;
+    string                    resmsg = 2;
+    map<string,string>        extra = 3;
 }
 
 service certnode_service {

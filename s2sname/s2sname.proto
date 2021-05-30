@@ -2,6 +2,9 @@ syntax = "proto3";
 package s2sname;
 import "rescode/rescode.proto";
 
+message Request {
+    string      name = 1;
+}
 
 enum Const {
     Const_None = 0;
@@ -73,10 +76,10 @@ service s2sname_service {
     rpc  updateS2sname(update_req) returns(update_res) {}
 
     // 根据参数获取对应的s2s列表
-    rpc  fetchS2sname(string) returns(fetch_res) {}
+    rpc  fetchS2sname(Request) returns(fetch_res) {}
 
     // 获取所有的s2sname 列表信息
-    rpc  fetchS2snames() returns(fetch_res) {}
+    rpc  fetchS2snames(Request) returns(fetch_res) {}
 
     // 服务心跳包，用于更新服务的状态
     rpc  heart(heart_req) returns(heart_res) {}

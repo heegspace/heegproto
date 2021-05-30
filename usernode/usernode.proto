@@ -4,6 +4,7 @@ import "rescode/rescode.proto";
 import "common/common.proto";
 
 enum attention_op_type {
+    NONE_ATTENTION = 0;
     ADD_ATTENTION = 1;
     DEL_ATTENTION = 2;
 }
@@ -12,14 +13,14 @@ message user_obj {
     string    phone = 1;
     string    email = 2;
     string    account = 3;
-    i16       status = 4;
+    int32       status = 4;
     int64       role = 5;
     int64       vip = 6;
     double    coin = 7;
     string    reg_at = 8;
     string    nick_name = 9;
     string   avatar = 10;
-    i32      sex = 11;
+    int32      sex = 11;
     string   province = 12;
     string   city = 13;
     string   country = 14;
