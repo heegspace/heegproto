@@ -1,0 +1,79 @@
+syntax = "proto3";
+package teachnode;
+import "rescode/rescode.proto";
+import "common/common.proto";
+
+
+message teaccher_subject {
+    string        name = 1;
+    int32           score = 2;
+}
+
+message teacher_item {
+    int64                       uid = 1;
+    string                      tag = 2;
+    string                      resume = 3;
+    repeated teaccher_subject   subject = 4;
+    int32                       status = 5;
+    int64                       tmlong = 6;
+}
+
+message update_teacher_req {
+    common.authorize      auth = 1;
+    teacher_item          teacher = 2;
+    map<string,string>    extra = 3;
+}
+
+message update_teacher_res {
+    rescode.code       rescode = 1;
+    string             resmsg = 2;
+    map<string,string> extra = 3;
+}
+
+message find_teacher_item {
+    teacher_item      teacher = 1;
+    common.user_info  info = 2;
+}
+
+message find_teacher_req {
+    common.authorize      auth = 1;
+    int64                   tuid = 2;
+    int64                   uuid = 3;
+    string                subject = 4;
+    int32                   page = 5;
+    int32                   size = 6;
+    string                sorted = 7;
+    map<string,string>    extra = 8;
+}
+
+message find_teacher_res {
+    rescode.code              rescode = 1;
+    string                    resmsg = 2;
+    repeated find_teacher_item   teachers = 3;
+    map<string,string>        extra = 4;
+}
+
+message focus_teacher_req {
+    common.authorize      auth = 1;
+    int64                   tuid = 2;
+    int64                   uuid = 3;
+    int32                   status = 4;
+    map<string,string>    extra = 5;
+}
+
+message focus_teacher_res {
+    rescode.code       rescode = 1;
+    string             resmsg = 2;
+    map<string,string> extra = 3;
+}
+
+service teachnode_service {
+    // 添加或者根据教师信息
+    rpc  update_teacher(update_teacher_req) returns(update_teacher_res){}
+
+    // 查询教师信息
+    rpc  get_teacher(find_teacher_req) returns(find_teacher_res) {}
+
+    // 关注/取消关注教师
+    rpc  focus_teacher(focus_teacher_req) returns (focus_teacher_res) {}
+}
