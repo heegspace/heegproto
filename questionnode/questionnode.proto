@@ -5,10 +5,10 @@ import "common/common.proto";
 
 
 message grade_cate_add_req {
-    common.authorize auth = 1;
+    common.authorize    auth = 1;
     int64               uid = 2;
-    common.grade_cate grade = 3;
-    map<string,string> extra = 4;
+    common.grade_cate   grade = 3;
+    map<string,string>  extra = 4;
 }
 
 message grade_cate_add_res {
@@ -18,66 +18,66 @@ message grade_cate_add_res {
 }
 
 message grade_cate_count_req {
-    common.authorize auth = 1;
+    common.authorize    auth = 1;
     int64               uid = 2;
-    map<string,string> extra = 3;
+    map<string,string>  extra = 3;
 }
 
 message grade_cate_count_res {
-    rescode.code          rescode = 1;
-    string                resmsg = 2;
+    rescode.code            rescode = 1;
+    string                  resmsg = 2;
     int32                   count = 3;
-    map<string,string>    extra = 4;
+    map<string,string>      extra = 4;
 }
 
 message grade_cate_list_req {
-    common.authorize auth = 1;
-    int64   uid = 2;
-    int32   page = 3;
-    int32   size = 4;
-    map<string,string> extra = 5;
+    common.authorize    auth = 1;
+    int64               uid = 2;
+    int32               page = 3;
+    int32               size = 4;
+    map<string,string>  extra = 5;
 }
 
 message grade_cate_list_res {
-    rescode.code          rescode = 1;
-    string                resmsg = 2;
+    rescode.code                rescode = 1;
+    string                      resmsg = 2;
     repeated common.grade_cate  lists = 3;
-    map<string,string>    extra = 4;
+    map<string,string>          extra = 4;
 }
 
 message home_black_data_req {
-    common.authorize auth = 1;
-    int64               uid = 2;
-    i16               school = 3;
-    map<string,string> extra = 4;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    i16                     school = 3;
+    map<string,string>      extra = 4;
 }
 
 message home_black_data_res {
-    rescode.code          rescode = 1;
-    string                resmsg = 2;
-    repeated common.school_static  lists =  3;
-    map<string,string>    extra = 4;
+    rescode.code                    rescode = 1;
+    string                          resmsg = 2;
+    repeated common.school_static   lists =  3;
+    map<string,string>              extra = 4;
 }
 
 message grade_subject_req {
-    common.authorize auth = 1;
-    int64   uid = 2;
-    int32    index = 3;
-    map<string,string> extra = 4;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    int32                   index = 3;
+    map<string,string>      extra = 4;
 }
 
 message grade_subject_res {
-    rescode.code          rescode = 1;
-    string                resmsg = 2;
-    repeated common.grade_subject  lists = 3;
-    map<string,string>    extra = 4;
+    rescode.code                    rescode = 1;
+    string                          resmsg = 2;
+    repeated common.grade_subject   lists = 3;
+    map<string,string>              extra = 4;
 }
 
 message school_roll_add_req {
-    common.authorize auth = 1;
-    int64 uid = 2;
-    common.school_roll roll = 3;
-    map<string,string> extra = 4;
+    common.authorize    auth = 1;
+    int64               uid = 2;
+    common.school_roll  roll = 3;
+    map<string,string>  extra = 4;
 }
 
 message school_roll_add_res {
@@ -87,38 +87,38 @@ message school_roll_add_res {
 }
 
 message school_roll_count_req {
-    common.authorize auth = 1;
-    int64 uid = 2;
-    map<string,string> extra = 3;
+    common.authorize    auth = 1;
+    int64               uid = 2;
+    map<string,string>  extra = 3;
 }
 
 message school_roll_count_res {
-    rescode.code          rescode = 1;
-    string                resmsg = 2;
+    rescode.code            rescode = 1;
+    string                  resmsg = 2;
     int32                   count = 3;
-    map<string,string>    extra = 4;
+    map<string,string>      extra = 4;
 }
 
 message school_list_req {
-    common.authorize auth = 1;
-    int64       uid = 2;
-    int32       page = 3;
-    int32       size = 4;
-    map<string,string> extra = 5;
+    common.authorize    auth = 1;
+    int64               uid = 2;
+    int32               page = 3;
+    int32               size = 4;
+    map<string,string>  extra = 5;
 }
 
 message school_list_res {
-    rescode.code          rescode = 1;
-    string                resmsg = 2;
+    rescode.code                rescode = 1;
+    string                      resmsg = 2;
     repeated common.school_roll lists = 3;
-    map<string,string>    extra = 4;
+    map<string,string>          extra = 4;
 }
 
 message subject_cate_add_req {
-    common.authorize auth = 1;
-    int64    uid = 2;
-    common.subject_cate subject = 3;
-    map<string,string> extra = 4;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    common.subject_cate     subject = 3;
+    map<string,string>      extra = 4;
 }
 
 message subject_cate_add_res {
@@ -128,72 +128,72 @@ message subject_cate_add_res {
 }
 
 message subject_cate_count_req {
-    common.authorize auth = 1;
-    int64    uid = 2;
-    map<string,string> extra = 3;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    map<string,string>      extra = 3;
 }
 
 message subject_cate_count_res {
-    rescode.code          rescode = 1;
-    string                resmsg = 2;
+    rescode.code            rescode = 1;
+    string                  resmsg = 2;
     int32                   count = 3;
-    map<string,string>    extra = 4;
+    map<string,string>      extra = 4;
 }
 
 message subejct_cate_list_req {
-    common.authorize auth = 1;
-    int64       uid = 2;
-    int32       page = 3;
-    int32       size = 4;
-    map<string,string> extra = 5;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    int32                   page = 3;
+    int32                   size = 4;
+    map<string,string>      extra = 5;
 }
 
 message subject_cate_list_res {
-    rescode.code          rescode = 1;
-    string                resmsg = 2;
-    repeated common.subject_cate lists = 3;
-    map<string,string>    extra = 4;
+    rescode.code                    rescode = 1;
+    string                          resmsg = 2;
+    repeated common.subject_cate    lists = 3;
+    map<string,string>              extra = 4;
 }
 
 message question_version_req {
-    common.authorize auth = 1;
-    int64    uid = 2;
-    common.question_query query = 3;
-    map<string,string> extra = 4;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    common.question_query   query = 3;
+    map<string,string>      extra = 4;
 }
 
 message question_version_res {
-    rescode.code          rescode = 1;
-    string                resmsg = 2;
-    repeated common.version_item lists = 3;
-    map<string,string>    extra = 4;
+    rescode.code                    rescode = 1;
+    string                          resmsg = 2;
+    repeated common.version_item    lists = 3;
+    map<string,string>              extra = 4;
 }
 
 message question_chapter_req {
-    common.authorize auth = 1;
-    int64    uid = 2;
-    common.question_query query = 3;
-    map<string,string> extra = 4;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    common.question_query   query = 3;
+    map<string,string>      extra = 4;
 }
 
 message chapter_res_item {
-    string       uid = 1;
-    string    title = 2;
-    repeated common.chapter_item childs = 3;
+    string                          uid = 1;
+    string                          title = 2;
+    repeated common.chapter_item    childs = 3;
 }
 
 message question_chapter_res {
-    rescode.code          rescode = 1;
-    string                resmsg = 2;
-    repeated chapter_res_item lists = 3;
-    map<string,string>    extra = 4;
+    rescode.code                rescode = 1;
+    string                      resmsg = 2;
+    repeated chapter_res_item   lists = 3;
+    map<string,string>          extra = 4;
 }
 
 message subject_name_req {
-    common.authorize auth = 1;
-    int64       uid = 2;
-    string    param = 3;
-    map<string,string> extra = 4;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    string                  param = 3;
+    map<string,string>      extra = 4;
 }
 
 message subject_name_res {
@@ -204,67 +204,67 @@ message subject_name_res {
 }
 
 message question_source_req {
-    common.authorize auth = 1;
-    int64    uid = 2;
-    common.question_query query = 3;
-    map<string,string> extra = 4;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    common.question_query   query = 3;
+    map<string,string>      extra = 4;
 }
 
 message question_source_res {
-    rescode.code          rescode = 1;
-    string                resmsg = 2;
+    rescode.code                rescode = 1;
+    string                      resmsg = 2;
     repeated common.source_item sources = 3;
-    map<string,string>    extra = 4;
+    map<string,string>          extra = 4;
 }
 
 message question_tixing_req {
-    common.authorize auth = 1;
-    int64    uid = 2;
-    common.question_query query = 3;
-    map<string,string> extra = 4;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    common.question_query   query = 3;
+    map<string,string>      extra = 4;
 }
 
 message question_tixing_res {
-    rescode.code          rescode = 1;
-    string                resmsg = 2;
+    rescode.code                rescode = 1;
+    string                      resmsg = 2;
     repeated common.tixing_item tixings = 3;
-    map<string,string>    extra = 4;
+    map<string,string>          extra = 4;
 }
 
 message question_timu_count_req {
-    common.authorize auth = 1;
-    int64    uid = 2;
-    common.question_query query = 3;
-    map<string,string> extra = 4;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    common.question_query   query = 3;
+    map<string,string>      extra = 4;
 }
 
 message question_timu_count_res {
-    rescode.code          rescode = 1;
-    string                resmsg = 2;
-    int32                   count = 3;
-    map<string,string>    extra = 4;
+    rescode.code                rescode = 1;
+    string                      resmsg = 2;
+    int32                       count = 3;
+    map<string,string>          extra = 4;
 }
 
 message question_timu_req {
-    common.authorize auth = 1;
-    int64    uid = 2;
-    common.question_query query = 3;
-    map<string,string> extra = 4;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    common.question_query   query = 3;
+    map<string,string>      extra = 4;
 }
 
 message question_timu_res {
-    rescode.code          rescode = 1;
-    string                resmsg = 2;
-    repeated common.timu_item timus = 3;
-    map<string,string>    extra = 4;
+    rescode.code                rescode = 1;
+    string                      resmsg = 2;
+    repeated common.timu_item   timus = 3;
+    map<string,string>          extra = 4;
 }
 
 message collect_timu_req {
-    common.authorize auth = 1;
-    int64       uid = 2;
-    string    cid = 3;
-    int64       op = 4;
-    map<string,string> extra = 5;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    string                  cid = 3;
+    int64                   op = 4;
+    map<string,string>      extra = 5;
 }
 
 message collect_timu_res {
@@ -274,26 +274,26 @@ message collect_timu_res {
 }
 
 message query_collect_timu_req {
-    common.authorize auth = 1;
-    int64       uid = 2;
-    int32       page = 3;
-    int32       size = 4;
-    map<string,string> extra = 5;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    int32                   page = 3;
+    int32                   size = 4;
+    map<string,string>      extra = 5;
 }
 
 message query_collect_timu_res {
-    rescode.code          rescode = 1;
-    string                resmsg = 2;
-    repeated common.timu_item timus = 3;
-    map<string,string>    extra = 4;
+    rescode.code                rescode = 1;
+    string                      resmsg = 2;
+    repeated common.timu_item   timus = 3;
+    map<string,string>          extra = 4;
 }
 
 message modify_question_req {
-    common.authorize auth = 1;
-    int64       uid = 2;
-    string    tid = 3;
-    common.question timu = 4;
-    map<string,string> extra=  5;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    string                  tid = 3;
+    common.question         timu = 4;
+    map<string,string>      extra=  5;
 }
 
 message modify_question_res {
@@ -303,45 +303,45 @@ message modify_question_res {
 }
 
 message modify_list_req {
-    common.authorize auth = 1;
-    int64       uid = 2;
-    int32       page = 3;
-    int32       size = 4;
-    string    sorted  = 5;
-    string    status = 6;
-    map<string,string> extra = 7;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    int32                   page = 3;
+    int32                   size = 4;
+    string                  sorted  = 5;
+    string                  status = 6;
+    map<string,string>      extra = 7;
 }
 
 message modify_list_res {
-    rescode.code          rescode = 1;
-    string                resmsg = 2;
+    rescode.code                rescode = 1;
+    string                      resmsg = 2;
     repeated common.modify_item timus = 3;
-    map<string,string>    extra = 4;
+    map<string,string>          extra = 4;
 }
 
 message modify_count_req {
-    common.authorize auth = 1;
-    int64       uid = 2;
-    string    status = 3;
-    map<string,string> extra = 4;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    string                  status = 3;
+    map<string,string>      extra = 4;
 }
 
 message modify_count_res {
-    rescode.code          rescode = 1;
-    string                resmsg = 2;
-    int32                   count = 3;
-    map<string,string>    extra = 4;
+    rescode.code                rescode = 1;
+    string                      resmsg = 2;
+    int32                       count = 3;
+    map<string,string>          extra = 4;
 }
 
 message approve_req {
-    common.authorize auth = 1;
+    common.authorize        auth = 1;
     int64                   id = 2;
     int64                   uid = 3;
-    string                status = 4;
-    string                info = 5;
-    double                reward = 6;
-    common.approve_dest   dest = 7;
-    map<string,string>    extra = 8;
+    string                  status = 4;
+    string                  info = 5;
+    double                  reward = 6;
+    common.approve_dest     dest = 7;
+    map<string,string>      extra = 8;
 }
 
 message approve_res {
@@ -351,10 +351,10 @@ message approve_res {
 }
 
 message timu_by_id_req {
-    common.authorize      auth = 1;
+    common.authorize        auth = 1;
     int64                   uid = 2;
-    string                tid = 3;
-    map<string,string>    extra = 4;
+    string                  tid = 3;
+    map<string,string>      extra = 4;
 }
 
 message timu_by_id_res {
@@ -365,10 +365,10 @@ message timu_by_id_res {
 }
 
 message timu_add_req {
-    common.authorize          auth = 1;
+    common.authorize            auth = 1;
     int64                       uid = 2;
-    common.add_timu_item      timu = 3;
-    map<string,string>        extra = 4;
+    common.add_timu_item        timu = 3;
+    map<string,string>          extra = 4;
 }
 
 message timu_add_res {
@@ -379,106 +379,106 @@ message timu_add_res {
 
 
 message add_list_req {
-    common.authorize   auth = 1;
+    common.authorize    auth = 1;
     int64               uid = 2;
     int32               page = 3;
     int32               size = 4;
-    string            sorted = 5;
-    string            status = 6;
+    string              sorted = 5;
+    string              status = 6;
 }
 
 message add_list_res {
-    rescode.code                  rescode = 1;
-    string                        resmsg = 2;
-    repeated common.add_timu_item    timus = 3;
-    map<string,string>            extra = 4;
+    rescode.code                    rescode = 1;
+    string                          resmsg = 2;
+    repeated common.add_timu_item   timus = 3;
+    map<string,string>              extra = 4;
 }
 
 message add_count_req {
-    common.authorize          auth = 1;
+    common.authorize            auth = 1;
     int64                       uid = 2;
-    string                    status = 3;
-    map<string,string>        extra = 4;
+    string                      status = 3;
+    map<string,string>          extra = 4;
 }
 
 message add_count_res {
-    rescode.code       rescode = 1;
-    string             resmsg = 2;
-    int32                count = 3;
-    map<string,string> extra = 4;
+    rescode.code            rescode = 1;
+    string                  resmsg = 2;
+    int32                   count = 3;
+    map<string,string>      extra = 4;
 }
 
 message tixing_by_vid_req {
-    common.authorize          auth =1;
+    common.authorize         auth =1;
     string                   vid = 2;
-    map<string,string>    extra = 3;
+    map<string,string>       extra = 3;
 }
 
 message tixing_by_vid_res {
-    rescode.code          rescode = 1;
-    string                resmsg = 2;
+    rescode.code             rescode = 1;
+    string                   resmsg = 2;
     repeated string          tixings = 3;
-    map<string,string>    extra = 4;
+    map<string,string>       extra = 4;
 }
 
 message source_by_vid_req {
     common.authorize          auth = 1;
-    string                   vid = 2;
-    map<string,string>    extra = 3;
+    string                    vid = 2;
+    map<string,string>        extra = 3;
 }
 
 message source_by_vid_res {
-    rescode.code          rescode = 1;
-    string                resmsg = 2;
+    rescode.code             rescode = 1;
+    string                   resmsg = 2;
     repeated string          sources = 3;
-    map<string,string>    extra = 4;
+    map<string,string>       extra = 4;
 }
 
 
 message ident_by_iid_req {
-    common.authorize       auth = 1;
+    common.authorize         auth = 1;
     int64                    uid = 2;
-    string                 iid = 3;
-    map<string,string>     extra = 4;
+    string                   iid = 3;
+    map<string,string>       extra = 4;
 }
 
 message ident_by_iid_res {
     rescode.code              rescode = 1;
     string                    resmsg = 2;
-    common.baidu_ident_item  result = 3;
+    common.baidu_ident_item   result = 3;
     map<string,string>        extra = 4;
 }
 
 message ident_list_req {
-    common.authorize          auth = 1;
-    int64       uid = 2;
-    int32       page = 3;
-    int32       size = 4;
-    string    sorted = 5;
-    string    status = 6;
-    string    iid = 7;
-    string    sign = 8;
+    common.authorize        auth = 1;
+    int64                   uid = 2;
+    int32                   page = 3;
+    int32                   size = 4;
+    string                  sorted = 5;
+    string                  status = 6;
+    string                  iid = 7;
+    string                  sign = 8;
 }
 
 message ident_list_res {
     rescode.code                      rescode = 1;
     string                            resmsg = 2;
-    repeated common.baidu_ident_item    results = 3;
+    repeated common.baidu_ident_item  results = 3;
     map<string,string>                extra = 4;
 }
 
 message ident_count_req {
     common.authorize          auth = 1;
-    int64       uid = 2;
-    string    status = 3;
-    map<string,string> extra = 4; 
+    int64                     uid = 2;
+    string                    status = 3;
+    map<string,string>        extra = 4; 
 }
 
 message ident_count_res {
-    rescode.code       rescode = 1;
-    string             resmsg = 2;
+    rescode.code         rescode = 1;
+    string               resmsg = 2;
     int32                count = 3;
-    map<string,string> extra = 4;
+    map<string,string>   extra = 4;
 }
 
 service questionnode_service {
@@ -504,8 +504,6 @@ service questionnode_service {
     rpc  subject_cate_count(subject_cate_count_req) returns(subject_cate_count_res) {}
     // 获取科目列表
     rpc  subject_cate_list(subejct_cate_list_req) returns(subject_cate_list_res) {}
-
-
     // 获取版本
     rpc  question_version(question_version_req) returns(question_version_res) {}
     // 获取章节
@@ -538,16 +536,12 @@ service questionnode_service {
     rpc  add_count(add_count_req) returns(add_count_res) {}
     // 审核修改的试题
     rpc  approve(approve_req) returns(approve_res) {}
-
     // 根据试题id请求题目
     rpc  question_timu_by_id(timu_by_id_req) returns(timu_by_id_res) {}
-
     // 通过版本id获取题型列表
     rpc  tixing_by_vid(tixing_by_vid_req) returns(tixing_by_vid_res) {}
-
     // 通过版本id获取来源
     rpc  source_by_vid(source_by_vid_req) returns(source_by_vid_res) {}
-
     // 根据识别id获取识别记录
     rpc  ident_by_iid(ident_by_iid_req) returns(ident_by_iid_res) {}
     // 获取识别列表

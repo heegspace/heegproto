@@ -49,12 +49,10 @@ message likes_list_res {
 }
 
 service likenode_service {
-    // 点赞数量
-   rpc likesCount(likes_count_req) returns (likes_count_res) {}
-
-    // 添加点赞
-   rpc likesAdd(likes_add_req) returns (likes_add_res) {}
-
-    // 获取点赞列表
-   rpc likesList(likes_list_req) returns (likes_list_res) {}
+	// 点赞数量
+	rpc likesCount(likes_count_req) returns (likes_count_res) {}
+	// 添加点赞
+	rpc likesAdd(likes_add_req) returns (likes_add_res) {}
+	// 获取点赞列表
+	rpc likesList(likes_list_req) returns (likes_list_res) {}
 }

@@ -108,19 +108,19 @@ message cert_cache_res {
 }
 
 service certnode_service {
-    // 提交实名
-   rpc  submit_cert(submit_cert_req)  returns (submit_cert_res) {}
-    // 获取实名信息
-   rpc  cert_info(cert_info_req)  returns (cert_info_res) {}
-    // 实名日志记录
-  rpc   cert_flow(cert_flow_req)  returns (cert_flow_res) {}
-    // 取消实名
-  rpc   cert_cancel(cert_cancel_req)  returns (cert_cancel_res) {}
-    //--------------需要授权--------------//
-    // 审核通过
-   rpc  cert_approved(cert_approved_req)  returns (cert_approved_res) {}
-    // 实名失败 
-  rpc   cert_refuse(cert_refuse_req) returns (cert_refuse_res) {}
-    // 实名缓存
- rpc   cert_cache(cert_cache_req)  returns (cert_cache_res) {}
+	// 提交实名
+	rpc submit_cert(submit_cert_req)  returns (submit_cert_res) {}
+	// 获取实名信息
+	rpc cert_info(cert_info_req)  returns (cert_info_res) {}
+	// 实名日志记录
+	rpc cert_flow(cert_flow_req)  returns (cert_flow_res) {}
+	// 取消实名
+	rpc cert_cancel(cert_cancel_req)  returns (cert_cancel_res) {}
+	//--------------需要授权--------------//
+	// 审核通过
+	rpc cert_approved(cert_approved_req)  returns (cert_approved_res) {}
+	// 实名失败 
+	rpc cert_refuse(cert_refuse_req) returns (cert_refuse_res) {}
+	// 实名缓存
+	rpc cert_cache(cert_cache_req)  returns (cert_cache_res) {}
 }

@@ -27,8 +27,8 @@ message add_timu_limit_res {
 }
 
 service limitnode_service {
-    // 检查修改试题是否受限
-   rpc  modify_timu_limit(modify_timu_limit_req) returns (modify_timu_limit_res) {}
-    // 检查添加试题是否受限
-   rpc  add_timu_limit(add_timu_limit_req) returns (add_timu_limit_res) {}
+	// 检查修改试题是否受限
+	rpc  modify_timu_limit(modify_timu_limit_req) returns (modify_timu_limit_res) {}
+	// 检查添加试题是否受限
+	rpc  add_timu_limit(add_timu_limit_req) returns (add_timu_limit_res) {}
 }

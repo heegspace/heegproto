@@ -84,14 +84,13 @@ message login_alipay_res {
 }
 
 service loginnode_service {
-    // 登录
-   rpc  login(login_req) returns (login_res) {}
-   rpc  login_by_code(login_by_code_req) returns (login_by_code_res) {}
-   rpc  login_wechat(login_wechat_req) returns (login_wechat_res) {}
-   rpc  login_alipay(login_alipay_req) returns (login_alipay_res) {}
-
-    // 退出登录
-   rpc  logout(logout_req) returns (logout_res) {}
-    // 刷新
-   rpc  refresh(refresh_req) returns (refresh_res) {}
+	// 登录
+	rpc  login(login_req) returns (login_res) {}
+	rpc  login_by_code(login_by_code_req) returns (login_by_code_res) {}
+	rpc  login_wechat(login_wechat_req) returns (login_wechat_res) {}
+	rpc  login_alipay(login_alipay_req) returns (login_alipay_res) {}
+	// 退出登录
+	rpc  logout(logout_req) returns (logout_res) {}
+	// 刷新
+	rpc  refresh(refresh_req) returns (refresh_res) {}
 }

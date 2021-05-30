@@ -1,0 +1,63 @@
+syntax = "proto3";
+package momnode;
+import "rescode/rescode.proto";
+import "common/common.proto";
+message moments_count_req {
+    common.authorize     auth=1;
+    int64                uid=2;
+}
+
+message moments_count_res {
+    rescode.code        rescode=1;
+    string              resmsg=2;
+    int32               count=3;
+    map<string,string>  extra=4;
+}
+
+message extra {
+    string  path=1;
+    int32   type=2;
+}
+
+message moments {
+    int32           id=1;
+    int64           mid=2;
+    string          text=3;
+    repeated extra  extra=3;
+    int32           create_at=4;
+}
+
+message add_moments_req {
+    common.authorize   auth=1;
+    int64              uid=2;
+    moments            moments=3;
+    map<string,string> extra=4;
+}
+
+message add_moments_res {
+    rescode.code        rescode=1;
+    string              resmsg=2;
+    map<string,string>  extra=3;
+}
+
+message moments_list_req {
+    common.authorize     auth=1;
+    int64				 uid=2;
+    int32				 page=3;
+    int32				 size=4;
+}
+
+message moments_list_res {
+    rescode.code        rescode=1;
+    string              resmsg=2;
+    repeated moments    data=3;
+}
+
+service momnode_service {
+	// 获取动态的数量
+	rpc   momentsCount(1:moments_count_req) returns (moments_count_res) {}
+	// 添加动态
+	rpc  momentsAdd(1:add_moments_req) returns (add_moments_res) {}
+	// 获取动态列表
+	rpc  momentsList(1:moments_list_req) returns (moments_list_res) {}
+}

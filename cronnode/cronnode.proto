@@ -58,12 +58,12 @@ message get_task_count_res {
 }
 
 service cronnode_service {
-    // 提交实名
-   rpc cron_call(1:cron_call_req) returns (cron_call_res) {}
-    // 添加任务
-   rpc add_task(1:add_task_req) returns (add_task_res) {}
-    // 获取任务
-   rpc get_task(1:get_task_req) returns (get_task_res) {}
-    // 获取任务数量
-   rpc get_task_count(1:get_task_count_req) returns (get_task_count_res) {}
+	// 提交实名
+	rpc cron_call(1:cron_call_req) returns (cron_call_res) {}
+	// 添加任务
+	rpc add_task(1:add_task_req) returns (add_task_res) {}
+	// 获取任务
+	rpc get_task(1:get_task_req) returns (get_task_res) {}
+	// 获取任务数量
+	rpc get_task_count(1:get_task_count_req) returns (get_task_count_res) {}
 }

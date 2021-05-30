@@ -167,36 +167,36 @@ message baidu_idcard_ident_res {
 }
 
 service dartynode_service {
-    // 登录微信
-   rpc login_wechat(login_wechat_req) returns (login_wechat_res) {}
-
-    // 刷新微信的token
-   rpc  refresh_wechat(refresh_wechat_req) returns (refresh_wechat_res) {}
-
-    // 退出微信登录
-    rpc  logout_wechat(logout_wechat_req) returns (logout_wechat_res) {}
-
-    // 获取用户信息
-    rpc  userinfo_wechat(userinfo_wechat_req) returns (userinfo_wechat_res) {}
-
-    // 支付宝登陆
-   rpc  login_alipay(login_alipay_req) returns (login_alipay_res) {}
-
-    // 刷新alipay的token
-   rpc  refresh_alipay(refresh_alipay_req) returns (refresh_alipay_res) {}
-
-    // 退出alipay登录
-   rpc  logout_alipay(logout_alipay_req) returns (logout_alipay_res) {}
-
-    // 获取用户信息
-  rpc   userinfo_alipay(userinfo_alipay_req) returns (userinfo_alipay_res) {}
-
-    // 百度实体
-   rpc  baidu_entity(baidu_entity_req) returns (baidu_entity_res) {}
-
-    // 试卷识别
-   rpc  baidu_doc_analysis(baidu_doc_analysis_req) returns (baidu_doc_analysis_res) {}
-
-    // 身份证识别
-   rpc  baidu_idcard_ident(baidu_idcard_ident_req) returns (baidu_idcard_ident_res) {}
+	// 登录微信
+	rpc login_wechat(login_wechat_req) returns (login_wechat_res) {}
+	
+	// 刷新微信的token
+	rpc refresh_wechat(refresh_wechat_req) returns (refresh_wechat_res) {}
+	
+	// 退出微信登录
+	rpc logout_wechat(logout_wechat_req) returns (logout_wechat_res) {}
+	
+	// 获取用户信息
+	rpc userinfo_wechat(userinfo_wechat_req) returns (userinfo_wechat_res) {}
+	
+	// 支付宝登陆
+	rpc login_alipay(login_alipay_req) returns (login_alipay_res) {}
+	
+	// 刷新alipay的token
+	rpc refresh_alipay(refresh_alipay_req) returns (refresh_alipay_res) {}
+	
+	// 退出alipay登录
+	rpc logout_alipay(logout_alipay_req) returns (logout_alipay_res) {}
+	
+	// 获取用户信息
+	rpc userinfo_alipay(userinfo_alipay_req) returns (userinfo_alipay_res) {}
+	
+	// 百度实体
+	rpc baidu_entity(baidu_entity_req) returns (baidu_entity_res) {}
+	
+	// 试卷识别
+	rpc baidu_doc_analysis(baidu_doc_analysis_req) returns (baidu_doc_analysis_res) {}
+	
+	// 身份证识别
+	rpc  baidu_idcard_ident(baidu_idcard_ident_req) returns (baidu_idcard_ident_res) {}
 }

@@ -134,28 +134,21 @@ message remove_friend_res {
 }
 
 service friendnode_service {
-    // --------------- 好友接口 ----------- //
-    // 添加好友
-   rpc  addFriends(add_friend_req)  returns (add_friend_res) {}
-
-    // 同意好友
-   rpc  agreeFriends(agree_friend_req)  returns (agree_friend_res) {}
-
-    //  请求好友列表
-   rpc  friendsList(friend_list_req)  returns (friend_list_res) {}
-
-    // 添加组
-   rpc  createGroup(create_group_req)  returns (create_group_res) {}
-
-    // 重命名组
-   rpc  renameGroup(rename_group_req)  returns (rename_group_res) {}
-
-    // 添加好友备注
-   rpc  addNoteFriend(add_friend_note_req)  returns (add_friend_note_res) {}
-    
-    // 移动到新的组
-   rpc  moveToNewGroup(move_group_req)  returns (move_group_res) {}
-
-    // 删除好友
-   rpc  removeFriend(remove_friend_req)  returns (remove_friend_res) {}
+	// --------------- 好友接口 ----------- //
+	// 添加好友
+	rpc  addFriends(add_friend_req)  returns (add_friend_res) {}
+	// 同意好友
+	rpc  agreeFriends(agree_friend_req)  returns (agree_friend_res) {}
+	//  请求好友列表
+	rpc  friendsList(friend_list_req)  returns (friend_list_res) {}
+	// 添加组
+	rpc  createGroup(create_group_req)  returns (create_group_res) {}
+	// 重命名组
+	rpc  renameGroup(rename_group_req)  returns (rename_group_res) {}
+	// 添加好友备注
+	rpc  addNoteFriend(add_friend_note_req)  returns (add_friend_note_res) {}  
+	// 移动到新的组
+	rpc  moveToNewGroup(move_group_req)  returns (move_group_res) {}
+	// 删除好友
+	rpc  removeFriend(remove_friend_req)  returns (remove_friend_res) {}
 }

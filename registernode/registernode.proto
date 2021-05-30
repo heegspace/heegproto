@@ -42,8 +42,8 @@ message cooperator_user_res {
 
 service registernode_service {
     // 创建普通用户
-    rpc    normal_user(normal_user_req) returns(normal_user_res) {}
+    rpc normal_user(normal_user_req) returns(normal_user_res) {}
 
     // 创建合作用户
-    rpc  cooperator_user(cooperator_user_req) returns(cooperator_user_res) {}
+    rpc cooperator_user(cooperator_user_req) returns(cooperator_user_res) {}
 }

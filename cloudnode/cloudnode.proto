@@ -96,14 +96,14 @@ message thumbnail_res {
 }
 
 service cloudnode_service {
-    // 获取目录
-   rpc dir(dir_req req) returns (dir_res) {}
-    // 添加目录
-   rpc add_dir(add_dir_req) returns (add_dir_res) {}
-    // 添加文件
-   rpc add_file(add_file_req) returns (add_file_res) {}
-    // 云存储属性
-   rpc  attr(attr_req) returns (attr_res) {}
-    // 获取缩略图
-   rpc thumbnail(thumbnail_req) returns (thumbnail_res) {}
+	// 获取目录
+	rpc dir(dir_req req) returns (dir_res) {}
+	// 添加目录
+	rpc add_dir(add_dir_req) returns (add_dir_res) {}
+	// 添加文件
+	rpc add_file(add_file_req) returns (add_file_res) {}
+	// 云存储属性
+	rpc attr(attr_req) returns (attr_res) {}
+	// 获取缩略图
+	rpc thumbnail(thumbnail_req) returns (thumbnail_res) {}
 }

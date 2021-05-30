@@ -45,8 +45,8 @@ message verify_code_res {
 }
 
 service codenode_service {
-    // 发送验证码
-   rpc send_code(code_req) returns (code_res) {}
-    // 请求验证码
-   rpc verify_code(verify_code_req) returns (verify_code_res) {}
+	// 发送验证码
+	rpc send_code(code_req) returns (code_res) {}
+	// 请求验证码
+	rpc verify_code(verify_code_req) returns (verify_code_res) {}
 }
