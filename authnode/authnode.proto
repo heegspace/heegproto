@@ -39,9 +39,8 @@ message cooper_role_res {
 service authnode_service {
     // 验证token
     rpc  verify_token(verify_token_req) returns (verify_token_res) {}
-        // 验证是否是管理用户
-   rpc  admin_role(admin_role_req req) returns (admin_role_res) {}
-
-    // 验证是否是合作用户
-   rpc  cooper_role(cooper_role_req req) returns (cooper_role_res) {}
+   // 验证是否是管理用户
+   rpc  admin_role(admin_role_req) returns (admin_role_res) {}
+   // 验证是否是合作用户
+   rpc  cooper_role(cooper_role_req) returns (cooper_role_res) {}
 }

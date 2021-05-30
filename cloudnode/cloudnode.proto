@@ -1,0 +1,109 @@
+syntax = "proto3";
+package cloudnode;
+import "rescode/rescode.proto";
+import "common/common.proto";
+message dir_req {
+    common.authorize      auth=1;
+    int64                 uid=2;
+    string                path=3;
+    map<string,string>    extra=4;
+}
+
+message dir_item {
+    string      name=1;
+    int32       type=2;
+    string      path=3;
+    int64       size=4;
+    string      url=5;
+    int64       create_at=6;
+    int64       update_at=7;
+    string      extra=8;
+}
+
+message dir_res {
+    rescode.code          rescode=1;
+    string                resmsg=2;
+    repeated dir_item     dirs=3;
+    map<string,string>    extra=4;
+}
+
+message add_dir_req {
+    common.authorize      auth=1;
+    int64                 uid=2;
+    string                parent=3;
+    string                name=4;
+    map<string,string>    extra=5; 
+}
+
+message add_dir_res {
+    rescode.code          rescode=1;
+    string                resmsg=2;
+    map<string,string>    extra=3;
+}
+
+message file_item {
+    int64       size=1;
+    string      path=2;
+    string      name=3;
+    string      url=4;
+    string      thumb=5;
+    string      content_type=6;
+}
+
+message add_file_req {
+    common.authorize        auth=1;
+    int64                   uid=2;
+    file_item               files=3;
+    map<string,string>      extra=4;
+}
+
+message add_file_res {
+    rescode.code          rescode=1;
+    string                resmsg=2;
+    map<string,string>    extra=3;
+}
+
+message attr_req {
+    common.authorize        auth=1;
+    int64                   uid=2;
+    map<string,string>      extra=3;
+}
+
+message attr_item {
+    int64     capacity=1;
+    int32     number=2;
+}
+
+message attr_res {
+    rescode.code          rescode=1;
+    string                resmsg=2;
+    attr_item             attr=3;
+    map<string,string>    extra=4;
+}
+
+message thumbnail_req {
+    common.authorize        auth=1;
+    int64                   uid=2;
+    string                  path=3;
+    map<string,string>      extra=4;
+}
+
+message thumbnail_res {
+    rescode.code        rescode=1;
+    string              resmsg=2;
+    string              thumb=3;
+    map<string,string>  extra=4;
+}
+
+service cloudnode_service {
+    // 获取目录
+   rpc dir(dir_req req) returns (dir_res) {}
+    // 添加目录
+   rpc add_dir(add_dir_req) returns (add_dir_res) {}
+    // 添加文件
+   rpc add_file(add_file_req) returns (add_file_res) {}
+    // 云存储属性
+   rpc  attr(attr_req) returns (attr_res) {}
+    // 获取缩略图
+   rpc thumbnail(thumbnail_req) returns (thumbnail_res) {}
+}
