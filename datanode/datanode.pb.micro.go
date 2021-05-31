@@ -6,7 +6,7 @@ package datanode
 import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	_ "github.com/heegspace/heegproto/common"
+	common "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
 	math "math"
 )
