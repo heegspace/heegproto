@@ -4,11 +4,11 @@
 package datanode
 
 import (
-	common "github.com/heegspace/heegproto/common"
+	common "common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
 	math "math"
-	_ "github.com/heegspace/heegproto/rescode"
+	_ "rescode"
 )
 
 import (
