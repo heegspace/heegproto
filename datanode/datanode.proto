@@ -1504,7 +1504,7 @@ service datanode_service {
 	// 添加年纪信息
 	rpc grade_cate_add(common.grade_cate) returns (add_grade_cate_res) {}
 	//获取年纪总数
-	rpc grade_cate_count(common.Request) returns (add_grade_cate_res) {}
+	rpc grade_cate_count(common.Request) returns (grade_cate_count_res) {}
 	// 获取年级信息
 	rpc grade_cate_list(grade_cate_list_req) returns (grade_cate_list_res) {}
 	//获取主页最新动态统计信息
