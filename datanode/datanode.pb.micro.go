@@ -161,7 +161,7 @@ type DatanodeService interface {
 	// 添加年纪信息
 	GradeCateAdd(ctx context.Context, in *common.GradeCate, opts ...client.CallOption) (*AddGradeCateRes, error)
 	//获取年纪总数
-	GradeCateCount(ctx context.Context, in *common.Request, opts ...client.CallOption) (*AddGradeCateRes, error)
+	GradeCateCount(ctx context.Context, in *common.Request, opts ...client.CallOption) (*GradeCateCountRes, error)
 	// 获取年级信息
 	GradeCateList(ctx context.Context, in *GradeCateListReq, opts ...client.CallOption) (*GradeCateListRes, error)
 	//获取主页最新动态统计信息
@@ -824,9 +824,9 @@ func (c *datanodeService) GradeCateAdd(ctx context.Context, in *common.GradeCate
 	return out, nil
 }
 
-func (c *datanodeService) GradeCateCount(ctx context.Context, in *common.Request, opts ...client.CallOption) (*AddGradeCateRes, error) {
+func (c *datanodeService) GradeCateCount(ctx context.Context, in *common.Request, opts ...client.CallOption) (*GradeCateCountRes, error) {
 	req := c.c.NewRequest(c.name, "DatanodeService.grade_cate_count", in)
-	out := new(AddGradeCateRes)
+	out := new(GradeCateCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1434,7 +1434,7 @@ type DatanodeServiceHandler interface {
 	// 添加年纪信息
 	GradeCateAdd(context.Context, *common.GradeCate, *AddGradeCateRes) error
 	//获取年纪总数
-	GradeCateCount(context.Context, *common.Request, *AddGradeCateRes) error
+	GradeCateCount(context.Context, *common.Request, *GradeCateCountRes) error
 	// 获取年级信息
 	GradeCateList(context.Context, *GradeCateListReq, *GradeCateListRes) error
 	//获取主页最新动态统计信息
@@ -1583,7 +1583,7 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		Approve(ctx context.Context, in *ApproveReq, out *ApproveRes) error
 		OnSearch(ctx context.Context, in *SearchReq, out *SearchRes) error
 		GradeCateAdd(ctx context.Context, in *common.GradeCate, out *AddGradeCateRes) error
-		GradeCateCount(ctx context.Context, in *common.Request, out *AddGradeCateRes) error
+		GradeCateCount(ctx context.Context, in *common.Request, out *GradeCateCountRes) error
 		GradeCateList(ctx context.Context, in *GradeCateListReq, out *GradeCateListRes) error
 		HomeBlackData(ctx context.Context, in *common.Request, out *HomeBlackDataRes) error
 		GradeSubject(ctx context.Context, in *GradeSubjectReq, out *GradeSubjectRes) error
@@ -1868,7 +1868,7 @@ func (h *datanodeServiceHandler) GradeCateAdd(ctx context.Context, in *common.Gr
 	return h.DatanodeServiceHandler.GradeCateAdd(ctx, in, out)
 }
 
-func (h *datanodeServiceHandler) GradeCateCount(ctx context.Context, in *common.Request, out *AddGradeCateRes) error {
+func (h *datanodeServiceHandler) GradeCateCount(ctx context.Context, in *common.Request, out *GradeCateCountRes) error {
 	return h.DatanodeServiceHandler.GradeCateCount(ctx, in, out)
 }
 
