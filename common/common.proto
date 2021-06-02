@@ -136,7 +136,7 @@ message question_query {
     // @inject_tag: form:"size"
     int32          size = 16;
     // @inject_tag: form:"user_id"
-    int32        user_id = 17;
+    int64        user_id = 17;
     // @inject_tag: form:"extra"
     map<string,string> extra = 18;
 }
