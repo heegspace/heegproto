@@ -136,7 +136,7 @@ message question_query {
     // @inject_tag: form:"size"
     int32          size = 16;
     // @inject_tag: form:"user_id"
-    string        user_id = 17;
+    int32        user_id = 17;
     // @inject_tag: form:"extra"
     map<string,string> extra = 18;
 }
@@ -335,7 +335,7 @@ message school_roll {
 }
 
 message subject_cate {
-    int64    uid = 1;
+    string    uid = 1;
     string    roll_id = 2;
     string    grade_id = 3;
     string    subject = 4;
