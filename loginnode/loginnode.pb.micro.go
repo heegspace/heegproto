@@ -6,8 +6,8 @@ package loginnode
 import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	_ "github.com/heegspace/heegproto/rescode"
 	math "math"
+	_ "rescode"
 )
 
 import (
@@ -45,7 +45,7 @@ func NewLoginnodeServiceEndpoints() []*api.Endpoint {
 type LoginnodeService interface {
 	// 登录
 	Login(ctx context.Context, in *LoginReq, opts ...client.CallOption) (*LoginRes, error)
-	LoginByCode(ctx context.Context, in *LoginByCodeDeq, opts ...client.CallOption) (*LoginByCodRes, error)
+	LoginByCode(ctx context.Context, in *LoginByCodeReq, opts ...client.CallOption) (*LoginByCodeRes, error)
 	LoginWechat(ctx context.Context, in *LoginWechatReq, opts ...client.CallOption) (*LoginWechatRes, error)
 	LoginAlipay(ctx context.Context, in *LoginAlipayReq, opts ...client.CallOption) (*LoginAlipayRes, error)
 	// 退出登录
@@ -76,9 +76,9 @@ func (c *loginnodeService) Login(ctx context.Context, in *LoginReq, opts ...clie
 	return out, nil
 }
 
-func (c *loginnodeService) LoginByCode(ctx context.Context, in *LoginByCodeDeq, opts ...client.CallOption) (*LoginByCodRes, error) {
+func (c *loginnodeService) LoginByCode(ctx context.Context, in *LoginByCodeReq, opts ...client.CallOption) (*LoginByCodeRes, error) {
 	req := c.c.NewRequest(c.name, "LoginnodeService.LoginByCode", in)
-	out := new(LoginByCodRes)
+	out := new(LoginByCodeRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -131,7 +131,7 @@ func (c *loginnodeService) Refresh(ctx context.Context, in *RefreshReq, opts ...
 type LoginnodeServiceHandler interface {
 	// 登录
 	Login(context.Context, *LoginReq, *LoginRes) error
-	LoginByCode(context.Context, *LoginByCodeDeq, *LoginByCodRes) error
+	LoginByCode(context.Context, *LoginByCodeReq, *LoginByCodeRes) error
 	LoginWechat(context.Context, *LoginWechatReq, *LoginWechatRes) error
 	LoginAlipay(context.Context, *LoginAlipayReq, *LoginAlipayRes) error
 	// 退出登录
@@ -143,7 +143,7 @@ type LoginnodeServiceHandler interface {
 func RegisterLoginnodeServiceHandler(s server.Server, hdlr LoginnodeServiceHandler, opts ...server.HandlerOption) error {
 	type loginnodeService interface {
 		Login(ctx context.Context, in *LoginReq, out *LoginRes) error
-		LoginByCode(ctx context.Context, in *LoginByCodeDeq, out *LoginByCodRes) error
+		LoginByCode(ctx context.Context, in *LoginByCodeReq, out *LoginByCodeRes) error
 		LoginWechat(ctx context.Context, in *LoginWechatReq, out *LoginWechatRes) error
 		LoginAlipay(ctx context.Context, in *LoginAlipayReq, out *LoginAlipayRes) error
 		Logout(ctx context.Context, in *LogoutReq, out *LogoutRes) error
@@ -164,7 +164,7 @@ func (h *loginnodeServiceHandler) Login(ctx context.Context, in *LoginReq, out *
 	return h.LoginnodeServiceHandler.Login(ctx, in, out)
 }
 
-func (h *loginnodeServiceHandler) LoginByCode(ctx context.Context, in *LoginByCodeDeq, out *LoginByCodRes) error {
+func (h *loginnodeServiceHandler) LoginByCode(ctx context.Context, in *LoginByCodeReq, out *LoginByCodeRes) error {
 	return h.LoginnodeServiceHandler.LoginByCode(ctx, in, out)
 }
 
