@@ -4,11 +4,10 @@
 package loginnode
 
 import (
-	_ "github.com/heegspace/heegproto/common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	math "math"
 	_ "github.com/heegspace/heegproto/rescode"
+	math "math"
 )
 
 import (
@@ -46,7 +45,7 @@ func NewLoginnodeServiceEndpoints() []*api.Endpoint {
 type LoginnodeService interface {
 	// 登录
 	Login(ctx context.Context, in *LoginReq, opts ...client.CallOption) (*LoginRes, error)
-	LoginByCode(ctx context.Context, in *LoginByCodeReq, opts ...client.CallOption) (*LoginByCodeRes, error)
+	LoginByCode(ctx context.Context, in *LoginByCodeDeq, opts ...client.CallOption) (*LoginByCodRes, error)
 	LoginWechat(ctx context.Context, in *LoginWechatReq, opts ...client.CallOption) (*LoginWechatRes, error)
 	LoginAlipay(ctx context.Context, in *LoginAlipayReq, opts ...client.CallOption) (*LoginAlipayRes, error)
 	// 退出登录
@@ -68,7 +67,7 @@ func NewLoginnodeService(name string, c client.Client) LoginnodeService {
 }
 
 func (c *loginnodeService) Login(ctx context.Context, in *LoginReq, opts ...client.CallOption) (*LoginRes, error) {
-	req := c.c.NewRequest(c.name, "LoginnodeService.login", in)
+	req := c.c.NewRequest(c.name, "LoginnodeService.Login", in)
 	out := new(LoginRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -77,9 +76,9 @@ func (c *loginnodeService) Login(ctx context.Context, in *LoginReq, opts ...clie
 	return out, nil
 }
 
-func (c *loginnodeService) LoginByCode(ctx context.Context, in *LoginByCodeReq, opts ...client.CallOption) (*LoginByCodeRes, error) {
-	req := c.c.NewRequest(c.name, "LoginnodeService.login_by_code", in)
-	out := new(LoginByCodeRes)
+func (c *loginnodeService) LoginByCode(ctx context.Context, in *LoginByCodeDeq, opts ...client.CallOption) (*LoginByCodRes, error) {
+	req := c.c.NewRequest(c.name, "LoginnodeService.LoginByCode", in)
+	out := new(LoginByCodRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -88,7 +87,7 @@ func (c *loginnodeService) LoginByCode(ctx context.Context, in *LoginByCodeReq, 
 }
 
 func (c *loginnodeService) LoginWechat(ctx context.Context, in *LoginWechatReq, opts ...client.CallOption) (*LoginWechatRes, error) {
-	req := c.c.NewRequest(c.name, "LoginnodeService.login_wechat", in)
+	req := c.c.NewRequest(c.name, "LoginnodeService.LoginWechat", in)
 	out := new(LoginWechatRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -98,7 +97,7 @@ func (c *loginnodeService) LoginWechat(ctx context.Context, in *LoginWechatReq, 
 }
 
 func (c *loginnodeService) LoginAlipay(ctx context.Context, in *LoginAlipayReq, opts ...client.CallOption) (*LoginAlipayRes, error) {
-	req := c.c.NewRequest(c.name, "LoginnodeService.login_alipay", in)
+	req := c.c.NewRequest(c.name, "LoginnodeService.LoginAlipay", in)
 	out := new(LoginAlipayRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -108,7 +107,7 @@ func (c *loginnodeService) LoginAlipay(ctx context.Context, in *LoginAlipayReq, 
 }
 
 func (c *loginnodeService) Logout(ctx context.Context, in *LogoutReq, opts ...client.CallOption) (*LogoutRes, error) {
-	req := c.c.NewRequest(c.name, "LoginnodeService.logout", in)
+	req := c.c.NewRequest(c.name, "LoginnodeService.Logout", in)
 	out := new(LogoutRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -118,7 +117,7 @@ func (c *loginnodeService) Logout(ctx context.Context, in *LogoutReq, opts ...cl
 }
 
 func (c *loginnodeService) Refresh(ctx context.Context, in *RefreshReq, opts ...client.CallOption) (*RefreshRes, error) {
-	req := c.c.NewRequest(c.name, "LoginnodeService.refresh", in)
+	req := c.c.NewRequest(c.name, "LoginnodeService.Refresh", in)
 	out := new(RefreshRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -132,7 +131,7 @@ func (c *loginnodeService) Refresh(ctx context.Context, in *RefreshReq, opts ...
 type LoginnodeServiceHandler interface {
 	// 登录
 	Login(context.Context, *LoginReq, *LoginRes) error
-	LoginByCode(context.Context, *LoginByCodeReq, *LoginByCodeRes) error
+	LoginByCode(context.Context, *LoginByCodeDeq, *LoginByCodRes) error
 	LoginWechat(context.Context, *LoginWechatReq, *LoginWechatRes) error
 	LoginAlipay(context.Context, *LoginAlipayReq, *LoginAlipayRes) error
 	// 退出登录
@@ -144,7 +143,7 @@ type LoginnodeServiceHandler interface {
 func RegisterLoginnodeServiceHandler(s server.Server, hdlr LoginnodeServiceHandler, opts ...server.HandlerOption) error {
 	type loginnodeService interface {
 		Login(ctx context.Context, in *LoginReq, out *LoginRes) error
-		LoginByCode(ctx context.Context, in *LoginByCodeReq, out *LoginByCodeRes) error
+		LoginByCode(ctx context.Context, in *LoginByCodeDeq, out *LoginByCodRes) error
 		LoginWechat(ctx context.Context, in *LoginWechatReq, out *LoginWechatRes) error
 		LoginAlipay(ctx context.Context, in *LoginAlipayReq, out *LoginAlipayRes) error
 		Logout(ctx context.Context, in *LogoutReq, out *LogoutRes) error
@@ -165,7 +164,7 @@ func (h *loginnodeServiceHandler) Login(ctx context.Context, in *LoginReq, out *
 	return h.LoginnodeServiceHandler.Login(ctx, in, out)
 }
 
-func (h *loginnodeServiceHandler) LoginByCode(ctx context.Context, in *LoginByCodeReq, out *LoginByCodeRes) error {
+func (h *loginnodeServiceHandler) LoginByCode(ctx context.Context, in *LoginByCodeDeq, out *LoginByCodRes) error {
 	return h.LoginnodeServiceHandler.LoginByCode(ctx, in, out)
 }
 

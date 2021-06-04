@@ -6,9 +6,9 @@ package authnode
 import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	math "math"
 	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	math "math"
 )
 
 import (
@@ -65,7 +65,7 @@ func NewAuthnodeService(name string, c client.Client) AuthnodeService {
 }
 
 func (c *authnodeService) VerifyToken(ctx context.Context, in *VerifyTokenReq, opts ...client.CallOption) (*VerifyTokenRes, error) {
-	req := c.c.NewRequest(c.name, "AuthnodeService.verify_token", in)
+	req := c.c.NewRequest(c.name, "AuthnodeService.VerifyToken", in)
 	out := new(VerifyTokenRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -75,7 +75,7 @@ func (c *authnodeService) VerifyToken(ctx context.Context, in *VerifyTokenReq, o
 }
 
 func (c *authnodeService) AdminRole(ctx context.Context, in *AdminRoleReq, opts ...client.CallOption) (*AdminRoleRes, error) {
-	req := c.c.NewRequest(c.name, "AuthnodeService.admin_role", in)
+	req := c.c.NewRequest(c.name, "AuthnodeService.AdminRole", in)
 	out := new(AdminRoleRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -85,7 +85,7 @@ func (c *authnodeService) AdminRole(ctx context.Context, in *AdminRoleReq, opts 
 }
 
 func (c *authnodeService) CooperRole(ctx context.Context, in *CooperRoleReq, opts ...client.CallOption) (*CooperRoleRes, error) {
-	req := c.c.NewRequest(c.name, "AuthnodeService.cooper_role", in)
+	req := c.c.NewRequest(c.name, "AuthnodeService.CooperRole", in)
 	out := new(CooperRoleRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {

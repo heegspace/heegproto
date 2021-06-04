@@ -3,14 +3,14 @@ package cloudnode;
 import "rescode/rescode.proto";
 import "common/common.proto";
 
-message dir_req {
-    common.authorize      auth = 1;
+message DirReq {
+    common.Authorize      auth = 1;
     int64                 uid = 2;
     string                path = 3;
     map<string,string>    extra = 4;
 }
 
-message dir_item {
+message DirItem {
     string      name = 1;
     int32       type = 2;
     string      path = 3;
@@ -21,28 +21,28 @@ message dir_item {
     string      extra = 8;
 }
 
-message dir_res {
-    rescode.code          rescode = 1;
+message DirRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
-    repeated dir_item     dirs = 3;
+    repeated DirItem     dirs = 3;
     map<string,string>    extra = 4;
 }
 
-message add_dir_req {
-    common.authorize      auth = 1;
+message AddDirReq {
+    common.Authorize      auth = 1;
     int64                 uid = 2;
     string                parent = 3;
     string                name = 4;
     map<string,string>    extra = 5; 
 }
 
-message add_dir_res {
-    rescode.code          rescode = 1;
+message AddDirRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     map<string,string>    extra = 3;
 }
 
-message file_item {
+message FileItem {
     int64       size = 1;
     string      path = 2;
     string      name = 3;
@@ -51,46 +51,46 @@ message file_item {
     string      content_type = 6;
 }
 
-message add_file_req {
-    common.authorize        auth = 1;
+message AddFileReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
-    file_item               files = 3;
+    FileItem               files = 3;
     map<string,string>      extra = 4;
 }
 
-message add_file_res {
-    rescode.code          rescode = 1;
+message AddFileRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     map<string,string>    extra = 3;
 }
 
-message attr_req {
-    common.authorize        auth = 1;
+message AttrReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
     map<string,string>      extra = 3;
 }
 
-message attr_item {
+message AttrItem {
     int64     capacity = 1;
     int32     number = 2;
 }
 
-message attr_res {
-    rescode.code          rescode = 1;
+message AttrRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
-    attr_item             attr = 3;
+    AttrItem             attr = 3;
     map<string,string>    extra = 4;
 }
 
-message thumbnail_req {
-    common.authorize        auth = 1;
+message ThumbnailReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
     string                  path = 3;
     map<string,string>      extra = 4;
 }
 
-message thumbnail_res {
-    rescode.code        rescode = 1;
+message ThumbnailRes {
+    rescode.Code        rescode = 1;
     string              resmsg = 2;
     string              thumb = 3;
     map<string,string>  extra = 4;
@@ -98,13 +98,13 @@ message thumbnail_res {
 
 service cloudnode_service {
 	// 获取目录
-	rpc dir(dir_req) returns (dir_res) {}
+	rpc Dir(DirReq) returns (DirRes) {}
 	// 添加目录
-	rpc add_dir(add_dir_req) returns (add_dir_res) {}
+	rpc AddDir(AddDirReq) returns (AddDirRes) {}
 	// 添加文件
-	rpc add_file(add_file_req) returns (add_file_res) {}
+	rpc AddFile(AddFileReq) returns (AddFileRes) {}
 	// 云存储属性
-	rpc attr(attr_req) returns (attr_res) {}
+	rpc Attr(AttrReq) returns (AttrRes) {}
 	// 获取缩略图
-	rpc thumbnail(thumbnail_req) returns (thumbnail_res) {}
+	rpc Thumbnail(ThumbnailReq) returns (ThumbnailRes) {}
 }

@@ -4,11 +4,11 @@
 package cloudnode
 
 import (
-	_ "github.com/heegspace/heegproto/common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	math "math"
+	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	math "math"
 )
 
 import (
@@ -69,7 +69,7 @@ func NewCloudnodeService(name string, c client.Client) CloudnodeService {
 }
 
 func (c *cloudnodeService) Dir(ctx context.Context, in *DirReq, opts ...client.CallOption) (*DirRes, error) {
-	req := c.c.NewRequest(c.name, "CloudnodeService.dir", in)
+	req := c.c.NewRequest(c.name, "CloudnodeService.Dir", in)
 	out := new(DirRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -79,7 +79,7 @@ func (c *cloudnodeService) Dir(ctx context.Context, in *DirReq, opts ...client.C
 }
 
 func (c *cloudnodeService) AddDir(ctx context.Context, in *AddDirReq, opts ...client.CallOption) (*AddDirRes, error) {
-	req := c.c.NewRequest(c.name, "CloudnodeService.add_dir", in)
+	req := c.c.NewRequest(c.name, "CloudnodeService.AddDir", in)
 	out := new(AddDirRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -89,7 +89,7 @@ func (c *cloudnodeService) AddDir(ctx context.Context, in *AddDirReq, opts ...cl
 }
 
 func (c *cloudnodeService) AddFile(ctx context.Context, in *AddFileReq, opts ...client.CallOption) (*AddFileRes, error) {
-	req := c.c.NewRequest(c.name, "CloudnodeService.add_file", in)
+	req := c.c.NewRequest(c.name, "CloudnodeService.AddFile", in)
 	out := new(AddFileRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -99,7 +99,7 @@ func (c *cloudnodeService) AddFile(ctx context.Context, in *AddFileReq, opts ...
 }
 
 func (c *cloudnodeService) Attr(ctx context.Context, in *AttrReq, opts ...client.CallOption) (*AttrRes, error) {
-	req := c.c.NewRequest(c.name, "CloudnodeService.attr", in)
+	req := c.c.NewRequest(c.name, "CloudnodeService.Attr", in)
 	out := new(AttrRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -109,7 +109,7 @@ func (c *cloudnodeService) Attr(ctx context.Context, in *AttrReq, opts ...client
 }
 
 func (c *cloudnodeService) Thumbnail(ctx context.Context, in *ThumbnailReq, opts ...client.CallOption) (*ThumbnailRes, error) {
-	req := c.c.NewRequest(c.name, "CloudnodeService.thumbnail", in)
+	req := c.c.NewRequest(c.name, "CloudnodeService.Thumbnail", in)
 	out := new(ThumbnailRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {

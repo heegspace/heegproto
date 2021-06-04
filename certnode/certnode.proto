@@ -3,20 +3,20 @@ package certnode;
 import "rescode/rescode.proto";
 import "common/common.proto";
 
-message submit_cert_req {
-    common.authorize      auth = 1;
-    common.person_cert    cert = 2;
+message SubmitCertReq {
+    common.Authorize      auth = 1;
+    common.PersonCert    cert = 2;
     map<string,string>    extra = 3;
 }
 
-message submit_cert_res {
-    rescode.code          rescode = 1;
+message SubmitCertRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     map<string,string>    extra = 3;
 }
 
-message cert_approved_req {
-    common.authorize      auth = 1;
+message CertApprovedReq {
+    common.Authorize      auth = 1;
     int64                 uid = 2;
     int64                 approve_uid = 3;
     string                approve_name = 4;
@@ -24,15 +24,15 @@ message cert_approved_req {
     map<string,string>    extra = 6;
 }
 
-message cert_approved_res {
-    rescode.code          rescode = 1;
+message CertApprovedRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
-    common.person_cert    cert = 3;
+    common.PersonCert    cert = 3;
     map<string,string>    extra = 4;
 }
 
-message cert_refuse_req {
-    common.authorize      auth = 1;
+message CertRefuseReq {
+    common.Authorize      auth = 1;
     int64                 uid = 2;
     int64                 refuse_uid = 3;
     string                refuse_name = 4;
@@ -40,16 +40,16 @@ message cert_refuse_req {
     map<string,string>    extra = 6;
 }
 
-message cert_refuse_res {
-    rescode.code          rescode = 1;
+message CertRefuseRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
-    common.person_cert    cert = 3;
+    common.PersonCert    cert = 3;
     map<string,string>    extra = 4;
 }
 
 
-message cert_info_req {
-    common.authorize      auth = 1;
+message CertInfoReq {
+    common.Authorize      auth = 1;
     int64                 uid = 2;
     string                status = 3;
     string                idname = 4;
@@ -59,69 +59,69 @@ message cert_info_req {
     map<string,string>    extra = 8;
 }
 
-message cert_info_res {
-    rescode.code                  rescode = 1;
+message CertInfoRes {
+    rescode.Code                  rescode = 1;
     string                        resmsg = 2;
-    repeated common.person_cert   cert = 3;
+    repeated common.PersonCert   cert = 3;
     map<string,string>            extra = 4;
 }
 
-message cert_flow_req {
-    common.authorize      auth = 1;
+message CertFlowReq {
+    common.Authorize      auth = 1;
     int64                 uid = 2;
     int32                 page = 3;
     int32                 size = 4;
     map<string,string>    extra = 5;
 }
 
-message cert_flow_res {
-    rescode.code                 rescode = 1;
+message CertFlowRes {
+    rescode.Code                 rescode = 1;
     string                       resmsg = 2;
-    repeated common.person_cert  cert = 3;
+    repeated common.PersonCert  cert = 3;
     map<string,string>           extra = 4;
 }
 
-message cert_cancel_req {
-    common.authorize      auth = 1;
+message CertCancelReq {
+    common.Authorize      auth = 1;
     int64                 uid = 2;
     string                info = 3;
     map<string,string>    extra = 4;
 }
 
-message cert_cancel_res {
-    rescode.code              rescode = 1;
+message CertCancelRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
     map<string,string>        extra = 3;
 }
 
-message cert_cache_req {
-    common.authorize      auth = 1;
+message CertCacheReq {
+    common.Authorize      auth = 1;
     string                key = 2;
     string                value = 3;
     int64                 expire = 4;
     map<string,string>    extra = 5;
 }
 
-message cert_cache_res {
-    rescode.code              rescode = 1;
+message CertCacheRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
     map<string,string>        extra = 3;
 }
 
 service certnode_service {
 	// 提交实名
-	rpc submit_cert(submit_cert_req)  returns (submit_cert_res) {}
+	rpc SubmitCert(SubmitCertReq)  returns (SubmitCertRes) {}
 	// 获取实名信息
-	rpc cert_info(cert_info_req)  returns (cert_info_res) {}
+	rpc CertInfo(CertInfoReq)  returns (CertInfoRes) {}
 	// 实名日志记录
-	rpc cert_flow(cert_flow_req)  returns (cert_flow_res) {}
+	rpc CertFlow(CertFlowReq)  returns (CertFlowRes) {}
 	// 取消实名
-	rpc cert_cancel(cert_cancel_req)  returns (cert_cancel_res) {}
+	rpc Certancel(CertCancelReq)  returns (CertCancelRes) {}
 	//--------------需要授权--------------//
 	// 审核通过
-	rpc cert_approved(cert_approved_req)  returns (cert_approved_res) {}
+	rpc CertApproved(CertApprovedReq)  returns (CertApprovedRes) {}
 	// 实名失败 
-	rpc cert_refuse(cert_refuse_req) returns (cert_refuse_res) {}
+	rpc CertRefuse(CertRefuseReq) returns (CertRefuseRes) {}
 	// 实名缓存
-	rpc cert_cache(cert_cache_req)  returns (cert_cache_res) {}
+	rpc CertCache(CertCacheReq)  returns (CertCacheRes) {}
 }

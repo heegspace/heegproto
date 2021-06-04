@@ -1,7 +1,7 @@
 syntax = "proto3";
 package rescode;
 
-enum code {
+enum Code {
     code_SUCCESS =   0;      // 成功
     code_ERROR   =   1;      // 失败
     code_DB_ERROR = 2;       // 数据异常
