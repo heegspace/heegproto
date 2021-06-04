@@ -7,10 +7,10 @@
 package loginnode
 
 import (
+	rescode "github.com/heegspace/heegproto/rescode"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
-	rescode "rescode"
 	sync "sync"
 )
 

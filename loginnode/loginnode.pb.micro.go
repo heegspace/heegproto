@@ -6,8 +6,8 @@ package loginnode
 import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
+	_ "github.com/heegspace/heegproto/rescode"
 	math "math"
-	_ "rescode"
 )
 
 import (
