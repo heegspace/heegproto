@@ -51,7 +51,7 @@ type CertnodeService interface {
 	// 实名日志记录
 	CertFlow(ctx context.Context, in *CertFlowReq, opts ...client.CallOption) (*CertFlowRes, error)
 	// 取消实名
-	Certancel(ctx context.Context, in *CertCancelReq, opts ...client.CallOption) (*CertCancelRes, error)
+	CertCancel(ctx context.Context, in *CertCancelReq, opts ...client.CallOption) (*CertCancelRes, error)
 	//--------------需要授权--------------//
 	// 审核通过
 	CertApproved(ctx context.Context, in *CertApprovedReq, opts ...client.CallOption) (*CertApprovedRes, error)
@@ -103,8 +103,8 @@ func (c *certnodeService) CertFlow(ctx context.Context, in *CertFlowReq, opts ..
 	return out, nil
 }
 
-func (c *certnodeService) Certancel(ctx context.Context, in *CertCancelReq, opts ...client.CallOption) (*CertCancelRes, error) {
-	req := c.c.NewRequest(c.name, "CertnodeService.Certancel", in)
+func (c *certnodeService) CertCancel(ctx context.Context, in *CertCancelReq, opts ...client.CallOption) (*CertCancelRes, error) {
+	req := c.c.NewRequest(c.name, "CertnodeService.CertCancel", in)
 	out := new(CertCancelRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -153,7 +153,7 @@ type CertnodeServiceHandler interface {
 	// 实名日志记录
 	CertFlow(context.Context, *CertFlowReq, *CertFlowRes) error
 	// 取消实名
-	Certancel(context.Context, *CertCancelReq, *CertCancelRes) error
+	CertCancel(context.Context, *CertCancelReq, *CertCancelRes) error
 	//--------------需要授权--------------//
 	// 审核通过
 	CertApproved(context.Context, *CertApprovedReq, *CertApprovedRes) error
@@ -168,7 +168,7 @@ func RegisterCertnodeServiceHandler(s server.Server, hdlr CertnodeServiceHandler
 		SubmitCert(ctx context.Context, in *SubmitCertReq, out *SubmitCertRes) error
 		CertInfo(ctx context.Context, in *CertInfoReq, out *CertInfoRes) error
 		CertFlow(ctx context.Context, in *CertFlowReq, out *CertFlowRes) error
-		Certancel(ctx context.Context, in *CertCancelReq, out *CertCancelRes) error
+		CertCancel(ctx context.Context, in *CertCancelReq, out *CertCancelRes) error
 		CertApproved(ctx context.Context, in *CertApprovedReq, out *CertApprovedRes) error
 		CertRefuse(ctx context.Context, in *CertRefuseReq, out *CertRefuseRes) error
 		CertCache(ctx context.Context, in *CertCacheReq, out *CertCacheRes) error
@@ -196,8 +196,8 @@ func (h *certnodeServiceHandler) CertFlow(ctx context.Context, in *CertFlowReq, 
 	return h.CertnodeServiceHandler.CertFlow(ctx, in, out)
 }
 
-func (h *certnodeServiceHandler) Certancel(ctx context.Context, in *CertCancelReq, out *CertCancelRes) error {
-	return h.CertnodeServiceHandler.Certancel(ctx, in, out)
+func (h *certnodeServiceHandler) CertCancel(ctx context.Context, in *CertCancelReq, out *CertCancelRes) error {
+	return h.CertnodeServiceHandler.CertCancel(ctx, in, out)
 }
 
 func (h *certnodeServiceHandler) CertApproved(ctx context.Context, in *CertApprovedReq, out *CertApprovedRes) error {

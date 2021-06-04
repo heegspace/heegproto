@@ -116,7 +116,7 @@ service certnode_service {
 	// 实名日志记录
 	rpc CertFlow(CertFlowReq)  returns (CertFlowRes) {}
 	// 取消实名
-	rpc Certancel(CertCancelReq)  returns (CertCancelRes) {}
+	rpc CertCancel(CertCancelReq)  returns (CertCancelRes) {}
 	//--------------需要授权--------------//
 	// 审核通过
 	rpc CertApproved(CertApprovedReq)  returns (CertApprovedRes) {}
