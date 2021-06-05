@@ -60,7 +60,7 @@ message GetTaskCountRes {
 
 service CronnodeService {
 	// 提交实名
-	rpc Cronall(CronCallReq) returns (CronCallRes) {}
+	rpc CronCall(CronCallReq) returns (CronCallRes) {}
 	// 添加任务
 	rpc AddTask(AddTaskReq) returns (AddTaskRes) {}
 	// 获取任务

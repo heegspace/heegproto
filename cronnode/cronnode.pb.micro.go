@@ -45,7 +45,7 @@ func NewCronnodeServiceEndpoints() []*api.Endpoint {
 
 type CronnodeService interface {
 	// 提交实名
-	Cronall(ctx context.Context, in *CronCallReq, opts ...client.CallOption) (*CronCallRes, error)
+	CronCall(ctx context.Context, in *CronCallReq, opts ...client.CallOption) (*CronCallRes, error)
 	// 添加任务
 	AddTask(ctx context.Context, in *AddTaskReq, opts ...client.CallOption) (*AddTaskRes, error)
 	// 获取任务
@@ -66,8 +66,8 @@ func NewCronnodeService(name string, c client.Client) CronnodeService {
 	}
 }
 
-func (c *cronnodeService) Cronall(ctx context.Context, in *CronCallReq, opts ...client.CallOption) (*CronCallRes, error) {
-	req := c.c.NewRequest(c.name, "CronnodeService.Cronall", in)
+func (c *cronnodeService) CronCall(ctx context.Context, in *CronCallReq, opts ...client.CallOption) (*CronCallRes, error) {
+	req := c.c.NewRequest(c.name, "CronnodeService.CronCall", in)
 	out := new(CronCallRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -110,7 +110,7 @@ func (c *cronnodeService) GetTaskCount(ctx context.Context, in *GetTaskCountReq,
 
 type CronnodeServiceHandler interface {
 	// 提交实名
-	Cronall(context.Context, *CronCallReq, *CronCallRes) error
+	CronCall(context.Context, *CronCallReq, *CronCallRes) error
 	// 添加任务
 	AddTask(context.Context, *AddTaskReq, *AddTaskRes) error
 	// 获取任务
@@ -121,7 +121,7 @@ type CronnodeServiceHandler interface {
 
 func RegisterCronnodeServiceHandler(s server.Server, hdlr CronnodeServiceHandler, opts ...server.HandlerOption) error {
 	type cronnodeService interface {
-		Cronall(ctx context.Context, in *CronCallReq, out *CronCallRes) error
+		CronCall(ctx context.Context, in *CronCallReq, out *CronCallRes) error
 		AddTask(ctx context.Context, in *AddTaskReq, out *AddTaskRes) error
 		GetTask(ctx context.Context, in *GetTaskReq, out *GetTaskRes) error
 		GetTaskCount(ctx context.Context, in *GetTaskCountReq, out *GetTaskCountRes) error
@@ -137,8 +137,8 @@ type cronnodeServiceHandler struct {
 	CronnodeServiceHandler
 }
 
-func (h *cronnodeServiceHandler) Cronall(ctx context.Context, in *CronCallReq, out *CronCallRes) error {
-	return h.CronnodeServiceHandler.Cronall(ctx, in, out)
+func (h *cronnodeServiceHandler) CronCall(ctx context.Context, in *CronCallReq, out *CronCallRes) error {
+	return h.CronnodeServiceHandler.CronCall(ctx, in, out)
 }
 
 func (h *cronnodeServiceHandler) AddTask(ctx context.Context, in *AddTaskReq, out *AddTaskRes) error {
