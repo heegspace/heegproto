@@ -145,9 +145,9 @@ type DatanodeService interface {
 	// 纠错试题（包含更新或添加）
 	ModifyQuestion(ctx context.Context, in *ModifyReq, opts ...client.CallOption) (*ModifyRes, error)
 	//获取个人纠错的试题
-	Modifylist(ctx context.Context, in *ModifyListReq, opts ...client.CallOption) (*ModifyListRes, error)
+	ModifyList(ctx context.Context, in *ModifyListReq, opts ...client.CallOption) (*ModifyListRes, error)
 	//获取个人纠错的试题的数量
-	Modifycount(ctx context.Context, in *ModifyCountReq, opts ...client.CallOption) (*ModifyCountRes, error)
+	ModifyCount(ctx context.Context, in *ModifyCountReq, opts ...client.CallOption) (*ModifyCountRes, error)
 	//添加试题
 	QuestionTimuAdd(ctx context.Context, in *TimuAddReq, opts ...client.CallOption) (*TimuAddRes, error)
 	//获取添加的试题
@@ -245,7 +245,7 @@ type DatanodeService interface {
 	// 日志数量
 	UserLogCount(ctx context.Context, in *UserLogCountReq, opts ...client.CallOption) (*UserLogCountRes, error)
 	// 添加任务
-	Addtask(ctx context.Context, in *AddTaskReq, opts ...client.CallOption) (*AddTaskRes, error)
+	AddTask(ctx context.Context, in *AddTaskReq, opts ...client.CallOption) (*AddTaskRes, error)
 	// 获取任务
 	GetTask(ctx context.Context, in *GetTaskReq, opts ...client.CallOption) (*GetTaskRes, error)
 	// 获取任务数量
@@ -655,7 +655,7 @@ func (c *datanodeService) QuestionChapter(ctx context.Context, in *common.Questi
 }
 
 func (c *datanodeService) SubjectName(ctx context.Context, in *SubjectNameReq, opts ...client.CallOption) (*SubjectNameRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.subjectName", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.SubjectName", in)
 	out := new(SubjectNameRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -744,8 +744,8 @@ func (c *datanodeService) ModifyQuestion(ctx context.Context, in *ModifyReq, opt
 	return out, nil
 }
 
-func (c *datanodeService) Modifylist(ctx context.Context, in *ModifyListReq, opts ...client.CallOption) (*ModifyListRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.Modifylist", in)
+func (c *datanodeService) ModifyList(ctx context.Context, in *ModifyListReq, opts ...client.CallOption) (*ModifyListRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.ModifyList", in)
 	out := new(ModifyListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -754,8 +754,8 @@ func (c *datanodeService) Modifylist(ctx context.Context, in *ModifyListReq, opt
 	return out, nil
 }
 
-func (c *datanodeService) Modifycount(ctx context.Context, in *ModifyCountReq, opts ...client.CallOption) (*ModifyCountRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.Modifycount", in)
+func (c *datanodeService) ModifyCount(ctx context.Context, in *ModifyCountReq, opts ...client.CallOption) (*ModifyCountRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.ModifyCount", in)
 	out := new(ModifyCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -865,7 +865,7 @@ func (c *datanodeService) GradeSubject(ctx context.Context, in *GradeSubjectReq,
 }
 
 func (c *datanodeService) SchoolRollAdd(ctx context.Context, in *common.SchoolRoll, opts ...client.CallOption) (*SchoolRollAddRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.SchoolRoll_add", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.SchoolRollAdd", in)
 	out := new(SchoolRollAddRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1055,7 +1055,7 @@ func (c *datanodeService) RefreshUserCoin(ctx context.Context, in *RefreshUserCo
 }
 
 func (c *datanodeService) TixingByVid(ctx context.Context, in *TixingByVidReq, opts ...client.CallOption) (*TixingByVidRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.tixingByVid", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.TixingByVid", in)
 	out := new(TixingByVidRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1284,8 +1284,8 @@ func (c *datanodeService) UserLogCount(ctx context.Context, in *UserLogCountReq,
 	return out, nil
 }
 
-func (c *datanodeService) Addtask(ctx context.Context, in *AddTaskReq, opts ...client.CallOption) (*AddTaskRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.Addtask", in)
+func (c *datanodeService) AddTask(ctx context.Context, in *AddTaskReq, opts ...client.CallOption) (*AddTaskRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.AddTask", in)
 	out := new(AddTaskRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1418,9 +1418,9 @@ type DatanodeServiceHandler interface {
 	// 纠错试题（包含更新或添加）
 	ModifyQuestion(context.Context, *ModifyReq, *ModifyRes) error
 	//获取个人纠错的试题
-	Modifylist(context.Context, *ModifyListReq, *ModifyListRes) error
+	ModifyList(context.Context, *ModifyListReq, *ModifyListRes) error
 	//获取个人纠错的试题的数量
-	Modifycount(context.Context, *ModifyCountReq, *ModifyCountRes) error
+	ModifyCount(context.Context, *ModifyCountReq, *ModifyCountRes) error
 	//添加试题
 	QuestionTimuAdd(context.Context, *TimuAddReq, *TimuAddRes) error
 	//获取添加的试题
@@ -1518,7 +1518,7 @@ type DatanodeServiceHandler interface {
 	// 日志数量
 	UserLogCount(context.Context, *UserLogCountReq, *UserLogCountRes) error
 	// 添加任务
-	Addtask(context.Context, *AddTaskReq, *AddTaskRes) error
+	AddTask(context.Context, *AddTaskReq, *AddTaskRes) error
 	// 获取任务
 	GetTask(context.Context, *GetTaskReq, *GetTaskRes) error
 	// 获取任务数量
@@ -1575,8 +1575,8 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		CollectTimu(ctx context.Context, in *CollectReq, out *CollectRes) error
 		QueryCollectTimu(ctx context.Context, in *CollectListReq, out *CollectListRes) error
 		ModifyQuestion(ctx context.Context, in *ModifyReq, out *ModifyRes) error
-		Modifylist(ctx context.Context, in *ModifyListReq, out *ModifyListRes) error
-		Modifycount(ctx context.Context, in *ModifyCountReq, out *ModifyCountRes) error
+		ModifyList(ctx context.Context, in *ModifyListReq, out *ModifyListRes) error
+		ModifyCount(ctx context.Context, in *ModifyCountReq, out *ModifyCountRes) error
 		QuestionTimuAdd(ctx context.Context, in *TimuAddReq, out *TimuAddRes) error
 		AddList(ctx context.Context, in *AddListReq, out *AddListRes) error
 		AddCount(ctx context.Context, in *AddCountReq, out *AddCountRes) error
@@ -1629,7 +1629,7 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		AddUserLog(ctx context.Context, in *AddUserLogReq, out *AddUserLogRes) error
 		QueryUserLog(ctx context.Context, in *QueryUserLogReq, out *QueryUserLogRes) error
 		UserLogCount(ctx context.Context, in *UserLogCountReq, out *UserLogCountRes) error
-		Addtask(ctx context.Context, in *AddTaskReq, out *AddTaskRes) error
+		AddTask(ctx context.Context, in *AddTaskReq, out *AddTaskRes) error
 		GetTask(ctx context.Context, in *GetTaskReq, out *GetTaskRes) error
 		GetTaskCount(ctx context.Context, in *GetTaskCountReq, out *GetTaskCountRes) error
 	}
@@ -1836,12 +1836,12 @@ func (h *datanodeServiceHandler) ModifyQuestion(ctx context.Context, in *ModifyR
 	return h.DatanodeServiceHandler.ModifyQuestion(ctx, in, out)
 }
 
-func (h *datanodeServiceHandler) Modifylist(ctx context.Context, in *ModifyListReq, out *ModifyListRes) error {
-	return h.DatanodeServiceHandler.Modifylist(ctx, in, out)
+func (h *datanodeServiceHandler) ModifyList(ctx context.Context, in *ModifyListReq, out *ModifyListRes) error {
+	return h.DatanodeServiceHandler.ModifyList(ctx, in, out)
 }
 
-func (h *datanodeServiceHandler) Modifycount(ctx context.Context, in *ModifyCountReq, out *ModifyCountRes) error {
-	return h.DatanodeServiceHandler.Modifycount(ctx, in, out)
+func (h *datanodeServiceHandler) ModifyCount(ctx context.Context, in *ModifyCountReq, out *ModifyCountRes) error {
+	return h.DatanodeServiceHandler.ModifyCount(ctx, in, out)
 }
 
 func (h *datanodeServiceHandler) QuestionTimuAdd(ctx context.Context, in *TimuAddReq, out *TimuAddRes) error {
@@ -2052,8 +2052,8 @@ func (h *datanodeServiceHandler) UserLogCount(ctx context.Context, in *UserLogCo
 	return h.DatanodeServiceHandler.UserLogCount(ctx, in, out)
 }
 
-func (h *datanodeServiceHandler) Addtask(ctx context.Context, in *AddTaskReq, out *AddTaskRes) error {
-	return h.DatanodeServiceHandler.Addtask(ctx, in, out)
+func (h *datanodeServiceHandler) AddTask(ctx context.Context, in *AddTaskReq, out *AddTaskRes) error {
+	return h.DatanodeServiceHandler.AddTask(ctx, in, out)
 }
 
 func (h *datanodeServiceHandler) GetTask(ctx context.Context, in *GetTaskReq, out *GetTaskRes) error {

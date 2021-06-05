@@ -1470,7 +1470,7 @@ service datanode_service {
 	// 获取章节
 	rpc QuestionChapter(common.QuestionQuery) returns (ChapterRes) {}
 	// 科目名
-	rpc subjectName(SubjectNameReq) returns (SubjectNameRes) {}
+	rpc SubjectName(SubjectNameReq) returns (SubjectNameRes) {}
 	// 获取来源
 	rpc QuestionSource(common.QuestionQuery) returns (SourceRes) {}
 	// 获取题型
@@ -1488,9 +1488,9 @@ service datanode_service {
 	// 纠错试题（包含更新或添加）
 	rpc ModifyQuestion(ModifyReq) returns (ModifyRes) {}
 	//获取个人纠错的试题
-	rpc Modifylist(ModifyListReq) returns (ModifyListRes) {}
+	rpc ModifyList(ModifyListReq) returns (ModifyListRes) {}
 	//获取个人纠错的试题的数量
-	rpc Modifycount(ModifyCountReq) returns (ModifyCountRes) {}
+	rpc ModifyCount(ModifyCountReq) returns (ModifyCountRes) {}
 	//添加试题
 	rpc QuestionTimuAdd(TimuAddReq) returns (TimuAddRes) {}
 	//获取添加的试题
@@ -1512,7 +1512,7 @@ service datanode_service {
 	//获取学籍对应的年级+科目
 	rpc GradeSubject(GradeSubjectReq) returns (GradeSubjectRes) {}
 	// 添加学级信息
-	rpc SchoolRoll_add(common.SchoolRoll) returns (SchoolRollAddRes) {}
+	rpc SchoolRollAdd(common.SchoolRoll) returns (SchoolRollAddRes) {}
 	//获取年级总数
 	rpc SchoolRollCount(common.Request) returns (SchoolRollCountRes) {}
 	//获取年级列表信息
@@ -1546,7 +1546,7 @@ service datanode_service {
 	// 更新用户的coin数值
 	rpc RefreshUserCoin(RefreshUserCoinReq) returns (RefreshUserCoinRes) {}
 	// 通过版本id获取题型列表
-	rpc tixingByVid(TixingByVidReq) returns (TixingByVidRes) {}
+	rpc TixingByVid(TixingByVidReq) returns (TixingByVidRes) {}
 	// 通过版本id获取来源
 	rpc SourceByVid(SourceByVidReq) returns (SourceByVidRes) {}
 	// 添加识别记录
@@ -1588,7 +1588,7 @@ service datanode_service {
 	// 日志数量
 	rpc UserLogCount(UserLogCountReq) returns (UserLogCountRes) {}
 	// 添加任务
-	rpc Addtask(AddTaskReq) returns (AddTaskRes) {}
+	rpc AddTask(AddTaskReq) returns (AddTaskRes) {}
 	// 获取任务
 	rpc GetTask(GetTaskReq) returns (GetTaskRes) {}
 	// 获取任务数量
