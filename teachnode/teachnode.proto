@@ -4,39 +4,39 @@ import "rescode/rescode.proto";
 import "common/common.proto";
 
 
-message teaccher_subject {
+message TeaccherSubject {
     string        name = 1;
-    int32           score = 2;
+    int32          score = 2;
 }
 
-message teacher_item {
+message TeacherItem {
     int64                       uid = 1;
     string                      tag = 2;
     string                      resume = 3;
-    repeated teaccher_subject   subject = 4;
+    repeated TeaccherSubject   subject = 4;
     int32                       status = 5;
     int64                       tmlong = 6;
 }
 
-message update_teacher_req {
-    common.authorize      auth = 1;
-    teacher_item          teacher = 2;
+message UpdateTeacherReq {
+    common.Authorize      auth = 1;
+    TeacherItem          teacher = 2;
     map<string,string>    extra = 3;
 }
 
-message update_teacher_res {
-    rescode.code       rescode = 1;
+message UpdateTeacherRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message find_teacher_item {
-    teacher_item      teacher = 1;
-    common.user_info  info = 2;
+message FindTeacherItem {
+    TeacherItem      teacher = 1;
+    common.UserInfo  info = 2;
 }
 
-message find_teacher_req {
-    common.authorize      auth = 1;
+message FindTeacherReq {
+    common.Authorize      auth = 1;
     int64                   tuid = 2;
     int64                   uuid = 3;
     string                subject = 4;
@@ -46,34 +46,34 @@ message find_teacher_req {
     map<string,string>    extra = 8;
 }
 
-message find_teacher_res {
-    rescode.code              rescode = 1;
+message FindTeacherRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
-    repeated find_teacher_item   teachers = 3;
+    repeated FindTeacherItem   teachers = 3;
     map<string,string>        extra = 4;
 }
 
-message focus_teacher_req {
-    common.authorize      auth = 1;
+message FocusTeacherReq {
+    common.Authorize      auth = 1;
     int64                   tuid = 2;
     int64                   uuid = 3;
     int32                   status = 4;
     map<string,string>    extra = 5;
 }
 
-message focus_teacher_res {
-    rescode.code       rescode = 1;
+message FocusTeacherRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
     map<string,string> extra = 3;
 }
 
-service teachnode_service {
+service TeachnodeService {
     // 添加或者根据教师信息
-    rpc  update_teacher(update_teacher_req) returns(update_teacher_res){}
+    rpc  UpdateTeacher(UpdateTeacherReq) returns(UpdateTeacherRes){}
 
     // 查询教师信息
-    rpc  get_teacher(find_teacher_req) returns(find_teacher_res) {}
+    rpc  GetTeacher(FindTeacherReq) returns(FindTeacherRes) {}
 
     // 关注/取消关注教师
-    rpc  focus_teacher(focus_teacher_req) returns (focus_teacher_res) {}
+    rpc  FocusTeacher(FocusTeacherReq) returns (FocusTeacherRes) {}
 }

@@ -11,7 +11,7 @@ enum Const {
     Const_Expired  = 5; // 超时时间
 }
 
-message s2sname {
+message S2sname {
     string    host = 1;
     int32   port = 2;
     int32   prority = 3;
@@ -19,71 +19,71 @@ message s2sname {
     int64   expired = 5;
 }
 
-message register_req {
+message RegisterReq {
     string    name = 1;
-    s2sname   s2s = 2;
+    S2sname   s2s = 2;
 }
 
-message register_res {
-    rescode.code    rescode = 1;
+message RegisterRes {
+    rescode.Code    rescode = 1;
     string    resmsg = 2;
 }
 
-message update_req {
+message UpdateReq {
     string    name = 1;
-    s2sname   s2s = 2;
+    S2sname   s2s = 2;
 }
 
-message update_res {
-    rescode.code    rescode = 1;
+message UpdateRes {
+    rescode.Code    rescode = 1;
     string    resmsg = 2;
 }
 
-message fetch_res {
-    rescode.code      rescode = 1;
+message FetchRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
-    repeated s2sname     s2ss = 3;
+    repeated S2sname     s2ss = 3;
 }
 
-message heart_req {
+message HeartReq {
     string    name = 1;
-    s2sname   s2s = 2;
+    S2sname   s2s = 2;
 }
 
-message heart_res {
-    rescode.code    rescode = 1;
+message HeartRes {
+    rescode.Code    rescode = 1;
     string    resmsg = 2;
 }
 
-message s2sinfo_req {
+message S2sinfoReq {
 
 }
 
-message s2sinfo_res {
-    message s2sname_item {
-        repeated s2sname item = 1;
+message S2sinfoRes {
+    message S2snameItem {
+        repeated S2sname item = 1;
     }
-    rescode.code                  rescode = 1;
+    rescode.Code                  rescode = 1;
     string                        resmsg = 2;
-    map<string, s2sname_item>    s2sinfo = 3;
+    map<string, S2snameItem>    s2sinfo = 3;
 }
 
-service s2sname_service {
+service S2snameService {
     // 注册s2s服务
-    rpc  registerS2sname(register_req) returns(register_res) {}
+    rpc  RegisterS2sname(RegisterReq) returns(RegisterRes) {}
 
     // 更新s2sname信息
-    rpc  updateS2sname(update_req) returns(update_res) {}
+    rpc  UpdateS2sname(UpdateReq) returns(UpdateRes) {}
 
     // 根据参数获取对应的s2s列表
-    rpc  fetchS2sname(Request) returns(fetch_res) {}
+    rpc  FetchS2sname(Request) returns(FetchRes) {}
 
     // 获取所有的s2sname 列表信息
-    rpc  fetchS2snames(Request) returns(fetch_res) {}
+    rpc  FetchS2snames(Request) returns(FetchRes) {}
 
     // 服务心跳包，用于更新服务的状态
-    rpc  heart(heart_req) returns(heart_res) {}
+    rpc  Heart(HeartReq) returns(HeartRes) {}
 
     // 获取所有的s2sname信息
-    rpc  s2sinfo(s2sinfo_req) returns(s2sinfo_res) {}
+    rpc  S2sinfo(S2sinfoReq) returns(S2sinfoRes) {}
 }

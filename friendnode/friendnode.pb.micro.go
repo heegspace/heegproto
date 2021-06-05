@@ -4,11 +4,11 @@
 package friendnode
 
 import (
-	_ "github.com/heegspace/heegproto/common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	math "math"
+	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	math "math"
 )
 
 import (
@@ -76,7 +76,7 @@ func NewFriendnodeService(name string, c client.Client) FriendnodeService {
 }
 
 func (c *friendnodeService) AddFriends(ctx context.Context, in *AddFriendReq, opts ...client.CallOption) (*AddFriendRes, error) {
-	req := c.c.NewRequest(c.name, "FriendnodeService.addFriends", in)
+	req := c.c.NewRequest(c.name, "FriendnodeService.AddFriends", in)
 	out := new(AddFriendRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -86,7 +86,7 @@ func (c *friendnodeService) AddFriends(ctx context.Context, in *AddFriendReq, op
 }
 
 func (c *friendnodeService) AgreeFriends(ctx context.Context, in *AgreeFriendReq, opts ...client.CallOption) (*AgreeFriendRes, error) {
-	req := c.c.NewRequest(c.name, "FriendnodeService.agreeFriends", in)
+	req := c.c.NewRequest(c.name, "FriendnodeService.AgreeFriends", in)
 	out := new(AgreeFriendRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -96,7 +96,7 @@ func (c *friendnodeService) AgreeFriends(ctx context.Context, in *AgreeFriendReq
 }
 
 func (c *friendnodeService) FriendsList(ctx context.Context, in *FriendListReq, opts ...client.CallOption) (*FriendListRes, error) {
-	req := c.c.NewRequest(c.name, "FriendnodeService.friendsList", in)
+	req := c.c.NewRequest(c.name, "FriendnodeService.FriendsList", in)
 	out := new(FriendListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -106,7 +106,7 @@ func (c *friendnodeService) FriendsList(ctx context.Context, in *FriendListReq, 
 }
 
 func (c *friendnodeService) CreateGroup(ctx context.Context, in *CreateGroupReq, opts ...client.CallOption) (*CreateGroupRes, error) {
-	req := c.c.NewRequest(c.name, "FriendnodeService.createGroup", in)
+	req := c.c.NewRequest(c.name, "FriendnodeService.CreateGroup", in)
 	out := new(CreateGroupRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -116,7 +116,7 @@ func (c *friendnodeService) CreateGroup(ctx context.Context, in *CreateGroupReq,
 }
 
 func (c *friendnodeService) RenameGroup(ctx context.Context, in *RenameGroupReq, opts ...client.CallOption) (*RenameGroupRes, error) {
-	req := c.c.NewRequest(c.name, "FriendnodeService.renameGroup", in)
+	req := c.c.NewRequest(c.name, "FriendnodeService.RenameGroup", in)
 	out := new(RenameGroupRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -126,7 +126,7 @@ func (c *friendnodeService) RenameGroup(ctx context.Context, in *RenameGroupReq,
 }
 
 func (c *friendnodeService) AddNoteFriend(ctx context.Context, in *AddFriendNoteReq, opts ...client.CallOption) (*AddFriendNoteRes, error) {
-	req := c.c.NewRequest(c.name, "FriendnodeService.addNoteFriend", in)
+	req := c.c.NewRequest(c.name, "FriendnodeService.AddNoteFriend", in)
 	out := new(AddFriendNoteRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -136,7 +136,7 @@ func (c *friendnodeService) AddNoteFriend(ctx context.Context, in *AddFriendNote
 }
 
 func (c *friendnodeService) MoveToNewGroup(ctx context.Context, in *MoveGroupReq, opts ...client.CallOption) (*MoveGroupRes, error) {
-	req := c.c.NewRequest(c.name, "FriendnodeService.moveToNewGroup", in)
+	req := c.c.NewRequest(c.name, "FriendnodeService.MoveToNewGroup", in)
 	out := new(MoveGroupRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -146,7 +146,7 @@ func (c *friendnodeService) MoveToNewGroup(ctx context.Context, in *MoveGroupReq
 }
 
 func (c *friendnodeService) RemoveFriend(ctx context.Context, in *RemoveFriendReq, opts ...client.CallOption) (*RemoveFriendRes, error) {
-	req := c.c.NewRequest(c.name, "FriendnodeService.removeFriend", in)
+	req := c.c.NewRequest(c.name, "FriendnodeService.RemoveFriend", in)
 	out := new(RemoveFriendRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {

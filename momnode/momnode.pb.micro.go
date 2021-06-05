@@ -4,11 +4,11 @@
 package momnode
 
 import (
-	_ "github.com/heegspace/heegproto/common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	math "math"
+	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	math "math"
 )
 
 import (
@@ -65,7 +65,7 @@ func NewMomnodeService(name string, c client.Client) MomnodeService {
 }
 
 func (c *momnodeService) MomentsCount(ctx context.Context, in *MomentsCountReq, opts ...client.CallOption) (*MomentsCountRes, error) {
-	req := c.c.NewRequest(c.name, "MomnodeService.momentsCount", in)
+	req := c.c.NewRequest(c.name, "MomnodeService.MomentsCount", in)
 	out := new(MomentsCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -75,7 +75,7 @@ func (c *momnodeService) MomentsCount(ctx context.Context, in *MomentsCountReq, 
 }
 
 func (c *momnodeService) MomentsAdd(ctx context.Context, in *AddMomentsReq, opts ...client.CallOption) (*AddMomentsRes, error) {
-	req := c.c.NewRequest(c.name, "MomnodeService.momentsAdd", in)
+	req := c.c.NewRequest(c.name, "MomnodeService.MomentsAdd", in)
 	out := new(AddMomentsRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -85,7 +85,7 @@ func (c *momnodeService) MomentsAdd(ctx context.Context, in *AddMomentsReq, opts
 }
 
 func (c *momnodeService) MomentsList(ctx context.Context, in *MomentsListReq, opts ...client.CallOption) (*MomentsListRes, error) {
-	req := c.c.NewRequest(c.name, "MomnodeService.momentsList", in)
+	req := c.c.NewRequest(c.name, "MomnodeService.MomentsList", in)
 	out := new(MomentsListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {

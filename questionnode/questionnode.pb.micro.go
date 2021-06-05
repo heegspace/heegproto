@@ -4,11 +4,11 @@
 package questionnode
 
 import (
-	_ "github.com/heegspace/heegproto/common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	math "math"
+	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	math "math"
 )
 
 import (
@@ -125,7 +125,7 @@ func NewQuestionnodeService(name string, c client.Client) QuestionnodeService {
 }
 
 func (c *questionnodeService) GradeCateAdd(ctx context.Context, in *GradeCateAddReq, opts ...client.CallOption) (*GradeCateAddRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.grade_cate_add", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.GradeCateAdd", in)
 	out := new(GradeCateAddRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -135,7 +135,7 @@ func (c *questionnodeService) GradeCateAdd(ctx context.Context, in *GradeCateAdd
 }
 
 func (c *questionnodeService) GradeCateCount(ctx context.Context, in *GradeCateCountReq, opts ...client.CallOption) (*GradeCateCountRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.grade_cate_count", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.GradeCateCount", in)
 	out := new(GradeCateCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -145,7 +145,7 @@ func (c *questionnodeService) GradeCateCount(ctx context.Context, in *GradeCateC
 }
 
 func (c *questionnodeService) GradeCateList(ctx context.Context, in *GradeCateListReq, opts ...client.CallOption) (*GradeCateListRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.grade_cate_list", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.GradeCateList", in)
 	out := new(GradeCateListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -155,7 +155,7 @@ func (c *questionnodeService) GradeCateList(ctx context.Context, in *GradeCateLi
 }
 
 func (c *questionnodeService) HomeBlackData(ctx context.Context, in *HomeBlackDataReq, opts ...client.CallOption) (*HomeBlackDataRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.home_black_data", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.HomeBlackData", in)
 	out := new(HomeBlackDataRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -165,7 +165,7 @@ func (c *questionnodeService) HomeBlackData(ctx context.Context, in *HomeBlackDa
 }
 
 func (c *questionnodeService) GradeSubject(ctx context.Context, in *GradeSubjectReq, opts ...client.CallOption) (*GradeSubjectRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.grade_subject", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.GradeSubject", in)
 	out := new(GradeSubjectRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -175,7 +175,7 @@ func (c *questionnodeService) GradeSubject(ctx context.Context, in *GradeSubject
 }
 
 func (c *questionnodeService) SchoolRollAdd(ctx context.Context, in *SchoolRollAddReq, opts ...client.CallOption) (*SchoolRollAddRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.school_roll_add", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.SchoolRollAdd", in)
 	out := new(SchoolRollAddRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -185,7 +185,7 @@ func (c *questionnodeService) SchoolRollAdd(ctx context.Context, in *SchoolRollA
 }
 
 func (c *questionnodeService) SchoolRollCount(ctx context.Context, in *SchoolRollCountReq, opts ...client.CallOption) (*SchoolRollCountRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.school_roll_count", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.SchoolRollCount", in)
 	out := new(SchoolRollCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -195,7 +195,7 @@ func (c *questionnodeService) SchoolRollCount(ctx context.Context, in *SchoolRol
 }
 
 func (c *questionnodeService) SchoolList(ctx context.Context, in *SchoolListReq, opts ...client.CallOption) (*SchoolListRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.school_list", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.SchoolList", in)
 	out := new(SchoolListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -205,7 +205,7 @@ func (c *questionnodeService) SchoolList(ctx context.Context, in *SchoolListReq,
 }
 
 func (c *questionnodeService) SubjectCateAdd(ctx context.Context, in *SubjectCateAddReq, opts ...client.CallOption) (*SubjectCateAddRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.subject_cate_add", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.SubjectCateAdd", in)
 	out := new(SubjectCateAddRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -215,7 +215,7 @@ func (c *questionnodeService) SubjectCateAdd(ctx context.Context, in *SubjectCat
 }
 
 func (c *questionnodeService) SubjectCateCount(ctx context.Context, in *SubjectCateCountReq, opts ...client.CallOption) (*SubjectCateCountRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.subject_cate_count", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.SubjectCateCount", in)
 	out := new(SubjectCateCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -225,7 +225,7 @@ func (c *questionnodeService) SubjectCateCount(ctx context.Context, in *SubjectC
 }
 
 func (c *questionnodeService) SubjectCateList(ctx context.Context, in *SubejctCateListReq, opts ...client.CallOption) (*SubjectCateListRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.subject_cate_list", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.SubjectCateList", in)
 	out := new(SubjectCateListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -235,7 +235,7 @@ func (c *questionnodeService) SubjectCateList(ctx context.Context, in *SubejctCa
 }
 
 func (c *questionnodeService) QuestionVersion(ctx context.Context, in *QuestionVersionReq, opts ...client.CallOption) (*QuestionVersionRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.question_version", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.QuestionVersion", in)
 	out := new(QuestionVersionRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -245,7 +245,7 @@ func (c *questionnodeService) QuestionVersion(ctx context.Context, in *QuestionV
 }
 
 func (c *questionnodeService) QuestionChapter(ctx context.Context, in *QuestionChapterReq, opts ...client.CallOption) (*QuestionChapterRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.question_chapter", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.QuestionChapter", in)
 	out := new(QuestionChapterRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -255,7 +255,7 @@ func (c *questionnodeService) QuestionChapter(ctx context.Context, in *QuestionC
 }
 
 func (c *questionnodeService) SubjectName(ctx context.Context, in *SubjectNameReq, opts ...client.CallOption) (*SubjectNameRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.subject_name", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.SubjectName", in)
 	out := new(SubjectNameRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -265,7 +265,7 @@ func (c *questionnodeService) SubjectName(ctx context.Context, in *SubjectNameRe
 }
 
 func (c *questionnodeService) QuestionSource(ctx context.Context, in *QuestionSourceReq, opts ...client.CallOption) (*QuestionSourceRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.question_source", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.QuestionSource", in)
 	out := new(QuestionSourceRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -275,7 +275,7 @@ func (c *questionnodeService) QuestionSource(ctx context.Context, in *QuestionSo
 }
 
 func (c *questionnodeService) QuestionTixing(ctx context.Context, in *QuestionTixingReq, opts ...client.CallOption) (*QuestionTixingRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.question_tixing", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.QuestionTixing", in)
 	out := new(QuestionTixingRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -285,7 +285,7 @@ func (c *questionnodeService) QuestionTixing(ctx context.Context, in *QuestionTi
 }
 
 func (c *questionnodeService) QuestionTimuCount(ctx context.Context, in *QuestionTimuCountReq, opts ...client.CallOption) (*QuestionTimuCountRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.question_timu_count", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.QuestionTimuCount", in)
 	out := new(QuestionTimuCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -295,7 +295,7 @@ func (c *questionnodeService) QuestionTimuCount(ctx context.Context, in *Questio
 }
 
 func (c *questionnodeService) QuestionTimu(ctx context.Context, in *QuestionTimuReq, opts ...client.CallOption) (*QuestionTimuRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.question_timu", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.QuestionTimu", in)
 	out := new(QuestionTimuRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -305,7 +305,7 @@ func (c *questionnodeService) QuestionTimu(ctx context.Context, in *QuestionTimu
 }
 
 func (c *questionnodeService) CollectTimu(ctx context.Context, in *CollectTimuReq, opts ...client.CallOption) (*CollectTimuRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.collect_timu", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.CollectTimu", in)
 	out := new(CollectTimuRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -315,7 +315,7 @@ func (c *questionnodeService) CollectTimu(ctx context.Context, in *CollectTimuRe
 }
 
 func (c *questionnodeService) QueryCollectTimu(ctx context.Context, in *QueryCollectTimuReq, opts ...client.CallOption) (*QueryCollectTimuRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.query_collect_timu", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.QueryCollectTimu", in)
 	out := new(QueryCollectTimuRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -325,7 +325,7 @@ func (c *questionnodeService) QueryCollectTimu(ctx context.Context, in *QueryCol
 }
 
 func (c *questionnodeService) ModifyQuestion(ctx context.Context, in *ModifyQuestionReq, opts ...client.CallOption) (*ModifyQuestionRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.modify_question", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.ModifyQuestion", in)
 	out := new(ModifyQuestionRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -335,7 +335,7 @@ func (c *questionnodeService) ModifyQuestion(ctx context.Context, in *ModifyQues
 }
 
 func (c *questionnodeService) ModifyList(ctx context.Context, in *ModifyListReq, opts ...client.CallOption) (*ModifyListRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.modify_list", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.ModifyList", in)
 	out := new(ModifyListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -345,7 +345,7 @@ func (c *questionnodeService) ModifyList(ctx context.Context, in *ModifyListReq,
 }
 
 func (c *questionnodeService) ModifyCount(ctx context.Context, in *ModifyCountReq, opts ...client.CallOption) (*ModifyCountRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.modify_count", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.ModifyCount", in)
 	out := new(ModifyCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -355,7 +355,7 @@ func (c *questionnodeService) ModifyCount(ctx context.Context, in *ModifyCountRe
 }
 
 func (c *questionnodeService) QuestionTimuAdd(ctx context.Context, in *TimuAddReq, opts ...client.CallOption) (*TimuAddRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.question_timu_add", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.QuestionTimuAdd", in)
 	out := new(TimuAddRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -365,7 +365,7 @@ func (c *questionnodeService) QuestionTimuAdd(ctx context.Context, in *TimuAddRe
 }
 
 func (c *questionnodeService) AddList(ctx context.Context, in *AddListReq, opts ...client.CallOption) (*AddListRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.add_list", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.AddList", in)
 	out := new(AddListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -375,7 +375,7 @@ func (c *questionnodeService) AddList(ctx context.Context, in *AddListReq, opts 
 }
 
 func (c *questionnodeService) AddCount(ctx context.Context, in *AddCountReq, opts ...client.CallOption) (*AddCountRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.add_count", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.AddCount", in)
 	out := new(AddCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -385,7 +385,7 @@ func (c *questionnodeService) AddCount(ctx context.Context, in *AddCountReq, opt
 }
 
 func (c *questionnodeService) Approve(ctx context.Context, in *ApproveReq, opts ...client.CallOption) (*ApproveRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.approve", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.Approve", in)
 	out := new(ApproveRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -395,7 +395,7 @@ func (c *questionnodeService) Approve(ctx context.Context, in *ApproveReq, opts 
 }
 
 func (c *questionnodeService) QuestionTimuById(ctx context.Context, in *TimuByIdReq, opts ...client.CallOption) (*TimuByIdRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.question_timu_by_id", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.QuestionTimuById", in)
 	out := new(TimuByIdRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -405,7 +405,7 @@ func (c *questionnodeService) QuestionTimuById(ctx context.Context, in *TimuById
 }
 
 func (c *questionnodeService) TixingByVid(ctx context.Context, in *TixingByVidReq, opts ...client.CallOption) (*TixingByVidRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.tixing_by_vid", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.TixingByVid", in)
 	out := new(TixingByVidRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -415,7 +415,7 @@ func (c *questionnodeService) TixingByVid(ctx context.Context, in *TixingByVidRe
 }
 
 func (c *questionnodeService) SourceByVid(ctx context.Context, in *SourceByVidReq, opts ...client.CallOption) (*SourceByVidRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.source_by_vid", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.SourceByVid", in)
 	out := new(SourceByVidRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -425,7 +425,7 @@ func (c *questionnodeService) SourceByVid(ctx context.Context, in *SourceByVidRe
 }
 
 func (c *questionnodeService) IdentByIid(ctx context.Context, in *IdentByIidReq, opts ...client.CallOption) (*IdentByIidRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.ident_by_iid", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.IdentByIid", in)
 	out := new(IdentByIidRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -435,7 +435,7 @@ func (c *questionnodeService) IdentByIid(ctx context.Context, in *IdentByIidReq,
 }
 
 func (c *questionnodeService) IdentList(ctx context.Context, in *IdentListReq, opts ...client.CallOption) (*IdentListRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.ident_list", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.IdentList", in)
 	out := new(IdentListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -445,7 +445,7 @@ func (c *questionnodeService) IdentList(ctx context.Context, in *IdentListReq, o
 }
 
 func (c *questionnodeService) IdentCount(ctx context.Context, in *IdentCountReq, opts ...client.CallOption) (*IdentCountRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.ident_count", in)
+	req := c.c.NewRequest(c.name, "QuestionnodeService.IdentCount", in)
 	out := new(IdentCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {

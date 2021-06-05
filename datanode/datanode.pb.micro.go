@@ -145,9 +145,9 @@ type DatanodeService interface {
 	// 纠错试题（包含更新或添加）
 	ModifyQuestion(ctx context.Context, in *ModifyReq, opts ...client.CallOption) (*ModifyRes, error)
 	//获取个人纠错的试题
-	ModifyList(ctx context.Context, in *ModifyListReq, opts ...client.CallOption) (*ModifyListRes, error)
+	Modifylist(ctx context.Context, in *ModifyListReq, opts ...client.CallOption) (*ModifyListRes, error)
 	//获取个人纠错的试题的数量
-	ModifyCount(ctx context.Context, in *ModifyCountReq, opts ...client.CallOption) (*ModifyCountRes, error)
+	Modifycount(ctx context.Context, in *ModifyCountReq, opts ...client.CallOption) (*ModifyCountRes, error)
 	//添加试题
 	QuestionTimuAdd(ctx context.Context, in *TimuAddReq, opts ...client.CallOption) (*TimuAddRes, error)
 	//获取添加的试题
@@ -197,7 +197,7 @@ type DatanodeService interface {
 	// 搜索关键字补全
 	SearchItem(ctx context.Context, in *SearchItemReq, opts ...client.CallOption) (*SearchItemRes, error)
 	// 更新修改试题的奖励积分
-	RefreshModifyReward(ctx context.Context, in *RefreshModifyRewardReq, opts ...client.CallOption) (*RefreshModifyRewardRes, error)
+	RefreshModifyreward(ctx context.Context, in *RefreshModifyRewardReq, opts ...client.CallOption) (*RefreshModifyRewardRes, error)
 	// 更新添加试题的奖励积分
 	RefreshAddReward(ctx context.Context, in *RefreshAddRewardReq, opts ...client.CallOption) (*RefreshAddRewardRes, error)
 	// 更新用户的coin数值
@@ -245,7 +245,7 @@ type DatanodeService interface {
 	// 日志数量
 	UserLogCount(ctx context.Context, in *UserLogCountReq, opts ...client.CallOption) (*UserLogCountRes, error)
 	// 添加任务
-	AddTask(ctx context.Context, in *AddTaskReq, opts ...client.CallOption) (*AddTaskRes, error)
+	Addtask(ctx context.Context, in *AddTaskReq, opts ...client.CallOption) (*AddTaskRes, error)
 	// 获取任务
 	GetTask(ctx context.Context, in *GetTaskReq, opts ...client.CallOption) (*GetTaskRes, error)
 	// 获取任务数量
@@ -265,7 +265,7 @@ func NewDatanodeService(name string, c client.Client) DatanodeService {
 }
 
 func (c *datanodeService) CreateUser(ctx context.Context, in *NewUserReq, opts ...client.CallOption) (*UserRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.createUser", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.CreateUser", in)
 	out := new(UserRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -275,7 +275,7 @@ func (c *datanodeService) CreateUser(ctx context.Context, in *NewUserReq, opts .
 }
 
 func (c *datanodeService) UserInfo(ctx context.Context, in *UserInfoReq, opts ...client.CallOption) (*UserRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.userInfo", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.UserInfo", in)
 	out := new(UserRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -285,7 +285,7 @@ func (c *datanodeService) UserInfo(ctx context.Context, in *UserInfoReq, opts ..
 }
 
 func (c *datanodeService) SearchUser(ctx context.Context, in *SearchUserReq, opts ...client.CallOption) (*SearchUserRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.searchUser", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.SearchUser", in)
 	out := new(SearchUserRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -295,7 +295,7 @@ func (c *datanodeService) SearchUser(ctx context.Context, in *SearchUserReq, opt
 }
 
 func (c *datanodeService) UpdateUserInfo(ctx context.Context, in *UpdateUserinfoReq, opts ...client.CallOption) (*UpdateUserinfoRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.updateUserInfo", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.UpdateUserInfo", in)
 	out := new(UpdateUserinfoRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -305,7 +305,7 @@ func (c *datanodeService) UpdateUserInfo(ctx context.Context, in *UpdateUserinfo
 }
 
 func (c *datanodeService) AddAttention(ctx context.Context, in *AddAttentionReq, opts ...client.CallOption) (*AddAttentionRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.add_attention", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.AddAttention", in)
 	out := new(AddAttentionRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -315,7 +315,7 @@ func (c *datanodeService) AddAttention(ctx context.Context, in *AddAttentionReq,
 }
 
 func (c *datanodeService) DelAttention(ctx context.Context, in *DelAttentionReq, opts ...client.CallOption) (*DelAttentionRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.del_attention", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.DelAttention", in)
 	out := new(DelAttentionRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -325,7 +325,7 @@ func (c *datanodeService) DelAttention(ctx context.Context, in *DelAttentionReq,
 }
 
 func (c *datanodeService) GetAttention(ctx context.Context, in *GetAttentionReq, opts ...client.CallOption) (*GetAttentionRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.get_attention", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.GetAttention", in)
 	out := new(GetAttentionRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -335,7 +335,7 @@ func (c *datanodeService) GetAttention(ctx context.Context, in *GetAttentionReq,
 }
 
 func (c *datanodeService) AddUserAttention(ctx context.Context, in *AddUserAttentionReq, opts ...client.CallOption) (*AddUserAttentionRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.add_user_attention", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.AddUserAttention", in)
 	out := new(AddUserAttentionRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -345,7 +345,7 @@ func (c *datanodeService) AddUserAttention(ctx context.Context, in *AddUserAtten
 }
 
 func (c *datanodeService) DelUserAttention(ctx context.Context, in *DelUserAttentionReq, opts ...client.CallOption) (*DelUserAttentionRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.del_user_attention", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.DelUserAttention", in)
 	out := new(DelUserAttentionRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -355,7 +355,7 @@ func (c *datanodeService) DelUserAttention(ctx context.Context, in *DelUserAtten
 }
 
 func (c *datanodeService) GetUserAttention(ctx context.Context, in *GetUserAttentionReq, opts ...client.CallOption) (*GetUserAttentionRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.get_user_attention", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.GetUserAttention", in)
 	out := new(GetUserAttentionRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -365,7 +365,7 @@ func (c *datanodeService) GetUserAttention(ctx context.Context, in *GetUserAtten
 }
 
 func (c *datanodeService) AddFriends(ctx context.Context, in *AddFriendReq, opts ...client.CallOption) (*AddFriendRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.addFriends", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.AddFriends", in)
 	out := new(AddFriendRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -375,7 +375,7 @@ func (c *datanodeService) AddFriends(ctx context.Context, in *AddFriendReq, opts
 }
 
 func (c *datanodeService) AgreeFriends(ctx context.Context, in *AgreeFriendReq, opts ...client.CallOption) (*AgreeFriendRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.agreeFriends", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.AgreeFriends", in)
 	out := new(AgreeFriendRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -385,7 +385,7 @@ func (c *datanodeService) AgreeFriends(ctx context.Context, in *AgreeFriendReq, 
 }
 
 func (c *datanodeService) FriendsList(ctx context.Context, in *FriendsListReq, opts ...client.CallOption) (*FriendRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.friendsList", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.FriendsList", in)
 	out := new(FriendRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -395,7 +395,7 @@ func (c *datanodeService) FriendsList(ctx context.Context, in *FriendsListReq, o
 }
 
 func (c *datanodeService) CreateGroup(ctx context.Context, in *CreateGroupReq, opts ...client.CallOption) (*CreateGroupRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.createGroup", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.CreateGroup", in)
 	out := new(CreateGroupRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -405,7 +405,7 @@ func (c *datanodeService) CreateGroup(ctx context.Context, in *CreateGroupReq, o
 }
 
 func (c *datanodeService) RenameGroup(ctx context.Context, in *RenameGroupReq, opts ...client.CallOption) (*RenameGroupRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.renameGroup", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.RenameGroup", in)
 	out := new(RenameGroupRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -415,7 +415,7 @@ func (c *datanodeService) RenameGroup(ctx context.Context, in *RenameGroupReq, o
 }
 
 func (c *datanodeService) AddNoteFriend(ctx context.Context, in *AddFriendNoteReq, opts ...client.CallOption) (*AddFriendNoteRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.addNoteFriend", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.AddNoteFriend", in)
 	out := new(AddFriendNoteRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -425,7 +425,7 @@ func (c *datanodeService) AddNoteFriend(ctx context.Context, in *AddFriendNoteRe
 }
 
 func (c *datanodeService) MoveToNewGroup(ctx context.Context, in *MoveGroupReq, opts ...client.CallOption) (*MoveGroupRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.moveToNewGroup", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.MoveToNewGroup", in)
 	out := new(MoveGroupRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -435,7 +435,7 @@ func (c *datanodeService) MoveToNewGroup(ctx context.Context, in *MoveGroupReq, 
 }
 
 func (c *datanodeService) RemoveFriend(ctx context.Context, in *RemoveFriendReq, opts ...client.CallOption) (*RemoveFriendRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.removeFriend", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.RemoveFriend", in)
 	out := new(RemoveFriendRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -445,7 +445,7 @@ func (c *datanodeService) RemoveFriend(ctx context.Context, in *RemoveFriendReq,
 }
 
 func (c *datanodeService) LikesCount(ctx context.Context, in *LikesCountReq, opts ...client.CallOption) (*LikesCountRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.likesCount", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.LikesCount", in)
 	out := new(LikesCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -455,7 +455,7 @@ func (c *datanodeService) LikesCount(ctx context.Context, in *LikesCountReq, opt
 }
 
 func (c *datanodeService) LikesAdd(ctx context.Context, in *LikesAddReq, opts ...client.CallOption) (*LikesAddRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.likesAdd", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.LikesAdd", in)
 	out := new(LikesAddRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -465,7 +465,7 @@ func (c *datanodeService) LikesAdd(ctx context.Context, in *LikesAddReq, opts ..
 }
 
 func (c *datanodeService) LikesList(ctx context.Context, in *LikesListReq, opts ...client.CallOption) (*LikesListRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.likesList", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.LikesList", in)
 	out := new(LikesListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -475,7 +475,7 @@ func (c *datanodeService) LikesList(ctx context.Context, in *LikesListReq, opts 
 }
 
 func (c *datanodeService) UpdateNote(ctx context.Context, in *UpdateNoteReq, opts ...client.CallOption) (*NoteMetaRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.updateNote", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.UpdateNote", in)
 	out := new(NoteMetaRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -485,7 +485,7 @@ func (c *datanodeService) UpdateNote(ctx context.Context, in *UpdateNoteReq, opt
 }
 
 func (c *datanodeService) NoteMetaList(ctx context.Context, in *NoteMetaListReq, opts ...client.CallOption) (*NoteMetaListRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.noteMetaList", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.NoteMetaList", in)
 	out := new(NoteMetaListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -495,7 +495,7 @@ func (c *datanodeService) NoteMetaList(ctx context.Context, in *NoteMetaListReq,
 }
 
 func (c *datanodeService) NoteListCount(ctx context.Context, in *NoteMetaListReq, opts ...client.CallOption) (*NoteListCountRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.noteListCount", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.NoteListCount", in)
 	out := new(NoteListCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -505,7 +505,7 @@ func (c *datanodeService) NoteListCount(ctx context.Context, in *NoteMetaListReq
 }
 
 func (c *datanodeService) NoteData(ctx context.Context, in *NoteDataReq, opts ...client.CallOption) (*NoteDataRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.noteData", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.NoteData", in)
 	out := new(NoteDataRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -515,7 +515,7 @@ func (c *datanodeService) NoteData(ctx context.Context, in *NoteDataReq, opts ..
 }
 
 func (c *datanodeService) NoteHtml(ctx context.Context, in *NoteHtmlReq, opts ...client.CallOption) (*NoteHtmlRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.noteHtml", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.NoteHtml", in)
 	out := new(NoteHtmlRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -525,7 +525,7 @@ func (c *datanodeService) NoteHtml(ctx context.Context, in *NoteHtmlReq, opts ..
 }
 
 func (c *datanodeService) MomentsCount(ctx context.Context, in *MomentsCountReq, opts ...client.CallOption) (*MomentsCountRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.momentsCount", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.MomentsCount", in)
 	out := new(MomentsCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -535,7 +535,7 @@ func (c *datanodeService) MomentsCount(ctx context.Context, in *MomentsCountReq,
 }
 
 func (c *datanodeService) MomentsAdd(ctx context.Context, in *Moments, opts ...client.CallOption) (*AddMomentsRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.momentsAdd", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.MomentsAdd", in)
 	out := new(AddMomentsRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -545,7 +545,7 @@ func (c *datanodeService) MomentsAdd(ctx context.Context, in *Moments, opts ...c
 }
 
 func (c *datanodeService) MomentsList(ctx context.Context, in *MomentsListReq, opts ...client.CallOption) (*MomentsListRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.momentsList", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.MomentsList", in)
 	out := new(MomentsListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -555,7 +555,7 @@ func (c *datanodeService) MomentsList(ctx context.Context, in *MomentsListReq, o
 }
 
 func (c *datanodeService) FileDirOne(ctx context.Context, in *FileDirReq, opts ...client.CallOption) (*FileDirRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.fileDirOne", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.FileDirOne", in)
 	out := new(FileDirRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -565,7 +565,7 @@ func (c *datanodeService) FileDirOne(ctx context.Context, in *FileDirReq, opts .
 }
 
 func (c *datanodeService) FileDirAdd(ctx context.Context, in *AddDirReq, opts ...client.CallOption) (*AddDirRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.fileDirAdd", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.FileDirAdd", in)
 	out := new(AddDirRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -575,7 +575,7 @@ func (c *datanodeService) FileDirAdd(ctx context.Context, in *AddDirReq, opts ..
 }
 
 func (c *datanodeService) AddFile(ctx context.Context, in *AddFileReq, opts ...client.CallOption) (*AddFileRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.addFile", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.AddFile", in)
 	out := new(AddFileRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -585,7 +585,7 @@ func (c *datanodeService) AddFile(ctx context.Context, in *AddFileReq, opts ...c
 }
 
 func (c *datanodeService) YunSaveAttr(ctx context.Context, in *FileAttrReq, opts ...client.CallOption) (*FileAttrRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.yunSaveAttr", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.YunSaveAttr", in)
 	out := new(FileAttrRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -595,7 +595,7 @@ func (c *datanodeService) YunSaveAttr(ctx context.Context, in *FileAttrReq, opts
 }
 
 func (c *datanodeService) Thumbnail(ctx context.Context, in *ThumbnailReq, opts ...client.CallOption) (*ThumbnailRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.thumbnail", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.Thumbnail", in)
 	out := new(ThumbnailRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -605,7 +605,7 @@ func (c *datanodeService) Thumbnail(ctx context.Context, in *ThumbnailReq, opts 
 }
 
 func (c *datanodeService) SetKeyValue(ctx context.Context, in *SetKeyvalueReq, opts ...client.CallOption) (*SetKeyvalueRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.setKeyValue", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.SetKeyValue", in)
 	out := new(SetKeyvalueRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -615,7 +615,7 @@ func (c *datanodeService) SetKeyValue(ctx context.Context, in *SetKeyvalueReq, o
 }
 
 func (c *datanodeService) GetKeyValue(ctx context.Context, in *GetKeyvalueReq, opts ...client.CallOption) (*GetKeyvalueRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.getKeyValue", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.GetKeyValue", in)
 	out := new(GetKeyvalueRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -625,7 +625,7 @@ func (c *datanodeService) GetKeyValue(ctx context.Context, in *GetKeyvalueReq, o
 }
 
 func (c *datanodeService) DelKeyValue(ctx context.Context, in *DelKeyvalueReq, opts ...client.CallOption) (*DelKeyvalueRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.delKeyValue", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.DelKeyValue", in)
 	out := new(DelKeyvalueRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -635,7 +635,7 @@ func (c *datanodeService) DelKeyValue(ctx context.Context, in *DelKeyvalueReq, o
 }
 
 func (c *datanodeService) QuestionVersion(ctx context.Context, in *common.QuestionQuery, opts ...client.CallOption) (*VersionRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.question_version", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.QuestionVersion", in)
 	out := new(VersionRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -645,7 +645,7 @@ func (c *datanodeService) QuestionVersion(ctx context.Context, in *common.Questi
 }
 
 func (c *datanodeService) QuestionChapter(ctx context.Context, in *common.QuestionQuery, opts ...client.CallOption) (*ChapterRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.question_chapter", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.QuestionChapter", in)
 	out := new(ChapterRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -655,7 +655,7 @@ func (c *datanodeService) QuestionChapter(ctx context.Context, in *common.Questi
 }
 
 func (c *datanodeService) SubjectName(ctx context.Context, in *SubjectNameReq, opts ...client.CallOption) (*SubjectNameRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.subject_name", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.subjectName", in)
 	out := new(SubjectNameRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -665,7 +665,7 @@ func (c *datanodeService) SubjectName(ctx context.Context, in *SubjectNameReq, o
 }
 
 func (c *datanodeService) QuestionSource(ctx context.Context, in *common.QuestionQuery, opts ...client.CallOption) (*SourceRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.question_source", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.QuestionSource", in)
 	out := new(SourceRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -675,7 +675,7 @@ func (c *datanodeService) QuestionSource(ctx context.Context, in *common.Questio
 }
 
 func (c *datanodeService) QuestionTixing(ctx context.Context, in *common.QuestionQuery, opts ...client.CallOption) (*TixingRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.question_tixing", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.QuestionTixing", in)
 	out := new(TixingRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -685,7 +685,7 @@ func (c *datanodeService) QuestionTixing(ctx context.Context, in *common.Questio
 }
 
 func (c *datanodeService) QuestionTimuCount(ctx context.Context, in *common.QuestionQuery, opts ...client.CallOption) (*TimuCountRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.question_timu_count", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.QuestionTimuCount", in)
 	out := new(TimuCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -695,7 +695,7 @@ func (c *datanodeService) QuestionTimuCount(ctx context.Context, in *common.Ques
 }
 
 func (c *datanodeService) QuestionTimu(ctx context.Context, in *common.QuestionQuery, opts ...client.CallOption) (*TimuRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.question_timu", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.QuestionTimu", in)
 	out := new(TimuRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -705,7 +705,7 @@ func (c *datanodeService) QuestionTimu(ctx context.Context, in *common.QuestionQ
 }
 
 func (c *datanodeService) QuestionTimuById(ctx context.Context, in *TimuByIdReq, opts ...client.CallOption) (*TimuByIdRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.question_timu_by_id", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.QuestionTimuById", in)
 	out := new(TimuByIdRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -715,7 +715,7 @@ func (c *datanodeService) QuestionTimuById(ctx context.Context, in *TimuByIdReq,
 }
 
 func (c *datanodeService) CollectTimu(ctx context.Context, in *CollectReq, opts ...client.CallOption) (*CollectRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.collect_timu", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.CollectTimu", in)
 	out := new(CollectRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -725,7 +725,7 @@ func (c *datanodeService) CollectTimu(ctx context.Context, in *CollectReq, opts 
 }
 
 func (c *datanodeService) QueryCollectTimu(ctx context.Context, in *CollectListReq, opts ...client.CallOption) (*CollectListRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.query_collect_timu", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.QueryCollectTimu", in)
 	out := new(CollectListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -735,7 +735,7 @@ func (c *datanodeService) QueryCollectTimu(ctx context.Context, in *CollectListR
 }
 
 func (c *datanodeService) ModifyQuestion(ctx context.Context, in *ModifyReq, opts ...client.CallOption) (*ModifyRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.modify_question", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.ModifyQuestion", in)
 	out := new(ModifyRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -744,8 +744,8 @@ func (c *datanodeService) ModifyQuestion(ctx context.Context, in *ModifyReq, opt
 	return out, nil
 }
 
-func (c *datanodeService) ModifyList(ctx context.Context, in *ModifyListReq, opts ...client.CallOption) (*ModifyListRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.modify_list", in)
+func (c *datanodeService) Modifylist(ctx context.Context, in *ModifyListReq, opts ...client.CallOption) (*ModifyListRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.Modifylist", in)
 	out := new(ModifyListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -754,8 +754,8 @@ func (c *datanodeService) ModifyList(ctx context.Context, in *ModifyListReq, opt
 	return out, nil
 }
 
-func (c *datanodeService) ModifyCount(ctx context.Context, in *ModifyCountReq, opts ...client.CallOption) (*ModifyCountRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.modify_count", in)
+func (c *datanodeService) Modifycount(ctx context.Context, in *ModifyCountReq, opts ...client.CallOption) (*ModifyCountRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.Modifycount", in)
 	out := new(ModifyCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -765,7 +765,7 @@ func (c *datanodeService) ModifyCount(ctx context.Context, in *ModifyCountReq, o
 }
 
 func (c *datanodeService) QuestionTimuAdd(ctx context.Context, in *TimuAddReq, opts ...client.CallOption) (*TimuAddRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.question_timu_add", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.QuestionTimuAdd", in)
 	out := new(TimuAddRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -775,7 +775,7 @@ func (c *datanodeService) QuestionTimuAdd(ctx context.Context, in *TimuAddReq, o
 }
 
 func (c *datanodeService) AddList(ctx context.Context, in *AddListReq, opts ...client.CallOption) (*AddListRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.add_list", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.AddList", in)
 	out := new(AddListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -785,7 +785,7 @@ func (c *datanodeService) AddList(ctx context.Context, in *AddListReq, opts ...c
 }
 
 func (c *datanodeService) AddCount(ctx context.Context, in *AddCountReq, opts ...client.CallOption) (*AddCountRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.add_count", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.AddCount", in)
 	out := new(AddCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -795,7 +795,7 @@ func (c *datanodeService) AddCount(ctx context.Context, in *AddCountReq, opts ..
 }
 
 func (c *datanodeService) Approve(ctx context.Context, in *ApproveReq, opts ...client.CallOption) (*ApproveRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.approve", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.Approve", in)
 	out := new(ApproveRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -805,7 +805,7 @@ func (c *datanodeService) Approve(ctx context.Context, in *ApproveReq, opts ...c
 }
 
 func (c *datanodeService) OnSearch(ctx context.Context, in *SearchReq, opts ...client.CallOption) (*SearchRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.on_search", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.OnSearch", in)
 	out := new(SearchRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -815,7 +815,7 @@ func (c *datanodeService) OnSearch(ctx context.Context, in *SearchReq, opts ...c
 }
 
 func (c *datanodeService) GradeCateAdd(ctx context.Context, in *common.GradeCate, opts ...client.CallOption) (*AddGradeCateRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.grade_cate_add", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.GradeCateAdd", in)
 	out := new(AddGradeCateRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -825,7 +825,7 @@ func (c *datanodeService) GradeCateAdd(ctx context.Context, in *common.GradeCate
 }
 
 func (c *datanodeService) GradeCateCount(ctx context.Context, in *common.Request, opts ...client.CallOption) (*GradeCateCountRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.grade_cate_count", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.GradeCateCount", in)
 	out := new(GradeCateCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -835,7 +835,7 @@ func (c *datanodeService) GradeCateCount(ctx context.Context, in *common.Request
 }
 
 func (c *datanodeService) GradeCateList(ctx context.Context, in *GradeCateListReq, opts ...client.CallOption) (*GradeCateListRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.grade_cate_list", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.GradeCateList", in)
 	out := new(GradeCateListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -845,7 +845,7 @@ func (c *datanodeService) GradeCateList(ctx context.Context, in *GradeCateListRe
 }
 
 func (c *datanodeService) HomeBlackData(ctx context.Context, in *common.Request, opts ...client.CallOption) (*HomeBlackDataRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.home_black_data", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.HomeBlackData", in)
 	out := new(HomeBlackDataRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -855,7 +855,7 @@ func (c *datanodeService) HomeBlackData(ctx context.Context, in *common.Request,
 }
 
 func (c *datanodeService) GradeSubject(ctx context.Context, in *GradeSubjectReq, opts ...client.CallOption) (*GradeSubjectRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.grade_subject", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.GradeSubject", in)
 	out := new(GradeSubjectRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -865,7 +865,7 @@ func (c *datanodeService) GradeSubject(ctx context.Context, in *GradeSubjectReq,
 }
 
 func (c *datanodeService) SchoolRollAdd(ctx context.Context, in *common.SchoolRoll, opts ...client.CallOption) (*SchoolRollAddRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.school_roll_add", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.SchoolRoll_add", in)
 	out := new(SchoolRollAddRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -875,7 +875,7 @@ func (c *datanodeService) SchoolRollAdd(ctx context.Context, in *common.SchoolRo
 }
 
 func (c *datanodeService) SchoolRollCount(ctx context.Context, in *common.Request, opts ...client.CallOption) (*SchoolRollCountRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.school_roll_count", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.SchoolRollCount", in)
 	out := new(SchoolRollCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -885,7 +885,7 @@ func (c *datanodeService) SchoolRollCount(ctx context.Context, in *common.Reques
 }
 
 func (c *datanodeService) SchoolList(ctx context.Context, in *SchoolRollListReq, opts ...client.CallOption) (*SchoolRollListRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.school_list", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.SchoolList", in)
 	out := new(SchoolRollListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -895,7 +895,7 @@ func (c *datanodeService) SchoolList(ctx context.Context, in *SchoolRollListReq,
 }
 
 func (c *datanodeService) SubjectCateAdd(ctx context.Context, in *common.SubjectCate, opts ...client.CallOption) (*SubjectCateAddRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.subject_cate_add", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.SubjectCateAdd", in)
 	out := new(SubjectCateAddRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -905,7 +905,7 @@ func (c *datanodeService) SubjectCateAdd(ctx context.Context, in *common.Subject
 }
 
 func (c *datanodeService) SubjectCateCount(ctx context.Context, in *common.Request, opts ...client.CallOption) (*SubjectCateCountRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.subject_cate_count", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.SubjectCateCount", in)
 	out := new(SubjectCateCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -915,7 +915,7 @@ func (c *datanodeService) SubjectCateCount(ctx context.Context, in *common.Reque
 }
 
 func (c *datanodeService) SubjectCateList(ctx context.Context, in *SubjectCateListReq, opts ...client.CallOption) (*SubjectCateListRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.subject_cate_list", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.SubjectCateList", in)
 	out := new(SubjectCateListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -925,7 +925,7 @@ func (c *datanodeService) SubjectCateList(ctx context.Context, in *SubjectCateLi
 }
 
 func (c *datanodeService) SetUserInfo(ctx context.Context, in *SetUserInfoReq, opts ...client.CallOption) (*SetUserInfoRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.set_user_info", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.SetUserInfo", in)
 	out := new(SetUserInfoRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -935,7 +935,7 @@ func (c *datanodeService) SetUserInfo(ctx context.Context, in *SetUserInfoReq, o
 }
 
 func (c *datanodeService) GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...client.CallOption) (*GetUserInfoRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.get_user_info", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.GetUserInfo", in)
 	out := new(GetUserInfoRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -945,7 +945,7 @@ func (c *datanodeService) GetUserInfo(ctx context.Context, in *GetUserInfoReq, o
 }
 
 func (c *datanodeService) SetWechatUinfo(ctx context.Context, in *SetWechatUinfoReq, opts ...client.CallOption) (*SetWechatUinfoRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.set_wechat_uinfo", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.SetWechatUinfo", in)
 	out := new(SetWechatUinfoRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -955,7 +955,7 @@ func (c *datanodeService) SetWechatUinfo(ctx context.Context, in *SetWechatUinfo
 }
 
 func (c *datanodeService) GetWechatUinfo(ctx context.Context, in *GetWechatUinfoReq, opts ...client.CallOption) (*GetWechatUinfoRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.get_wechat_uinfo", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.GetWechatUinfo", in)
 	out := new(GetWechatUinfoRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -965,7 +965,7 @@ func (c *datanodeService) GetWechatUinfo(ctx context.Context, in *GetWechatUinfo
 }
 
 func (c *datanodeService) SetAlipayUinfo(ctx context.Context, in *SetAlipayUinfoReq, opts ...client.CallOption) (*SetAlipayUinfoRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.set_alipay_uinfo", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.SetAlipayUinfo", in)
 	out := new(SetAlipayUinfoRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -975,7 +975,7 @@ func (c *datanodeService) SetAlipayUinfo(ctx context.Context, in *SetAlipayUinfo
 }
 
 func (c *datanodeService) GetAlipayUinfo(ctx context.Context, in *GetAlipayUinfoReq, opts ...client.CallOption) (*GetAlipayUinfoRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.get_alipay_uinfo", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.GetAlipayUinfo", in)
 	out := new(GetAlipayUinfoRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -985,7 +985,7 @@ func (c *datanodeService) GetAlipayUinfo(ctx context.Context, in *GetAlipayUinfo
 }
 
 func (c *datanodeService) SetBaiduEntity(ctx context.Context, in *SetBaiduEntityReq, opts ...client.CallOption) (*SetBaiduEntityRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.set_baidu_entity", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.SetBaiduEntity", in)
 	out := new(SetBaiduEntityRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -995,7 +995,7 @@ func (c *datanodeService) SetBaiduEntity(ctx context.Context, in *SetBaiduEntity
 }
 
 func (c *datanodeService) BaiduEntity(ctx context.Context, in *BaiduEntityReq, opts ...client.CallOption) (*BaiduEntityRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.baidu_entity", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.BaiduEntity", in)
 	out := new(BaiduEntityRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1005,7 +1005,7 @@ func (c *datanodeService) BaiduEntity(ctx context.Context, in *BaiduEntityReq, o
 }
 
 func (c *datanodeService) SearchHistory(ctx context.Context, in *SearchHistoryReq, opts ...client.CallOption) (*SearchHistoryRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.search_history", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.SearchHistory", in)
 	out := new(SearchHistoryRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1015,7 +1015,7 @@ func (c *datanodeService) SearchHistory(ctx context.Context, in *SearchHistoryRe
 }
 
 func (c *datanodeService) SearchItem(ctx context.Context, in *SearchItemReq, opts ...client.CallOption) (*SearchItemRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.search_item", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.SearchItem", in)
 	out := new(SearchItemRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1024,8 +1024,8 @@ func (c *datanodeService) SearchItem(ctx context.Context, in *SearchItemReq, opt
 	return out, nil
 }
 
-func (c *datanodeService) RefreshModifyReward(ctx context.Context, in *RefreshModifyRewardReq, opts ...client.CallOption) (*RefreshModifyRewardRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.refresh_modify_reward", in)
+func (c *datanodeService) RefreshModifyreward(ctx context.Context, in *RefreshModifyRewardReq, opts ...client.CallOption) (*RefreshModifyRewardRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.RefreshModifyreward", in)
 	out := new(RefreshModifyRewardRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1035,7 +1035,7 @@ func (c *datanodeService) RefreshModifyReward(ctx context.Context, in *RefreshMo
 }
 
 func (c *datanodeService) RefreshAddReward(ctx context.Context, in *RefreshAddRewardReq, opts ...client.CallOption) (*RefreshAddRewardRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.refresh_add_reward", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.RefreshAddReward", in)
 	out := new(RefreshAddRewardRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1045,7 +1045,7 @@ func (c *datanodeService) RefreshAddReward(ctx context.Context, in *RefreshAddRe
 }
 
 func (c *datanodeService) RefreshUserCoin(ctx context.Context, in *RefreshUserCoinReq, opts ...client.CallOption) (*RefreshUserCoinRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.refresh_user_coin", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.RefreshUserCoin", in)
 	out := new(RefreshUserCoinRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1055,7 +1055,7 @@ func (c *datanodeService) RefreshUserCoin(ctx context.Context, in *RefreshUserCo
 }
 
 func (c *datanodeService) TixingByVid(ctx context.Context, in *TixingByVidReq, opts ...client.CallOption) (*TixingByVidRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.tixing_by_vid", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.tixingByVid", in)
 	out := new(TixingByVidRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1065,7 +1065,7 @@ func (c *datanodeService) TixingByVid(ctx context.Context, in *TixingByVidReq, o
 }
 
 func (c *datanodeService) SourceByVid(ctx context.Context, in *SourceByVidReq, opts ...client.CallOption) (*SourceByVidRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.source_by_vid", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.SourceByVid", in)
 	out := new(SourceByVidRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1075,7 +1075,7 @@ func (c *datanodeService) SourceByVid(ctx context.Context, in *SourceByVidReq, o
 }
 
 func (c *datanodeService) IdentAdd(ctx context.Context, in *IdentAddReq, opts ...client.CallOption) (*IdentAddRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.ident_add", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.IdentAdd", in)
 	out := new(IdentAddRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1085,7 +1085,7 @@ func (c *datanodeService) IdentAdd(ctx context.Context, in *IdentAddReq, opts ..
 }
 
 func (c *datanodeService) IdentByIid(ctx context.Context, in *IdentByIidReq, opts ...client.CallOption) (*IdentByIidRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.ident_by_iid", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.IdentByIid", in)
 	out := new(IdentByIidRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1095,7 +1095,7 @@ func (c *datanodeService) IdentByIid(ctx context.Context, in *IdentByIidReq, opt
 }
 
 func (c *datanodeService) IdentList(ctx context.Context, in *IdentListReq, opts ...client.CallOption) (*IdentListRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.ident_list", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.IdentList", in)
 	out := new(IdentListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1105,7 +1105,7 @@ func (c *datanodeService) IdentList(ctx context.Context, in *IdentListReq, opts 
 }
 
 func (c *datanodeService) IdentCount(ctx context.Context, in *IdentCountReq, opts ...client.CallOption) (*IdentCountRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.ident_count", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.IdentCount", in)
 	out := new(IdentCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1115,7 +1115,7 @@ func (c *datanodeService) IdentCount(ctx context.Context, in *IdentCountReq, opt
 }
 
 func (c *datanodeService) RefreshIdentReward(ctx context.Context, in *RefreshIdentRewardReq, opts ...client.CallOption) (*RefreshIdentRewardRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.refresh_ident_reward", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.RefreshIdentReward", in)
 	out := new(RefreshIdentRewardRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1125,7 +1125,7 @@ func (c *datanodeService) RefreshIdentReward(ctx context.Context, in *RefreshIde
 }
 
 func (c *datanodeService) RefreshUserVip(ctx context.Context, in *RefreshUserVipReq, opts ...client.CallOption) (*RefreshUserVipRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.refresh_user_vip", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.RefreshUserVip", in)
 	out := new(RefreshUserVipRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1135,7 +1135,7 @@ func (c *datanodeService) RefreshUserVip(ctx context.Context, in *RefreshUserVip
 }
 
 func (c *datanodeService) UpdateTeacher(ctx context.Context, in *UpdateTeacherReq, opts ...client.CallOption) (*UpdateTeacherRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.update_teacher", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.UpdateTeacher", in)
 	out := new(UpdateTeacherRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1145,7 +1145,7 @@ func (c *datanodeService) UpdateTeacher(ctx context.Context, in *UpdateTeacherRe
 }
 
 func (c *datanodeService) GetTeacher(ctx context.Context, in *FindTeacherReq, opts ...client.CallOption) (*FindTeacherRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.get_teacher", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.GetTeacher", in)
 	out := new(FindTeacherRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1155,7 +1155,7 @@ func (c *datanodeService) GetTeacher(ctx context.Context, in *FindTeacherReq, op
 }
 
 func (c *datanodeService) FocusTeacher(ctx context.Context, in *FocusTeacherReq, opts ...client.CallOption) (*FocusTeacherRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.focus_teacher", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.FocusTeacher", in)
 	out := new(FocusTeacherRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1165,7 +1165,7 @@ func (c *datanodeService) FocusTeacher(ctx context.Context, in *FocusTeacherReq,
 }
 
 func (c *datanodeService) NoteCooper(ctx context.Context, in *NoteCooperReq, opts ...client.CallOption) (*NoteCooperRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.note_cooper", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.NoteCooper", in)
 	out := new(NoteCooperRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1175,7 +1175,7 @@ func (c *datanodeService) NoteCooper(ctx context.Context, in *NoteCooperReq, opt
 }
 
 func (c *datanodeService) NoteTag(ctx context.Context, in *NoteTagReq, opts ...client.CallOption) (*NoteTagRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.note_tag", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.NoteTag", in)
 	out := new(NoteTagRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1185,7 +1185,7 @@ func (c *datanodeService) NoteTag(ctx context.Context, in *NoteTagReq, opts ...c
 }
 
 func (c *datanodeService) NoteBgcolor(ctx context.Context, in *NoteBgcolorReq, opts ...client.CallOption) (*NoteBgcolorRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.note_bgcolor", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.NoteBgcolor", in)
 	out := new(NoteBgcolorRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1195,7 +1195,7 @@ func (c *datanodeService) NoteBgcolor(ctx context.Context, in *NoteBgcolorReq, o
 }
 
 func (c *datanodeService) NoteTagAdd(ctx context.Context, in *NoteTagAddReq, opts ...client.CallOption) (*NoteTagAddRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.note_tag_add", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.NoteTagAdd", in)
 	out := new(NoteTagAddRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1205,7 +1205,7 @@ func (c *datanodeService) NoteTagAdd(ctx context.Context, in *NoteTagAddReq, opt
 }
 
 func (c *datanodeService) NoteTagList(ctx context.Context, in *NoteTagListReq, opts ...client.CallOption) (*NoteTagListRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.note_tag_list", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.NoteTagList", in)
 	out := new(NoteTagListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1215,7 +1215,7 @@ func (c *datanodeService) NoteTagList(ctx context.Context, in *NoteTagListReq, o
 }
 
 func (c *datanodeService) SubmitCert(ctx context.Context, in *SubmitCertReq, opts ...client.CallOption) (*SubmitCertRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.submit_cert", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.SubmitCert", in)
 	out := new(SubmitCertRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1225,7 +1225,7 @@ func (c *datanodeService) SubmitCert(ctx context.Context, in *SubmitCertReq, opt
 }
 
 func (c *datanodeService) CertStatus(ctx context.Context, in *CertStatusReq, opts ...client.CallOption) (*CertStatusRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.cert_status", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.CertStatus", in)
 	out := new(CertStatusRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1235,7 +1235,7 @@ func (c *datanodeService) CertStatus(ctx context.Context, in *CertStatusReq, opt
 }
 
 func (c *datanodeService) CertInfo(ctx context.Context, in *CertInfoReq, opts ...client.CallOption) (*CertInfoRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.cert_info", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.CertInfo", in)
 	out := new(CertInfoRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1245,7 +1245,7 @@ func (c *datanodeService) CertInfo(ctx context.Context, in *CertInfoReq, opts ..
 }
 
 func (c *datanodeService) CertFlow(ctx context.Context, in *CertFlowReq, opts ...client.CallOption) (*CertFlowRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.cert_flow", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.CertFlow", in)
 	out := new(CertFlowRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1255,7 +1255,7 @@ func (c *datanodeService) CertFlow(ctx context.Context, in *CertFlowReq, opts ..
 }
 
 func (c *datanodeService) AddUserLog(ctx context.Context, in *AddUserLogReq, opts ...client.CallOption) (*AddUserLogRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.add_user_log", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.AddUserLog", in)
 	out := new(AddUserLogRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1265,7 +1265,7 @@ func (c *datanodeService) AddUserLog(ctx context.Context, in *AddUserLogReq, opt
 }
 
 func (c *datanodeService) QueryUserLog(ctx context.Context, in *QueryUserLogReq, opts ...client.CallOption) (*QueryUserLogRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.query_user_log", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.QueryUserLog", in)
 	out := new(QueryUserLogRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1275,7 +1275,7 @@ func (c *datanodeService) QueryUserLog(ctx context.Context, in *QueryUserLogReq,
 }
 
 func (c *datanodeService) UserLogCount(ctx context.Context, in *UserLogCountReq, opts ...client.CallOption) (*UserLogCountRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.user_log_count", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.UserLogCount", in)
 	out := new(UserLogCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1284,8 +1284,8 @@ func (c *datanodeService) UserLogCount(ctx context.Context, in *UserLogCountReq,
 	return out, nil
 }
 
-func (c *datanodeService) AddTask(ctx context.Context, in *AddTaskReq, opts ...client.CallOption) (*AddTaskRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.add_task", in)
+func (c *datanodeService) Addtask(ctx context.Context, in *AddTaskReq, opts ...client.CallOption) (*AddTaskRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.Addtask", in)
 	out := new(AddTaskRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1295,7 +1295,7 @@ func (c *datanodeService) AddTask(ctx context.Context, in *AddTaskReq, opts ...c
 }
 
 func (c *datanodeService) GetTask(ctx context.Context, in *GetTaskReq, opts ...client.CallOption) (*GetTaskRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.get_task", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.GetTask", in)
 	out := new(GetTaskRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1305,7 +1305,7 @@ func (c *datanodeService) GetTask(ctx context.Context, in *GetTaskReq, opts ...c
 }
 
 func (c *datanodeService) GetTaskCount(ctx context.Context, in *GetTaskCountReq, opts ...client.CallOption) (*GetTaskCountRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.get_task_count", in)
+	req := c.c.NewRequest(c.name, "DatanodeService.GetTaskCount", in)
 	out := new(GetTaskCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1418,9 +1418,9 @@ type DatanodeServiceHandler interface {
 	// 纠错试题（包含更新或添加）
 	ModifyQuestion(context.Context, *ModifyReq, *ModifyRes) error
 	//获取个人纠错的试题
-	ModifyList(context.Context, *ModifyListReq, *ModifyListRes) error
+	Modifylist(context.Context, *ModifyListReq, *ModifyListRes) error
 	//获取个人纠错的试题的数量
-	ModifyCount(context.Context, *ModifyCountReq, *ModifyCountRes) error
+	Modifycount(context.Context, *ModifyCountReq, *ModifyCountRes) error
 	//添加试题
 	QuestionTimuAdd(context.Context, *TimuAddReq, *TimuAddRes) error
 	//获取添加的试题
@@ -1470,7 +1470,7 @@ type DatanodeServiceHandler interface {
 	// 搜索关键字补全
 	SearchItem(context.Context, *SearchItemReq, *SearchItemRes) error
 	// 更新修改试题的奖励积分
-	RefreshModifyReward(context.Context, *RefreshModifyRewardReq, *RefreshModifyRewardRes) error
+	RefreshModifyreward(context.Context, *RefreshModifyRewardReq, *RefreshModifyRewardRes) error
 	// 更新添加试题的奖励积分
 	RefreshAddReward(context.Context, *RefreshAddRewardReq, *RefreshAddRewardRes) error
 	// 更新用户的coin数值
@@ -1518,7 +1518,7 @@ type DatanodeServiceHandler interface {
 	// 日志数量
 	UserLogCount(context.Context, *UserLogCountReq, *UserLogCountRes) error
 	// 添加任务
-	AddTask(context.Context, *AddTaskReq, *AddTaskRes) error
+	Addtask(context.Context, *AddTaskReq, *AddTaskRes) error
 	// 获取任务
 	GetTask(context.Context, *GetTaskReq, *GetTaskRes) error
 	// 获取任务数量
@@ -1575,8 +1575,8 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		CollectTimu(ctx context.Context, in *CollectReq, out *CollectRes) error
 		QueryCollectTimu(ctx context.Context, in *CollectListReq, out *CollectListRes) error
 		ModifyQuestion(ctx context.Context, in *ModifyReq, out *ModifyRes) error
-		ModifyList(ctx context.Context, in *ModifyListReq, out *ModifyListRes) error
-		ModifyCount(ctx context.Context, in *ModifyCountReq, out *ModifyCountRes) error
+		Modifylist(ctx context.Context, in *ModifyListReq, out *ModifyListRes) error
+		Modifycount(ctx context.Context, in *ModifyCountReq, out *ModifyCountRes) error
 		QuestionTimuAdd(ctx context.Context, in *TimuAddReq, out *TimuAddRes) error
 		AddList(ctx context.Context, in *AddListReq, out *AddListRes) error
 		AddCount(ctx context.Context, in *AddCountReq, out *AddCountRes) error
@@ -1603,7 +1603,7 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		BaiduEntity(ctx context.Context, in *BaiduEntityReq, out *BaiduEntityRes) error
 		SearchHistory(ctx context.Context, in *SearchHistoryReq, out *SearchHistoryRes) error
 		SearchItem(ctx context.Context, in *SearchItemReq, out *SearchItemRes) error
-		RefreshModifyReward(ctx context.Context, in *RefreshModifyRewardReq, out *RefreshModifyRewardRes) error
+		RefreshModifyreward(ctx context.Context, in *RefreshModifyRewardReq, out *RefreshModifyRewardRes) error
 		RefreshAddReward(ctx context.Context, in *RefreshAddRewardReq, out *RefreshAddRewardRes) error
 		RefreshUserCoin(ctx context.Context, in *RefreshUserCoinReq, out *RefreshUserCoinRes) error
 		TixingByVid(ctx context.Context, in *TixingByVidReq, out *TixingByVidRes) error
@@ -1629,7 +1629,7 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		AddUserLog(ctx context.Context, in *AddUserLogReq, out *AddUserLogRes) error
 		QueryUserLog(ctx context.Context, in *QueryUserLogReq, out *QueryUserLogRes) error
 		UserLogCount(ctx context.Context, in *UserLogCountReq, out *UserLogCountRes) error
-		AddTask(ctx context.Context, in *AddTaskReq, out *AddTaskRes) error
+		Addtask(ctx context.Context, in *AddTaskReq, out *AddTaskRes) error
 		GetTask(ctx context.Context, in *GetTaskReq, out *GetTaskRes) error
 		GetTaskCount(ctx context.Context, in *GetTaskCountReq, out *GetTaskCountRes) error
 	}
@@ -1836,12 +1836,12 @@ func (h *datanodeServiceHandler) ModifyQuestion(ctx context.Context, in *ModifyR
 	return h.DatanodeServiceHandler.ModifyQuestion(ctx, in, out)
 }
 
-func (h *datanodeServiceHandler) ModifyList(ctx context.Context, in *ModifyListReq, out *ModifyListRes) error {
-	return h.DatanodeServiceHandler.ModifyList(ctx, in, out)
+func (h *datanodeServiceHandler) Modifylist(ctx context.Context, in *ModifyListReq, out *ModifyListRes) error {
+	return h.DatanodeServiceHandler.Modifylist(ctx, in, out)
 }
 
-func (h *datanodeServiceHandler) ModifyCount(ctx context.Context, in *ModifyCountReq, out *ModifyCountRes) error {
-	return h.DatanodeServiceHandler.ModifyCount(ctx, in, out)
+func (h *datanodeServiceHandler) Modifycount(ctx context.Context, in *ModifyCountReq, out *ModifyCountRes) error {
+	return h.DatanodeServiceHandler.Modifycount(ctx, in, out)
 }
 
 func (h *datanodeServiceHandler) QuestionTimuAdd(ctx context.Context, in *TimuAddReq, out *TimuAddRes) error {
@@ -1948,8 +1948,8 @@ func (h *datanodeServiceHandler) SearchItem(ctx context.Context, in *SearchItemR
 	return h.DatanodeServiceHandler.SearchItem(ctx, in, out)
 }
 
-func (h *datanodeServiceHandler) RefreshModifyReward(ctx context.Context, in *RefreshModifyRewardReq, out *RefreshModifyRewardRes) error {
-	return h.DatanodeServiceHandler.RefreshModifyReward(ctx, in, out)
+func (h *datanodeServiceHandler) RefreshModifyreward(ctx context.Context, in *RefreshModifyRewardReq, out *RefreshModifyRewardRes) error {
+	return h.DatanodeServiceHandler.RefreshModifyreward(ctx, in, out)
 }
 
 func (h *datanodeServiceHandler) RefreshAddReward(ctx context.Context, in *RefreshAddRewardReq, out *RefreshAddRewardRes) error {
@@ -2052,8 +2052,8 @@ func (h *datanodeServiceHandler) UserLogCount(ctx context.Context, in *UserLogCo
 	return h.DatanodeServiceHandler.UserLogCount(ctx, in, out)
 }
 
-func (h *datanodeServiceHandler) AddTask(ctx context.Context, in *AddTaskReq, out *AddTaskRes) error {
-	return h.DatanodeServiceHandler.AddTask(ctx, in, out)
+func (h *datanodeServiceHandler) Addtask(ctx context.Context, in *AddTaskReq, out *AddTaskRes) error {
+	return h.DatanodeServiceHandler.Addtask(ctx, in, out)
 }
 
 func (h *datanodeServiceHandler) GetTask(ctx context.Context, in *GetTaskReq, out *GetTaskRes) error {

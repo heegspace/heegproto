@@ -4,306 +4,306 @@ import "rescode/rescode.proto";
 import "common/common.proto";
 
 
-message grade_cate_add_req {
-    common.authorize    auth = 1;
+message GradeCateAddReq {
+    common.Authorize    auth = 1;
     int64               uid = 2;
-    common.grade_cate   grade = 3;
+    common.GradeCate   grade = 3;
     map<string,string>  extra = 4;
 }
 
-message grade_cate_add_res {
-    rescode.code          rescode = 1;
+message GradeCateAddRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     map<string,string>    extra = 3;
 }
 
-message grade_cate_count_req {
-    common.authorize    auth = 1;
+message GradeCateCountReq {
+    common.Authorize    auth = 1;
     int64               uid = 2;
     map<string,string>  extra = 3;
 }
 
-message grade_cate_count_res {
-    rescode.code            rescode = 1;
+message GradeCateCountRes {
+    rescode.Code            rescode = 1;
     string                  resmsg = 2;
     int32                   count = 3;
     map<string,string>      extra = 4;
 }
 
-message grade_cate_list_req {
-    common.authorize    auth = 1;
+message GradeCateListReq {
+    common.Authorize    auth = 1;
     int64               uid = 2;
     int32               page = 3;
     int32               size = 4;
     map<string,string>  extra = 5;
 }
 
-message grade_cate_list_res {
-    rescode.code                rescode = 1;
+message GradeCateListRes {
+    rescode.Code                rescode = 1;
     string                      resmsg = 2;
-    repeated common.grade_cate  lists = 3;
+    repeated common.GradeCate  lists = 3;
     map<string,string>          extra = 4;
 }
 
-message home_black_data_req {
-    common.authorize        auth = 1;
+message HomeBlackDataReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
     int32                   school = 3;
     map<string,string>      extra = 4;
 }
 
-message home_black_data_res {
-    rescode.code                    rescode = 1;
+message HomeBlackDataRes {
+    rescode.Code                    rescode = 1;
     string                          resmsg = 2;
-    repeated common.school_static   lists =  3;
+    repeated common.SchoolStatic   lists =  3;
     map<string,string>              extra = 4;
 }
 
-message grade_subject_req {
-    common.authorize        auth = 1;
+message GradeSubjectReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
     int32                   index = 3;
     map<string,string>      extra = 4;
 }
 
-message grade_subject_res {
-    rescode.code                    rescode = 1;
+message GradeSubjectRes {
+    rescode.Code                    rescode = 1;
     string                          resmsg = 2;
-    repeated common.grade_subject   lists = 3;
+    repeated common.GradeSubject   lists = 3;
     map<string,string>              extra = 4;
 }
 
-message school_roll_add_req {
-    common.authorize    auth = 1;
+message SchoolRollAddReq {
+    common.Authorize    auth = 1;
     int64               uid = 2;
-    common.school_roll  roll = 3;
+    common.SchoolRoll  roll = 3;
     map<string,string>  extra = 4;
 }
 
-message school_roll_add_res {
-    rescode.code          rescode = 1;
+message SchoolRollAddRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     map<string,string>    extra = 3;
 }
 
-message school_roll_count_req {
-    common.authorize    auth = 1;
+message SchoolRollCountReq {
+    common.Authorize    auth = 1;
     int64               uid = 2;
     map<string,string>  extra = 3;
 }
 
-message school_roll_count_res {
-    rescode.code            rescode = 1;
+message SchoolRollCountRes {
+    rescode.Code            rescode = 1;
     string                  resmsg = 2;
     int32                   count = 3;
     map<string,string>      extra = 4;
 }
 
-message school_list_req {
-    common.authorize    auth = 1;
+message SchoolListReq {
+    common.Authorize    auth = 1;
     int64               uid = 2;
     int32               page = 3;
     int32               size = 4;
     map<string,string>  extra = 5;
 }
 
-message school_list_res {
-    rescode.code                rescode = 1;
+message SchoolListRes {
+    rescode.Code                rescode = 1;
     string                      resmsg = 2;
-    repeated common.school_roll lists = 3;
+    repeated common.SchoolRoll lists = 3;
     map<string,string>          extra = 4;
 }
 
-message subject_cate_add_req {
-    common.authorize        auth = 1;
+message SubjectCateAddReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
-    common.subject_cate     subject = 3;
+    common.SubjectCate     subject = 3;
     map<string,string>      extra = 4;
 }
 
-message subject_cate_add_res {
-    rescode.code          rescode = 1;
+message SubjectCateAddRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     map<string,string>    extra = 3;
 }
 
-message subject_cate_count_req {
-    common.authorize        auth = 1;
+message SubjectCateCountReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
     map<string,string>      extra = 3;
 }
 
-message subject_cate_count_res {
-    rescode.code            rescode = 1;
+message SubjectCateCountRes {
+    rescode.Code            rescode = 1;
     string                  resmsg = 2;
     int32                   count = 3;
     map<string,string>      extra = 4;
 }
 
-message subejct_cate_list_req {
-    common.authorize        auth = 1;
+message SubejctCateListReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
     int32                   page = 3;
     int32                   size = 4;
     map<string,string>      extra = 5;
 }
 
-message subject_cate_list_res {
-    rescode.code                    rescode = 1;
+message SubjectCateListRes {
+    rescode.Code                    rescode = 1;
     string                          resmsg = 2;
-    repeated common.subject_cate    lists = 3;
+    repeated common.SubjectCate    lists = 3;
     map<string,string>              extra = 4;
 }
 
-message question_version_req {
-    common.authorize        auth = 1;
+message QuestionVersionReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
-    common.question_query   query = 3;
+    common.QuestionQuery   query = 3;
     map<string,string>      extra = 4;
 }
 
-message question_version_res {
-    rescode.code                    rescode = 1;
+message QuestionVersionRes {
+    rescode.Code                    rescode = 1;
     string                          resmsg = 2;
-    repeated common.version_item    lists = 3;
+    repeated common.VersionItem    lists = 3;
     map<string,string>              extra = 4;
 }
 
-message question_chapter_req {
-    common.authorize        auth = 1;
+message QuestionChapterReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
-    common.question_query   query = 3;
+    common.QuestionQuery   query = 3;
     map<string,string>      extra = 4;
 }
 
-message chapter_res_item {
+message ChapterResItem {
     string                          uid = 1;
     string                          title = 2;
-    repeated common.chapter_item    childs = 3;
+    repeated common.ChapterItem    childs = 3;
 }
 
-message question_chapter_res {
-    rescode.code                rescode = 1;
+message QuestionChapterRes {
+    rescode.Code                rescode = 1;
     string                      resmsg = 2;
-    repeated chapter_res_item   lists = 3;
+    repeated ChapterResItem   lists = 3;
     map<string,string>          extra = 4;
 }
 
-message subject_name_req {
-    common.authorize        auth = 1;
+message SubjectNameReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
     string                  param = 3;
     map<string,string>      extra = 4;
 }
 
-message subject_name_res {
-    rescode.code          rescode = 1;
+message SubjectNameRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     string                name = 3;
     map<string,string>    extra = 4;
 }
 
-message question_source_req {
-    common.authorize        auth = 1;
+message QuestionSourceReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
-    common.question_query   query = 3;
+    common.QuestionQuery   query = 3;
     map<string,string>      extra = 4;
 }
 
-message question_source_res {
-    rescode.code                rescode = 1;
+message QuestionSourceRes {
+    rescode.Code                rescode = 1;
     string                      resmsg = 2;
-    repeated common.source_item sources = 3;
+    repeated common.SourceItem sources = 3;
     map<string,string>          extra = 4;
 }
 
-message question_tixing_req {
-    common.authorize        auth = 1;
+message QuestionTixingReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
-    common.question_query   query = 3;
+    common.QuestionQuery   query = 3;
     map<string,string>      extra = 4;
 }
 
-message question_tixing_res {
-    rescode.code                rescode = 1;
+message QuestionTixingRes {
+    rescode.Code                rescode = 1;
     string                      resmsg = 2;
-    repeated common.tixing_item tixings = 3;
+    repeated common.TixingItem tixings = 3;
     map<string,string>          extra = 4;
 }
 
-message question_timu_count_req {
-    common.authorize        auth = 1;
+message QuestionTimuCountReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
-    common.question_query   query = 3;
+    common.QuestionQuery   query = 3;
     map<string,string>      extra = 4;
 }
 
-message question_timu_count_res {
-    rescode.code                rescode = 1;
+message QuestionTimuCountRes {
+    rescode.Code                rescode = 1;
     string                      resmsg = 2;
     int32                       count = 3;
     map<string,string>          extra = 4;
 }
 
-message question_timu_req {
-    common.authorize        auth = 1;
+message QuestionTimuReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
-    common.question_query   query = 3;
+    common.QuestionQuery   query = 3;
     map<string,string>      extra = 4;
 }
 
-message question_timu_res {
-    rescode.code                rescode = 1;
+message QuestionTimuRes {
+    rescode.Code                rescode = 1;
     string                      resmsg = 2;
-    repeated common.timu_item   timus = 3;
+    repeated common.TimuItem   timus = 3;
     map<string,string>          extra = 4;
 }
 
-message collect_timu_req {
-    common.authorize        auth = 1;
+message CollectTimuReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
     string                  cid = 3;
     int64                   op = 4;
     map<string,string>      extra = 5;
 }
 
-message collect_timu_res {
-    rescode.code          rescode = 1;
+message CollectTimuRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     map<string,string>    extra = 3;
 }
 
-message query_collect_timu_req {
-    common.authorize        auth = 1;
+message QueryCollectTimuReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
     int32                   page = 3;
     int32                   size = 4;
     map<string,string>      extra = 5;
 }
 
-message query_collect_timu_res {
-    rescode.code                rescode = 1;
+message QueryCollectTimuRes {
+    rescode.Code                rescode = 1;
     string                      resmsg = 2;
-    repeated common.timu_item   timus = 3;
+    repeated common.TimuItem   timus = 3;
     map<string,string>          extra = 4;
 }
 
-message modify_question_req {
-    common.authorize        auth = 1;
+message ModifyQuestionReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
     string                  tid = 3;
-    common.question         timu = 4;
+    common.Question         timu = 4;
     map<string,string>      extra=  5;
 }
 
-message modify_question_res {
-    rescode.code          rescode = 1;
+message ModifyQuestionRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     map<string,string>    extra = 3;
 }
 
-message modify_list_req {
-    common.authorize        auth = 1;
+message ModifyListReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
     int32                   page = 3;
     int32                   size = 4;
@@ -312,74 +312,74 @@ message modify_list_req {
     map<string,string>      extra = 7;
 }
 
-message modify_list_res {
-    rescode.code                rescode = 1;
+message ModifyListRes {
+    rescode.Code                rescode = 1;
     string                      resmsg = 2;
-    repeated common.modify_item timus = 3;
+    repeated common.ModifyItem timus = 3;
     map<string,string>          extra = 4;
 }
 
-message modify_count_req {
-    common.authorize        auth = 1;
+message ModifyCountReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
     string                  status = 3;
     map<string,string>      extra = 4;
 }
 
-message modify_count_res {
-    rescode.code                rescode = 1;
+message ModifyCountRes {
+    rescode.Code                rescode = 1;
     string                      resmsg = 2;
     int32                       count = 3;
     map<string,string>          extra = 4;
 }
 
-message approve_req {
-    common.authorize        auth = 1;
+message ApproveReq {
+    common.Authorize        auth = 1;
     int64                   id = 2;
     int64                   uid = 3;
     string                  status = 4;
     string                  info = 5;
     double                  reward = 6;
-    common.approve_dest     dest = 7;
+    common.ApproveDest     dest = 7;
     map<string,string>      extra = 8;
 }
 
-message approve_res {
-    rescode.code       rescode = 1;
+message ApproveRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message timu_by_id_req {
-    common.authorize        auth = 1;
+message TimuByIdReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
     string                  tid = 3;
     map<string,string>      extra = 4;
 }
 
-message timu_by_id_res {
-    rescode.code       rescode = 1;
+message TimuByIdRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
-    common.timu_item   timu = 3;
+    common.TimuItem   timu = 3;
     map<string,string> extra = 4;
 }
 
-message timu_add_req {
-    common.authorize            auth = 1;
+message TimuAddReq {
+    common.Authorize            auth = 1;
     int64                       uid = 2;
-    common.add_timu_item        timu = 3;
+    common.AddTimuItem        timu = 3;
     map<string,string>          extra = 4;
 }
 
-message timu_add_res {
-    rescode.code       rescode = 1;
+message TimuAddRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
     map<string,string> extra = 3;
 }
 
 
-message add_list_req {
-    common.authorize    auth = 1;
+message AddListReq {
+    common.Authorize    auth = 1;
     int64               uid = 2;
     int32               page = 3;
     int32               size = 4;
@@ -387,70 +387,70 @@ message add_list_req {
     string              status = 6;
 }
 
-message add_list_res {
-    rescode.code                    rescode = 1;
+message AddListRes {
+    rescode.Code                    rescode = 1;
     string                          resmsg = 2;
-    repeated common.add_timu_item   timus = 3;
+    repeated common.AddTimuItem   timus = 3;
     map<string,string>              extra = 4;
 }
 
-message add_count_req {
-    common.authorize            auth = 1;
+message AddCountReq {
+    common.Authorize            auth = 1;
     int64                       uid = 2;
     string                      status = 3;
     map<string,string>          extra = 4;
 }
 
-message add_count_res {
-    rescode.code            rescode = 1;
+message AddCountRes {
+    rescode.Code            rescode = 1;
     string                  resmsg = 2;
     int32                   count = 3;
     map<string,string>      extra = 4;
 }
 
-message tixing_by_vid_req {
-    common.authorize         auth =1;
+message TixingByVidReq {
+    common.Authorize         auth =1;
     string                   vid = 2;
     map<string,string>       extra = 3;
 }
 
-message tixing_by_vid_res {
-    rescode.code             rescode = 1;
+message TixingByVidRes {
+    rescode.Code             rescode = 1;
     string                   resmsg = 2;
     repeated string          tixings = 3;
     map<string,string>       extra = 4;
 }
 
-message source_by_vid_req {
-    common.authorize          auth = 1;
+message SourceByVidReq {
+    common.Authorize          auth = 1;
     string                    vid = 2;
     map<string,string>        extra = 3;
 }
 
-message source_by_vid_res {
-    rescode.code             rescode = 1;
+message SourceByVidRes {
+    rescode.Code             rescode = 1;
     string                   resmsg = 2;
     repeated string          sources = 3;
     map<string,string>       extra = 4;
 }
 
 
-message ident_by_iid_req {
-    common.authorize         auth = 1;
+message IdentByIidReq {
+    common.Authorize         auth = 1;
     int64                    uid = 2;
     string                   iid = 3;
     map<string,string>       extra = 4;
 }
 
-message ident_by_iid_res {
-    rescode.code              rescode = 1;
+message IdentByIidRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
-    common.baidu_ident_item   result = 3;
+    common.BaiduIdentItem   result = 3;
     map<string,string>        extra = 4;
 }
 
-message ident_list_req {
-    common.authorize        auth = 1;
+message IdentListReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
     int32                   page = 3;
     int32                   size = 4;
@@ -460,92 +460,92 @@ message ident_list_req {
     string                  sign = 8;
 }
 
-message ident_list_res {
-    rescode.code                      rescode = 1;
+message IdentListRes {
+    rescode.Code                      rescode = 1;
     string                            resmsg = 2;
-    repeated common.baidu_ident_item  results = 3;
+    repeated common.BaiduIdentItem  results = 3;
     map<string,string>                extra = 4;
 }
 
-message ident_count_req {
-    common.authorize          auth = 1;
+message IdentCountReq {
+    common.Authorize          auth = 1;
     int64                     uid = 2;
     string                    status = 3;
     map<string,string>        extra = 4; 
 }
 
-message ident_count_res {
-    rescode.code         rescode = 1;
+message IdentCountRes {
+    rescode.Code         rescode = 1;
     string               resmsg = 2;
     int32                count = 3;
     map<string,string>   extra = 4;
 }
 
-service questionnode_service {
+service QuestionnodeService {
     // 添加年纪信息
-    rpc  grade_cate_add(grade_cate_add_req) returns(grade_cate_add_res) {}
+    rpc  GradeCateAdd(GradeCateAddReq) returns(GradeCateAddRes) {}
     // 获取年纪总数
-    rpc  grade_cate_count(grade_cate_count_req) returns(grade_cate_count_res) {}
+    rpc  GradeCateCount(GradeCateCountReq) returns(GradeCateCountRes) {}
     // 获取年级信息
-    rpc  grade_cate_list(grade_cate_list_req) returns(grade_cate_list_res) {}
+    rpc  GradeCateList(GradeCateListReq) returns(GradeCateListRes) {}
     // 获取主页最新动态统计信息
-    rpc  home_black_data(home_black_data_req) returns(home_black_data_res) {}
+    rpc  HomeBlackData(HomeBlackDataReq) returns(HomeBlackDataRes) {}
     // 获取学籍对应的年级+科目
-    rpc  grade_subject(grade_subject_req) returns(grade_subject_res) {}
+    rpc  GradeSubject(GradeSubjectReq) returns(GradeSubjectRes) {}
     // 添加学级信息
-    rpc  school_roll_add(school_roll_add_req) returns(school_roll_add_res) {}
+    rpc  SchoolRollAdd(SchoolRollAddReq) returns(SchoolRollAddRes) {}
     // 获取年级总数
-    rpc  school_roll_count(school_roll_count_req) returns(school_roll_count_res) {}
+    rpc  SchoolRollCount(SchoolRollCountReq) returns(SchoolRollCountRes) {}
     // 获取年级列表信息
-    rpc  school_list(school_list_req) returns(school_list_res) {}
+    rpc  SchoolList(SchoolListReq) returns(SchoolListRes) {}
     // 添加科目信息
-    rpc  subject_cate_add(subject_cate_add_req) returns(subject_cate_add_res) {}
+    rpc  SubjectCateAdd(SubjectCateAddReq) returns(SubjectCateAddRes) {}
     // 获取科目总数
-    rpc  subject_cate_count(subject_cate_count_req) returns(subject_cate_count_res) {}
+    rpc  SubjectCateCount(SubjectCateCountReq) returns(SubjectCateCountRes) {}
     // 获取科目列表
-    rpc  subject_cate_list(subejct_cate_list_req) returns(subject_cate_list_res) {}
+    rpc  SubjectCateList(SubejctCateListReq) returns(SubjectCateListRes) {}
     // 获取版本
-    rpc  question_version(question_version_req) returns(question_version_res) {}
+    rpc  QuestionVersion(QuestionVersionReq) returns(QuestionVersionRes) {}
     // 获取章节
-    rpc  question_chapter(question_chapter_req) returns(question_chapter_res) {}
+    rpc  QuestionChapter(QuestionChapterReq) returns(QuestionChapterRes) {}
     // 获取科目名
-    rpc  subject_name(subject_name_req) returns(subject_name_res) {}
+    rpc  SubjectName(SubjectNameReq) returns(SubjectNameRes) {}
     // 获取来源
-    rpc  question_source(question_source_req) returns(question_source_res) {}
+    rpc  QuestionSource(QuestionSourceReq) returns(QuestionSourceRes) {}
     // 获取题型
-    rpc  question_tixing(question_tixing_req) returns(question_tixing_res) {}
+    rpc  QuestionTixing(QuestionTixingReq) returns(QuestionTixingRes) {}
     // 获取题目数量
-    rpc  question_timu_count(question_timu_count_req) returns(question_timu_count_res) {}
+    rpc  QuestionTimuCount(QuestionTimuCountReq) returns(QuestionTimuCountRes) {}
     // 获取题目
-    rpc  question_timu(question_timu_req) returns(question_timu_res) {}
+    rpc  QuestionTimu(QuestionTimuReq) returns(QuestionTimuRes) {}
     // 收藏题目
-    rpc  collect_timu(collect_timu_req) returns(collect_timu_res) {}
+    rpc  CollectTimu(CollectTimuReq) returns(CollectTimuRes) {}
     // 获取收藏的题目
-    rpc  query_collect_timu(query_collect_timu_req) returns(query_collect_timu_res) {}
+    rpc  QueryCollectTimu(QueryCollectTimuReq) returns(QueryCollectTimuRes) {}
     // 纠错试题
-    rpc  modify_question(modify_question_req) returns(modify_question_res) {}
+    rpc  ModifyQuestion(ModifyQuestionReq) returns(ModifyQuestionRes) {}
     // 获取纠错列表
-    rpc  modify_list(modify_list_req) returns(modify_list_res) {}
+    rpc  ModifyList(ModifyListReq) returns(ModifyListRes) {}
     // 获取纠错数量
-    rpc  modify_count(modify_count_req) returns(modify_count_res) {}
+    rpc  ModifyCount(ModifyCountReq) returns(ModifyCountRes) {}
     // 添加试题
-    rpc  question_timu_add(timu_add_req) returns(timu_add_res) {}
+    rpc  QuestionTimuAdd(TimuAddReq) returns(TimuAddRes) {}
     // 获取添加的试题
-    rpc  add_list(add_list_req) returns(add_list_res) {}
+    rpc  AddList(AddListReq) returns(AddListRes) {}
     // 获取添加的数量
-    rpc  add_count(add_count_req) returns(add_count_res) {}
+    rpc  AddCount(AddCountReq) returns(AddCountRes) {}
     // 审核修改的试题
-    rpc  approve(approve_req) returns(approve_res) {}
+    rpc  Approve(ApproveReq) returns(ApproveRes) {}
     // 根据试题id请求题目
-    rpc  question_timu_by_id(timu_by_id_req) returns(timu_by_id_res) {}
+    rpc  QuestionTimuById(TimuByIdReq) returns(TimuByIdRes) {}
     // 通过版本id获取题型列表
-    rpc  tixing_by_vid(tixing_by_vid_req) returns(tixing_by_vid_res) {}
+    rpc  TixingByVid(TixingByVidReq) returns(TixingByVidRes) {}
     // 通过版本id获取来源
-    rpc  source_by_vid(source_by_vid_req) returns(source_by_vid_res) {}
+    rpc  SourceByVid(SourceByVidReq) returns(SourceByVidRes) {}
     // 根据识别id获取识别记录
-    rpc  ident_by_iid(ident_by_iid_req) returns(ident_by_iid_res) {}
+    rpc  IdentByIid(IdentByIidReq) returns(IdentByIidRes) {}
     // 获取识别列表
-    rpc  ident_list(ident_list_req) returns(ident_list_res) {}
+    rpc  IdentList(IdentListReq) returns(IdentListRes) {}
     // 获取识别列表熟数量
-    rpc  ident_count(ident_count_req) returns(ident_count_res) {}
+    rpc  IdentCount(IdentCountReq) returns(IdentCountRes) {}
 }

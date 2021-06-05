@@ -4,11 +4,11 @@
 package codenode
 
 import (
-	_ "github.com/heegspace/heegproto/common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	math "math"
+	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	math "math"
 )
 
 import (
@@ -63,7 +63,7 @@ func NewCodenodeService(name string, c client.Client) CodenodeService {
 }
 
 func (c *codenodeService) SendCode(ctx context.Context, in *CodeReq, opts ...client.CallOption) (*CodeRes, error) {
-	req := c.c.NewRequest(c.name, "CodenodeService.send_code", in)
+	req := c.c.NewRequest(c.name, "CodenodeService.SendCode", in)
 	out := new(CodeRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -73,7 +73,7 @@ func (c *codenodeService) SendCode(ctx context.Context, in *CodeReq, opts ...cli
 }
 
 func (c *codenodeService) VerifyCode(ctx context.Context, in *VerifyCodeReq, opts ...client.CallOption) (*VerifyCodeRes, error) {
-	req := c.c.NewRequest(c.name, "CodenodeService.verify_code", in)
+	req := c.c.NewRequest(c.name, "CodenodeService.VerifyCode", in)
 	out := new(VerifyCodeRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {

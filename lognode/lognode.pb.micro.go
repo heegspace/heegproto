@@ -4,11 +4,11 @@
 package lognode
 
 import (
-	common "github.com/heegspace/heegproto/common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	math "math"
+	common "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	math "math"
 )
 
 import (
@@ -65,7 +65,7 @@ func NewLognodeService(name string, c client.Client) LognodeService {
 }
 
 func (c *lognodeService) Log(ctx context.Context, in *LogReq, opts ...client.CallOption) (*common.Response, error) {
-	req := c.c.NewRequest(c.name, "LognodeService.log", in)
+	req := c.c.NewRequest(c.name, "LognodeService.Log", in)
 	out := new(common.Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -75,7 +75,7 @@ func (c *lognodeService) Log(ctx context.Context, in *LogReq, opts ...client.Cal
 }
 
 func (c *lognodeService) CallLog(ctx context.Context, in *CallLogReq, opts ...client.CallOption) (*common.Response, error) {
-	req := c.c.NewRequest(c.name, "LognodeService.call_log", in)
+	req := c.c.NewRequest(c.name, "LognodeService.CallLog", in)
 	out := new(common.Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -85,7 +85,7 @@ func (c *lognodeService) CallLog(ctx context.Context, in *CallLogReq, opts ...cl
 }
 
 func (c *lognodeService) QueryUserLog(ctx context.Context, in *QueryUserLogReq, opts ...client.CallOption) (*QueryUserLogRes, error) {
-	req := c.c.NewRequest(c.name, "LognodeService.query_user_log", in)
+	req := c.c.NewRequest(c.name, "LognodeService.QueryUserLog", in)
 	out := new(QueryUserLogRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -95,7 +95,7 @@ func (c *lognodeService) QueryUserLog(ctx context.Context, in *QueryUserLogReq, 
 }
 
 func (c *lognodeService) UserLogCount(ctx context.Context, in *UserLogCountReq, opts ...client.CallOption) (*UserLogCountRes, error) {
-	req := c.c.NewRequest(c.name, "LognodeService.user_log_count", in)
+	req := c.c.NewRequest(c.name, "LognodeService.UserLogCount", in)
 	out := new(UserLogCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {

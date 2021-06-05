@@ -3,7 +3,7 @@ package codenode;
 import "rescode/rescode.proto";
 import "common/common.proto";
 
-enum code_type {
+enum CodeType {
     UID          =  0;
     ACCOUNT      =  1;
     MOBILE       =  2;
@@ -11,44 +11,44 @@ enum code_type {
 }
 
 // 请求验证码的操作类型
-enum operate_type {
+enum OperateType {
     NONE         =  0;
     REGISTER     =  101;  // 注册请求
     LOGIN        =  102;  // 登录请求
 }
 
-message code_req {
-    common.authorize      auth =  1;
+message CodeReq {
+    common.Authorize      auth =  1;
     string                desc =  2;
-    code_type             type =  3;
-    operate_type          optype =  4;
+    CodeType             type =  3;
+    OperateType          optype =  4;
     map<string,string>    extra =  5;
 }
 
-message code_res {
-    rescode.code          rescode =  1;
+message CodeRes {
+    rescode.Code          rescode =  1;
     string                resmsg =  2;
     string                code =  3;
     map<string,string>    extra =  4;
 }
 
-message verify_code_req {
-    common.authorize      auth =  1;
+message VerifyCodeReq {
+    common.Authorize      auth =  1;
     string                desc =  2;
     string                code =  3;
-    operate_type          optype =  4;
+    OperateType          optype =  4;
     map<string,string>    extra =  5;
 }
 
-message verify_code_res {
-    rescode.code          rescode =  1;
+message VerifyCodeRes {
+    rescode.Code          rescode =  1;
     string                resmsg =  2;
     map<string,string>    extra =  3;
 }
 
-service codenode_service {
+service CodenodeService {
 	// 发送验证码
-	rpc send_code(code_req) returns (code_res) {}
+	rpc SendCode(CodeReq) returns (CodeRes) {}
 	// 请求验证码
-	rpc verify_code(verify_code_req) returns (verify_code_res) {}
+	rpc VerifyCode(VerifyCodeReq) returns (VerifyCodeRes) {}
 }

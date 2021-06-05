@@ -4,11 +4,11 @@
 package dartynode
 
 import (
-	_ "github.com/heegspace/heegproto/common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	math "math"
+	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	math "math"
 )
 
 import (
@@ -81,7 +81,7 @@ func NewDartynodeService(name string, c client.Client) DartynodeService {
 }
 
 func (c *dartynodeService) LoginWechat(ctx context.Context, in *LoginWechatReq, opts ...client.CallOption) (*LoginWechatRes, error) {
-	req := c.c.NewRequest(c.name, "DartynodeService.login_wechat", in)
+	req := c.c.NewRequest(c.name, "DartynodeService.LoginWechat", in)
 	out := new(LoginWechatRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -91,7 +91,7 @@ func (c *dartynodeService) LoginWechat(ctx context.Context, in *LoginWechatReq, 
 }
 
 func (c *dartynodeService) RefreshWechat(ctx context.Context, in *RefreshWechatReq, opts ...client.CallOption) (*RefreshWechatRes, error) {
-	req := c.c.NewRequest(c.name, "DartynodeService.refresh_wechat", in)
+	req := c.c.NewRequest(c.name, "DartynodeService.RefreshWechat", in)
 	out := new(RefreshWechatRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -101,7 +101,7 @@ func (c *dartynodeService) RefreshWechat(ctx context.Context, in *RefreshWechatR
 }
 
 func (c *dartynodeService) LogoutWechat(ctx context.Context, in *LogoutWechatReq, opts ...client.CallOption) (*LogoutWechatRes, error) {
-	req := c.c.NewRequest(c.name, "DartynodeService.logout_wechat", in)
+	req := c.c.NewRequest(c.name, "DartynodeService.LogoutWechat", in)
 	out := new(LogoutWechatRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -111,7 +111,7 @@ func (c *dartynodeService) LogoutWechat(ctx context.Context, in *LogoutWechatReq
 }
 
 func (c *dartynodeService) UserinfoWechat(ctx context.Context, in *UserinfoWechatReq, opts ...client.CallOption) (*UserinfoWechatRes, error) {
-	req := c.c.NewRequest(c.name, "DartynodeService.userinfo_wechat", in)
+	req := c.c.NewRequest(c.name, "DartynodeService.UserinfoWechat", in)
 	out := new(UserinfoWechatRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -121,7 +121,7 @@ func (c *dartynodeService) UserinfoWechat(ctx context.Context, in *UserinfoWecha
 }
 
 func (c *dartynodeService) LoginAlipay(ctx context.Context, in *LoginAlipayReq, opts ...client.CallOption) (*LoginAlipayRes, error) {
-	req := c.c.NewRequest(c.name, "DartynodeService.login_alipay", in)
+	req := c.c.NewRequest(c.name, "DartynodeService.LoginAlipay", in)
 	out := new(LoginAlipayRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -131,7 +131,7 @@ func (c *dartynodeService) LoginAlipay(ctx context.Context, in *LoginAlipayReq, 
 }
 
 func (c *dartynodeService) RefreshAlipay(ctx context.Context, in *RefreshAlipayReq, opts ...client.CallOption) (*RefreshAlipayRes, error) {
-	req := c.c.NewRequest(c.name, "DartynodeService.refresh_alipay", in)
+	req := c.c.NewRequest(c.name, "DartynodeService.RefreshAlipay", in)
 	out := new(RefreshAlipayRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -141,7 +141,7 @@ func (c *dartynodeService) RefreshAlipay(ctx context.Context, in *RefreshAlipayR
 }
 
 func (c *dartynodeService) LogoutAlipay(ctx context.Context, in *LogoutAlipayReq, opts ...client.CallOption) (*LogoutAlipayRes, error) {
-	req := c.c.NewRequest(c.name, "DartynodeService.logout_alipay", in)
+	req := c.c.NewRequest(c.name, "DartynodeService.LogoutAlipay", in)
 	out := new(LogoutAlipayRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -151,7 +151,7 @@ func (c *dartynodeService) LogoutAlipay(ctx context.Context, in *LogoutAlipayReq
 }
 
 func (c *dartynodeService) UserinfoAlipay(ctx context.Context, in *UserinfoAlipayReq, opts ...client.CallOption) (*UserinfoAlipayRes, error) {
-	req := c.c.NewRequest(c.name, "DartynodeService.userinfo_alipay", in)
+	req := c.c.NewRequest(c.name, "DartynodeService.UserinfoAlipay", in)
 	out := new(UserinfoAlipayRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -161,7 +161,7 @@ func (c *dartynodeService) UserinfoAlipay(ctx context.Context, in *UserinfoAlipa
 }
 
 func (c *dartynodeService) BaiduEntity(ctx context.Context, in *BaiduEntityReq, opts ...client.CallOption) (*BaiduEntityRes, error) {
-	req := c.c.NewRequest(c.name, "DartynodeService.baidu_entity", in)
+	req := c.c.NewRequest(c.name, "DartynodeService.BaiduEntity", in)
 	out := new(BaiduEntityRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -171,7 +171,7 @@ func (c *dartynodeService) BaiduEntity(ctx context.Context, in *BaiduEntityReq, 
 }
 
 func (c *dartynodeService) BaiduDocAnalysis(ctx context.Context, in *BaiduDocAnalysisReq, opts ...client.CallOption) (*BaiduDocAnalysisRes, error) {
-	req := c.c.NewRequest(c.name, "DartynodeService.baidu_doc_analysis", in)
+	req := c.c.NewRequest(c.name, "DartynodeService.BaiduDocAnalysis", in)
 	out := new(BaiduDocAnalysisRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -181,7 +181,7 @@ func (c *dartynodeService) BaiduDocAnalysis(ctx context.Context, in *BaiduDocAna
 }
 
 func (c *dartynodeService) BaiduIdcardIdent(ctx context.Context, in *BaiduIdcardIdentReq, opts ...client.CallOption) (*BaiduIdcardIdentRes, error) {
-	req := c.c.NewRequest(c.name, "DartynodeService.baidu_idcard_ident", in)
+	req := c.c.NewRequest(c.name, "DartynodeService.BaiduIdcardIdent", in)
 	out := new(BaiduIdcardIdentRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {

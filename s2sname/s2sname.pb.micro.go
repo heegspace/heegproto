@@ -6,8 +6,8 @@ package s2sname
 import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	math "math"
 	_ "github.com/heegspace/heegproto/rescode"
+	math "math"
 )
 
 import (
@@ -70,7 +70,7 @@ func NewS2SnameService(name string, c client.Client) S2SnameService {
 }
 
 func (c *s2SnameService) RegisterS2Sname(ctx context.Context, in *RegisterReq, opts ...client.CallOption) (*RegisterRes, error) {
-	req := c.c.NewRequest(c.name, "S2SnameService.registerS2sname", in)
+	req := c.c.NewRequest(c.name, "S2SnameService.RegisterS2sname", in)
 	out := new(RegisterRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -80,7 +80,7 @@ func (c *s2SnameService) RegisterS2Sname(ctx context.Context, in *RegisterReq, o
 }
 
 func (c *s2SnameService) UpdateS2Sname(ctx context.Context, in *UpdateReq, opts ...client.CallOption) (*UpdateRes, error) {
-	req := c.c.NewRequest(c.name, "S2SnameService.updateS2sname", in)
+	req := c.c.NewRequest(c.name, "S2SnameService.UpdateS2sname", in)
 	out := new(UpdateRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -90,7 +90,7 @@ func (c *s2SnameService) UpdateS2Sname(ctx context.Context, in *UpdateReq, opts 
 }
 
 func (c *s2SnameService) FetchS2Sname(ctx context.Context, in *Request, opts ...client.CallOption) (*FetchRes, error) {
-	req := c.c.NewRequest(c.name, "S2SnameService.fetchS2sname", in)
+	req := c.c.NewRequest(c.name, "S2SnameService.FetchS2sname", in)
 	out := new(FetchRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -100,7 +100,7 @@ func (c *s2SnameService) FetchS2Sname(ctx context.Context, in *Request, opts ...
 }
 
 func (c *s2SnameService) FetchS2Snames(ctx context.Context, in *Request, opts ...client.CallOption) (*FetchRes, error) {
-	req := c.c.NewRequest(c.name, "S2SnameService.fetchS2snames", in)
+	req := c.c.NewRequest(c.name, "S2SnameService.FetchS2snames", in)
 	out := new(FetchRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -110,7 +110,7 @@ func (c *s2SnameService) FetchS2Snames(ctx context.Context, in *Request, opts ..
 }
 
 func (c *s2SnameService) Heart(ctx context.Context, in *HeartReq, opts ...client.CallOption) (*HeartRes, error) {
-	req := c.c.NewRequest(c.name, "S2SnameService.heart", in)
+	req := c.c.NewRequest(c.name, "S2SnameService.Heart", in)
 	out := new(HeartRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -120,7 +120,7 @@ func (c *s2SnameService) Heart(ctx context.Context, in *HeartReq, opts ...client
 }
 
 func (c *s2SnameService) S2Sinfo(ctx context.Context, in *S2SinfoReq, opts ...client.CallOption) (*S2SinfoRes, error) {
-	req := c.c.NewRequest(c.name, "S2SnameService.s2sinfo", in)
+	req := c.c.NewRequest(c.name, "S2SnameService.S2sinfo", in)
 	out := new(S2SinfoRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {

@@ -4,11 +4,11 @@
 package usernode
 
 import (
-	_ "github.com/heegspace/heegproto/common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	math "math"
+	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	math "math"
 )
 
 import (
@@ -69,7 +69,7 @@ func NewUsernodeService(name string, c client.Client) UsernodeService {
 }
 
 func (c *usernodeService) UpdateUserInfo(ctx context.Context, in *UpdateUserinfoReq, opts ...client.CallOption) (*UpdateUserinfoRes, error) {
-	req := c.c.NewRequest(c.name, "UsernodeService.updateUserInfo", in)
+	req := c.c.NewRequest(c.name, "UsernodeService.UpdateUserInfo", in)
 	out := new(UpdateUserinfoRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -79,7 +79,7 @@ func (c *usernodeService) UpdateUserInfo(ctx context.Context, in *UpdateUserinfo
 }
 
 func (c *usernodeService) UpdateCardid(ctx context.Context, in *UpdateCardidReq, opts ...client.CallOption) (*UpdateUserRes, error) {
-	req := c.c.NewRequest(c.name, "UsernodeService.update_cardid", in)
+	req := c.c.NewRequest(c.name, "UsernodeService.UpdateCardid", in)
 	out := new(UpdateUserRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -89,7 +89,7 @@ func (c *usernodeService) UpdateCardid(ctx context.Context, in *UpdateCardidReq,
 }
 
 func (c *usernodeService) UpdateAttention(ctx context.Context, in *UpdateAttentionReq, opts ...client.CallOption) (*UpdateUserRes, error) {
-	req := c.c.NewRequest(c.name, "UsernodeService.update_attention", in)
+	req := c.c.NewRequest(c.name, "UsernodeService.UpdateAttention", in)
 	out := new(UpdateUserRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -99,7 +99,7 @@ func (c *usernodeService) UpdateAttention(ctx context.Context, in *UpdateAttenti
 }
 
 func (c *usernodeService) UserInfo(ctx context.Context, in *UserInfoReq, opts ...client.CallOption) (*UserInfoRes, error) {
-	req := c.c.NewRequest(c.name, "UsernodeService.user_info", in)
+	req := c.c.NewRequest(c.name, "UsernodeService.UserInfo", in)
 	out := new(UserInfoRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -109,7 +109,7 @@ func (c *usernodeService) UserInfo(ctx context.Context, in *UserInfoReq, opts ..
 }
 
 func (c *usernodeService) UserCache(ctx context.Context, in *UserCacheReq, opts ...client.CallOption) (*UserCacheRes, error) {
-	req := c.c.NewRequest(c.name, "UsernodeService.user_cache", in)
+	req := c.c.NewRequest(c.name, "UsernodeService.UserCache", in)
 	out := new(UserCacheRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {

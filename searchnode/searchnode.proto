@@ -4,8 +4,8 @@ import "rescode/rescode.proto";
 import "common/common.proto";
 
 
-message search_question_req {
-    common.authorize auth = 1;
+message SearchQuestionReq {
+    common.Authorize auth = 1;
     int64   uid = 2;
     string keyword = 3;
     int32    page = 4;
@@ -13,52 +13,52 @@ message search_question_req {
     map<string,string> extra = 6;
 }
 
-message search_question_res {
-    rescode.code                      rescode = 1;
+message SearchQuestionRes {
+    rescode.Code                      rescode = 1;
     string                            resmsg = 2;
     double                            timestamp = 3;
-    common.search_hits_total          total = 4;
-    repeated common.search_hits_item     hits = 5;
+    common.SearchHitsTotal              total = 4;
+    repeated common.SearchHitsItem     hits = 5;
     map<string,string>                extra = 6;
 }
 
-message search_item_req {
-    common.authorize auth = 1;
+message SearchItemReq {
+    common.Authorize auth = 1;
     string            keyword = 2;
     int32               page = 3;
     int32                size = 4;
     map<string,string> extra = 5;
 }
 
-message search_item_res {
-    rescode.code                      rescode = 1;
+message SearchItemRes {
+    rescode.Code                      rescode = 1;
     string                            resmsg = 2;
     repeated string                    lists = 3;
     map<string,string>                extra = 4;
 }
 
-message search_history_req {
-    common.authorize auth = 1;
+message SearchHistoryReq {
+    common.Authorize auth = 1;
     int64           uid = 2;
     int32           page = 3;
     int32           size = 4;
     map<string,string> extra = 5;
 }
 
-message search_history_res {
-    rescode.code                      rescode = 1;
+message SearchHistoryRes {
+    rescode.Code                      rescode = 1;
     string                            resmsg = 2;
-    repeated common.search_history_item  lists = 3;
+    repeated common.SearchHistoryItem  lists = 3;
     map<string,string>                extra = 4;
 }
 
-service searchnode_service {
+service SearchnodeService {
     // 搜索试题
-    rpc  search_question(search_question_req) returns(search_question_res) {}
+    rpc  SearchQuestion(SearchQuestionReq) returns(SearchQuestionRes) {}
 
     // 搜索关键字补全
-    rpc  search_item(search_item_req) returns(search_item_res) {}
+    rpc  SearchItem(SearchItemReq) returns(SearchItemRes) {}
 
     // 获取搜索记录
-    rpc  search_history(search_history_req) returns(search_history_res) {}
+    rpc  SearchHistory(SearchHistoryReq) returns(SearchHistoryRes) {}
 }

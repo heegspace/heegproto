@@ -4,11 +4,11 @@
 package limitnode
 
 import (
-	_ "github.com/heegspace/heegproto/common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	math "math"
+	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	math "math"
 )
 
 import (
@@ -63,7 +63,7 @@ func NewLimitnodeService(name string, c client.Client) LimitnodeService {
 }
 
 func (c *limitnodeService) ModifyTimuLimit(ctx context.Context, in *ModifyTimuLimitReq, opts ...client.CallOption) (*ModifyTimuLimitRes, error) {
-	req := c.c.NewRequest(c.name, "LimitnodeService.modify_timu_limit", in)
+	req := c.c.NewRequest(c.name, "LimitnodeService.ModifyTimuLimit", in)
 	out := new(ModifyTimuLimitRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -73,7 +73,7 @@ func (c *limitnodeService) ModifyTimuLimit(ctx context.Context, in *ModifyTimuLi
 }
 
 func (c *limitnodeService) AddTimuLimit(ctx context.Context, in *AddTimuLimitReq, opts ...client.CallOption) (*AddTimuLimitRes, error) {
-	req := c.c.NewRequest(c.name, "LimitnodeService.add_timu_limit", in)
+	req := c.c.NewRequest(c.name, "LimitnodeService.AddTimuLimit", in)
 	out := new(AddTimuLimitRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {

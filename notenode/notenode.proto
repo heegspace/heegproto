@@ -3,7 +3,7 @@ package notenode;
 import "rescode/rescode.proto";
 import "common/common.proto";
 
-message note_item {
+message NoteItem {
     int64                   nid = 1;
     string                  data = 2;
     string                  html = 3;
@@ -12,22 +12,22 @@ message note_item {
     int64                   note_type = 6;
 }
 
-message update_note_req {
-    common.authorize            auth = 1;
+message UpdateNoteReq {
+    common.Authorize            auth = 1;
     int64                       uid = 2;
-    note_item                   note = 3;
+    NoteItem                   note = 3;
     map<string,string>          extra = 4;
 }
 
-message note_meta_res {
-    rescode.code        rescode = 1;
+message NoteMetaRes {
+    rescode.Code        rescode = 1;
     string              resmsg = 2;
-    common.note_meta    meta = 3;
+    common.NoteMeta    meta = 3;
     map<string,string>  extra = 4;
 }
  
-message note_meta_list_req {
-    common.authorize        auth = 1;
+message NoteMetaListReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
     int64                   userid = 3;
     string                  tag = 4;
@@ -38,15 +38,15 @@ message note_meta_list_req {
     map<string,string>      extra = 10;
 }
 
-message note_meta_list_res {
-    rescode.code                    rescode = 1;
+message NoteMetaListRes {
+    rescode.Code                    rescode = 1;
     string                          resmsg = 2;
-    repeated common.note_meta       meta = 3;
+    repeated common.NoteMeta       meta = 3;
     map<string,string>              extra = 4;
 }
 
-message note_list_count_req {
-    common.authorize        auth = 1;
+message NoteListCountReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
     int64                   userid = 3;
     string                  tag = 4;
@@ -55,104 +55,104 @@ message note_list_count_req {
     map<string,string>      extra = 7;
 }
 
-message note_list_count_res {
-    rescode.code        rescode = 1;
+message NoteListCountRes {
+    rescode.Code        rescode = 1;
     string              resmsg = 2;
     int32               count = 3;
     map<string,string>  extra = 4;
 }
 
-message note_data_req {
-    common.authorize        auth = 1;
+message NoteDataReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
     int64                   nid = 3;
     map<string,string>      extra = 4;
 }
 
-message note_data_res {
-    rescode.code        rescode = 1;
+message NoteDataRes {
+    rescode.Code        rescode = 1;
     string              resmsg = 2;
     string              data = 3;
     map<string,string>  extra = 4;
 }
 
-message note_html_req {
-    common.authorize        auth = 1;
+message NoteHtmlReq {
+    common.Authorize        auth = 1;
     int64                   uid = 2;
     int64                   nid = 3;
     map<string,string>      extra = 4;
 }
 
-message note_html_res {
-    rescode.code        rescode = 1;
+message NoteHtmlRes {
+    rescode.Code        rescode = 1;
     string              resmsg = 2;
     string              data = 3;
     map<string,string>  extra = 4;
 }
 
 
-message note_cooper_req {
-    common.authorize        auth = 1;
+message NoteCooperReq {
+    common.Authorize        auth = 1;
     int64                   nid = 2;
     int64                   userid = 3;
     repeated string         user = 4;
     map<string,string>      extra = 5;
 }
 
-message note_cooper_res {
-    rescode.code                    rescode = 1;
+message NoteCooperRes {
+    rescode.Code                    rescode = 1;
     string                          resmsg = 2;
-    repeated common.user_info       user = 3;
+    repeated common.UserInfo       user = 3;
     map<string,string>              extra = 4;
 }
 
-message note_tag_req {
-    common.authorize      auth = 1;
+message NoteTagReq {
+    common.Authorize      auth = 1;
     int64                 nid = 2;
     int64                 userid = 3;
     repeated string       tags = 4;
     map<string,string>    extra = 5;
 }
 
-message note_tag_res {
-    rescode.code       rescode = 1;
+message NoteTagRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
     repeated string    tags = 3;
     map<string,string> extra = 4;
 }
 
-message note_bgcolor_req {
-    common.authorize      auth = 1;
+message NoteBgcolorReq {
+    common.Authorize      auth = 1;
     int64                 nid = 2;
     int64                 userid = 3;
     string                bgcolor = 4;
     map<string,string>    extra = 5;
 } 
 
-message note_bgcolor_res {
-    rescode.code       rescode = 1;
+message NoteBgcolorRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
     string             bgcolor = 3;
     map<string,string> extra = 4;
 }
 
 
-message note_tag_add_req {
-    common.authorize      auth = 1;
+message NoteTagAddReq {
+    common.Authorize      auth = 1;
     int64                 userid = 2;
     string                cn = 3;
     string                eg = 4;
     map<string,string>    extra = 5;
 }
 
-message note_tag_add_res {
-    rescode.code      rescode = 1;
+message NoteTagAddRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message note_tag_list_req {
-    common.authorize        auth = 1;
+message NoteTagListReq {
+    common.Authorize        auth = 1;
     int64                   user_id = 2;
     string                  lang = 3;
     int64                   status = 4;
@@ -161,28 +161,28 @@ message note_tag_list_req {
     map<string,string>      extra = 7;
 }
 
-message note_tag_list_res {
-    rescode.code              rescode = 1;
+message NoteTagListRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
-    repeated common.note_tag  tags = 3;
+    repeated common.NoteTag  tags = 3;
     map<string,string>        extra = 4;
 }
 
-service notenode_service {
+service NotenodeService {
     //更新或者添加笔记信息
-    rpc  updateNote(update_note_req) returns (note_meta_res) {}
+    rpc  UpdateNote(UpdateNoteReq) returns (NoteMetaRes) {}
     // 获取笔记列表
-    rpc  noteMetaList(note_meta_list_req) returns (note_meta_list_res) {}
+    rpc  NoteMetaList(NoteMetaListReq) returns (NoteMetaListRes) {}
     // 获取用户笔记数量
-    rpc  noteListCount(note_list_count_req) returns (note_list_count_res) {}
+    rpc  NoteListCount(NoteListCountReq) returns (NoteListCountRes) {}
     // 获取笔记数据列
-    rpc  noteData(note_data_req) returns (note_data_res) {}
+    rpc  NoteData(NoteDataReq) returns (NoteDataRes) {}
     // 获取笔记html数据
-    rpc  noteHtml(note_html_req) returns (note_html_res) {}
+    rpc  NoteHtml(NoteHtmlReq) returns (NoteHtmlRes) {}
     // 更新笔记的协作者、标签、颜色
-    rpc  note_cooper(note_cooper_req) returns (note_cooper_res) {}
-    rpc  note_tag(note_tag_req) returns (note_tag_res) {}
-    rpc  note_bgcolor(note_bgcolor_req) returns (note_bgcolor_res) {}
-    rpc  note_tag_add(note_tag_add_req) returns (note_tag_add_res) {}
-    rpc  note_tag_list(note_tag_list_req) returns (note_tag_list_res) {}
+    rpc  NoteCooper(NoteCooperReq) returns (NoteCooperRes) {}
+    rpc  NoteTag(NoteTagReq) returns (NoteTagRes) {}
+    rpc  NoteBgcolor(NoteBgcolorReq) returns (NoteBgcolorRes) {}
+    rpc  NoteTagAdd(NoteTagAddReq) returns (NoteTagAddRes) {}
+    rpc  NoteTagList(NoteTagListReq) returns (NoteTagListRes) {}
 }

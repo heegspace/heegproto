@@ -4,11 +4,11 @@
 package notenode
 
 import (
-	_ "github.com/heegspace/heegproto/common"
+	_ "common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
 	math "math"
-	_ "github.com/heegspace/heegproto/rescode"
+	_ "rescode"
 )
 
 import (
@@ -75,7 +75,7 @@ func NewNotenodeService(name string, c client.Client) NotenodeService {
 }
 
 func (c *notenodeService) UpdateNote(ctx context.Context, in *UpdateNoteReq, opts ...client.CallOption) (*NoteMetaRes, error) {
-	req := c.c.NewRequest(c.name, "NotenodeService.updateNote", in)
+	req := c.c.NewRequest(c.name, "NotenodeService.UpdateNote", in)
 	out := new(NoteMetaRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -85,7 +85,7 @@ func (c *notenodeService) UpdateNote(ctx context.Context, in *UpdateNoteReq, opt
 }
 
 func (c *notenodeService) NoteMetaList(ctx context.Context, in *NoteMetaListReq, opts ...client.CallOption) (*NoteMetaListRes, error) {
-	req := c.c.NewRequest(c.name, "NotenodeService.noteMetaList", in)
+	req := c.c.NewRequest(c.name, "NotenodeService.NoteMetaList", in)
 	out := new(NoteMetaListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -95,7 +95,7 @@ func (c *notenodeService) NoteMetaList(ctx context.Context, in *NoteMetaListReq,
 }
 
 func (c *notenodeService) NoteListCount(ctx context.Context, in *NoteListCountReq, opts ...client.CallOption) (*NoteListCountRes, error) {
-	req := c.c.NewRequest(c.name, "NotenodeService.noteListCount", in)
+	req := c.c.NewRequest(c.name, "NotenodeService.NoteListCount", in)
 	out := new(NoteListCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -105,7 +105,7 @@ func (c *notenodeService) NoteListCount(ctx context.Context, in *NoteListCountRe
 }
 
 func (c *notenodeService) NoteData(ctx context.Context, in *NoteDataReq, opts ...client.CallOption) (*NoteDataRes, error) {
-	req := c.c.NewRequest(c.name, "NotenodeService.noteData", in)
+	req := c.c.NewRequest(c.name, "NotenodeService.NoteData", in)
 	out := new(NoteDataRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -115,7 +115,7 @@ func (c *notenodeService) NoteData(ctx context.Context, in *NoteDataReq, opts ..
 }
 
 func (c *notenodeService) NoteHtml(ctx context.Context, in *NoteHtmlReq, opts ...client.CallOption) (*NoteHtmlRes, error) {
-	req := c.c.NewRequest(c.name, "NotenodeService.noteHtml", in)
+	req := c.c.NewRequest(c.name, "NotenodeService.NoteHtml", in)
 	out := new(NoteHtmlRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -125,7 +125,7 @@ func (c *notenodeService) NoteHtml(ctx context.Context, in *NoteHtmlReq, opts ..
 }
 
 func (c *notenodeService) NoteCooper(ctx context.Context, in *NoteCooperReq, opts ...client.CallOption) (*NoteCooperRes, error) {
-	req := c.c.NewRequest(c.name, "NotenodeService.note_cooper", in)
+	req := c.c.NewRequest(c.name, "NotenodeService.NoteCooper", in)
 	out := new(NoteCooperRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -135,7 +135,7 @@ func (c *notenodeService) NoteCooper(ctx context.Context, in *NoteCooperReq, opt
 }
 
 func (c *notenodeService) NoteTag(ctx context.Context, in *NoteTagReq, opts ...client.CallOption) (*NoteTagRes, error) {
-	req := c.c.NewRequest(c.name, "NotenodeService.note_tag", in)
+	req := c.c.NewRequest(c.name, "NotenodeService.NoteTag", in)
 	out := new(NoteTagRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -145,7 +145,7 @@ func (c *notenodeService) NoteTag(ctx context.Context, in *NoteTagReq, opts ...c
 }
 
 func (c *notenodeService) NoteBgcolor(ctx context.Context, in *NoteBgcolorReq, opts ...client.CallOption) (*NoteBgcolorRes, error) {
-	req := c.c.NewRequest(c.name, "NotenodeService.note_bgcolor", in)
+	req := c.c.NewRequest(c.name, "NotenodeService.NoteBgcolor", in)
 	out := new(NoteBgcolorRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -155,7 +155,7 @@ func (c *notenodeService) NoteBgcolor(ctx context.Context, in *NoteBgcolorReq, o
 }
 
 func (c *notenodeService) NoteTagAdd(ctx context.Context, in *NoteTagAddReq, opts ...client.CallOption) (*NoteTagAddRes, error) {
-	req := c.c.NewRequest(c.name, "NotenodeService.note_tag_add", in)
+	req := c.c.NewRequest(c.name, "NotenodeService.NoteTagAdd", in)
 	out := new(NoteTagAddRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -165,7 +165,7 @@ func (c *notenodeService) NoteTagAdd(ctx context.Context, in *NoteTagAddReq, opt
 }
 
 func (c *notenodeService) NoteTagList(ctx context.Context, in *NoteTagListReq, opts ...client.CallOption) (*NoteTagListRes, error) {
-	req := c.c.NewRequest(c.name, "NotenodeService.note_tag_list", in)
+	req := c.c.NewRequest(c.name, "NotenodeService.NoteTagList", in)
 	out := new(NoteTagListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {

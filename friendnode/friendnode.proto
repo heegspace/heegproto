@@ -3,39 +3,39 @@ package friendnode;
 import "rescode/rescode.proto";
 import "common/common.proto";
 
-message add_friend_req {
-    common.authorize auth = 1;
+message AddFriendReq {
+    common.Authorize auth = 1;
     int64             uid = 2;
     string            phone = 3;
     map<string,string> extra = 4;
 }
 
-message add_friend_res {
-    rescode.code      rescode = 1;
+message AddFriendRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message agree_friend_req {
-    common.authorize   auth = 1;
+message AgreeFriendReq {
+    common.Authorize   auth = 1;
     int64              suid = 2; // 用户id
     int64              uid = 3;
     map<string,string> extra = 4;
 }
 
-message agree_friend_res {
-    rescode.code      rescode = 1;
+message AgreeFriendRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message friend_list_req {
-    common.authorize   auth = 1;
+message FriendListReq {
+    common.Authorize   auth = 1;
     int64              uid = 2;
     map<string,string> extra = 3;
 }
 
-message friend_item {
+message FriendItem {
     int64     uid = 1;
     string    note = 2;
     string    account = 3;
@@ -45,110 +45,110 @@ message friend_item {
     int64     join_at = 7;
 }
 
-message fgroup {
+message Fgroup {
     int64             sort = 1;
     string            name = 2;
-    repeated friend_item lists = 3;
+    repeated FriendItem lists = 3;
 }
 
 message friend {
     int64                   total = 1;
-    repeated fgroup         data = 2;
-    repeated friend_item    invite = 3;
-    repeated friend_item    blacks = 4;
+    repeated Fgroup         data = 2;
+    repeated FriendItem    invite = 3;
+    repeated FriendItem    blacks = 4;
 }
 
-message friend_list_res {
-   rescode.code          rescode = 1;
+message FriendListRes {
+   rescode.Code          rescode = 1;
    string                resmsg = 2;
    friend                friends = 3;
    map<string,string>    extra = 4;
 }
 
-message create_group_req {
-    common.authorize   auth = 1;
+message CreateGroupReq {
+    common.Authorize   auth = 1;
     int64              uid = 2;
     string             name = 3;
     map<string,string> extra = 4;
 }
 
-message create_group_res {
-    rescode.code      rescode = 1;
+message CreateGroupRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message rename_group_req {
-    common.authorize   auth = 1;
+message RenameGroupReq {
+    common.Authorize   auth = 1;
     int64              uid = 2;
     string             old_name = 3;
     string             new_name = 4;
     map<string,string> extra = 5;
 }
 
-message rename_group_res {
-    rescode.code      rescode = 1;
+message RenameGroupRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message add_friend_note_req {
-    common.authorize   auth = 1;
+message AddFriendNoteReq {
+    common.Authorize   auth = 1;
     int64              suid = 2;
     int64              uid = 3;
     string             note = 4;
     map<string,string> extra = 5;
 }
 
-message add_friend_note_res {
-    rescode.code      rescode = 1;
+message AddFriendNoteRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message move_group_req {
-    common.authorize          auth = 1;
+message MoveGroupReq {
+    common.Authorize          auth = 1;
     int64                     suid = 2;
     int64                     uid = 3;
     string                    group = 4;
     map<string,string>        extra = 5;
 }
 
-message move_group_res {
-    rescode.code      rescode = 1;
+message MoveGroupRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message remove_friend_req {
-    common.authorize   auth = 1;
+message RemoveFriendReq {
+    common.Authorize   auth = 1;
     int64              suid = 2;
     int64              uid = 3;
     map<string,string> extra = 4;
 }
 
-message remove_friend_res {
-   rescode.code      rescode = 1;
+message RemoveFriendRes {
+   rescode.Code      rescode = 1;
    string            resmsg = 2;
    map<string,string> extra = 3;
 }
 
-service friendnode_service {
+service FriendnodeService {
 	// --------------- 好友接口 ----------- //
 	// 添加好友
-	rpc  addFriends(add_friend_req)  returns (add_friend_res) {}
+	rpc  AddFriends(AddFriendReq)  returns (AddFriendRes) {}
 	// 同意好友
-	rpc  agreeFriends(agree_friend_req)  returns (agree_friend_res) {}
+	rpc  AgreeFriends(AgreeFriendReq)  returns (AgreeFriendRes) {}
 	//  请求好友列表
-	rpc  friendsList(friend_list_req)  returns (friend_list_res) {}
+	rpc  FriendsList(FriendListReq)  returns (FriendListRes) {}
 	// 添加组
-	rpc  createGroup(create_group_req)  returns (create_group_res) {}
+	rpc  CreateGroup(CreateGroupReq)  returns (CreateGroupRes) {}
 	// 重命名组
-	rpc  renameGroup(rename_group_req)  returns (rename_group_res) {}
+	rpc  RenameGroup(RenameGroupReq)  returns (RenameGroupRes) {}
 	// 添加好友备注
-	rpc  addNoteFriend(add_friend_note_req)  returns (add_friend_note_res) {}  
+	rpc  AddNoteFriend(AddFriendNoteReq)  returns (AddFriendNoteRes) {}  
 	// 移动到新的组
-	rpc  moveToNewGroup(move_group_req)  returns (move_group_res) {}
+	rpc  MoveToNewGroup(MoveGroupReq)  returns (MoveGroupRes) {}
 	// 删除好友
-	rpc  removeFriend(remove_friend_req)  returns (remove_friend_res) {}
+	rpc  RemoveFriend(RemoveFriendReq)  returns (RemoveFriendRes) {}
 }

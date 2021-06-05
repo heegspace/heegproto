@@ -4,11 +4,11 @@
 package sensinode
 
 import (
-	_ "github.com/heegspace/heegproto/common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	math "math"
+	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	math "math"
 )
 
 import (
@@ -69,7 +69,7 @@ func NewSensinodeService(name string, c client.Client) SensinodeService {
 }
 
 func (c *sensinodeService) RefreshModifyReward(ctx context.Context, in *RefreshModifyRewardReq, opts ...client.CallOption) (*RefreshModifyRewardRes, error) {
-	req := c.c.NewRequest(c.name, "SensinodeService.refresh_modify_reward", in)
+	req := c.c.NewRequest(c.name, "SensinodeService.RefreshModifyReward", in)
 	out := new(RefreshModifyRewardRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -79,7 +79,7 @@ func (c *sensinodeService) RefreshModifyReward(ctx context.Context, in *RefreshM
 }
 
 func (c *sensinodeService) RefreshAddReward(ctx context.Context, in *RefreshAddRewardReq, opts ...client.CallOption) (*RefreshAddRewardRes, error) {
-	req := c.c.NewRequest(c.name, "SensinodeService.refresh_add_reward", in)
+	req := c.c.NewRequest(c.name, "SensinodeService.RefreshAddReward", in)
 	out := new(RefreshAddRewardRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -89,7 +89,7 @@ func (c *sensinodeService) RefreshAddReward(ctx context.Context, in *RefreshAddR
 }
 
 func (c *sensinodeService) RefreshUserCoin(ctx context.Context, in *RefreshUserCoinReq, opts ...client.CallOption) (*RefreshUserCoinRes, error) {
-	req := c.c.NewRequest(c.name, "SensinodeService.refresh_user_coin", in)
+	req := c.c.NewRequest(c.name, "SensinodeService.RefreshUserCoin", in)
 	out := new(RefreshUserCoinRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -99,7 +99,7 @@ func (c *sensinodeService) RefreshUserCoin(ctx context.Context, in *RefreshUserC
 }
 
 func (c *sensinodeService) RefreshIdentReward(ctx context.Context, in *RefreshIdentRewardReq, opts ...client.CallOption) (*RefreshIdentRewardRes, error) {
-	req := c.c.NewRequest(c.name, "SensinodeService.refresh_ident_reward", in)
+	req := c.c.NewRequest(c.name, "SensinodeService.RefreshIdentReward", in)
 	out := new(RefreshIdentRewardRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -109,7 +109,7 @@ func (c *sensinodeService) RefreshIdentReward(ctx context.Context, in *RefreshId
 }
 
 func (c *sensinodeService) RefreshUserVip(ctx context.Context, in *RefreshUserVipReq, opts ...client.CallOption) (*RefreshUserVipRes, error) {
-	req := c.c.NewRequest(c.name, "SensinodeService.refresh_user_vip", in)
+	req := c.c.NewRequest(c.name, "SensinodeService.RefreshUserVip", in)
 	out := new(RefreshUserVipRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {

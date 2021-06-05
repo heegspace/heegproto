@@ -96,7 +96,7 @@ message ThumbnailRes {
     map<string,string>  extra = 4;
 }
 
-service cloudnode_service {
+service CloudnodeService {
 	// 获取目录
 	rpc Dir(DirReq) returns (DirRes) {}
 	// 添加目录

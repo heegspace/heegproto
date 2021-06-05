@@ -36,7 +36,7 @@ message CooperRoleRes {
 }
 
 
-service authnode_service {
+service AuthnodeService {
 	// 验证token
 	rpc  VerifyToken(VerifyTokenReq) returns (VerifyTokenRes) {}
 	// 验证是否是管理用户

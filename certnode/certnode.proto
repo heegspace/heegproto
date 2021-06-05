@@ -108,7 +108,7 @@ message CertCacheRes {
     map<string,string>        extra = 3;
 }
 
-service certnode_service {
+service CertnodeService {
 	// 提交实名
 	rpc SubmitCert(SubmitCertReq)  returns (SubmitCertRes) {}
 	// 获取实名信息

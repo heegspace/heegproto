@@ -3,33 +3,33 @@ package limitnode;
 import "rescode/rescode.proto";
 import "common/common.proto";
 
-message modify_timu_limit_req {
-    common.authorize     auth = 1;
+message ModifyTimuLimitReq {
+    common.Authorize     auth = 1;
     int64                  uid = 2;
     map<string,string>   extra = 3;
 }
 
-message modify_timu_limit_res {
-    rescode.code      rescode = 1;
+message ModifyTimuLimitRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message add_timu_limit_req {
-    common.authorize     auth = 1;
+message AddTimuLimitReq {
+    common.Authorize     auth = 1;
     int64                  uid = 2;
     map<string,string>   extra = 3;
 }
 
-message add_timu_limit_res {
-    rescode.code      rescode = 1;
+message AddTimuLimitRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     map<string,string> extra = 3;
 }
 
-service limitnode_service {
+service LimitnodeService {
 	// 检查修改试题是否受限
-	rpc  modify_timu_limit(modify_timu_limit_req) returns (modify_timu_limit_res) {}
+	rpc  ModifyTimuLimit(ModifyTimuLimitReq) returns (ModifyTimuLimitRes) {}
 	// 检查添加试题是否受限
-	rpc  add_timu_limit(add_timu_limit_req) returns (add_timu_limit_res) {}
+	rpc  AddTimuLimit(AddTimuLimitReq) returns (AddTimuLimitRes) {}
 }

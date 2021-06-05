@@ -4,11 +4,11 @@
 package registernode
 
 import (
-	_ "github.com/heegspace/heegproto/common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	math "math"
+	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	math "math"
 )
 
 import (
@@ -63,7 +63,7 @@ func NewRegisternodeService(name string, c client.Client) RegisternodeService {
 }
 
 func (c *registernodeService) NormalUser(ctx context.Context, in *NormalUserReq, opts ...client.CallOption) (*NormalUserRes, error) {
-	req := c.c.NewRequest(c.name, "RegisternodeService.normal_user", in)
+	req := c.c.NewRequest(c.name, "RegisternodeService.NormalUser", in)
 	out := new(NormalUserRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -73,7 +73,7 @@ func (c *registernodeService) NormalUser(ctx context.Context, in *NormalUserReq,
 }
 
 func (c *registernodeService) CooperatorUser(ctx context.Context, in *CooperatorUserReq, opts ...client.CallOption) (*CooperatorUserRes, error) {
-	req := c.c.NewRequest(c.name, "RegisternodeService.cooperator_user", in)
+	req := c.c.NewRequest(c.name, "RegisternodeService.CooperatorUser", in)
 	out := new(CooperatorUserRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {

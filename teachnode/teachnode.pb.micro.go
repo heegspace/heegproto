@@ -4,11 +4,11 @@
 package teachnode
 
 import (
-	_ "github.com/heegspace/heegproto/common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	math "math"
+	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	math "math"
 )
 
 import (
@@ -65,7 +65,7 @@ func NewTeachnodeService(name string, c client.Client) TeachnodeService {
 }
 
 func (c *teachnodeService) UpdateTeacher(ctx context.Context, in *UpdateTeacherReq, opts ...client.CallOption) (*UpdateTeacherRes, error) {
-	req := c.c.NewRequest(c.name, "TeachnodeService.update_teacher", in)
+	req := c.c.NewRequest(c.name, "TeachnodeService.UpdateTeacher", in)
 	out := new(UpdateTeacherRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -75,7 +75,7 @@ func (c *teachnodeService) UpdateTeacher(ctx context.Context, in *UpdateTeacherR
 }
 
 func (c *teachnodeService) GetTeacher(ctx context.Context, in *FindTeacherReq, opts ...client.CallOption) (*FindTeacherRes, error) {
-	req := c.c.NewRequest(c.name, "TeachnodeService.get_teacher", in)
+	req := c.c.NewRequest(c.name, "TeachnodeService.GetTeacher", in)
 	out := new(FindTeacherRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -85,7 +85,7 @@ func (c *teachnodeService) GetTeacher(ctx context.Context, in *FindTeacherReq, o
 }
 
 func (c *teachnodeService) FocusTeacher(ctx context.Context, in *FocusTeacherReq, opts ...client.CallOption) (*FocusTeacherRes, error) {
-	req := c.c.NewRequest(c.name, "TeachnodeService.focus_teacher", in)
+	req := c.c.NewRequest(c.name, "TeachnodeService.FocusTeacher", in)
 	out := new(FocusTeacherRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {

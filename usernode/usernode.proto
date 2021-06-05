@@ -3,13 +3,13 @@ package usernode;
 import "rescode/rescode.proto";
 import "common/common.proto";
 
-enum attention_op_type {
+enum AttentionOpType {
     NONE_ATTENTION = 0;
     ADD_ATTENTION = 1;
     DEL_ATTENTION = 2;
 }
 
-message user_obj {
+message UserObj {
     string    phone = 1;
     string    email = 2;
     string    account = 3;
@@ -28,82 +28,82 @@ message user_obj {
 }
 
 
-message update_cardid_req {
-    common.authorize auth =1;
+message UpdateCardidReq {
+    common.Authorize auth =1;
     int64 uid = 2;
     string card_id = 3;
     map<string,string> extra = 4;
 }
 
 
-message update_attention_req {
-    common.authorize auth = 1;
+message UpdateAttentionReq {
+    common.Authorize auth = 1;
     int64               uid = 2;
-    attention_op_type op = 3; // 0:添加;1:删除
+    AttentionOpType op = 3; // 0:添加;1:删除
     repeated int64         aid = 4;
     map<string,string> extra = 5;
 }
 
-message update_user_res {
-    rescode.code      rescode = 1;
+message UpdateUserRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message user_info_req {
-    common.authorize      auth = 1;
+message UserInfoReq {
+    common.Authorize      auth = 1;
     int64                   uid = 2;
-    common.from_platom    platom = 3; // 帐号来源平台
+    common.FromPlatom    platom = 3; // 帐号来源平台
     map<string,string>    extra = 4;
 }
 
-message user_info_res {
-    rescode.code      rescode = 1;
+message UserInfoRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
-    user_obj          user = 3;
+    UserObj          user = 3;
     map<string,string> extra = 4;
 }
 
-message update_userinfo_req {
-    common.authorize                  auth = 1;
-    common.update_userinfo_item       info = 2;
+message UpdateUserinfoReq {
+    common.Authorize                  auth = 1;
+    common.UpdateUserinfoItem       info = 2;
     map<string,string>                extra = 3;
 }
 
-message update_userinfo_res {
-    rescode.code              rescode = 1;
+message UpdateUserinfoRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
     string                    value = 3;
     map<string,string>        extra = 4;
 }
 
-message user_cache_req {
-    common.authorize      auth = 1;
+message UserCacheReq {
+    common.Authorize      auth = 1;
     string                key = 2;
     string                value = 3;
     int64                  expire = 4;
     map<string,string>    extra = 5;
 }
 
-message user_cache_res {
-    rescode.code              rescode = 1;
+message UserCacheRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
     map<string,string>        extra = 3;
 }
 
-service usernode_service {
+service UsernodeService {
     // 更新用户信息
-    rpc  updateUserInfo(update_userinfo_req) returns(update_userinfo_res) {}
+    rpc  UpdateUserInfo(UpdateUserinfoReq) returns(UpdateUserinfoRes) {}
 
     // 更新身份证号
-    rpc  update_cardid(update_cardid_req) returns(update_user_res) {}
+    rpc  UpdateCardid(UpdateCardidReq) returns(UpdateUserRes) {}
 
     // 更新关注对象
-    rpc  update_attention(update_attention_req) returns(update_user_res){}
+    rpc  UpdateAttention(UpdateAttentionReq) returns(UpdateUserRes){}
 
     // 获取用户信息
-    rpc  user_info(user_info_req) returns(user_info_res) {}
+    rpc  UserInfo(UserInfoReq) returns(UserInfoRes) {}
 
     // 用户缓存
-    rpc  user_cache(user_cache_req) returns(user_cache_res){}
+    rpc  UserCache(UserCacheReq) returns(UserCacheRes){}
 }

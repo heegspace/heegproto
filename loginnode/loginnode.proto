@@ -83,7 +83,7 @@ message LoginAlipayRes {
     map<string,string>    extra = 4;
 }
 
-service loginnode_service {
+service LoginnodeService {
 	// 登录
 	rpc  Login(LoginReq) returns (LoginRes) {}
 	rpc  LoginByCode(LoginByCodeReq) returns (LoginByCodeRes) {}

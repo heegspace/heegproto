@@ -4,11 +4,11 @@
 package cronnode
 
 import (
-	_ "github.com/heegspace/heegproto/common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	math "math"
+	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	math "math"
 )
 
 import (
@@ -45,7 +45,7 @@ func NewCronnodeServiceEndpoints() []*api.Endpoint {
 
 type CronnodeService interface {
 	// 提交实名
-	CronCall(ctx context.Context, in *CronCallReq, opts ...client.CallOption) (*CronCallRes, error)
+	Cronall(ctx context.Context, in *CronCallReq, opts ...client.CallOption) (*CronCallRes, error)
 	// 添加任务
 	AddTask(ctx context.Context, in *AddTaskReq, opts ...client.CallOption) (*AddTaskRes, error)
 	// 获取任务
@@ -66,8 +66,8 @@ func NewCronnodeService(name string, c client.Client) CronnodeService {
 	}
 }
 
-func (c *cronnodeService) CronCall(ctx context.Context, in *CronCallReq, opts ...client.CallOption) (*CronCallRes, error) {
-	req := c.c.NewRequest(c.name, "CronnodeService.cron_call", in)
+func (c *cronnodeService) Cronall(ctx context.Context, in *CronCallReq, opts ...client.CallOption) (*CronCallRes, error) {
+	req := c.c.NewRequest(c.name, "CronnodeService.Cronall", in)
 	out := new(CronCallRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -77,7 +77,7 @@ func (c *cronnodeService) CronCall(ctx context.Context, in *CronCallReq, opts ..
 }
 
 func (c *cronnodeService) AddTask(ctx context.Context, in *AddTaskReq, opts ...client.CallOption) (*AddTaskRes, error) {
-	req := c.c.NewRequest(c.name, "CronnodeService.add_task", in)
+	req := c.c.NewRequest(c.name, "CronnodeService.AddTask", in)
 	out := new(AddTaskRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -87,7 +87,7 @@ func (c *cronnodeService) AddTask(ctx context.Context, in *AddTaskReq, opts ...c
 }
 
 func (c *cronnodeService) GetTask(ctx context.Context, in *GetTaskReq, opts ...client.CallOption) (*GetTaskRes, error) {
-	req := c.c.NewRequest(c.name, "CronnodeService.get_task", in)
+	req := c.c.NewRequest(c.name, "CronnodeService.GetTask", in)
 	out := new(GetTaskRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -97,7 +97,7 @@ func (c *cronnodeService) GetTask(ctx context.Context, in *GetTaskReq, opts ...c
 }
 
 func (c *cronnodeService) GetTaskCount(ctx context.Context, in *GetTaskCountReq, opts ...client.CallOption) (*GetTaskCountRes, error) {
-	req := c.c.NewRequest(c.name, "CronnodeService.get_task_count", in)
+	req := c.c.NewRequest(c.name, "CronnodeService.GetTaskCount", in)
 	out := new(GetTaskCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -110,7 +110,7 @@ func (c *cronnodeService) GetTaskCount(ctx context.Context, in *GetTaskCountReq,
 
 type CronnodeServiceHandler interface {
 	// 提交实名
-	CronCall(context.Context, *CronCallReq, *CronCallRes) error
+	Cronall(context.Context, *CronCallReq, *CronCallRes) error
 	// 添加任务
 	AddTask(context.Context, *AddTaskReq, *AddTaskRes) error
 	// 获取任务
@@ -121,7 +121,7 @@ type CronnodeServiceHandler interface {
 
 func RegisterCronnodeServiceHandler(s server.Server, hdlr CronnodeServiceHandler, opts ...server.HandlerOption) error {
 	type cronnodeService interface {
-		CronCall(ctx context.Context, in *CronCallReq, out *CronCallRes) error
+		Cronall(ctx context.Context, in *CronCallReq, out *CronCallRes) error
 		AddTask(ctx context.Context, in *AddTaskReq, out *AddTaskRes) error
 		GetTask(ctx context.Context, in *GetTaskReq, out *GetTaskRes) error
 		GetTaskCount(ctx context.Context, in *GetTaskCountReq, out *GetTaskCountRes) error
@@ -137,8 +137,8 @@ type cronnodeServiceHandler struct {
 	CronnodeServiceHandler
 }
 
-func (h *cronnodeServiceHandler) CronCall(ctx context.Context, in *CronCallReq, out *CronCallRes) error {
-	return h.CronnodeServiceHandler.CronCall(ctx, in, out)
+func (h *cronnodeServiceHandler) Cronall(ctx context.Context, in *CronCallReq, out *CronCallRes) error {
+	return h.CronnodeServiceHandler.Cronall(ctx, in, out)
 }
 
 func (h *cronnodeServiceHandler) AddTask(ctx context.Context, in *AddTaskReq, out *AddTaskRes) error {

@@ -4,11 +4,11 @@
 package likenode
 
 import (
-	_ "github.com/heegspace/heegproto/common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	math "math"
+	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	math "math"
 )
 
 import (
@@ -65,7 +65,7 @@ func NewLikenodeService(name string, c client.Client) LikenodeService {
 }
 
 func (c *likenodeService) LikesCount(ctx context.Context, in *LikesCountReq, opts ...client.CallOption) (*LikesCountRes, error) {
-	req := c.c.NewRequest(c.name, "LikenodeService.likesCount", in)
+	req := c.c.NewRequest(c.name, "LikenodeService.LikesCount", in)
 	out := new(LikesCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -75,7 +75,7 @@ func (c *likenodeService) LikesCount(ctx context.Context, in *LikesCountReq, opt
 }
 
 func (c *likenodeService) LikesAdd(ctx context.Context, in *LikesAddReq, opts ...client.CallOption) (*LikesAddRes, error) {
-	req := c.c.NewRequest(c.name, "LikenodeService.likesAdd", in)
+	req := c.c.NewRequest(c.name, "LikenodeService.LikesAdd", in)
 	out := new(LikesAddRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -85,7 +85,7 @@ func (c *likenodeService) LikesAdd(ctx context.Context, in *LikesAddReq, opts ..
 }
 
 func (c *likenodeService) LikesList(ctx context.Context, in *LikesListReq, opts ...client.CallOption) (*LikesListRes, error) {
-	req := c.c.NewRequest(c.name, "LikenodeService.likesList", in)
+	req := c.c.NewRequest(c.name, "LikenodeService.LikesList", in)
 	out := new(LikesListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {

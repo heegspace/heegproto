@@ -4,11 +4,11 @@
 package macipnode
 
 import (
-	_ "github.com/heegspace/heegproto/common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	math "math"
+	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	math "math"
 )
 
 import (
@@ -61,7 +61,7 @@ func NewMacipnodeService(name string, c client.Client) MacipnodeService {
 }
 
 func (c *macipnodeService) IpToAddress(ctx context.Context, in *IpToAddressReq, opts ...client.CallOption) (*IpToAddressRes, error) {
-	req := c.c.NewRequest(c.name, "MacipnodeService.ip_to_address", in)
+	req := c.c.NewRequest(c.name, "MacipnodeService.IpToAddress", in)
 	out := new(IpToAddressRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {

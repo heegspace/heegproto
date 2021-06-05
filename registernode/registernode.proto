@@ -4,8 +4,8 @@ import "rescode/rescode.proto";
 import "common/common.proto";
 
 
-message normal_user_req {
-    common.authorize auth = 1;
+message NormalUserReq {
+    common.Authorize auth = 1;
     string    account = 2;
     string    passwd = 3;
     string    code = 4;
@@ -15,14 +15,14 @@ message normal_user_req {
     map<string,string> extra = 8;
 }
 
-message normal_user_res {
-    rescode.code          rescode = 1;
+message NormalUserRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     map<string,string>    extra = 3;
 }
 
-message cooperator_user_req {
-    common.authorize auth = 1;
+message CooperatorUserReq {
+    common.Authorize auth = 1;
     string    account = 2;
     string    passwd = 3;
     string    code = 4;
@@ -34,16 +34,16 @@ message cooperator_user_req {
     map<string,string> extra = 10;
 }
 
-message cooperator_user_res {
-    rescode.code          rescode = 1;
+message CooperatorUserRes {
+    rescode.Code          rescode = 1;
     string                resmsg =  2;
     map<string,string>    extra = 3;
 }
 
-service registernode_service {
+service RegisternodeService {
     // 创建普通用户
-    rpc normal_user(normal_user_req) returns(normal_user_res) {}
+    rpc NormalUser(NormalUserReq) returns(NormalUserRes) {}
 
     // 创建合作用户
-    rpc cooperator_user(cooperator_user_req) returns(cooperator_user_res) {}
+    rpc CooperatorUser(CooperatorUserReq) returns(CooperatorUserRes) {}
 }

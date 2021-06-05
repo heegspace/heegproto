@@ -3,68 +3,68 @@ package cronnode;
 import "rescode/rescode.proto";
 import "common/common.proto";
 
-message cron_call_req {
+message CronCallReq {
     string                  func =  1;
     int64                   call_time =  2;
     map<string,string>      extra =  3;
 }
 
-message cron_call_res {
-    rescode.code          rescode =  1;
+message CronCallRes {
+    rescode.Code          rescode =  1;
     string                resmsg =  2;
     map<string,string>    extra =  3;
 }
 
-message add_task_req {
-    common.authorize      auth =  1;
-    common.cron_item      cron =  2;
+message AddTaskReq {
+    common.Authorize      auth =  1;
+    common.CronItem      cron =  2;
     string                admin =  3;
     map<string,string>    extra =  4;
 }
 
-message add_task_res {
-    rescode.code          rescode =  1;
+message AddTaskRes {
+    rescode.Code          rescode =  1;
     string                resmsg =  2;
     map<string,string>    extra =  3;
 }
 
-message get_task_req {
-    common.authorize      auth =  1;
+message GetTaskReq {
+    common.Authorize      auth =  1;
     bool                  repeated =  2;
     bool                  mutitask =  3;
     string                start_at =  4;
     map<string,string>    extra =  5;
 }
 
-message get_task_res {
-    rescode.code                rescode =  1;
+message GetTaskRes {
+    rescode.Code                rescode =  1;
     string                      resmsg =  2;
-    repeated common.cron_item   crons =  3;
+    repeated common.CronItem   crons =  3;
     map<string,string>          extra =  4;
 }
 
-message get_task_count_req {
-    common.authorize      auth =  1;
+message GetTaskCountReq {
+    common.Authorize      auth =  1;
     bool                  repeated =  2;
     bool                  mutitask =  3;
     string                start_at =  4;
     map<string,string>    extra =  5;
 }
 
-message get_task_count_res {
-    rescode.code                rescode =  1;
+message GetTaskCountRes {
+    rescode.Code                rescode =  1;
     string                      resmsg =  2;
     int64                       count =  3;
     map<string,string>          extra =  4;
 }
 
-service cronnode_service {
+service CronnodeService {
 	// 提交实名
-	rpc cron_call(cron_call_req) returns (cron_call_res) {}
+	rpc Cronall(CronCallReq) returns (CronCallRes) {}
 	// 添加任务
-	rpc add_task(add_task_req) returns (add_task_res) {}
+	rpc AddTask(AddTaskReq) returns (AddTaskRes) {}
 	// 获取任务
-	rpc get_task(get_task_req) returns (get_task_res) {}
+	rpc GetTask(GetTaskReq) returns (GetTaskRes) {}
 	// 获取任务数量
-	rpc get_task_count(get_task_count_req) returns (get_task_count_res) {}
+	rpc GetTaskCount(GetTaskCountReq) returns (GetTaskCountRes) {}
 }

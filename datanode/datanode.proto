@@ -4,13 +4,13 @@ import "rescode/rescode.proto";
 import "common/common.proto";
 
 
-message user{
+message User{
     int64    uid = 1;
     string   phone = 2;
     string   email = 3;
     string   account = 4;
     string   pass_wd = 5;
-    int32      status = 6;
+    int32    status = 6;
     int64    role = 7;
     int64    vip = 8;
     double   coin = 9;
@@ -18,12 +18,12 @@ message user{
     string  reg_at = 11;
 }
 
-message user_info_req {
+message UserInfoReq {
     int64    uid = 1;
     map<string,string> extra = 2;
 }
 
-message new_user_req {
+message NewUserReq {
     string    account = 1;
     string    pass_wd = 2;
     int32     role = 3;     
@@ -36,7 +36,7 @@ message new_user_req {
     map<string,string> extra = 10;
 }
 
-message search_user_req {
+message SearchUserReq {
     repeated int64    uids = 1;
     string            account = 2;
     string            phone = 3;
@@ -44,49 +44,49 @@ message search_user_req {
     map<string,string> extra = 5;
 }
 
-message search_user_res {
-    repeated    user    users  =  1;
+message SearchUserRes {
+    repeated    User    users  =  1;
     map<string,string>  extra  =  2;
 }
 
-message user_res {
-    rescode.code      rescode = 1;
+message UserRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
-    user              user = 3;
+    User              user = 3;
     map<string,string> extra = 4;
 }
 
-message add_friend_req {
-    int64   uid  =  1;
-    string   phone = 2;
-    map<string,string> extra = 3;
+message AddFriendReq {
+    int64                   uid  =  1;
+    string                  phone = 2;
+    map<string,string>      extra = 3;
 }
 
-message add_friend_res {
-    rescode.code    rescode = 1;
+message AddFriendRes {
+    rescode.Code    rescode = 1;
     string          resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message agree_friend_req {
+message AgreeFriendReq {
     int64               uid1  =  1;
     int64               uid2  =  2;
     map<string,string> extra  =  3;
 }
 
-message friends_list_req {
+message FriendsListReq {
     int64               uid1  =  1;
     int64               uid2  =  2;
     map<string,string> extra  =  3;
 }
 
-message agree_friend_res {
-    rescode.code      rescode = 1;
+message AgreeFriendRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message friend_item {
+message FriendItem {
     int64      uid = 1;
     string    note = 2;
     string    account = 3;
@@ -96,133 +96,133 @@ message friend_item {
     int64     join_at = 7;
 }
 
-message fgroup {
+message Fgroup {
     int64             sort = 1;
     string            name = 2;
-    repeated friend_item lists = 3;
+    repeated FriendItem lists = 3;
 }
 
 message friend {
     int64                   total = 1;
-    repeated fgroup          data = 2;
-    repeated friend_item    invite = 3;
-    repeated friend_item    blacks = 4;
+    repeated Fgroup          data = 2;
+    repeated FriendItem    invite = 3;
+    repeated FriendItem    blacks = 4;
 }
 
-message friend_res {
-    rescode.code          rescode = 1;
+message FriendRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     friend                friends = 3;
     map<string,string>    extra = 4;
 }
 
-message create_group_req {
+message CreateGroupReq {
     int64       uid  =  1;
     string    name = 2;
     map<string,string> extra = 3;
 }
 
-message create_group_res {
-    rescode.code      rescode = 1;
+message CreateGroupRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message rename_group_req {
+message RenameGroupReq {
     int64       uid  =  1;
     string    old_name = 2;
     string    new_name = 3;
     map<string,string> extra = 4;
 }
 
-message rename_group_res {
-    rescode.code      rescode = 1;
+message RenameGroupRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message add_friend_note_req {
+message AddFriendNoteReq {
     int64               uid1  =  1;
     int64             uid2  =  2;
     string            note = 3;
     map<string,string> extra = 4;
 }
 
-message add_friend_note_res {
-    rescode.code      rescode = 1;
+message AddFriendNoteRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message move_group_req {
+message MoveGroupReq {
     int64            uid1  =  1;
     int64             uid2 = 2;
     string            group = 3;
     map<string,string> extra = 4;
 }
 
-message move_group_res {
-    rescode.code      rescode = 1;
+message MoveGroupRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message remove_friend_req {
+message RemoveFriendReq {
     int64               uid1  =  1;
     int64              uid = 2;
     map<string,string> extra = 3;
 }
 
-message likes_count_req {
+message LikesCountReq {
     string          mid  =  1;
     map<string,string>  extra  =  2;
 }
 
-message likes_add_req {
+message LikesAddReq {
     string          mid  =  1;
     int64           uid  =  2;
     map<string,string> extra  =  3;
 }
 
-message likes_list_req {
+message LikesListReq {
     string          mid  =  1;
     int32           page  =  2;
     int32           size  =  3;
     map<string,string> extra  =  4;
 }
 
-message remove_friend_res {
-    rescode.code      rescode = 1;
+message RemoveFriendRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message likes_count_res {
-    rescode.code      rescode = 1;
+message LikesCountRes {
+    rescode.Code      rescode = 1;
     int32             count = 2;
     string            resmsg = 3;
     map<string,string> extra = 4;
 }
 
-message likes_add_res {
-    rescode.code      rescode = 1;
+message LikesAddRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message likes {
+message Likes {
     int64               uid = 1;
     int64               create_at = 2;
 }
 
-message likes_list_res {
-    rescode.code      rescode = 1;
+message LikesListRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
-    repeated likes    data = 3;
+    repeated Likes    data = 3;
     map<string,string> extra = 4;
 }
 
-message update_note_req {
+message UpdateNoteReq {
     int64             userid  =  1;
     int64             uid = 2;
     string            data = 3;
@@ -233,14 +233,14 @@ message update_note_req {
     map<string,string> extra = 8;
 }
 
-message note_meta_res {
-    rescode.code      rescode = 1;
+message NoteMetaRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
-    common.note_meta  meta = 3;
+    common.NoteMeta  meta = 3;
     map<string,string> extra = 4;
 }
 
-message note_meta_list_req {
+message NoteMetaListReq {
     int64                 uid = 1;
     int64                 userid = 2;
     string                tag = 3;
@@ -251,88 +251,88 @@ message note_meta_list_req {
     map<string,string>    extra = 8;
 }
 
-message note_meta_list_res {
-    rescode.code      rescode = 1;
+message NoteMetaListRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
-    repeated common.note_meta      meta = 3;
+    repeated common.NoteMeta      meta = 3;
     map<string,string> extra = 4;
 }
 
-message note_data_req {
+message NoteDataReq {
     int64           uid  =  1;
     int64           nid  =  2;
     map<string,string> extra  =  3;
 }
 
-message note_html_req {
+message NoteHtmlReq {
     int64           uid  =  1;
     int64           nid  =  2;
     map<string,string> extra  =  3;
 }
 
-message note_list_count_res {
-    rescode.code      rescode = 1;
+message NoteListCountRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     int32             count = 3;
     map<string,string> extra = 4;
 }
 
-message note_data_res {
-    rescode.code      rescode = 1;
+message NoteDataRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     string            data = 3;
     map<string,string> extra = 4;
 }
 
-message note_html_res {
-    rescode.code      rescode = 1;
+message NoteHtmlRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     string            data = 3;
     map<string,string> extra = 4;
 }
 
-message moments_count_req {
+message MomentsCountReq {
     int64           uid  =  1;
     map<string,string> extra  =  2;
 }
 
-message moments_count_res {
-    rescode.code      rescode = 1;
+message MomentsCountRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     int32             count = 3;
     map<string,string> extra = 4;
 }
 
-message extra {
+message Extra {
     string path = 1;
     int32 type = 2;
 }
 
-message moments {
+message Moments {
     int64   uid  =  1;
     int64     id = 2;
     string    mid = 3;
     string    text = 4;
-    repeated extra extra = 5;
+    repeated Extra extra = 5;
     int32 create_at = 6;
 }
 
-message add_moments_res {
-    rescode.code      rescode = 1;
+message AddMomentsRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
 }
 
-message moments_list_req {
+message MomentsListReq {
     int64          uid  =  1;
     int32           page  =  2;
     int32           size  =  3;
     map<string,string> extra  =  4;
 }
 
-message moments_list_res {
-    rescode.code      rescode = 1;
+message MomentsListRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
-    repeated moments  data = 3;
+    repeated Moments  data = 3;
 }
 
 message FileItem {
@@ -346,30 +346,30 @@ message FileItem {
     string    extra = 8;
 }
 
-message file_dir_req {
+message FileDirReq {
     int64       uid  =  1;
     string      path  =  2;
     map<string,string>  extra  =  3;
 }
 
-message file_dir_res {
-    rescode.code      rescode = 1;
+message FileDirRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     repeated FileItem dirs = 3;
 }
 
-message add_dir_req {
+message AddDirReq {
     int64       uid  =  1;
     string    parent = 2;
     string    name = 3;
 }
 
-message add_dir_res {
-    rescode.code  rescode = 1;
+message AddDirRes {
+    rescode.Code  rescode = 1;
     string        resmsg = 2;
 }
 
-message add_file_req {
+message AddFileReq {
     int64   uid  =  1;
     int64  size = 2;
     string path = 3;
@@ -379,190 +379,190 @@ message add_file_req {
     string content_type = 7;
 }
 
-message add_file_res {
-    rescode.code  rescode = 1;
+message AddFileRes {
+    rescode.Code  rescode = 1;
     string        resmsg = 2;
 }
 
-message file_attr_req {
+message FileAttrReq {
     int64       uid  =  1;
     map<string,string> extra  =  2;
 }
 
 
-message file_attr_res {
-    rescode.code  rescode = 1;
+message FileAttrRes {
+    rescode.Code  rescode = 1;
     string        resmsg = 2;
     int64         capacity = 3;
     int32         number = 4;
 }
 
-message thumbnail_req {
+message ThumbnailReq {
     int64       uid  =  1;
     string      path  =  2;
     map<string,string> extra  =  3;
 }
 
-message thumbnail_res {
-    rescode.code  rescode = 1;
+message ThumbnailRes {
+    rescode.Code  rescode = 1;
     string        resmsg = 2;
     string        thumb = 3;
 }
 
-message set_keyvalue_req {
+message SetKeyvalueReq {
     string        key = 1;
     string        value = 4;
     int64         expire = 3;
 }
 
-message set_keyvalue_res {
-    rescode.code  rescode = 1;
+message SetKeyvalueRes {
+    rescode.Code  rescode = 1;
     string        resmsg = 2;
 }
 
-message get_keyvalue_req {
+message GetKeyvalueReq {
     string        key = 1;
 }
 
-message get_keyvalue_res {
-    rescode.code  rescode = 1;
+message GetKeyvalueRes {
+    rescode.Code  rescode = 1;
     string        resmsg = 2;
     string        value = 3;
 }
 
-message del_keyvalue_req {
+message DelKeyvalueReq {
     string        key = 1;
 }
 
-message del_keyvalue_res {
-    rescode.code  rescode = 1;
+message DelKeyvalueRes {
+    rescode.Code  rescode = 1;
     string        resmsg = 2;
 }
 
-message version_res {
-    rescode.code       rescode = 1;
+message VersionRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
-    repeated common.version_item versions = 3;
+    repeated common.VersionItem versions = 3;
     map<string,string> extra = 4;
 }
 
-message subject_name_req {
+message SubjectNameReq {
     string      req  =  1;
     map<string,string>  extra  =  2;
 }
 
-message subject_name_res {
-    rescode.code       rescode = 1;
+message SubjectNameRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
     string             name = 3;
     map<string,string> extra = 4;
 }
 
-message chapter_res_item {
+message ChapterResItem {
     string                    uid = 1;
     string                    title = 2;
-    repeated common.chapter_item childs = 3;
+    repeated common.ChapterItem childs = 3;
 }
 
-message chapter_res {
-    rescode.code          rescode = 1;
+message ChapterRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
-    repeated chapter_res_item chapters = 3;
+    repeated ChapterResItem chapters = 3;
     map<string,string> extra = 4;
 }
 
-message source_res {
-    rescode.code       rescode = 1;
+message SourceRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
-    repeated common.source_item  sources = 4;
+    repeated common.SourceItem  sources = 4;
     map<string,string> extra = 5;
 }
 
-message tixing_res {
-    rescode.code       rescode = 1;
+message TixingRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
-    repeated common.tixing_item  tixings = 3;
+    repeated common.TixingItem  tixings = 3;
     map<string,string> extra = 4;
 }
 
-message timu_count_res {
-    rescode.code       rescode = 1;
+message TimuCountRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
     int32                count = 3;
     map<string,string> extra = 4;
 }
 
-message timu_add_req {
+message TimuAddReq {
     int64                     uid = 1;
-    common.add_timu_item      timus = 2;
+    common.AddTimuItem      timus = 2;
     map<string,string>        extra = 3;
 }
 
-message timu_add_res {
-    rescode.code       rescode = 1;
+message TimuAddRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message timu_res {
-    rescode.code       rescode = 1;
+message TimuRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
-    repeated common.timu_item    timus = 3;
+    repeated common.TimuItem    timus = 3;
     map<string,string> extra = 4;
 }
 
-message timu_by_id_req {
+message TimuByIdReq {
     int64                 uid = 1;    // 用户id
     string                tid = 2;    // 题目id
     map<string,string>    extra = 3;
 }
 
-message timu_by_id_res {
-    rescode.code       rescode = 1;
+message TimuByIdRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
-    common.timu_item   timus = 3;
+    common.TimuItem   timus = 3;
     map<string,string> extra = 4;
 }
 
-message collect_req {
+message CollectReq {
     int64               uid  =  1;
     string              cid = 2;
     int64               op = 3;
     map<string,string> extra = 4;
 }
 
-message collect_res {
-    rescode.code       rescode = 1;
+message CollectRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message collect_list_req {
+message CollectListReq {
     int64       uid = 1;
     int32       page = 2;
     int32       size = 3;
 }
 
-message collect_list_res {
-    rescode.code       rescode = 1;
+message CollectListRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
-    repeated common.timu_item    timus = 3;
+    repeated common.TimuItem    timus = 3;
     map<string,string> extra = 4;
 }
 
-message modify_req {
+message ModifyReq {
     int64             uid = 1;
     string            tid = 2;
-    common.question   timu = 3;
+    common.Question   timu = 3;
 }
 
-message modify_res {
-    rescode.code       rescode = 1;
+message ModifyRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message modify_list_req {
+message ModifyListReq {
     int64       uid = 1;
     int32       page = 2;
     int32       size = 3;
@@ -570,398 +570,398 @@ message modify_list_req {
     string    status = 5;
 }
 
-message modify_list_res {
-    rescode.code       rescode = 1;
+message ModifyListRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
-    repeated common.modify_item    timus = 3;
+    repeated common.ModifyItem    timus = 3;
     map<string,string> extra = 4;
 }
 
-message modify_count_req {
+message ModifyCountReq {
     int64     uid = 1;
     string    status = 2;
     map<string,string> extra = 3; 
 }
 
-message modify_count_res {
-    rescode.code       rescode = 1;
+message ModifyCountRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
     int32              count = 3;
     map<string,string> extra = 4; 
 }
 
-message approve_req {
+message ApproveReq {
     int64                 id = 1;
     int64                 uid = 2;
     string                status = 3;
     string                info = 4;
-    common.approve_dest   dest = 5;
+    common.ApproveDest   dest = 5;
     map<string,string>    extra = 6; 
 }
 
-message approve_res {
-    rescode.code       rescode = 1;
+message ApproveRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
     map<string,string> extra = 3; 
 }
 
-message search_req {
+message SearchReq {
     string        keyword = 1;
     int64         uid = 2;
-    common.search_tyle   style = 3;
+    common.SearchTyle   style = 3;
     int32           page = 4;
     int32           size = 5;
 }
 
-message search_res {
-    rescode.code                  rescode = 1;
+message SearchRes {
+    rescode.Code                  rescode = 1;
     string                        resmsg = 2;
     double                        timestamp = 3;
-    common.search_hits_total      total = 4;
-    repeated common.search_hits_item    hits = 5;
+    common.SearchHitsTotal      total = 4;
+    repeated common.SearchHitsItem    hits = 5;
     map<string,string> extra = 6;
 }
 
-message add_grade_cate_res {
-    rescode.code      rescode = 1;
+message AddGradeCateRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
 }
 
-message grade_cate_count_res {
-    rescode.code      rescode = 1;
+message GradeCateCountRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     int64               count = 3;
     map<string,string> extra = 4;
 }
 
-message grade_cate_list_req {
+message GradeCateListReq {
     int32       page = 1;
     int32       size = 2;
     map<string,string> extra = 3;
 }
 
-message grade_cate_list_res {
-    rescode.code              rescode = 1;
+message GradeCateListRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
-    repeated common.grade_cate lists = 3;
+    repeated common.GradeCate lists = 3;
     map<string,string>        extra = 4;
 }
 
-message home_black_data_res {
-    rescode.code              rescode = 1;
+message HomeBlackDataRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
-    repeated common.school_static lists = 3;
+    repeated common.SchoolStatic lists = 3;
     map<string,string>        extra = 4;
 }
 
-message grade_subject_req {
+message GradeSubjectReq {
     int32              index = 1;
     map<string,string> extra = 2;
 }
 
-message grade_subject_res {
-    rescode.code              rescode = 1;
+message GradeSubjectRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
-    repeated common.grade_subject lists = 3;
+    repeated common.GradeSubject lists = 3;
     map<string,string>        extra = 4;
 }
 
-message school_roll_add_res {
-    rescode.code      rescode = 1;
+message SchoolRollAddRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
 }
 
-message school_roll_count_res {
-    rescode.code      rescode = 1;
+message SchoolRollCountRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     int64             count = 3;
 }
 
-message school_roll_list_req {
+message SchoolRollListReq {
     int32   page = 1;
     int32   size = 2;
     map<string,string> extra = 3;
 }
 
-message school_roll_list_res {
-    rescode.code              rescode = 1;
+message SchoolRollListRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
-    repeated common.school_roll  lists = 3;
+    repeated common.SchoolRoll  lists = 3;
     map<string,string>        extra = 4;
 }
 
-message subject_cate_add_res {
-    rescode.code      rescode = 1;
+message SubjectCateAddRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
 }
 
-message subject_cate_count_res {
-    rescode.code      rescode = 1;
+message SubjectCateCountRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     int64               count = 3;
 }
 
-message subject_cate_list_req {
+message SubjectCateListReq {
     int32   page = 1;
     int32   size = 2;
     map<string,string> extra = 3;
 }
 
-message subject_cate_list_res {
-    rescode.code              rescode = 1;
+message SubjectCateListRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
-    repeated common.subject_cate  lists = 3;
+    repeated common.SubjectCate  lists = 3;
     map<string,string>        extra = 4;
 }
 
-message attention_item {
+message AttentionItem {
     int64     id = 1;
     string    name = 2;
     string    desc = 3;
     int64     create_at = 4;
 }
 
-message add_attention_req {
-    attention_item        item = 1;
+message AddAttentionReq {
+    AttentionItem        item = 1;
     map<string,string>    extra = 2;
 }
 
-message add_attention_res {
-    rescode.code              rescode = 1;
+message AddAttentionRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
     map<string,string>        extra = 3;
 }
 
-message del_attention_req {
+message DelAttentionReq {
     int64                 aid = 1;
     map<string,string>    extra = 2;
 }
 
-message del_attention_res {
-    rescode.code              rescode = 1;
+message DelAttentionRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
     map<string,string>        extra = 3;
 }
 
-message get_attention_req {
+message GetAttentionReq {
     int64           aid = 1;
     int32           page = 2;
     int32           size = 3;
     map<string,string> extra = 4;
 }
 
-message get_attention_res {
-    rescode.code              rescode = 1;
+message GetAttentionRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
-    repeated attention_item   lists = 3;
+    repeated AttentionItem   lists = 3;
     map<string,string>        extra = 4;
 }
 
-message add_user_attention_req {
+message AddUserAttentionReq {
     int64           aid = 1;
     int64           uid = 2;
     map<string,string> extra = 3;
 }
 
-message add_user_attention_res {
-    rescode.code              rescode = 1;
+message AddUserAttentionRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
     map<string,string>        extra = 3;
 }
 
-message get_user_attention_req {
+message GetUserAttentionReq {
     int64                 uid = 1;
     map<string,string>    extra = 2;
 }
 
-message get_user_attention_res {
-    rescode.code              rescode = 1;
+message GetUserAttentionRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
-    repeated attention_item   lists = 3;
+    repeated AttentionItem   lists = 3;
     map<string,string>        extra = 4;
 }
 
-message del_user_attention_req {
+message DelUserAttentionReq {
     int64           aid = 1;
     int64           uid = 2;
     map<string,string> extra = 3;
 }
 
-message del_user_attention_res {
-    rescode.code              rescode = 1;
+message DelUserAttentionRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
     map<string,string>        extra = 3;
 }
 
-message set_user_info_req {
+message SetUserInfoReq {
     int64                     uid = 1;
-    common.user_info          info = 2;
+    common.UserInfo          info = 2;
     map<string,string>        extra = 3;
 }
 
-message set_user_info_res {
-    rescode.code              rescode = 1;
+message SetUserInfoRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
     map<string,string>        extra = 3;
 }
 
-message get_user_info_req {
-    int64                     uid = 1;
-    map<string,string>        extra = 2;
-}
-
-message get_user_info_res {
-    rescode.code              rescode = 1;
-    string                    resmsg = 2;
-    common.user_info          info = 3;
-    map<string,string>        extra = 4;
-}
-
-message set_wechat_uinfo_req {
-    int64                     uid = 1;
-    common.wechat_userinfo    info = 2;
-    map<string,string>        extra = 3;
-}
-
-message set_wechat_uinfo_res {
-    rescode.code              rescode = 1;
-    string                    resmsg = 2;
-    map<string,string>        extra = 3;
-}
-
-message get_wechat_uinfo_req {
+message GetUserInfoReq {
     int64                     uid = 1;
     map<string,string>        extra = 2;
 }
 
-message get_wechat_uinfo_res {
-    rescode.code              rescode = 1;
+message GetUserInfoRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
-    common.wechat_userinfo    info = 3;
+    common.UserInfo          info = 3;
     map<string,string>        extra = 4;
 }
 
-message set_alipay_uinfo_req {
+message SetWechatUinfoReq {
     int64                     uid = 1;
-    common.alipay_userinfo    info = 2;
+    common.WechatUserinfo    info = 2;
     map<string,string>        extra = 3;
 }
 
-message set_alipay_uinfo_res {
-    rescode.code              rescode = 1;
+message SetWechatUinfoRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
     map<string,string>        extra = 3;
 }
 
-message get_alipay_uinfo_req {
+message GetWechatUinfoReq {
     int64                     uid = 1;
     map<string,string>        extra = 2;
 }
 
-message get_alipay_uinfo_res {
-    rescode.code              rescode = 1;
+message GetWechatUinfoRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
-    common.alipay_userinfo    info = 3;
+    common.WechatUserinfo    info = 3;
     map<string,string>        extra = 4;
 }
 
-message set_baidu_entity_req {
+message SetAlipayUinfoReq {
+    int64                     uid = 1;
+    common.AlipayUserinfo    info = 2;
+    map<string,string>        extra = 3;
+}
+
+message SetAlipayUinfoRes {
+    rescode.Code              rescode = 1;
+    string                    resmsg = 2;
+    map<string,string>        extra = 3;
+}
+
+message GetAlipayUinfoReq {
+    int64                     uid = 1;
+    map<string,string>        extra = 2;
+}
+
+message GetAlipayUinfoRes {
+    rescode.Code              rescode = 1;
+    string                    resmsg = 2;
+    common.AlipayUserinfo    info = 3;
+    map<string,string>        extra = 4;
+}
+
+message SetBaiduEntityReq {
     string                    bid = 1;
-    repeated common.baidu_entity entitys = 2;
+    repeated common.BaiduEntity entitys = 2;
     map<string,string>        extra = 3;
 }
 
-message set_baidu_entity_res {
-    rescode.code              rescode = 1;
+message SetBaiduEntityRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
     map<string,string>        extra = 3;
 }
 
-message baidu_entity_req {
+message BaiduEntityReq {
     string                    bid = 1;
     int64                     page = 2;
     int64                     size = 3;
     map<string,string>        extra = 4;
 }
 
-message baidu_entity_res {
-    rescode.code              rescode = 1;
+message BaiduEntityRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
     int64                     page = 3;
     int64                     size = 4;
-    repeated common.baidu_entity entitys = 5;
+    repeated common.BaiduEntity entitys = 5;
     map<string,string>        extra = 6;
 }
 
-message search_item_req {
+message SearchItemReq {
     string            keyword = 1;
     int32             page = 2;
     int32             size = 3;
     map<string,string> extra = 4;
 }
 
-message search_item_res {
-    rescode.code                      rescode = 1;
+message SearchItemRes {
+    rescode.Code                      rescode = 1;
     string                            resmsg = 2;
     repeated string                   lists = 3;
     map<string,string>                extra = 4;
 }
 
-message search_history_req {
+message SearchHistoryReq {
     int64           uid = 1;
     int32           page = 2;
     int32           size = 3;
     map<string,string> extra = 4;
 }
 
-message search_history_res {
-    rescode.code                      rescode = 1;
+message SearchHistoryRes {
+    rescode.Code                      rescode = 1;
     string                            resmsg = 2;
-    repeated common.search_history_item  lists = 3;
+    repeated common.SearchHistoryItem  lists = 3;
     map<string,string>                extra = 4;
 }
 
-message refresh_modify_reward_req {
+message RefreshModifyRewardReq {
     string                auth = 1;
     int64                 id = 2;
     double                reward = 3;
     map<string,string>    extra = 4;
 } 
 
-message refresh_modify_reward_res {
-    rescode.code          rescode = 1;
+message RefreshModifyRewardRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     string                code = 3;
     map<string,string>    extra = 4;
 }
 
-message refresh_user_coin_req {
+message RefreshUserCoinReq {
     string                auth = 1;
     int64                 userid = 2;
     double                coin = 3;
     map<string,string>    extra = 4;
 }
 
-message refresh_user_coin_res {
-    rescode.code          rescode = 1;
+message RefreshUserCoinRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     string                code = 3;
     map<string,string>    extra = 4;
 }
 
-message add_question_req {
+message AddQuestionReq {
     int64                   uid = 1;
-    common.add_timu_item  timu = 2;
+    common.AddTimuItem  timu = 2;
 }
 
-message add_question_res {
-    rescode.code          rescode = 1;
+message AddQuestionRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     string                code = 3;
     map<string,string>    extra = 4;
 }
 
-message add_list_req {
+message AddListReq {
     int64       uid = 1;
     int32       page = 2;
     int32       size = 3;
@@ -969,92 +969,92 @@ message add_list_req {
     string    status = 5;
 }
 
-message add_list_res {
-    rescode.code                  rescode = 1;
+message AddListRes {
+    rescode.Code                  rescode = 1;
     string                        resmsg = 2;
-    repeated common.add_timu_item timus = 3;
+    repeated common.AddTimuItem timus = 3;
     map<string,string>            extra = 4;
 }
 
-message add_count_req {
+message AddCountReq {
     int64     uid = 1;
     string    status = 2;
     map<string,string> extra = 3;
 }
 
-message add_count_res {
-    rescode.code       rescode = 1;
+message AddCountRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
     int32              count = 3;
     map<string,string> extra = 4;
 }
 
 
-message refresh_add_reward_req {
+message RefreshAddRewardReq {
     string                auth = 1;
     int64                 id = 2;
     double                reward = 3;
     map<string,string>    extra = 4;
 } 
 
-message refresh_add_reward_res {
-    rescode.code          rescode = 1;
+message RefreshAddRewardRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     string                code = 3;
     map<string,string>    extra = 4;
 }
 
-message tixing_by_vid_req {
+message TixingByVidReq {
     string                vid = 1;
     map<string,string>    extra = 2;
 }
 
-message tixing_by_vid_res {
-    rescode.code          rescode = 1;
+message TixingByVidRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     repeated string       tixings = 3;
     map<string,string>    extra = 4;
 }
 
-message source_by_vid_req {
+message SourceByVidReq {
     string                vid = 1;
     map<string,string>    extra = 2;
 }
 
-message source_by_vid_res {
-    rescode.code          rescode = 1;
+message SourceByVidRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     repeated string       sources = 3;
     map<string,string>    extra = 4;
 }
 
-message ident_add_req {
+message IdentAddReq {
     int64                             uid = 1;
     string                            log_id = 2;
-    common.baidu_doc_analysis         result = 3;
+    common.BaiduDocAnalysis         result = 3;
     map<string,string>                extra = 4;
 }
 
-message ident_add_res {
-    rescode.code          rescode = 1;
+message IdentAddRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     map<string,string>    extra = 3;
 }
 
-message ident_by_iid_req {
+message IdentByIidReq {
    int64                  uid = 1;
    string                 iid = 2; 
    map<string,string>     extra = 3;
 }
 
-message ident_by_iid_res {
-    rescode.code              rescode = 1;
+message IdentByIidRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
-    common.baidu_ident_item  result = 3;
+    common.BaiduIdentItem  result = 3;
     map<string,string>        extra = 4;
 }
 
-message ident_list_req {
+message IdentListReq {
     int64       uid = 1;
     int32       page = 2;
     int32       size = 3;
@@ -1064,55 +1064,55 @@ message ident_list_req {
     string    sign = 7;
 }
 
-message ident_list_res {
-    rescode.code                      rescode = 1;
+message IdentListRes {
+    rescode.Code                      rescode = 1;
     string                            resmsg = 2;
-    repeated common.baidu_ident_item  results = 3;
+    repeated common.BaiduIdentItem  results = 3;
     map<string,string>                extra = 4;
 }
 
-message ident_count_req {
+message IdentCountReq {
     int64     uid = 1;
     string    status = 2;
     map<string,string> extra = 3; 
 }
 
-message ident_count_res {
-    rescode.code       rescode = 1;
+message IdentCountRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
     int32              count = 3;
     map<string,string> extra = 4; 
 }
 
-message refresh_ident_reward_req {
+message RefreshIdentRewardReq {
     string                auth = 1;
     string                iid = 2;
     double                reward = 3;
     map<string,string>    extra = 4;
 } 
 
-message refresh_ident_reward_res {
-    rescode.code          rescode = 1;
+message RefreshIdentRewardRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     string                code = 3;
     map<string,string>    extra = 4;
 }
 
-message refresh_user_vip_req {
+message RefreshUserVipReq {
     string                auth = 1;
     int64                 userid = 2;
     int64                 vip = 3;
     map<string,string>    extra = 4;
 }
 
-message refresh_user_vip_res {
-    rescode.code          rescode = 1;
+message RefreshUserVipRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     string                code = 3;
     map<string,string>    extra = 4;
 }
 
-message teacher_item {
+message TeacherItem {
     int64                 uid = 1;
     string                tag = 2;
     string                resume = 3;
@@ -1121,18 +1121,18 @@ message teacher_item {
     int64                 tmlong = 6;
 }
 
-message update_teacher_req {
-    teacher_item          teacher = 1;
+message UpdateTeacherReq {
+    TeacherItem          teacher = 1;
     map<string,string>    extra = 2;
 }
 
-message update_teacher_res {
-    rescode.code       rescode = 1;
+message UpdateTeacherRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message find_teacher_req {
+message FindTeacherReq {
     int64               tuid = 1;
     int64               uuid = 2;
     string            subject = 3;
@@ -1141,82 +1141,82 @@ message find_teacher_req {
     string            sorted = 6;
 }
 
-message find_teacher_res {
-    rescode.code       rescode = 1;
+message FindTeacherRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
-    repeated teacher_item teachers = 3;
+    repeated TeacherItem teachers = 3;
     map<string,string> extra = 4;
 }
 
-message focus_teacher_req {
+message FocusTeacherReq {
     int64                 tuid = 1;
     int64                 uuid = 2;
     int32                 status = 3;
     map<string,string>    extra = 4;
 }
 
-message focus_teacher_res {
-    rescode.code       rescode = 1;
+message FocusTeacherRes {
+    rescode.Code       rescode = 1;
     string             resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message note_cooper_req {
+message NoteCooperReq {
     int64                 nid = 1;
     int64                 userid = 2;
     repeated string       user = 3;
     map<string,string>    extra = 4;
 }
 
-message note_cooper_res {
-    rescode.code              rescode = 1;
+message NoteCooperRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
-    repeated common.user_info user = 3;
+    repeated common.UserInfo user = 3;
     map<string,string>        extra = 4;
 }
 
-message note_tag_req {
+message NoteTagReq {
     int64                 nid = 1;
     int64                 userid = 2;
     repeated string       tags = 3;
     map<string,string>    extra = 4;
 }
 
-message note_tag_res {
-    rescode.code      rescode = 1;
+message NoteTagRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     repeated string   tags = 3;
     map<string,string> extra = 4;
 }
 
-message note_bgcolor_req {
+message NoteBgcolorReq {
     int64                 nid = 1;
     int64                 userid = 2;
     string                bgcolor = 3;
     map<string,string>    extra = 4;
 } 
 
-message note_bgcolor_res {
-    rescode.code      rescode = 1;
+message NoteBgcolorRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     string            bgcolor = 3;
     map<string,string> extra = 4;
 }
 
-message note_tag_add_req {
+message NoteTagAddReq {
     int64                 userid = 1;
     string                cn = 2;
     string                eg = 3;
     map<string,string>    extra = 4;
 }
 
-message note_tag_add_res {
-    rescode.code      rescode = 1;
+message NoteTagAddRes {
+    rescode.Code      rescode = 1;
     string            resmsg = 2;
     map<string,string> extra = 3;
 }
 
-message note_tag_list_req {
+message NoteTagListReq {
     int64                 user_id = 1;
     string                lang = 2;
     int64                 status = 3;
@@ -1225,25 +1225,25 @@ message note_tag_list_req {
     map<string,string>    extra = 6;
 }
 
-message note_tag_list_res {
-    rescode.code              rescode = 1;
+message NoteTagListRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
-    repeated common.note_tag  tags = 3;
+    repeated common.NoteTag  tags = 3;
     map<string,string>        extra = 4;
 }
 
-message submit_cert_req {
-    common.person_cert    cert = 1;
+message SubmitCertReq {
+    common.PersonCert    cert = 1;
     map<string,string>    extra = 2;
 }
 
-message submit_cert_res {
-    rescode.code          rescode = 1;
+message SubmitCertRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     map<string,string>    extra = 3;
 }
 
-message cert_status_req {
+message CertStatusReq {
     int64                 uid = 1;
     int64                 cert_uid = 2;
     string                cert_name = 3;
@@ -1252,14 +1252,14 @@ message cert_status_req {
     map<string,string>    extra = 6;
 }
 
-message cert_status_res {
-    rescode.code          rescode = 1;
+message CertStatusRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
-    common.person_cert    cert = 3;
+    common.PersonCert    cert = 3;
     map<string,string>    extra = 4;
 }
 
-message cert_info_req {
+message CertInfoReq {
     int64                 uid = 1;
     string                status = 2;
     string                idname = 3;
@@ -1269,28 +1269,28 @@ message cert_info_req {
     map<string,string>    extra = 7;
 }
 
-message cert_info_res {
-    rescode.code              rescode = 1;
+message CertInfoRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
-    repeated common.person_cert  cert = 3;
+    repeated common.PersonCert  cert = 3;
     map<string,string>        extra = 4;
 }
 
-message cert_flow_req {
+message CertFlowReq {
     int64                   uid = 1;
     int32                   page = 2;
     int32                   size = 3;
     map<string,string>    extra = 4;
 }
 
-message cert_flow_res {
-    rescode.code              rescode = 1;
+message CertFlowRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
-    repeated common.person_cert  cert = 3;
+    repeated common.PersonCert  cert = 3;
     map<string,string>        extra = 4;
 }
 
-message add_user_log_req {
+message AddUserLogReq {
     int64                 uid = 1;
     int32                 log_type = 2;
     string                log_info = 3;
@@ -1298,13 +1298,13 @@ message add_user_log_req {
     map<string,string>    extra = 5;
 }
 
-message add_user_log_res {
-    rescode.code              rescode = 1;
+message AddUserLogRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
     map<string,string>        extra = 3;
 }
 
-message query_user_log_req {
+message QueryUserLogReq {
     int64                 id = 1;
     int64                 uid = 2;
     int32                 log_type = 3;
@@ -1313,74 +1313,74 @@ message query_user_log_req {
     map<string,string>    extra = 6;
 }
 
-message query_user_log_res {
-    rescode.code              rescode = 1;
+message QueryUserLogRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
-    repeated common.user_log  logs = 3;
+    repeated common.UserLog  logs = 3;
     map<string,string>        extra = 4;
 }
 
-message user_log_count_req {
+message UserLogCountReq {
     int64                 uid = 1;
     int32                 log_type = 2;
     map<string,string>    extra = 3;
 }
 
-message user_log_count_res {
-    rescode.code              rescode = 1;
+message UserLogCountRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
     int64                     count = 3;
     map<string,string>        extra = 4;
 }
 
 
-message add_task_req {
-    common.cron_item      cron = 1;
+message AddTaskReq {
+    common.CronItem      cron = 1;
     string                admin = 2;
     map<string,string>    extra = 3;
 }
 
-message add_task_res {
-    rescode.code          rescode = 1;
+message AddTaskRes {
+    rescode.Code          rescode = 1;
     string                resmsg = 2;
     map<string,string>    extra = 3;
 }
 
-message get_task_req {
+message GetTaskReq {
     bool                  repeated = 1;
     bool                  mutitask = 2;
     string                start_at = 3;
     map<string,string>    extra = 4;
 }
 
-message get_task_res {
-    rescode.code              rescode = 1;
+message GetTaskRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
-    repeated common.cron_item crons = 3;
+    repeated common.CronItem crons = 3;
     map<string,string>        extra = 4;
 }
 
-message get_task_count_req {
+message GetTaskCountReq {
     bool                  repeated = 1;
     bool                  mutitask = 2;
     string                start_at = 3;
     map<string,string>    extra = 4;
 }
 
-message get_task_count_res {
-    rescode.code              rescode = 1;
+message GetTaskCountRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
     int64                     count = 3;
     map<string,string>        extra = 4;
 }
 
-message update_userinfo_req {
-    common.update_userinfo_item       info = 1;
+message UpdateUserinfoReq {
+    common.UpdateUserinfoItem       info = 1;
     map<string,string>                extra = 2;
 }
 
-message update_userinfo_res {
-    rescode.code              rescode = 1;
+message UpdateUserinfoRes {
+    rescode.Code              rescode = 1;
     string                    resmsg = 2;
     string                    value = 3;
     map<string,string>        extra = 4;
@@ -1389,208 +1389,208 @@ message update_userinfo_res {
 service datanode_service {
 	// ---------- 用户接口 ------- //
 	// 创建新用户
-	rpc  createUser(new_user_req) returns (user_res) {}
+	rpc  CreateUser(NewUserReq) returns (UserRes) {}
 	// 获取用户信息
-	rpc  userInfo(user_info_req) returns (user_res) {}
+	rpc  UserInfo(UserInfoReq) returns (UserRes) {}
 	// 搜索用户信息
-	rpc searchUser(search_user_req) returns (search_user_res) {}
+	rpc SearchUser(SearchUserReq) returns (SearchUserRes) {}
 	// 更新用户信息
-	rpc updateUserInfo(update_userinfo_req) returns (update_userinfo_res) {}
+	rpc UpdateUserInfo(UpdateUserinfoReq) returns (UpdateUserinfoRes) {}
 	// 关注对象操作
-	rpc add_attention(add_attention_req) returns (add_attention_res) {}
-	rpc del_attention(del_attention_req) returns (del_attention_res) {}
-	rpc get_attention(get_attention_req) returns (get_attention_res) {}
+	rpc AddAttention(AddAttentionReq) returns (AddAttentionRes) {}
+	rpc DelAttention(DelAttentionReq) returns (DelAttentionRes) {}
+	rpc GetAttention(GetAttentionReq) returns (GetAttentionRes) {}
 	// 用户
-	rpc add_user_attention(add_user_attention_req) returns (add_user_attention_res) {}
-	rpc del_user_attention(del_user_attention_req) returns (del_user_attention_res) {}
-	rpc get_user_attention(get_user_attention_req) returns (get_user_attention_res) {}
+	rpc AddUserAttention(AddUserAttentionReq) returns (AddUserAttentionRes) {}
+	rpc DelUserAttention(DelUserAttentionReq) returns (DelUserAttentionRes) {}
+	rpc GetUserAttention(GetUserAttentionReq) returns (GetUserAttentionRes) {}
 	// --------------- 好友接口 ----------- //
 	// 添加好友
-	rpc addFriends(add_friend_req) returns (add_friend_res) {}
+	rpc AddFriends(AddFriendReq) returns (AddFriendRes) {}
 	// 同意好友
-	rpc agreeFriends(agree_friend_req) returns (agree_friend_res) {}
+	rpc AgreeFriends(AgreeFriendReq) returns (AgreeFriendRes) {}
 	// 请求好友列表
-	rpc friendsList(friends_list_req) returns (friend_res) {}
+	rpc FriendsList(FriendsListReq) returns (FriendRes) {}
 	// 添加组
-	rpc createGroup(create_group_req) returns (create_group_res) {}
+	rpc CreateGroup(CreateGroupReq) returns (CreateGroupRes) {}
 	// 重命名组
-	rpc renameGroup(rename_group_req) returns (rename_group_res) {}
+	rpc RenameGroup(RenameGroupReq) returns (RenameGroupRes) {}
 	// 添加好友备注
-	rpc addNoteFriend(add_friend_note_req) returns (add_friend_note_res) {}
+	rpc AddNoteFriend(AddFriendNoteReq) returns (AddFriendNoteRes) {}
 	// 移动到新的组
-	rpc moveToNewGroup(move_group_req) returns (move_group_res) {}
+	rpc MoveToNewGroup(MoveGroupReq) returns (MoveGroupRes) {}
 	// 删除好友
-	rpc removeFriend(remove_friend_req) returns (remove_friend_res) {}
+	rpc RemoveFriend(RemoveFriendReq) returns (RemoveFriendRes) {}
 	// ----------------- 点赞 --------------- //
 	// 获取点赞的数量
-	rpc likesCount(likes_count_req) returns (likes_count_res) {}
+	rpc LikesCount(LikesCountReq) returns (LikesCountRes) {}
 	// 添加点赞
-	rpc likesAdd(likes_add_req) returns (likes_add_res) {}
+	rpc LikesAdd(LikesAddReq) returns (LikesAddRes) {}
 	// 获取点赞列表
-	rpc likesList(likes_list_req) returns (likes_list_res) {}
+	rpc LikesList(LikesListReq) returns (LikesListRes) {}
 	// ----------------- 笔记 ----------------// 
 	//更新或者添加笔记信息
-	rpc updateNote(update_note_req) returns (note_meta_res) {}
+	rpc UpdateNote(UpdateNoteReq) returns (NoteMetaRes) {}
 	// 获取笔记列表
-	rpc noteMetaList(note_meta_list_req) returns (note_meta_list_res) {}
+	rpc NoteMetaList(NoteMetaListReq) returns (NoteMetaListRes) {}
 	// 获取用户笔记数量
-	rpc noteListCount(note_meta_list_req) returns (note_list_count_res) {}
+	rpc NoteListCount(NoteMetaListReq) returns (NoteListCountRes) {}
 	// 获取笔记数据列
-	rpc noteData(note_data_req) returns (note_data_res) {}
+	rpc NoteData(NoteDataReq) returns (NoteDataRes) {}
 	// 获取笔记html数据
-	rpc noteHtml(note_html_req) returns (note_html_res) {}
+	rpc NoteHtml(NoteHtmlReq) returns (NoteHtmlRes) {}
 	// ---------------- 动态 --------------- //
 	// 获取动态的数量
-	rpc momentsCount(moments_count_req) returns (moments_count_res) {}
+	rpc MomentsCount(MomentsCountReq) returns (MomentsCountRes) {}
 	// 添加动态
-	rpc momentsAdd(moments) returns (add_moments_res) {}
+	rpc MomentsAdd(Moments) returns (AddMomentsRes) {}
 	// 获取动态列表
-	rpc momentsList(moments_list_req) returns (moments_list_res) {}
+	rpc MomentsList(MomentsListReq) returns (MomentsListRes) {}
 	// ---------------- 文件 ------------------//
 	// 获取目录,目录之间的/替换成-
-	rpc fileDirOne(file_dir_req) returns (file_dir_res) {}
+	rpc FileDirOne(FileDirReq) returns (FileDirRes) {}
 	// 添加目录
-	rpc fileDirAdd(add_dir_req) returns (add_dir_res) {}
+	rpc FileDirAdd(AddDirReq) returns (AddDirRes) {}
 	// 添加文件
-	rpc addFile(add_file_req) returns (add_file_res) {}
+	rpc AddFile(AddFileReq) returns (AddFileRes) {}
 	// 获取云盘属性，容量和文件数量
-	rpc yunSaveAttr(file_attr_req) returns (file_attr_res) {}
+	rpc YunSaveAttr(FileAttrReq) returns (FileAttrRes) {}
 	// 获取图像缩略图
-	rpc thumbnail(thumbnail_req) returns (thumbnail_res) {}
+	rpc Thumbnail(ThumbnailReq) returns (ThumbnailRes) {}
 	// ------------- key-value ----------------//
 	// 设置缓存
-	rpc setKeyValue(set_keyvalue_req) returns (set_keyvalue_res) {}
+	rpc SetKeyValue(SetKeyvalueReq) returns (SetKeyvalueRes) {}
 	// 获取缓存
-	rpc getKeyValue(get_keyvalue_req) returns (get_keyvalue_res) {}
+	rpc GetKeyValue(GetKeyvalueReq) returns (GetKeyvalueRes) {}
 	// 删除
-	rpc delKeyValue(del_keyvalue_req) returns (del_keyvalue_res) {}
+	rpc DelKeyValue(DelKeyvalueReq) returns (DelKeyvalueRes) {}
 	// --------------- 试题相关 -------------------//
 	// 获取版本
-	rpc question_version(common.question_query) returns (version_res) {}
+	rpc QuestionVersion(common.QuestionQuery) returns (VersionRes) {}
 	// 获取章节
-	rpc question_chapter(common.question_query) returns (chapter_res) {}
+	rpc QuestionChapter(common.QuestionQuery) returns (ChapterRes) {}
 	// 科目名
-	rpc subject_name(subject_name_req) returns (subject_name_res) {}
+	rpc subjectName(SubjectNameReq) returns (SubjectNameRes) {}
 	// 获取来源
-	rpc question_source(common.question_query) returns (source_res) {}
+	rpc QuestionSource(common.QuestionQuery) returns (SourceRes) {}
 	// 获取题型
-	rpc question_tixing(common.question_query) returns (tixing_res) {}
+	rpc QuestionTixing(common.QuestionQuery) returns (TixingRes) {}
 	// 获取题目数量
-	rpc question_timu_count(common.question_query) returns (timu_count_res) {}
+	rpc QuestionTimuCount(common.QuestionQuery) returns (TimuCountRes) {}
 	// 请求题目
-	rpc question_timu(common.question_query) returns (timu_res) {}
+	rpc QuestionTimu(common.QuestionQuery) returns (TimuRes) {}
 	// 根据试题id请求题目
-	rpc question_timu_by_id(timu_by_id_req) returns (timu_by_id_res) {}
+	rpc QuestionTimuById(TimuByIdReq) returns (TimuByIdRes) {}
 	// 收藏试题
-	rpc collect_timu(collect_req) returns (collect_res) {}
+	rpc CollectTimu(CollectReq) returns (CollectRes) {}
 	// 获取收藏列表
-	rpc query_collect_timu(collect_list_req) returns (collect_list_res) {}
+	rpc QueryCollectTimu(CollectListReq) returns (CollectListRes) {}
 	// 纠错试题（包含更新或添加）
-	rpc modify_question(modify_req) returns (modify_res) {}
+	rpc ModifyQuestion(ModifyReq) returns (ModifyRes) {}
 	//获取个人纠错的试题
-	rpc modify_list(modify_list_req) returns (modify_list_res) {}
+	rpc Modifylist(ModifyListReq) returns (ModifyListRes) {}
 	//获取个人纠错的试题的数量
-	rpc modify_count(modify_count_req) returns (modify_count_res) {}
+	rpc Modifycount(ModifyCountReq) returns (ModifyCountRes) {}
 	//添加试题
-	rpc question_timu_add(timu_add_req) returns (timu_add_res) {}
+	rpc QuestionTimuAdd(TimuAddReq) returns (TimuAddRes) {}
 	//获取添加的试题
-	rpc add_list(add_list_req) returns (add_list_res) {}
+	rpc AddList(AddListReq) returns (AddListRes) {}
 	// 获取添加的数量
-	 rpc add_count(add_count_req) returns (add_count_res) {}
+	rpc AddCount(AddCountReq) returns (AddCountRes) {}
 	// 审核修改的试题
-	rpc approve(approve_req) returns (approve_res) {}
+	rpc Approve(ApproveReq) returns (ApproveRes) {}
 	//搜索试题
-	rpc on_search(search_req) returns (search_res) {}
+	rpc OnSearch(SearchReq) returns (SearchRes) {}
 	// 添加年纪信息
-	rpc grade_cate_add(common.grade_cate) returns (add_grade_cate_res) {}
+	rpc GradeCateAdd(common.GradeCate) returns (AddGradeCateRes) {}
 	//获取年纪总数
-	rpc grade_cate_count(common.Request) returns (grade_cate_count_res) {}
+	rpc GradeCateCount(common.Request) returns (GradeCateCountRes) {}
 	// 获取年级信息
-	rpc grade_cate_list(grade_cate_list_req) returns (grade_cate_list_res) {}
+	rpc GradeCateList(GradeCateListReq) returns (GradeCateListRes) {}
 	//获取主页最新动态统计信息
-	rpc home_black_data(common.Request) returns (home_black_data_res) {}
+	rpc HomeBlackData(common.Request) returns (HomeBlackDataRes) {}
 	//获取学籍对应的年级+科目
-	rpc grade_subject(grade_subject_req) returns (grade_subject_res) {}
+	rpc GradeSubject(GradeSubjectReq) returns (GradeSubjectRes) {}
 	// 添加学级信息
-	rpc school_roll_add(common.school_roll) returns (school_roll_add_res) {}
+	rpc SchoolRoll_add(common.SchoolRoll) returns (SchoolRollAddRes) {}
 	//获取年级总数
-	rpc school_roll_count(common.Request) returns (school_roll_count_res) {}
+	rpc SchoolRollCount(common.Request) returns (SchoolRollCountRes) {}
 	//获取年级列表信息
-	rpc school_list(school_roll_list_req) returns (school_roll_list_res) {}
+	rpc SchoolList(SchoolRollListReq) returns (SchoolRollListRes) {}
 	//添加科目信息
-	rpc subject_cate_add(common.subject_cate) returns (subject_cate_add_res) {}
+	rpc SubjectCateAdd(common.SubjectCate) returns (SubjectCateAddRes) {}
 	//获取科目总数
-	rpc subject_cate_count(common.Request) returns (subject_cate_count_res) {}
+	rpc SubjectCateCount(common.Request) returns (SubjectCateCountRes) {}
 	//获取科目列表
-	rpc subject_cate_list(subject_cate_list_req) returns (subject_cate_list_res) {}
+	rpc SubjectCateList(SubjectCateListReq) returns (SubjectCateListRes) {}
 	//用户信息
-	rpc set_user_info(set_user_info_req) returns (set_user_info_res) {}
-	rpc get_user_info(get_user_info_req) returns (get_user_info_res) {}
+	rpc SetUserInfo(SetUserInfoReq) returns (SetUserInfoRes) {}
+	rpc GetUserInfo(GetUserInfoReq) returns (GetUserInfoRes) {}
 	//微信用户信息操作
-	rpc set_wechat_uinfo(set_wechat_uinfo_req) returns (set_wechat_uinfo_res) {}
-	rpc get_wechat_uinfo(get_wechat_uinfo_req) returns (get_wechat_uinfo_res) {}
+	rpc SetWechatUinfo(SetWechatUinfoReq) returns (SetWechatUinfoRes) {}
+	rpc GetWechatUinfo(GetWechatUinfoReq) returns (GetWechatUinfoRes) {}
 	// 支付宝用户信息操作
-	rpc set_alipay_uinfo(set_alipay_uinfo_req) returns (set_alipay_uinfo_res) {}
-	rpc get_alipay_uinfo(get_alipay_uinfo_req) returns (get_alipay_uinfo_res) {}
+	rpc SetAlipayUinfo(SetAlipayUinfoReq) returns (SetAlipayUinfoRes) {}
+	rpc GetAlipayUinfo(GetAlipayUinfoReq) returns (GetAlipayUinfoRes) {}
 	// 请求百度实体信息
-	rpc set_baidu_entity(set_baidu_entity_req) returns (set_baidu_entity_res) {}
-	rpc baidu_entity(baidu_entity_req) returns (baidu_entity_res) {}
+	rpc SetBaiduEntity(SetBaiduEntityReq) returns (SetBaiduEntityRes) {}
+	rpc BaiduEntity(BaiduEntityReq) returns (BaiduEntityRes) {}
 	// 获取搜索记录
-	rpc search_history(search_history_req) returns (search_history_res) {}
+	rpc SearchHistory(SearchHistoryReq) returns (SearchHistoryRes) {}
 	// 搜索关键字补全
-	rpc search_item(search_item_req) returns (search_item_res) {}
+	rpc SearchItem(SearchItemReq) returns (SearchItemRes) {}
 	// 更新修改试题的奖励积分
-	rpc refresh_modify_reward(refresh_modify_reward_req) returns (refresh_modify_reward_res) {}
+	rpc RefreshModifyreward(RefreshModifyRewardReq) returns (RefreshModifyRewardRes) {}
 	// 更新添加试题的奖励积分
-	rpc refresh_add_reward(refresh_add_reward_req) returns (refresh_add_reward_res) {}
+	rpc RefreshAddReward(RefreshAddRewardReq) returns (RefreshAddRewardRes) {}
 	// 更新用户的coin数值
-	rpc refresh_user_coin(refresh_user_coin_req) returns (refresh_user_coin_res) {}
+	rpc RefreshUserCoin(RefreshUserCoinReq) returns (RefreshUserCoinRes) {}
 	// 通过版本id获取题型列表
-	rpc tixing_by_vid(tixing_by_vid_req) returns (tixing_by_vid_res) {}
+	rpc tixingByVid(TixingByVidReq) returns (TixingByVidRes) {}
 	// 通过版本id获取来源
-	rpc source_by_vid(source_by_vid_req) returns (source_by_vid_res) {}
+	rpc SourceByVid(SourceByVidReq) returns (SourceByVidRes) {}
 	// 添加识别记录
-	rpc ident_add(ident_add_req) returns (ident_add_res) {}
+	rpc IdentAdd(IdentAddReq) returns (IdentAddRes) {}
 	// 根据识别id获取识别记录
-	rpc ident_by_iid(ident_by_iid_req) returns (ident_by_iid_res) {}
+	rpc IdentByIid(IdentByIidReq) returns (IdentByIidRes) {}
 	// 获取识别列表
-	rpc ident_list(ident_list_req) returns (ident_list_res) {}
+	rpc IdentList(IdentListReq) returns (IdentListRes) {}
 	// 获取识别列表熟数量
-	rpc ident_count(ident_count_req) returns (ident_count_res) {}
+	rpc IdentCount(IdentCountReq) returns (IdentCountRes) {}
 	// 刷新识别奖励
-	rpc refresh_ident_reward(refresh_ident_reward_req) returns (refresh_ident_reward_res) {}
+	rpc RefreshIdentReward(RefreshIdentRewardReq) returns (RefreshIdentRewardRes) {}
 	// 更新用户vip
-	rpc refresh_user_vip(refresh_user_vip_req) returns (refresh_user_vip_res) {}
+	rpc RefreshUserVip(RefreshUserVipReq) returns (RefreshUserVipRes) {}
 	// 添加或者根据教师信息
-	rpc update_teacher(update_teacher_req) returns (update_teacher_res) {}
+	rpc UpdateTeacher(UpdateTeacherReq) returns (UpdateTeacherRes) {}
 	// 查询教师信息
-	rpc get_teacher(find_teacher_req) returns (find_teacher_res) {}
+	rpc GetTeacher(FindTeacherReq) returns (FindTeacherRes) {}
 	// 关注/取消关注教师
-	rpc focus_teacher(focus_teacher_req) returns (focus_teacher_res) {}
+	rpc FocusTeacher(FocusTeacherReq) returns (FocusTeacherRes) {}
 	// 更新笔记的协作者、标签、颜色
-	rpc note_cooper(note_cooper_req) returns (note_cooper_res) {}
-	rpc note_tag(note_tag_req) returns (note_tag_res) {}
-	rpc note_bgcolor(note_bgcolor_req) returns (note_bgcolor_res) {}
-	rpc note_tag_add(note_tag_add_req) returns (note_tag_add_res) {}
-	rpc note_tag_list(note_tag_list_req) returns (note_tag_list_res) {}
+	rpc NoteCooper(NoteCooperReq) returns (NoteCooperRes) {}
+	rpc NoteTag(NoteTagReq) returns (NoteTagRes) {}
+	rpc NoteBgcolor(NoteBgcolorReq) returns (NoteBgcolorRes) {}
+	rpc NoteTagAdd(NoteTagAddReq) returns (NoteTagAddRes) {}
+	rpc NoteTagList(NoteTagListReq) returns (NoteTagListRes) {}
 	// 提交实名
-	rpc submit_cert(submit_cert_req) returns (submit_cert_res) {}
+	rpc SubmitCert(SubmitCertReq) returns (SubmitCertRes) {}
 	// 更新实名状态
-	rpc cert_status(cert_status_req) returns (cert_status_res) {}
+	rpc CertStatus(CertStatusReq) returns (CertStatusRes) {}
 	// 获取实名信息
-	rpc cert_info(cert_info_req) returns (cert_info_res) {}
+	rpc CertInfo(CertInfoReq) returns (CertInfoRes) {}
 	// 实名日志记录
-	rpc cert_flow(cert_flow_req) returns (cert_flow_res) {}
+	rpc CertFlow(CertFlowReq) returns (CertFlowRes) {}
 	// 添加日志
-	rpc add_user_log(add_user_log_req) returns (add_user_log_res) {}
+	rpc AddUserLog(AddUserLogReq) returns (AddUserLogRes) {}
 	// 获取日志
-	rpc query_user_log(query_user_log_req) returns (query_user_log_res) {}
+	rpc QueryUserLog(QueryUserLogReq) returns (QueryUserLogRes) {}
 	// 日志数量
-	rpc user_log_count(user_log_count_req) returns (user_log_count_res) {}
+	rpc UserLogCount(UserLogCountReq) returns (UserLogCountRes) {}
 	// 添加任务
-	rpc add_task(add_task_req) returns (add_task_res) {}
+	rpc Addtask(AddTaskReq) returns (AddTaskRes) {}
 	// 获取任务
-	rpc get_task(get_task_req) returns (get_task_res) {}
+	rpc GetTask(GetTaskReq) returns (GetTaskRes) {}
 	// 获取任务数量
-	rpc  get_task_count(get_task_count_req) returns (get_task_count_res) {}
+	rpc GetTaskCount(GetTaskCountReq) returns (GetTaskCountRes) {}
 }

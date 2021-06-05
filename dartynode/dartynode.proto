@@ -3,7 +3,7 @@ package dartynode;
 import "rescode/rescode.proto";
 import "common/common.proto";
 
-message login_wechat_req {
+message LoginWechatReq {
     string                appid =  1;
     string                Code =  2;
     string                State =  3;
@@ -11,14 +11,14 @@ message login_wechat_req {
     map<string,string>    extra =  5;
 }
 
-message login_wechat_res {
-    rescode.code          rescode =  1;
+message LoginWechatRes {
+    rescode.Code          rescode =  1;
     string                resmsg =  2;
     string                cookie =  3;
     map<string,string>    extra =  4;
 }
 
-message refresh_wechat_req {
+message RefreshWechatReq {
     int64                   uid =  1;
     string                  appid =  2;
     string                  refresh_token =  3;
@@ -26,27 +26,27 @@ message refresh_wechat_req {
     map<string,string>      extra =  5;
 }
 
-message refresh_wechat_res {
-    rescode.code          rescode =  1;
+message RefreshWechatRes {
+    rescode.Code          rescode =  1;
     string                resmsg =  2;
     string                cookie =  3;
     map<string,string>    extra =  4;
 }
 
-message logout_wechat_req {
+message LogoutWechatReq {
     int64                   uid =  1;
     string                  appid =  2;
     string                  cookie =  3;
     map<string,string>      extra =  4;
 }
 
-message logout_wechat_res {
-    rescode.code          rescode =  1;
+message LogoutWechatRes {
+    rescode.Code          rescode =  1;
     string                resmsg =  2;
     map<string,string>    extra =  3;
 }
 
-message userinfo_wechat_req {
+message UserinfoWechatReq {
     int64                   uid =  1;
     string                  openid =  2;
     string                  appid =  3;
@@ -55,15 +55,15 @@ message userinfo_wechat_req {
     map<string,string>      extra =  6;
 }
 
-message userinfo_wechat_res {
-    rescode.code              rescode =  1;
+message UserinfoWechatRes {
+    rescode.Code              rescode =  1;
     string                    resmsg =  2;
-    common.wechat_userinfo    userinfo =  3;
+    common.WechatUserinfo    userinfo =  3;
     string                    cookie =  4; // 是否更新cookie
     map<string,string>        extra =  5;
 }
 
-message login_alipay_req {
+message LoginAlipayReq {
     string                app_id =  1;
     string                source =  2;
     string                scope =  3;
@@ -72,14 +72,14 @@ message login_alipay_req {
     map<string,string>    extra =  6;
 }
 
-message login_alipay_res {
-    rescode.code          rescode =  1;
+message LoginAlipayRes {
+    rescode.Code          rescode =  1;
     string                resmsg =  2;
     string                cookie =  3;
     map<string,string>    extra =  4;
 }
 
-message userinfo_alipay_req {
+message UserinfoAlipayReq {
     int64                   uid =  1;
     string                  openid =  2;
     string                  appid =  3;
@@ -88,15 +88,15 @@ message userinfo_alipay_req {
     map<string,string>      extra =  6;
 }
 
-message userinfo_alipay_res {
-    rescode.code              rescode =  1;
+message UserinfoAlipayRes {
+    rescode.Code              rescode =  1;
     string                    resmsg =  2;
-    common.alipay_userinfo    userinfo =  3;
+    common.AlipayUserinfo    userinfo =  3;
     string                    cookie =  4; // 是否更新cookie
     map<string,string>        extra =  5;
 }
 
-message refresh_alipay_req {
+message RefreshAlipayReq {
     int64                   uid =  1;
     string                  appid =  2;
     string                  refresh_token =  3;
@@ -104,100 +104,100 @@ message refresh_alipay_req {
     map<string,string>      extra =  5;
 }
 
-message refresh_alipay_res {
-    rescode.code          rescode =  1;
+message RefreshAlipayRes {
+    rescode.Code          rescode =  1;
     string                resmsg =  2;
     string                cookie =  3;
     map<string,string>    extra =  4;
 }
 
-message logout_alipay_req {
+message LogoutAlipayReq {
     int64                   uid =  1;
     string                  appid =  2;
     string                  cookie =  3;
     map<string,string>      extra =  4;
 }
 
-message logout_alipay_res {
-    rescode.code          rescode =  1;
+message LogoutAlipayRes {
+    rescode.Code          rescode =  1;
     string                resmsg =  2;
     map<string,string>    extra =  3;
 }
 
-message baidu_entity_req {
+message BaiduEntityReq {
     int32                   page =  1;
     int32                   size =  2;
     string                  statement =  3;
     map<string,string>      extra =  4;
 }
 
-message baidu_entity_res {
-    rescode.code                 rescode =  1;
+message BaiduEntityRes {
+    rescode.Code                 rescode =  1;
     string                       resmsg =  2;
     int32                        page =  3;
     int32                        size =  4;
-   repeated common.baidu_entity  entitys =  5;
+   repeated common.BaiduEntity  entitys =  5;
     map<string,string>           extra =  6;
 }
 
-message baidu_doc_analysis_req {
+message BaiduDocAnalysisReq {
     int64                   uid =  1;
     string                  image_base64 =  2;
     map<string,string>      extra =  3;
 }
 
-message baidu_doc_analysis_res {
-    rescode.code                      rescode =  1;
+message BaiduDocAnalysisRes {
+    rescode.Code                      rescode =  1;
     string                            resmsg =  2;
-    common.baidu_doc_analysis         analysis =  3;
+    common.BaiduDocAnalysis         analysis =  3;
     map<string,string>                extra =  4;
 }
 
-message baidu_idcard_ident_req {
+message BaiduIdcardIdentReq {
     int64                   uid =  1;
     string                  idcard_side =  2;
     string                  image_base64 =  3;
     map<string,string>      extra =  4;
 }
 
-message baidu_idcard_ident_res {
-    rescode.code                      rescode =  1;
+message BaiduIdcardIdentRes {
+    rescode.Code                      rescode =  1;
     string                            resmsg =  2;
-    common.baidu_idcard_ident         ident =  3;
+    common.BaiduIdcardIdent         ident =  3;
     map<string,string>                extra =  4;
 }
 
-service dartynode_service {
+service DartynodeService {
 	// 登录微信
-	rpc login_wechat(login_wechat_req) returns (login_wechat_res) {}
+	rpc LoginWechat(LoginWechatReq) returns (LoginWechatRes) {}
 	
 	// 刷新微信的token
-	rpc refresh_wechat(refresh_wechat_req) returns (refresh_wechat_res) {}
+	rpc RefreshWechat(RefreshWechatReq) returns (RefreshWechatRes) {}
 	
 	// 退出微信登录
-	rpc logout_wechat(logout_wechat_req) returns (logout_wechat_res) {}
+	rpc LogoutWechat(LogoutWechatReq) returns (LogoutWechatRes) {}
 	
 	// 获取用户信息
-	rpc userinfo_wechat(userinfo_wechat_req) returns (userinfo_wechat_res) {}
+	rpc UserinfoWechat(UserinfoWechatReq) returns (UserinfoWechatRes) {}
 	
 	// 支付宝登陆
-	rpc login_alipay(login_alipay_req) returns (login_alipay_res) {}
+	rpc LoginAlipay(LoginAlipayReq) returns (LoginAlipayRes) {}
 	
 	// 刷新alipay的token
-	rpc refresh_alipay(refresh_alipay_req) returns (refresh_alipay_res) {}
+	rpc RefreshAlipay(RefreshAlipayReq) returns (RefreshAlipayRes) {}
 	
 	// 退出alipay登录
-	rpc logout_alipay(logout_alipay_req) returns (logout_alipay_res) {}
+	rpc LogoutAlipay(LogoutAlipayReq) returns (LogoutAlipayRes) {}
 	
 	// 获取用户信息
-	rpc userinfo_alipay(userinfo_alipay_req) returns (userinfo_alipay_res) {}
+	rpc UserinfoAlipay(UserinfoAlipayReq) returns (UserinfoAlipayRes) {}
 	
 	// 百度实体
-	rpc baidu_entity(baidu_entity_req) returns (baidu_entity_res) {}
+	rpc BaiduEntity(BaiduEntityReq) returns (BaiduEntityRes) {}
 	
 	// 试卷识别
-	rpc baidu_doc_analysis(baidu_doc_analysis_req) returns (baidu_doc_analysis_res) {}
+	rpc BaiduDocAnalysis(BaiduDocAnalysisReq) returns (BaiduDocAnalysisRes) {}
 	
 	// 身份证识别
-	rpc  baidu_idcard_ident(baidu_idcard_ident_req) returns (baidu_idcard_ident_res) {}
+	rpc  BaiduIdcardIdent(BaiduIdcardIdentReq) returns (BaiduIdcardIdentRes) {}
 }

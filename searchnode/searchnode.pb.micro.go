@@ -4,11 +4,11 @@
 package searchnode
 
 import (
-	_ "github.com/heegspace/heegproto/common"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	math "math"
+	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	math "math"
 )
 
 import (
@@ -65,7 +65,7 @@ func NewSearchnodeService(name string, c client.Client) SearchnodeService {
 }
 
 func (c *searchnodeService) SearchQuestion(ctx context.Context, in *SearchQuestionReq, opts ...client.CallOption) (*SearchQuestionRes, error) {
-	req := c.c.NewRequest(c.name, "SearchnodeService.search_question", in)
+	req := c.c.NewRequest(c.name, "SearchnodeService.SearchQuestion", in)
 	out := new(SearchQuestionRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -75,7 +75,7 @@ func (c *searchnodeService) SearchQuestion(ctx context.Context, in *SearchQuesti
 }
 
 func (c *searchnodeService) SearchItem(ctx context.Context, in *SearchItemReq, opts ...client.CallOption) (*SearchItemRes, error) {
-	req := c.c.NewRequest(c.name, "SearchnodeService.search_item", in)
+	req := c.c.NewRequest(c.name, "SearchnodeService.SearchItem", in)
 	out := new(SearchItemRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -85,7 +85,7 @@ func (c *searchnodeService) SearchItem(ctx context.Context, in *SearchItemReq, o
 }
 
 func (c *searchnodeService) SearchHistory(ctx context.Context, in *SearchHistoryReq, opts ...client.CallOption) (*SearchHistoryRes, error) {
-	req := c.c.NewRequest(c.name, "SearchnodeService.search_history", in)
+	req := c.c.NewRequest(c.name, "SearchnodeService.SearchHistory", in)
 	out := new(SearchHistoryRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {

@@ -3,62 +3,62 @@ package momnode;
 import "rescode/rescode.proto";
 import "common/common.proto";
 
-message moments_count_req {
-    common.authorize     auth = 1;
+message MomentsCountReq {
+    common.Authorize     auth = 1;
     int64                uid = 2;
 }
 
-message moments_count_res {
-    rescode.code        rescode = 1;
+message MomentsCountRes {
+    rescode.Code        rescode = 1;
     string              resmsg = 2;
     int32               count = 3;
     map<string,string>  extra = 4;
 }
 
-message extra {
+message Extra {
     string  path = 1;
     int32   type = 2;
 }
 
-message moments {
+message Moments {
     int32           id = 1;
     int64           mid = 2;
     string          text = 3;
-    repeated extra  extra = 4;
+    repeated Extra  extra = 4;
     int32           create_at = 5;
 }
 
-message add_moments_req {
-    common.authorize   auth = 1;
+message AddMomentsReq {
+    common.Authorize   auth = 1;
     int64              uid = 2;
-    moments            moments = 3;
+    Moments            moments = 3;
     map<string,string> extra = 4;
 }
 
-message add_moments_res {
-    rescode.code        rescode = 1;
+message AddMomentsRes {
+    rescode.Code        rescode = 1;
     string              resmsg = 2;
     map<string,string>  extra = 3;
 }
 
-message moments_list_req {
-    common.authorize     auth = 1;
+message MomentsListReq {
+    common.Authorize     auth = 1;
     int64				 uid = 2;
     int32				 page = 3;
     int32				 size = 4;
 }
 
-message moments_list_res {
-    rescode.code        rescode = 1;
+message MomentsListRes {
+    rescode.Code        rescode = 1;
     string              resmsg = 2;
-    repeated moments    data = 3;
+    repeated Moments    data = 3;
 }
 
-service momnode_service {
+service MomnodeService {
 	// 获取动态的数量
-	rpc   momentsCount(moments_count_req) returns (moments_count_res) {}
+	rpc   MomentsCount(MomentsCountReq) returns (MomentsCountRes) {}
 	// 添加动态
-	rpc  momentsAdd(add_moments_req) returns (add_moments_res) {}
+	rpc  MomentsAdd(AddMomentsReq) returns (AddMomentsRes) {}
 	// 获取动态列表
-	rpc  momentsList(moments_list_req) returns (moments_list_res) {}
+	rpc  MomentsList(MomentsListReq) returns (MomentsListRes) {}
 }
