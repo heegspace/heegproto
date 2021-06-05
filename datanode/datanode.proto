@@ -1540,7 +1540,7 @@ service datanode_service {
 	// 搜索关键字补全
 	rpc SearchItem(SearchItemReq) returns (SearchItemRes) {}
 	// 更新修改试题的奖励积分
-	rpc RefreshModifyreward(RefreshModifyRewardReq) returns (RefreshModifyRewardRes) {}
+	rpc RefreshModifyReward(RefreshModifyRewardReq) returns (RefreshModifyRewardRes) {}
 	// 更新添加试题的奖励积分
 	rpc RefreshAddReward(RefreshAddRewardReq) returns (RefreshAddRewardRes) {}
 	// 更新用户的coin数值

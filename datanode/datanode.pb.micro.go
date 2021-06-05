@@ -197,7 +197,7 @@ type DatanodeService interface {
 	// 搜索关键字补全
 	SearchItem(ctx context.Context, in *SearchItemReq, opts ...client.CallOption) (*SearchItemRes, error)
 	// 更新修改试题的奖励积分
-	RefreshModifyreward(ctx context.Context, in *RefreshModifyRewardReq, opts ...client.CallOption) (*RefreshModifyRewardRes, error)
+	RefreshModifyReward(ctx context.Context, in *RefreshModifyRewardReq, opts ...client.CallOption) (*RefreshModifyRewardRes, error)
 	// 更新添加试题的奖励积分
 	RefreshAddReward(ctx context.Context, in *RefreshAddRewardReq, opts ...client.CallOption) (*RefreshAddRewardRes, error)
 	// 更新用户的coin数值
@@ -1024,8 +1024,8 @@ func (c *datanodeService) SearchItem(ctx context.Context, in *SearchItemReq, opt
 	return out, nil
 }
 
-func (c *datanodeService) RefreshModifyreward(ctx context.Context, in *RefreshModifyRewardReq, opts ...client.CallOption) (*RefreshModifyRewardRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.RefreshModifyreward", in)
+func (c *datanodeService) RefreshModifyReward(ctx context.Context, in *RefreshModifyRewardReq, opts ...client.CallOption) (*RefreshModifyRewardRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.RefreshModifyReward", in)
 	out := new(RefreshModifyRewardRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -1470,7 +1470,7 @@ type DatanodeServiceHandler interface {
 	// 搜索关键字补全
 	SearchItem(context.Context, *SearchItemReq, *SearchItemRes) error
 	// 更新修改试题的奖励积分
-	RefreshModifyreward(context.Context, *RefreshModifyRewardReq, *RefreshModifyRewardRes) error
+	RefreshModifyReward(context.Context, *RefreshModifyRewardReq, *RefreshModifyRewardRes) error
 	// 更新添加试题的奖励积分
 	RefreshAddReward(context.Context, *RefreshAddRewardReq, *RefreshAddRewardRes) error
 	// 更新用户的coin数值
@@ -1603,7 +1603,7 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		BaiduEntity(ctx context.Context, in *BaiduEntityReq, out *BaiduEntityRes) error
 		SearchHistory(ctx context.Context, in *SearchHistoryReq, out *SearchHistoryRes) error
 		SearchItem(ctx context.Context, in *SearchItemReq, out *SearchItemRes) error
-		RefreshModifyreward(ctx context.Context, in *RefreshModifyRewardReq, out *RefreshModifyRewardRes) error
+		RefreshModifyReward(ctx context.Context, in *RefreshModifyRewardReq, out *RefreshModifyRewardRes) error
 		RefreshAddReward(ctx context.Context, in *RefreshAddRewardReq, out *RefreshAddRewardRes) error
 		RefreshUserCoin(ctx context.Context, in *RefreshUserCoinReq, out *RefreshUserCoinRes) error
 		TixingByVid(ctx context.Context, in *TixingByVidReq, out *TixingByVidRes) error
@@ -1948,8 +1948,8 @@ func (h *datanodeServiceHandler) SearchItem(ctx context.Context, in *SearchItemR
 	return h.DatanodeServiceHandler.SearchItem(ctx, in, out)
 }
 
-func (h *datanodeServiceHandler) RefreshModifyreward(ctx context.Context, in *RefreshModifyRewardReq, out *RefreshModifyRewardRes) error {
-	return h.DatanodeServiceHandler.RefreshModifyreward(ctx, in, out)
+func (h *datanodeServiceHandler) RefreshModifyReward(ctx context.Context, in *RefreshModifyRewardReq, out *RefreshModifyRewardRes) error {
+	return h.DatanodeServiceHandler.RefreshModifyReward(ctx, in, out)
 }
 
 func (h *datanodeServiceHandler) RefreshAddReward(ctx context.Context, in *RefreshAddRewardReq, out *RefreshAddRewardRes) error {
