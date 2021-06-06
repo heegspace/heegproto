@@ -1386,7 +1386,7 @@ message UpdateUserinfoRes {
     map<string,string>        extra = 4;
 }
 
-service datanode_service {
+service DatanodeService {
 	// ---------- 用户接口 ------- //
 	// 创建新用户
 	rpc  CreateUser(NewUserReq) returns (UserRes) {}
