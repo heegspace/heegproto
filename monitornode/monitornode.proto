@@ -1,0 +1,64 @@
+syntax  =  "proto3";
+package monitornode;
+option go_package="./monitornode";
+
+message InstallReq {
+    string              name = 1;
+    string              version = 2;
+    map<string,string>  extra = 3;
+}
+
+message InstallRes {
+    int32               rescode = 1;
+    string              resmsg = 2;
+    map<string,string>  extra = 3;
+}
+
+message UnInstallReq {
+    string              name = 1;
+    string              version = 2;
+    map<string,string>  extra = 3;
+}
+
+message UnInstallRes {
+    int32               rescode = 1;
+    string              resmsg = 2;
+    map<string,string>  extra = 3;
+}
+
+message StartReq {
+    string              name = 1;
+    string              version = 2;
+    map<string,string>  extra = 3;
+}
+
+message StartRes {
+    int32               rescode = 1;
+    string              resmsg = 2;
+    map<string,string>  extra = 3;
+}
+
+message StopReq {
+    string              name = 1;
+    string              version = 2;
+    map<string,string>  extra = 3;
+}
+
+message StopRes {
+    int32               rescode = 1;
+    string              resmsg = 2;
+    map<string,string>  extra = 3;
+}
+
+message UpdateReq {
+    string              name = 1;
+    string              version = 2;
+    string              url = 3;
+    map<string,string>  extra = 4;
+}
+
+message UpdateRes {
+    int32               rescode = 1;
+    string              resmsg = 2;
+    map<string,string>  extra = 3;
+}
