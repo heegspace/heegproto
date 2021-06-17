@@ -2,6 +2,22 @@ syntax  =  "proto3";
 package monitornode;
 option go_package="./monitornode";
 
+
+message RunningReq {
+    string              name = 1;
+    string              version = 2;
+    map<string,string>  extra = 3;
+}
+
+message RunningRes {
+    int32               rescode = 1;
+    string              resmsg = 2;
+    uint32              runing = 3;
+    string              name = 4;
+    string              version = 5;
+    map<string,string>  extra = 6;
+}
+
 message InstallReq {
     string              name = 1;
     string              version = 2;
@@ -12,6 +28,17 @@ message InstallRes {
     int32               rescode = 1;
     string              resmsg = 2;
     map<string,string>  extra = 3;
+}
+
+message InstalledReq {
+    map<string,string>  extra = 3;
+}
+
+message InstalledRes {
+    int32               rescode = 1;
+    string              resmsg = 2;
+    repeated string     procs = 3;
+    map<string,string>  extra = 4;
 }
 
 message UnInstallReq {
