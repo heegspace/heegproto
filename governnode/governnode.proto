@@ -1,6 +1,6 @@
 syntax  =  "proto3";
-package monitornode;
-option go_package="./monitornode";
+package governnode;
+option go_package="./governnode";
 
 message Authorie {
     string              user = 1;
@@ -10,7 +10,9 @@ message Authorie {
 
 message RunningReq {
     Authorie            auth = 1;
+    // @inject_tag: form:"name"
     string              name = 2;
+    // @inject_tag: form:"version"
     string              version = 3;
     map<string,string>  extra = 4;
 }
@@ -26,7 +28,9 @@ message RunningRes {
 
 message InstallReq {
     Authorie            auth = 1;
+    // @inject_tag: form:"name"
     string              name = 2;
+    // @inject_tag: form:"version"
     string              version = 3;
     map<string,string>  extra = 4;
 }
@@ -51,7 +55,9 @@ message InstalledRes {
 
 message UnInstallReq {
     Authorie            auth = 1;
+    // @inject_tag: form:"name"
     string              name = 2;
+    // @inject_tag: form:"version"
     string              version = 3;
     map<string,string>  extra = 4;
 }
@@ -64,7 +70,9 @@ message UnInstallRes {
 
 message StartReq {
     Authorie            auth = 1;
+    // @inject_tag: form:"name"
     string              name = 2;
+    // @inject_tag: form:"version"
     string              version = 3;
     map<string,string>  extra = 4;
 }
@@ -77,7 +85,9 @@ message StartRes {
 
 message StopReq {
     Authorie            auth = 1;
+    // @inject_tag: form:"name"
     string              name = 2;
+    // @inject_tag: form:"version"
     string              version = 3;
     map<string,string>  extra = 4;
 }
@@ -90,8 +100,11 @@ message StopRes {
 
 message UpdateReq {
     Authorie            auth = 1;
+    // @inject_tag: form:"name"
     string              name = 2;
+    // @inject_tag: form:"version"
     string              version = 3;
+    // @inject_tag: form:"url"
     string              url = 4;
     map<string,string>  extra = 5;
 }
@@ -104,6 +117,7 @@ message UpdateRes {
 
 message ExcuteShellReq {
     Authorie            auth = 1;
+    // @inject_tag: form:"shell"
     string              shell = 2;
     map<string,string>  extra = 3;
 }
