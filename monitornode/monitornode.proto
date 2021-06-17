@@ -2,11 +2,17 @@ syntax  =  "proto3";
 package monitornode;
 option go_package="./monitornode";
 
+message Authorie {
+    string              user = 1;
+    string              key = 2;
+    map<string,string>  extra = 3;
+}
 
 message RunningReq {
-    string              name = 1;
-    string              version = 2;
-    map<string,string>  extra = 3;
+    Authorie            auth = 1;
+    string              name = 2;
+    string              version = 3;
+    map<string,string>  extra = 4;
 }
 
 message RunningRes {
@@ -19,9 +25,10 @@ message RunningRes {
 }
 
 message InstallReq {
-    string              name = 1;
-    string              version = 2;
-    map<string,string>  extra = 3;
+    Authorie            auth = 1;
+    string              name = 2;
+    string              version = 3;
+    map<string,string>  extra = 4;
 }
 
 message InstallRes {
@@ -31,7 +38,8 @@ message InstallRes {
 }
 
 message InstalledReq {
-    map<string,string>  extra = 3;
+    Authorie            auth = 1;
+    map<string,string>  extra = 2;
 }
 
 message InstalledRes {
@@ -42,9 +50,10 @@ message InstalledRes {
 }
 
 message UnInstallReq {
-    string              name = 1;
-    string              version = 2;
-    map<string,string>  extra = 3;
+    Authorie            auth = 1;
+    string              name = 2;
+    string              version = 3;
+    map<string,string>  extra = 4;
 }
 
 message UnInstallRes {
@@ -54,9 +63,10 @@ message UnInstallRes {
 }
 
 message StartReq {
-    string              name = 1;
-    string              version = 2;
-    map<string,string>  extra = 3;
+    Authorie            auth = 1;
+    string              name = 2;
+    string              version = 3;
+    map<string,string>  extra = 4;
 }
 
 message StartRes {
@@ -66,9 +76,10 @@ message StartRes {
 }
 
 message StopReq {
-    string              name = 1;
-    string              version = 2;
-    map<string,string>  extra = 3;
+    Authorie            auth = 1;
+    string              name = 2;
+    string              version = 3;
+    map<string,string>  extra = 4;
 }
 
 message StopRes {
@@ -78,14 +89,28 @@ message StopRes {
 }
 
 message UpdateReq {
-    string              name = 1;
-    string              version = 2;
-    string              url = 3;
-    map<string,string>  extra = 4;
+    Authorie            auth = 1;
+    string              name = 2;
+    string              version = 3;
+    string              url = 4;
+    map<string,string>  extra = 5;
 }
 
 message UpdateRes {
     int32               rescode = 1;
     string              resmsg = 2;
     map<string,string>  extra = 3;
+}
+
+message ExcuteShellReq {
+    Authorie            auth = 1;
+    string              shell = 2;
+    map<string,string>  extra = 3;
+}
+
+message ExcuteShellRes {
+    int32               rescode = 1;
+    string              resmsg = 2;
+    string              result = 3;
+    map<string,string>  extra = 4;
 }
