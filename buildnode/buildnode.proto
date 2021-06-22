@@ -42,6 +42,21 @@ message BuildStatusRes {
     map<string,string>  extra = 4;
 }
 
+message VersionReq {
+    Authorie            auth = 1;
+    // @inject_tag: form:"url"
+    string              url = 2;
+    // @inject_tag: form:"version"
+    string              version = 3;
+    map<string,string>  extra = 4;
+}
+
+message VersionRes {
+    int32               rescode = 1;
+    string              resmsg = 2;
+    map<string,string>  extra = 3;
+}
+
 message ExcuteShellReq {
     Authorie            auth = 1;
     // @inject_tag: form:"shell"
