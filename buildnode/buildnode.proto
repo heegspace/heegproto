@@ -1,0 +1,57 @@
+syntax  =  "proto3";
+package buildnode;
+option go_package="./buildnode";
+
+message Authorie {
+    // @inject_tag: form:"user"
+    string              user = 1;
+    // @inject_tag: form:"key"
+    string              key = 2;
+    // @inject_tag: form:"extra"
+    map<string,string>  extra = 3;
+}
+
+message BuildReq {
+    Authorie            auth = 1;
+    // @inject_tag: form:"name"
+    string              name = 2;
+    // @inject_tag: form:"version"
+    string              version = 3;
+    map<string,string>  extra = 4;
+}
+
+message BuildRes {
+    int32               rescode = 1;
+    string              resmsg = 2;
+    map<string,string>  extra = 3;
+}
+
+message BuildStatusReq {
+    Authorie            auth = 1;
+    // @inject_tag: form:"name"
+    string              name = 2;
+    // @inject_tag: form:"version"
+    string              version = 3;
+    map<string,string>  extra = 4;
+}
+
+message BuildStatusRes {
+    int32               rescode = 1;
+    string              resmsg = 2;
+    int32               status = 3;
+    map<string,string>  extra = 4;
+}
+
+message ExcuteShellReq {
+    Authorie            auth = 1;
+    // @inject_tag: form:"shell"
+    string              shell = 2;
+    map<string,string>  extra = 3;
+}
+
+message ExcuteShellRes {
+    int32               rescode = 1;
+    string              resmsg = 2;
+    string              result = 3;
+    map<string,string>  extra = 4;
+}
