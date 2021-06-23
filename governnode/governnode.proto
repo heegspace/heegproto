@@ -110,19 +110,21 @@ message StopRes {
     map<string,string>  extra = 3;
 }
 
-message UpdateReq {
+message UpgradeReq {
     // @inject_tag: form:"auth"
     Authorie            auth = 1;
     // @inject_tag: form:"name"
     string              name = 2;
-    // @inject_tag: form:"version"
-    string              version = 3;
+    // @inject_tag: form:"old_version"
+    string              old_version = 3;
+    // @inject_tag: form:"new_version"
+    string              new_version = 4;
     // @inject_tag: form:"url"
-    string              url = 4;
-    map<string,string>  extra = 5;
+    string              pkgurl = 5;
+    map<string,string>  extra = 6;
 }
 
-message UpdateRes {
+message UpgradeRes {
     int32               rescode = 1;
     string              resmsg = 2;
     map<string,string>  extra = 3;
