@@ -6,8 +6,8 @@ package pkgnode
 import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	_ "github.com/heegspace/heegproto//common"
-	_ "github.com/heegspace/heegproto//rescode"
+	_ "github.com/heegspace/heegproto/common"
+	_ "github.com/heegspace/heegproto/rescode"
 	math "math"
 )
 

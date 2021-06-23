@@ -7,8 +7,8 @@
 package pkgnode
 
 import (
-	common "github.com/heegspace/heegproto//common"
-	rescode "github.com/heegspace/heegproto//rescode"
+	common "github.com/heegspace/heegproto/common"
+	rescode "github.com/heegspace/heegproto/rescode"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
