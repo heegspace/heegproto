@@ -4,10 +4,10 @@
 package datanode
 
 import (
+	common "./common"
+	_ "./rescode"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	common "github.com/heegspace/heegproto/common"
-	_ "github.com/heegspace/heegproto/rescode"
 	math "math"
 )
 
@@ -250,6 +250,14 @@ type DatanodeService interface {
 	GetTask(ctx context.Context, in *GetTaskReq, opts ...client.CallOption) (*GetTaskRes, error)
 	// 获取任务数量
 	GetTaskCount(ctx context.Context, in *GetTaskCountReq, opts ...client.CallOption) (*GetTaskCountRes, error)
+	// 添加包信息
+	AddPkg(ctx context.Context, in *AddPkgReq, opts ...client.CallOption) (*AddPkgRes, error)
+	// 删除包
+	DelPkg(ctx context.Context, in *DelPkgReq, opts ...client.CallOption) (*DelPkgRes, error)
+	// 获取包列表
+	PkgLists(ctx context.Context, in *PkgListReq, opts ...client.CallOption) (*PkgListRes, error)
+	// 获取包数量
+	PkgCount(ctx context.Context, in *PkgCountReq, opts ...client.CallOption) (*PkgCountRes, error)
 }
 
 type datanodeService struct {
@@ -1314,6 +1322,46 @@ func (c *datanodeService) GetTaskCount(ctx context.Context, in *GetTaskCountReq,
 	return out, nil
 }
 
+func (c *datanodeService) AddPkg(ctx context.Context, in *AddPkgReq, opts ...client.CallOption) (*AddPkgRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.AddPkg", in)
+	out := new(AddPkgRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *datanodeService) DelPkg(ctx context.Context, in *DelPkgReq, opts ...client.CallOption) (*DelPkgRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.DelPkg", in)
+	out := new(DelPkgRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *datanodeService) PkgLists(ctx context.Context, in *PkgListReq, opts ...client.CallOption) (*PkgListRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.PkgLists", in)
+	out := new(PkgListRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *datanodeService) PkgCount(ctx context.Context, in *PkgCountReq, opts ...client.CallOption) (*PkgCountRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.PkgCount", in)
+	out := new(PkgCountRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for DatanodeService service
 
 type DatanodeServiceHandler interface {
@@ -1523,6 +1571,14 @@ type DatanodeServiceHandler interface {
 	GetTask(context.Context, *GetTaskReq, *GetTaskRes) error
 	// 获取任务数量
 	GetTaskCount(context.Context, *GetTaskCountReq, *GetTaskCountRes) error
+	// 添加包信息
+	AddPkg(context.Context, *AddPkgReq, *AddPkgRes) error
+	// 删除包
+	DelPkg(context.Context, *DelPkgReq, *DelPkgRes) error
+	// 获取包列表
+	PkgLists(context.Context, *PkgListReq, *PkgListRes) error
+	// 获取包数量
+	PkgCount(context.Context, *PkgCountReq, *PkgCountRes) error
 }
 
 func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler, opts ...server.HandlerOption) error {
@@ -1632,6 +1688,10 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		AddTask(ctx context.Context, in *AddTaskReq, out *AddTaskRes) error
 		GetTask(ctx context.Context, in *GetTaskReq, out *GetTaskRes) error
 		GetTaskCount(ctx context.Context, in *GetTaskCountReq, out *GetTaskCountRes) error
+		AddPkg(ctx context.Context, in *AddPkgReq, out *AddPkgRes) error
+		DelPkg(ctx context.Context, in *DelPkgReq, out *DelPkgRes) error
+		PkgLists(ctx context.Context, in *PkgListReq, out *PkgListRes) error
+		PkgCount(ctx context.Context, in *PkgCountReq, out *PkgCountRes) error
 	}
 	type DatanodeService struct {
 		datanodeService
@@ -2062,4 +2122,20 @@ func (h *datanodeServiceHandler) GetTask(ctx context.Context, in *GetTaskReq, ou
 
 func (h *datanodeServiceHandler) GetTaskCount(ctx context.Context, in *GetTaskCountReq, out *GetTaskCountRes) error {
 	return h.DatanodeServiceHandler.GetTaskCount(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) AddPkg(ctx context.Context, in *AddPkgReq, out *AddPkgRes) error {
+	return h.DatanodeServiceHandler.AddPkg(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) DelPkg(ctx context.Context, in *DelPkgReq, out *DelPkgRes) error {
+	return h.DatanodeServiceHandler.DelPkg(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) PkgLists(ctx context.Context, in *PkgListReq, out *PkgListRes) error {
+	return h.DatanodeServiceHandler.PkgLists(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) PkgCount(ctx context.Context, in *PkgCountReq, out *PkgCountRes) error {
+	return h.DatanodeServiceHandler.PkgCount(ctx, in, out)
 }

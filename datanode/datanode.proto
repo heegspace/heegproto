@@ -3,6 +3,7 @@ package datanode;
 import "rescode/rescode.proto";
 import "common/common.proto";
 
+option go_package="./datanode";
 
 message User{
     int64    uid = 1;
@@ -1386,6 +1387,58 @@ message UpdateUserinfoRes {
     map<string,string>        extra = 4;
 }
 
+
+message AddPkgReq {
+    string                name  = 1;
+    string                version = 2;
+    string                address = 3;
+    map<string,string>    extra = 4;
+}
+
+message AddPkgRes {
+    rescode.Code        rescode = 1;
+    string              resmsg = 2;
+    map<string,string>  extra = 3;
+}
+
+message DelPkgReq {
+    string                name  = 1;
+    string                version = 2;
+    map<string,string>    extra = 3;
+}
+
+message DelPkgRes {
+    rescode.Code        rescode = 1;
+    string              resmsg = 2;
+    map<string,string>  extra = 3;
+}
+
+message PkgListReq {
+    string                name = 1;
+    int64                 page = 2;
+    int64                 size = 3;
+    map<string,string>    extra = 4;
+}
+
+message PkgListRes {
+    rescode.Code        rescode = 1;
+    string              resmsg = 2;
+    common.GovernItem   version = 3;
+    map<string,string>  extra = 4;
+}
+
+message PkgCountReq {
+    string                name = 1;
+    map<string,string>    extra = 2;
+}
+
+message PkgCountRes {
+    rescode.Code        rescode = 1;
+    string              resmsg = 2;
+    int64               count = 3;
+    map<string,string>  extra = 4;
+}
+
 service DatanodeService {
 	// ---------- 用户接口 ------- //
 	// 创建新用户
@@ -1593,4 +1646,12 @@ service DatanodeService {
 	rpc GetTask(GetTaskReq) returns (GetTaskRes) {}
 	// 获取任务数量
 	rpc GetTaskCount(GetTaskCountReq) returns (GetTaskCountRes) {}
+    // 添加包信息
+    rpc  AddPkg(AddPkgReq) returns(AddPkgRes){}
+    // 删除包
+    rpc  DelPkg(DelPkgReq) returns(DelPkgRes){}
+    // 获取包列表
+    rpc  PkgLists(PkgListReq) returns(PkgListRes){}
+    // 获取包数量
+    rpc  PkgCount(PkgCountReq) returns(PkgCountRes) {}
 }

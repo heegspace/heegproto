@@ -3,12 +3,15 @@ package governnode;
 option go_package="./governnode";
 
 message Authorie {
+    // @inject_tag: form:"user"
     string              user = 1;
+    // @inject_tag: form:"key"
     string              key = 2;
     map<string,string>  extra = 3;
 }
 
 message RunningReq {
+    // @inject_tag: form:"auth"
     Authorie            auth = 1;
     // @inject_tag: form:"name"
     string              name = 2;
@@ -27,12 +30,15 @@ message RunningRes {
 }
 
 message InstallReq {
+    // @inject_tag: form:"auth"
     Authorie            auth = 1;
     // @inject_tag: form:"name"
     string              name = 2;
     // @inject_tag: form:"version"
     string              version = 3;
-    map<string,string>  extra = 4;
+    // @inject_tag: form:"pkgurl"
+    string              pkgurl = 4;
+    map<string,string>  extra = 5;
 }
 
 message InstallRes {
@@ -42,6 +48,7 @@ message InstallRes {
 }
 
 message InstalledReq {
+    // @inject_tag: form:"auth"
     Authorie            auth = 1;
     map<string,string>  extra = 2;
 }
@@ -54,6 +61,7 @@ message InstalledRes {
 }
 
 message UnInstallReq {
+    // @inject_tag: form:"auth"
     Authorie            auth = 1;
     // @inject_tag: form:"name"
     string              name = 2;
@@ -69,12 +77,15 @@ message UnInstallRes {
 }
 
 message StartReq {
+    // @inject_tag: form:"auth"
     Authorie            auth = 1;
     // @inject_tag: form:"name"
     string              name = 2;
     // @inject_tag: form:"version"
     string              version = 3;
-    map<string,string>  extra = 4;
+    // @inject_tag: form:"count"
+    int64               count = 4;
+    map<string,string>  extra = 5;
 }
 
 message StartRes {
@@ -84,6 +95,7 @@ message StartRes {
 }
 
 message StopReq {
+    // @inject_tag: form:"auth"
     Authorie            auth = 1;
     // @inject_tag: form:"name"
     string              name = 2;
@@ -99,6 +111,7 @@ message StopRes {
 }
 
 message UpdateReq {
+    // @inject_tag: form:"auth"
     Authorie            auth = 1;
     // @inject_tag: form:"name"
     string              name = 2;
@@ -116,6 +129,7 @@ message UpdateRes {
 }
 
 message ExcuteShellReq {
+    // @inject_tag: form:"auth"
     Authorie            auth = 1;
     // @inject_tag: form:"shell"
     string              shell = 2;
@@ -127,4 +141,73 @@ message ExcuteShellRes {
     string              resmsg = 2;
     string              result = 3;
     map<string,string>  extra = 4;
+}
+
+message OpenDirReq {
+    // @inject_tag: form:"auth"
+	Authorie            auth = 1;
+    // @inject_tag: form:"name"
+    string              name = 2;
+    // @inject_tag: form:"version"
+    string              version = 3;
+	// @inject_tag: form:"dir"
+	string 				dir = 4;
+    map<string,string>  extra = 5;
+}
+
+message DirItem {
+	string 			 name = 1;
+	bool 			 isdir = 2;
+}
+
+message OpenDirRes {
+	int32               rescode = 1;
+    string              resmsg = 2;
+	repeated DirItem 	dirs = 3;
+    map<string,string>  extra = 4;
+}
+
+
+message OpenFileReq {
+    // @inject_tag: form:"auth"
+	Authorie            auth = 1;
+    // @inject_tag: form:"name"
+    string              name = 2;
+    // @inject_tag: form:"version"
+    string              version = 3;
+	// @inject_tag: form:"dir"
+	string 				dir = 4;
+	// @inject_tag: form:"filename"
+	string 				filename = 5;
+    map<string,string>  extra = 6;
+}
+
+message OpenFileRes {
+	int32               rescode = 1;
+    string              resmsg = 2;
+	string 				data = 3;
+    map<string,string>  extra = 4;
+}
+
+
+message WriteFileReq {
+    // @inject_tag: form:"auth"
+	Authorie            auth = 1;
+    // @inject_tag: form:"name"
+    string              name = 2;
+    // @inject_tag: form:"version"
+    string              version = 3;
+	// @inject_tag: form:"dir"
+	string 				dir = 4;
+	// @inject_tag: form:"filename"
+	string 				filename = 5;
+	// @inject_tag: form:"data"
+	string 				data = 6;
+    map<string,string>  extra = 7;
+}
+
+message WriteFileRes {
+	int32               rescode = 1;
+    string              resmsg = 2;
+    map<string,string>  extra = 3;
 }

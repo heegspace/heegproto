@@ -1,6 +1,9 @@
 syntax = "proto3";
 package rescode;
 
+option go_package="./rescode";
+
+
 enum Code {
     code_SUCCESS =   0;      // 成功
     code_ERROR   =   1;      // 失败

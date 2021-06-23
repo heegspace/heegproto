@@ -1,6 +1,7 @@
 syntax = "proto3";
 package common;
-import "rescode/rescode.proto";
+
+option go_package="./common";
 
 message Authorize {
     string              key = 1;
@@ -566,4 +567,13 @@ message CronItem {
     string                info = 6;
     string                version = 7;
     map<string,string>    extra = 8;
+}
+
+message GovernItem {
+    string                  name = 1;
+    string                  version = 2;
+    string                  address = 3;
+    string                  admin = 4;
+    int32                   flag = 5;
+    string                  create_at = 6;
 }
