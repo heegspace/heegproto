@@ -1421,10 +1421,10 @@ message PkgListReq {
 }
 
 message PkgListRes {
-    rescode.Code        rescode = 1;
-    string              resmsg = 2;
-    common.GovernItem   version = 3;
-    map<string,string>  extra = 4;
+    rescode.Code                rescode = 1;
+    string                      resmsg = 2;
+    repeated common.PkgItem  version = 3;
+    map<string,string>          extra = 4;
 }
 
 message PkgCountReq {

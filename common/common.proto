@@ -569,7 +569,7 @@ message CronItem {
     map<string,string>    extra = 8;
 }
 
-message GovernItem {
+message PkgItem {
     string                  name = 1;
     string                  version = 2;
     string                  address = 3;
