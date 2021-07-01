@@ -227,3 +227,22 @@ message StatisticRes {
     repeated string     running = 4;
     map<string,string>  extra = 5;
 }
+
+
+message StatusItem {
+    string name = 1;
+    bool isrunning = 2;
+}
+
+message StatusReq {
+    // @inject_tag: form:"auth"
+	Authorie            auth = 1;
+    map<string,string>  extra = 2;
+}
+
+message StatusRes  {
+    int32               rescode = 1;
+    string              resmsg = 2;
+    repeated StatusItem status = 3;
+    map<string,string>  extra = 4;
+}
