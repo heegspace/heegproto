@@ -26,9 +26,9 @@ type Authorie struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"user"
-	User string `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty" form:"user"`
+	User string `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	// @inject_tag: form:"key"
-	Key   string            `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty" form:"key"`
+	Key   string            `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
 	Extra map[string]string `protobuf:"bytes,3,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -91,11 +91,11 @@ type RunningReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
 	// @inject_tag: form:"name"
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// @inject_tag: form:"version"
-	Version string            `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty" form:"version"`
+	Version string            `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
 	Extra   map[string]string `protobuf:"bytes,4,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -252,13 +252,13 @@ type InstallReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
 	// @inject_tag: form:"name"
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// @inject_tag: form:"version"
-	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty" form:"version"`
+	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
 	// @inject_tag: form:"pkgurl"
-	Pkgurl string            `protobuf:"bytes,4,opt,name=pkgurl,proto3" json:"pkgurl,omitempty" form:"pkgurl"`
+	Pkgurl string            `protobuf:"bytes,4,opt,name=pkgurl,proto3" json:"pkgurl,omitempty"`
 	Extra  map[string]string `protobuf:"bytes,5,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -398,7 +398,7 @@ type InstalledReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth  *Authorie         `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
+	Auth  *Authorie         `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
 	Extra map[string]string `protobuf:"bytes,2,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -525,11 +525,11 @@ type UnInstallReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
 	// @inject_tag: form:"name"
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// @inject_tag: form:"version"
-	Version string            `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty" form:"version"`
+	Version string            `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
 	Extra   map[string]string `protobuf:"bytes,4,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -662,13 +662,13 @@ type StartReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
 	// @inject_tag: form:"name"
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// @inject_tag: form:"version"
-	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty" form:"version"`
+	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
 	// @inject_tag: form:"count"
-	Count int64             `protobuf:"varint,4,opt,name=count,proto3" json:"count,omitempty" form:"count"`
+	Count int64             `protobuf:"varint,4,opt,name=count,proto3" json:"count,omitempty"`
 	Extra map[string]string `protobuf:"bytes,5,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -808,11 +808,11 @@ type StopReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
 	// @inject_tag: form:"name"
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// @inject_tag: form:"version"
-	Version string            `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty" form:"version"`
+	Version string            `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
 	Extra   map[string]string `protobuf:"bytes,4,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -945,15 +945,15 @@ type UpgradeReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
 	// @inject_tag: form:"name"
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// @inject_tag: form:"old_version"
-	OldVersion string `protobuf:"bytes,3,opt,name=old_version,json=oldVersion,proto3" json:"old_version,omitempty" form:"old_version"`
+	OldVersion string `protobuf:"bytes,3,opt,name=old_version,json=oldVersion,proto3" json:"old_version,omitempty"`
 	// @inject_tag: form:"new_version"
-	NewVersion string `protobuf:"bytes,4,opt,name=new_version,json=newVersion,proto3" json:"new_version,omitempty" form:"new_version"`
+	NewVersion string `protobuf:"bytes,4,opt,name=new_version,json=newVersion,proto3" json:"new_version,omitempty"`
 	// @inject_tag: form:"url"
-	Pkgurl string            `protobuf:"bytes,5,opt,name=pkgurl,proto3" json:"pkgurl,omitempty" form:"url"`
+	Pkgurl string            `protobuf:"bytes,5,opt,name=pkgurl,proto3" json:"pkgurl,omitempty"`
 	Extra  map[string]string `protobuf:"bytes,6,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -1100,9 +1100,9 @@ type ExcuteShellReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
 	// @inject_tag: form:"shell"
-	Shell string            `protobuf:"bytes,2,opt,name=shell,proto3" json:"shell,omitempty" form:"shell"`
+	Shell string            `protobuf:"bytes,2,opt,name=shell,proto3" json:"shell,omitempty"`
 	Extra map[string]string `protobuf:"bytes,3,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -1236,13 +1236,13 @@ type OpenDirReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
 	// @inject_tag: form:"name"
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// @inject_tag: form:"version"
-	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty" form:"version"`
+	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
 	// @inject_tag: form:"dir"
-	Dir   string            `protobuf:"bytes,4,opt,name=dir,proto3" json:"dir,omitempty" form:"dir"`
+	Dir   string            `protobuf:"bytes,4,opt,name=dir,proto3" json:"dir,omitempty"`
 	Extra map[string]string `protobuf:"bytes,5,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -1445,15 +1445,15 @@ type OpenFileReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
 	// @inject_tag: form:"name"
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// @inject_tag: form:"version"
-	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty" form:"version"`
+	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
 	// @inject_tag: form:"dir"
-	Dir string `protobuf:"bytes,4,opt,name=dir,proto3" json:"dir,omitempty" form:"dir"`
+	Dir string `protobuf:"bytes,4,opt,name=dir,proto3" json:"dir,omitempty"`
 	// @inject_tag: form:"filename"
-	Filename string            `protobuf:"bytes,5,opt,name=filename,proto3" json:"filename,omitempty" form:"filename"`
+	Filename string            `protobuf:"bytes,5,opt,name=filename,proto3" json:"filename,omitempty"`
 	Extra    map[string]string `protobuf:"bytes,6,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -1608,17 +1608,17 @@ type WriteFileReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
 	// @inject_tag: form:"name"
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// @inject_tag: form:"version"
-	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty" form:"version"`
+	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
 	// @inject_tag: form:"dir"
-	Dir string `protobuf:"bytes,4,opt,name=dir,proto3" json:"dir,omitempty" form:"dir"`
+	Dir string `protobuf:"bytes,4,opt,name=dir,proto3" json:"dir,omitempty"`
 	// @inject_tag: form:"filename"
-	Filename string `protobuf:"bytes,5,opt,name=filename,proto3" json:"filename,omitempty" form:"filename"`
+	Filename string `protobuf:"bytes,5,opt,name=filename,proto3" json:"filename,omitempty"`
 	// @inject_tag: form:"data"
-	Data  string            `protobuf:"bytes,6,opt,name=data,proto3" json:"data,omitempty" form:"data"`
+	Data  string            `protobuf:"bytes,6,opt,name=data,proto3" json:"data,omitempty"`
 	Extra map[string]string `protobuf:"bytes,7,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -1772,7 +1772,7 @@ type StatisticReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth  *Authorie         `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
+	Auth  *Authorie         `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
 	Extra map[string]string `protobuf:"bytes,2,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -1962,8 +1962,10 @@ type StatusReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth  *Authorie         `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
-	Extra map[string]string `protobuf:"bytes,2,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	// @inject_tag: form:"auth"
+	Name  string            `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Extra map[string]string `protobuf:"bytes,3,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
 func (x *StatusReq) Reset() {
@@ -2003,6 +2005,13 @@ func (x *StatusReq) GetAuth() *Authorie {
 		return x.Auth
 	}
 	return nil
+}
+
+func (x *StatusReq) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
 }
 
 func (x *StatusReq) GetExtra() map[string]string {
@@ -2428,33 +2437,34 @@ var file_governnode_proto_rawDesc = []byte{
 	0x65, 0x6d, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
 	0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x69, 0x73, 0x72, 0x75, 0x6e, 0x6e,
 	0x69, 0x6e, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x08, 0x52, 0x09, 0x69, 0x73, 0x72, 0x75, 0x6e,
-	0x6e, 0x69, 0x6e, 0x67, 0x22, 0xa7, 0x01, 0x0a, 0x09, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52,
+	0x6e, 0x69, 0x6e, 0x67, 0x22, 0xbb, 0x01, 0x0a, 0x09, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52,
 	0x65, 0x71, 0x12, 0x28, 0x0a, 0x04, 0x61, 0x75, 0x74, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b,
 	0x32, 0x14, 0x2e, 0x67, 0x6f, 0x76, 0x65, 0x72, 0x6e, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x41, 0x75,
-	0x74, 0x68, 0x6f, 0x72, 0x69, 0x65, 0x52, 0x04, 0x61, 0x75, 0x74, 0x68, 0x12, 0x36, 0x0a, 0x05,
-	0x65, 0x78, 0x74, 0x72, 0x61, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x67, 0x6f,
-	0x76, 0x65, 0x72, 0x6e, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52,
-	0x65, 0x71, 0x2e, 0x45, 0x78, 0x74, 0x72, 0x61, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x05, 0x65,
-	0x78, 0x74, 0x72, 0x61, 0x1a, 0x38, 0x0a, 0x0a, 0x45, 0x78, 0x74, 0x72, 0x61, 0x45, 0x6e, 0x74,
-	0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0xdf,
-	0x01, 0x0a, 0x09, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x12, 0x18, 0x0a, 0x07,
-	0x72, 0x65, 0x73, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x07, 0x72,
-	0x65, 0x73, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x6d, 0x73, 0x67,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65, 0x73, 0x6d, 0x73, 0x67, 0x12, 0x2e,
-	0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x16,
-	0x2e, 0x67, 0x6f, 0x76, 0x65, 0x72, 0x6e, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x53, 0x74, 0x61, 0x74,
-	0x75, 0x73, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x36,
-	0x0a, 0x05, 0x65, 0x78, 0x74, 0x72, 0x61, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x20, 0x2e,
-	0x67, 0x6f, 0x76, 0x65, 0x72, 0x6e, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75,
-	0x73, 0x52, 0x65, 0x73, 0x2e, 0x45, 0x78, 0x74, 0x72, 0x61, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52,
-	0x05, 0x65, 0x78, 0x74, 0x72, 0x61, 0x1a, 0x38, 0x0a, 0x0a, 0x45, 0x78, 0x74, 0x72, 0x61, 0x45,
-	0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01,
-	0x42, 0x0e, 0x5a, 0x0c, 0x2e, 0x2f, 0x67, 0x6f, 0x76, 0x65, 0x72, 0x6e, 0x6e, 0x6f, 0x64, 0x65,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x74, 0x68, 0x6f, 0x72, 0x69, 0x65, 0x52, 0x04, 0x61, 0x75, 0x74, 0x68, 0x12, 0x12, 0x0a, 0x04,
+	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65,
+	0x12, 0x36, 0x0a, 0x05, 0x65, 0x78, 0x74, 0x72, 0x61, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x20, 0x2e, 0x67, 0x6f, 0x76, 0x65, 0x72, 0x6e, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x53, 0x74, 0x61,
+	0x74, 0x75, 0x73, 0x52, 0x65, 0x71, 0x2e, 0x45, 0x78, 0x74, 0x72, 0x61, 0x45, 0x6e, 0x74, 0x72,
+	0x79, 0x52, 0x05, 0x65, 0x78, 0x74, 0x72, 0x61, 0x1a, 0x38, 0x0a, 0x0a, 0x45, 0x78, 0x74, 0x72,
+	0x61, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75,
+	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02,
+	0x38, 0x01, 0x22, 0xdf, 0x01, 0x0a, 0x09, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73,
+	0x12, 0x18, 0x0a, 0x07, 0x72, 0x65, 0x73, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x07, 0x72, 0x65, 0x73, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65,
+	0x73, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65, 0x73, 0x6d,
+	0x73, 0x67, 0x12, 0x2e, 0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x03, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x16, 0x2e, 0x67, 0x6f, 0x76, 0x65, 0x72, 0x6e, 0x6e, 0x6f, 0x64, 0x65, 0x2e,
+	0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74,
+	0x75, 0x73, 0x12, 0x36, 0x0a, 0x05, 0x65, 0x78, 0x74, 0x72, 0x61, 0x18, 0x04, 0x20, 0x03, 0x28,
+	0x0b, 0x32, 0x20, 0x2e, 0x67, 0x6f, 0x76, 0x65, 0x72, 0x6e, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x53,
+	0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x2e, 0x45, 0x78, 0x74, 0x72, 0x61, 0x45, 0x6e,
+	0x74, 0x72, 0x79, 0x52, 0x05, 0x65, 0x78, 0x74, 0x72, 0x61, 0x1a, 0x38, 0x0a, 0x0a, 0x45, 0x78,
+	0x74, 0x72, 0x61, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61,
+	0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65,
+	0x3a, 0x02, 0x38, 0x01, 0x42, 0x0e, 0x5a, 0x0c, 0x2e, 0x2f, 0x67, 0x6f, 0x76, 0x65, 0x72, 0x6e,
+	0x6e, 0x6f, 0x64, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (

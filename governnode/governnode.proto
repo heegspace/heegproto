@@ -237,7 +237,9 @@ message StatusItem {
 message StatusReq {
     // @inject_tag: form:"auth"
 	Authorie            auth = 1;
-    map<string,string>  extra = 2;
+    // @inject_tag: form:"auth"
+    string              name = 2;
+    map<string,string>  extra = 3;
 }
 
 message StatusRes  {
