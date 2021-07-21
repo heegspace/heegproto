@@ -26,9 +26,9 @@ type Authorie struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"user"
-	User string `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	User string `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty" form:"user"`
 	// @inject_tag: form:"key"
-	Key   string            `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
+	Key   string            `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty" form:"key"`
 	Extra map[string]string `protobuf:"bytes,3,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -91,11 +91,11 @@ type RunningReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
 	// @inject_tag: form:"name"
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
 	// @inject_tag: form:"version"
-	Version string            `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
+	Version string            `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty" form:"version"`
 	Extra   map[string]string `protobuf:"bytes,4,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -252,13 +252,13 @@ type InstallReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
 	// @inject_tag: form:"name"
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
 	// @inject_tag: form:"version"
-	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
+	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty" form:"version"`
 	// @inject_tag: form:"pkgurl"
-	Pkgurl string            `protobuf:"bytes,4,opt,name=pkgurl,proto3" json:"pkgurl,omitempty"`
+	Pkgurl string            `protobuf:"bytes,4,opt,name=pkgurl,proto3" json:"pkgurl,omitempty" form:"pkgurl"`
 	Extra  map[string]string `protobuf:"bytes,5,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -398,7 +398,7 @@ type InstalledReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth  *Authorie         `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	Auth  *Authorie         `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
 	Extra map[string]string `protobuf:"bytes,2,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -525,11 +525,11 @@ type UnInstallReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
 	// @inject_tag: form:"name"
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
 	// @inject_tag: form:"version"
-	Version string            `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
+	Version string            `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty" form:"version"`
 	Extra   map[string]string `protobuf:"bytes,4,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -662,13 +662,13 @@ type StartReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
 	// @inject_tag: form:"name"
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
 	// @inject_tag: form:"version"
-	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
+	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty" form:"version"`
 	// @inject_tag: form:"count"
-	Count int64             `protobuf:"varint,4,opt,name=count,proto3" json:"count,omitempty"`
+	Count int64             `protobuf:"varint,4,opt,name=count,proto3" json:"count,omitempty" form:"count"`
 	Extra map[string]string `protobuf:"bytes,5,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -808,11 +808,11 @@ type StopReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
 	// @inject_tag: form:"name"
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
 	// @inject_tag: form:"version"
-	Version string            `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
+	Version string            `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty" form:"version"`
 	Extra   map[string]string `protobuf:"bytes,4,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -945,15 +945,15 @@ type UpgradeReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
 	// @inject_tag: form:"name"
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
 	// @inject_tag: form:"old_version"
-	OldVersion string `protobuf:"bytes,3,opt,name=old_version,json=oldVersion,proto3" json:"old_version,omitempty"`
+	OldVersion string `protobuf:"bytes,3,opt,name=old_version,json=oldVersion,proto3" json:"old_version,omitempty" form:"old_version"`
 	// @inject_tag: form:"new_version"
-	NewVersion string `protobuf:"bytes,4,opt,name=new_version,json=newVersion,proto3" json:"new_version,omitempty"`
+	NewVersion string `protobuf:"bytes,4,opt,name=new_version,json=newVersion,proto3" json:"new_version,omitempty" form:"new_version"`
 	// @inject_tag: form:"url"
-	Pkgurl string            `protobuf:"bytes,5,opt,name=pkgurl,proto3" json:"pkgurl,omitempty"`
+	Pkgurl string            `protobuf:"bytes,5,opt,name=pkgurl,proto3" json:"pkgurl,omitempty" form:"url"`
 	Extra  map[string]string `protobuf:"bytes,6,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -1100,9 +1100,9 @@ type ExcuteShellReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
 	// @inject_tag: form:"shell"
-	Shell string            `protobuf:"bytes,2,opt,name=shell,proto3" json:"shell,omitempty"`
+	Shell string            `protobuf:"bytes,2,opt,name=shell,proto3" json:"shell,omitempty" form:"shell"`
 	Extra map[string]string `protobuf:"bytes,3,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -1236,13 +1236,13 @@ type OpenDirReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
 	// @inject_tag: form:"name"
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
 	// @inject_tag: form:"version"
-	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
+	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty" form:"version"`
 	// @inject_tag: form:"dir"
-	Dir   string            `protobuf:"bytes,4,opt,name=dir,proto3" json:"dir,omitempty"`
+	Dir   string            `protobuf:"bytes,4,opt,name=dir,proto3" json:"dir,omitempty" form:"dir"`
 	Extra map[string]string `protobuf:"bytes,5,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -1445,15 +1445,15 @@ type OpenFileReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
 	// @inject_tag: form:"name"
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
 	// @inject_tag: form:"version"
-	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
+	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty" form:"version"`
 	// @inject_tag: form:"dir"
-	Dir string `protobuf:"bytes,4,opt,name=dir,proto3" json:"dir,omitempty"`
+	Dir string `protobuf:"bytes,4,opt,name=dir,proto3" json:"dir,omitempty" form:"dir"`
 	// @inject_tag: form:"filename"
-	Filename string            `protobuf:"bytes,5,opt,name=filename,proto3" json:"filename,omitempty"`
+	Filename string            `protobuf:"bytes,5,opt,name=filename,proto3" json:"filename,omitempty" form:"filename"`
 	Extra    map[string]string `protobuf:"bytes,6,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -1608,17 +1608,17 @@ type WriteFileReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
 	// @inject_tag: form:"name"
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
 	// @inject_tag: form:"version"
-	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
+	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty" form:"version"`
 	// @inject_tag: form:"dir"
-	Dir string `protobuf:"bytes,4,opt,name=dir,proto3" json:"dir,omitempty"`
+	Dir string `protobuf:"bytes,4,opt,name=dir,proto3" json:"dir,omitempty" form:"dir"`
 	// @inject_tag: form:"filename"
-	Filename string `protobuf:"bytes,5,opt,name=filename,proto3" json:"filename,omitempty"`
+	Filename string `protobuf:"bytes,5,opt,name=filename,proto3" json:"filename,omitempty" form:"filename"`
 	// @inject_tag: form:"data"
-	Data  string            `protobuf:"bytes,6,opt,name=data,proto3" json:"data,omitempty"`
+	Data  string            `protobuf:"bytes,6,opt,name=data,proto3" json:"data,omitempty" form:"data"`
 	Extra map[string]string `protobuf:"bytes,7,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -1772,7 +1772,7 @@ type StatisticReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth  *Authorie         `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	Auth  *Authorie         `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
 	Extra map[string]string `protobuf:"bytes,2,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -1962,9 +1962,9 @@ type StatusReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"auth"
-	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
-	// @inject_tag: form:"auth"
-	Name  string            `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
+	// @inject_tag: form:"name"
+	Name  string            `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
 	Extra map[string]string `protobuf:"bytes,3,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
