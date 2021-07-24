@@ -160,6 +160,7 @@ message OpenDirReq {
 message DirItem {
 	string 			 name = 1;
 	bool 			 isdir = 2;
+    bool             edit = 3;
 }
 
 message OpenDirRes {
