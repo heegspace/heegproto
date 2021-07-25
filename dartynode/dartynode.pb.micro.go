@@ -4,10 +4,10 @@
 package dartynode
 
 import (
-	_ "./common"
-	_ "./rescode"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
+	_ "github.com/heegspace/heegproto/common"
+	_ "github.com/heegspace/heegproto/rescode"
 	math "math"
 )
 
