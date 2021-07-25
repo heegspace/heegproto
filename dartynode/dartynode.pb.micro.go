@@ -4,10 +4,10 @@
 package dartynode
 
 import (
+	_ "./common"
+	_ "./rescode"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	_ "github.com/heegspace/heegproto/common"
-	_ "github.com/heegspace/heegproto/rescode"
 	math "math"
 )
 
@@ -66,6 +66,10 @@ type DartynodeService interface {
 	BaiduDocAnalysis(ctx context.Context, in *BaiduDocAnalysisReq, opts ...client.CallOption) (*BaiduDocAnalysisRes, error)
 	// 身份证识别
 	BaiduIdcardIdent(ctx context.Context, in *BaiduIdcardIdentReq, opts ...client.CallOption) (*BaiduIdcardIdentRes, error)
+	// 检查文本是否违规
+	BaiduTextCensor(ctx context.Context, in *BaiduTextCensorReq, opts ...client.CallOption) (*BaiduTextCensorRes, error)
+	// 检查图像是否违规
+	BaiduImgCensor(ctx context.Context, in *BaiduImgCensorReq, opts ...client.CallOption) (*BaiduImgCensorRes, error)
 }
 
 type dartynodeService struct {
@@ -190,6 +194,26 @@ func (c *dartynodeService) BaiduIdcardIdent(ctx context.Context, in *BaiduIdcard
 	return out, nil
 }
 
+func (c *dartynodeService) BaiduTextCensor(ctx context.Context, in *BaiduTextCensorReq, opts ...client.CallOption) (*BaiduTextCensorRes, error) {
+	req := c.c.NewRequest(c.name, "DartynodeService.BaiduTextCensor", in)
+	out := new(BaiduTextCensorRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dartynodeService) BaiduImgCensor(ctx context.Context, in *BaiduImgCensorReq, opts ...client.CallOption) (*BaiduImgCensorRes, error) {
+	req := c.c.NewRequest(c.name, "DartynodeService.BaiduImgCensor", in)
+	out := new(BaiduImgCensorRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for DartynodeService service
 
 type DartynodeServiceHandler interface {
@@ -215,6 +239,10 @@ type DartynodeServiceHandler interface {
 	BaiduDocAnalysis(context.Context, *BaiduDocAnalysisReq, *BaiduDocAnalysisRes) error
 	// 身份证识别
 	BaiduIdcardIdent(context.Context, *BaiduIdcardIdentReq, *BaiduIdcardIdentRes) error
+	// 检查文本是否违规
+	BaiduTextCensor(context.Context, *BaiduTextCensorReq, *BaiduTextCensorRes) error
+	// 检查图像是否违规
+	BaiduImgCensor(context.Context, *BaiduImgCensorReq, *BaiduImgCensorRes) error
 }
 
 func RegisterDartynodeServiceHandler(s server.Server, hdlr DartynodeServiceHandler, opts ...server.HandlerOption) error {
@@ -230,6 +258,8 @@ func RegisterDartynodeServiceHandler(s server.Server, hdlr DartynodeServiceHandl
 		BaiduEntity(ctx context.Context, in *BaiduEntityReq, out *BaiduEntityRes) error
 		BaiduDocAnalysis(ctx context.Context, in *BaiduDocAnalysisReq, out *BaiduDocAnalysisRes) error
 		BaiduIdcardIdent(ctx context.Context, in *BaiduIdcardIdentReq, out *BaiduIdcardIdentRes) error
+		BaiduTextCensor(ctx context.Context, in *BaiduTextCensorReq, out *BaiduTextCensorRes) error
+		BaiduImgCensor(ctx context.Context, in *BaiduImgCensorReq, out *BaiduImgCensorRes) error
 	}
 	type DartynodeService struct {
 		dartynodeService
@@ -284,4 +314,12 @@ func (h *dartynodeServiceHandler) BaiduDocAnalysis(ctx context.Context, in *Baid
 
 func (h *dartynodeServiceHandler) BaiduIdcardIdent(ctx context.Context, in *BaiduIdcardIdentReq, out *BaiduIdcardIdentRes) error {
 	return h.DartynodeServiceHandler.BaiduIdcardIdent(ctx, in, out)
+}
+
+func (h *dartynodeServiceHandler) BaiduTextCensor(ctx context.Context, in *BaiduTextCensorReq, out *BaiduTextCensorRes) error {
+	return h.DartynodeServiceHandler.BaiduTextCensor(ctx, in, out)
+}
+
+func (h *dartynodeServiceHandler) BaiduImgCensor(ctx context.Context, in *BaiduImgCensorReq, out *BaiduImgCensorRes) error {
+	return h.DartynodeServiceHandler.BaiduImgCensor(ctx, in, out)
 }

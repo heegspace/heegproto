@@ -3,6 +3,8 @@ package dartynode;
 import "rescode/rescode.proto";
 import "common/common.proto";
 
+option go_package="./dartynode";
+
 message LoginWechatReq {
     string                appid =  1;
     string                Code =  2;
@@ -163,7 +165,33 @@ message BaiduIdcardIdentReq {
 message BaiduIdcardIdentRes {
     rescode.Code                      rescode =  1;
     string                            resmsg =  2;
-    common.BaiduIdcardIdent         ident =  3;
+    common.BaiduIdcardIdent           ident =  3;
+    map<string,string>                extra =  4;
+}
+
+message BaiduTextCensorReq {
+    int64                   uid =  1;
+    string                  text =  2;
+    map<string,string>      extra =  3;
+}
+
+message BaiduTextCensorRes {
+    rescode.Code                      rescode =  1;
+    bool                              is_censor = 2;
+    string                            resmsg =  3;
+    map<string,string>                extra =  4;
+}
+
+message BaiduImgCensorReq {
+    int64                   uid =  1;
+    string                  base64 =  2;
+    map<string,string>      extra =  3;
+}
+
+message BaiduImgCensorRes {
+    rescode.Code                      rescode =  1;
+    bool                              is_censor = 2;
+    string                            resmsg =  3;
     map<string,string>                extra =  4;
 }
 
@@ -200,4 +228,10 @@ service DartynodeService {
 	
 	// 身份证识别
 	rpc  BaiduIdcardIdent(BaiduIdcardIdentReq) returns (BaiduIdcardIdentRes) {}
+
+    // 检查文本是否违规
+    rpc  BaiduTextCensor(BaiduTextCensorReq) returns (BaiduTextCensorRes) {}
+
+    // 检查图像是否违规
+    rpc  BaiduImgCensor(BaiduImgCensorReq) returns (BaiduImgCensorRes) {}
 }
