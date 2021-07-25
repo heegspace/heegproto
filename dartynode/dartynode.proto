@@ -177,7 +177,7 @@ message BaiduTextCensorReq {
 
 message BaiduTextCensorRes {
     rescode.Code                      rescode =  1;
-    bool                              is_censor = 2;
+    int64                             censor = 2;
     string                            resmsg =  3;
     map<string,string>                extra =  4;
 }
@@ -190,7 +190,7 @@ message BaiduImgCensorReq {
 
 message BaiduImgCensorRes {
     rescode.Code                      rescode =  1;
-    bool                              is_censor = 2;
+    int64                              censor = 2;
     string                            resmsg =  3;
     map<string,string>                extra =  4;
 }
