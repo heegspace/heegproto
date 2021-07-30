@@ -28,7 +28,8 @@ message RunningRes {
     uint32              runing = 3;
     string              name = 4;
     string              version = 5;
-    map<string,string>  extra = 6;
+    string              authcode = 6;
+    map<string,string>  extra = 7;
 }
 
 message InstallReq {
@@ -77,7 +78,8 @@ message UnInstallReq {
 message UnInstallRes {
     int32               rescode = 1;
     string              resmsg = 2;
-    map<string,string>  extra = 3;
+    string              authcode = 4;
+    map<string,string>  extra = 5;
 }
 
 message StartReq {
@@ -97,7 +99,8 @@ message StartReq {
 message StartRes {
     int32               rescode = 1;
     string              resmsg = 2;
-    map<string,string>  extra = 3;
+    string              authcode = 3;
+    map<string,string>  extra = 4;
 }
 
 message StopReq {
@@ -115,7 +118,8 @@ message StopReq {
 message StopRes {
     int32               rescode = 1;
     string              resmsg = 2;
-    map<string,string>  extra = 3;
+    string              authcode = 3;
+    map<string,string>  extra = 4;
 }
 
 message UpgradeReq {
@@ -137,7 +141,8 @@ message UpgradeReq {
 message UpgradeRes {
     int32               rescode = 1;
     string              resmsg = 2;
-    map<string,string>  extra = 3;
+    string              authcode = 3;
+    map<string,string>  extra = 4;
 }
 
 message ExcuteShellReq {
@@ -224,7 +229,8 @@ message WriteFileReq {
 message WriteFileRes {
 	int32               rescode = 1;
     string              resmsg = 2;
-    map<string,string>  extra = 3;
+    string              authcode = 3;
+    map<string,string>  extra = 4;
 }
 
 message StatisticReq {
