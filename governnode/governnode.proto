@@ -17,7 +17,9 @@ message RunningReq {
     string              name = 2;
     // @inject_tag: form:"version"
     string              version = 3;
-    map<string,string>  extra = 4;
+    // @inject_tag: form:"authcode"
+    string              authcode = 4;
+    map<string,string>  extra = 5;
 }
 
 message RunningRes {
@@ -67,7 +69,9 @@ message UnInstallReq {
     string              name = 2;
     // @inject_tag: form:"version"
     string              version = 3;
-    map<string,string>  extra = 4;
+    // @inject_tag: form:"authcode"
+    string              authcode = 4;
+    map<string,string>  extra = 5;
 }
 
 message UnInstallRes {
@@ -85,7 +89,9 @@ message StartReq {
     string              version = 3;
     // @inject_tag: form:"count"
     int64               count = 4;
-    map<string,string>  extra = 5;
+    // @inject_tag: form:"authcode"
+    string              authcode = 5;
+    map<string,string>  extra = 6;
 }
 
 message StartRes {
@@ -101,7 +107,9 @@ message StopReq {
     string              name = 2;
     // @inject_tag: form:"version"
     string              version = 3;
-    map<string,string>  extra = 4;
+    // @inject_tag: form:"authcode"
+    string              authcode = 4;
+    map<string,string>  extra = 5;
 }
 
 message StopRes {
@@ -121,7 +129,9 @@ message UpgradeReq {
     string              new_version = 4;
     // @inject_tag: form:"url"
     string              pkgurl = 5;
-    map<string,string>  extra = 6;
+    // @inject_tag: form:"authcode"
+    string              authcode = 6;
+    map<string,string>  extra = 7;
 }
 
 message UpgradeRes {
@@ -206,7 +216,9 @@ message WriteFileReq {
 	string 				filename = 5;
 	// @inject_tag: form:"data"
 	string 				data = 6;
-    map<string,string>  extra = 7;
+    // @inject_tag: form:"authcode"
+    string              authcode = 7;
+    map<string,string>  extra = 8;
 }
 
 message WriteFileRes {
