@@ -41,7 +41,9 @@ message InstallReq {
     string              version = 3;
     // @inject_tag: form:"pkgurl"
     string              pkgurl = 4;
-    map<string,string>  extra = 5;
+    // @inject_tag: form:"authcode"
+    string              authcode = 5;
+    map<string,string>  extra = 6;
 }
 
 message InstallRes {
