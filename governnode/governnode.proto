@@ -49,7 +49,8 @@ message InstallReq {
 message InstallRes {
     int32               rescode = 1;
     string              resmsg = 2;
-    map<string,string>  extra = 3;
+    string              authcode = 3;
+    map<string,string>  extra = 4;
 }
 
 message InstalledReq {
