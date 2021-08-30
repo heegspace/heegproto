@@ -258,6 +258,10 @@ type DatanodeService interface {
 	PkgLists(ctx context.Context, in *PkgListReq, opts ...client.CallOption) (*PkgListRes, error)
 	// 获取包数量
 	PkgCount(ctx context.Context, in *PkgCountReq, opts ...client.CallOption) (*PkgCountRes, error)
+	// 添加赞助信息
+	SponsorAdd(ctx context.Context, in *SponsorAddReq, opts ...client.CallOption) (*SponsorAddRes, error)
+	// 获取赞助列表
+	SponsorList(ctx context.Context, in *SponsorListReq, opts ...client.CallOption) (*SponsorListRes, error)
 }
 
 type datanodeService struct {
@@ -1362,6 +1366,26 @@ func (c *datanodeService) PkgCount(ctx context.Context, in *PkgCountReq, opts ..
 	return out, nil
 }
 
+func (c *datanodeService) SponsorAdd(ctx context.Context, in *SponsorAddReq, opts ...client.CallOption) (*SponsorAddRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.SponsorAdd", in)
+	out := new(SponsorAddRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *datanodeService) SponsorList(ctx context.Context, in *SponsorListReq, opts ...client.CallOption) (*SponsorListRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.SponsorList", in)
+	out := new(SponsorListRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for DatanodeService service
 
 type DatanodeServiceHandler interface {
@@ -1579,6 +1603,10 @@ type DatanodeServiceHandler interface {
 	PkgLists(context.Context, *PkgListReq, *PkgListRes) error
 	// 获取包数量
 	PkgCount(context.Context, *PkgCountReq, *PkgCountRes) error
+	// 添加赞助信息
+	SponsorAdd(context.Context, *SponsorAddReq, *SponsorAddRes) error
+	// 获取赞助列表
+	SponsorList(context.Context, *SponsorListReq, *SponsorListRes) error
 }
 
 func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler, opts ...server.HandlerOption) error {
@@ -1692,6 +1720,8 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		DelPkg(ctx context.Context, in *DelPkgReq, out *DelPkgRes) error
 		PkgLists(ctx context.Context, in *PkgListReq, out *PkgListRes) error
 		PkgCount(ctx context.Context, in *PkgCountReq, out *PkgCountRes) error
+		SponsorAdd(ctx context.Context, in *SponsorAddReq, out *SponsorAddRes) error
+		SponsorList(ctx context.Context, in *SponsorListReq, out *SponsorListRes) error
 	}
 	type DatanodeService struct {
 		datanodeService
@@ -2138,4 +2168,12 @@ func (h *datanodeServiceHandler) PkgLists(ctx context.Context, in *PkgListReq, o
 
 func (h *datanodeServiceHandler) PkgCount(ctx context.Context, in *PkgCountReq, out *PkgCountRes) error {
 	return h.DatanodeServiceHandler.PkgCount(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) SponsorAdd(ctx context.Context, in *SponsorAddReq, out *SponsorAddRes) error {
+	return h.DatanodeServiceHandler.SponsorAdd(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) SponsorList(ctx context.Context, in *SponsorListReq, out *SponsorListRes) error {
+	return h.DatanodeServiceHandler.SponsorList(ctx, in, out)
 }

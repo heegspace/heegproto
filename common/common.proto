@@ -577,3 +577,13 @@ message PkgItem {
     int32                   flag = 5;
     string                  create_at = 6;
 }
+
+message SponsorItem {
+    int64                   id = 1;
+    int64                   uid = 2;
+    string                  user_name= 3;
+    int64                   pay_style = 4;
+    string                  pay_info = 5;
+    double                  amount = 6;
+    string                  create_ar = 7;
+}
