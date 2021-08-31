@@ -4,10 +4,10 @@
 package paynode
 
 import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
 	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	fmt "fmt"
+	proto "google.golang.org/protobuf/proto"
 	math "math"
 )
 
@@ -23,47 +23,41 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
-
 // Reference imports to suppress errors if they are not otherwise used.
 var _ api.Endpoint
 var _ context.Context
 var _ client.Option
 var _ server.Option
 
-// Api Endpoints for SponsornodeService service
+// Api Endpoints for PaynodeService service
 
-func NewSponsornodeServiceEndpoints() []*api.Endpoint {
+func NewPaynodeServiceEndpoints() []*api.Endpoint {
 	return []*api.Endpoint{}
 }
 
-// Client API for SponsornodeService service
+// Client API for PaynodeService service
 
-type SponsornodeService interface {
+type PaynodeService interface {
 	// 添加赞助信息
 	SponsorAdd(ctx context.Context, in *SponsorAddReq, opts ...client.CallOption) (*SponsorAddRes, error)
 	// 获取赞助列表
 	SponsorList(ctx context.Context, in *SponsorListReq, opts ...client.CallOption) (*SponsorListRes, error)
 }
 
-type sponsornodeService struct {
+type paynodeService struct {
 	c    client.Client
 	name string
 }
 
-func NewSponsornodeService(name string, c client.Client) SponsornodeService {
-	return &sponsornodeService{
+func NewPaynodeService(name string, c client.Client) PaynodeService {
+	return &paynodeService{
 		c:    c,
 		name: name,
 	}
 }
 
-func (c *sponsornodeService) SponsorAdd(ctx context.Context, in *SponsorAddReq, opts ...client.CallOption) (*SponsorAddRes, error) {
-	req := c.c.NewRequest(c.name, "SponsornodeService.SponsorAdd", in)
+func (c *paynodeService) SponsorAdd(ctx context.Context, in *SponsorAddReq, opts ...client.CallOption) (*SponsorAddRes, error) {
+	req := c.c.NewRequest(c.name, "PaynodeService.SponsorAdd", in)
 	out := new(SponsorAddRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -72,8 +66,8 @@ func (c *sponsornodeService) SponsorAdd(ctx context.Context, in *SponsorAddReq, 
 	return out, nil
 }
 
-func (c *sponsornodeService) SponsorList(ctx context.Context, in *SponsorListReq, opts ...client.CallOption) (*SponsorListRes, error) {
-	req := c.c.NewRequest(c.name, "SponsornodeService.SponsorList", in)
+func (c *paynodeService) SponsorList(ctx context.Context, in *SponsorListReq, opts ...client.CallOption) (*SponsorListRes, error) {
+	req := c.c.NewRequest(c.name, "PaynodeService.SponsorList", in)
 	out := new(SponsorListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -82,35 +76,35 @@ func (c *sponsornodeService) SponsorList(ctx context.Context, in *SponsorListReq
 	return out, nil
 }
 
-// Server API for SponsornodeService service
+// Server API for PaynodeService service
 
-type SponsornodeServiceHandler interface {
+type PaynodeServiceHandler interface {
 	// 添加赞助信息
 	SponsorAdd(context.Context, *SponsorAddReq, *SponsorAddRes) error
 	// 获取赞助列表
 	SponsorList(context.Context, *SponsorListReq, *SponsorListRes) error
 }
 
-func RegisterSponsornodeServiceHandler(s server.Server, hdlr SponsornodeServiceHandler, opts ...server.HandlerOption) error {
-	type sponsornodeService interface {
+func RegisterPaynodeServiceHandler(s server.Server, hdlr PaynodeServiceHandler, opts ...server.HandlerOption) error {
+	type paynodeService interface {
 		SponsorAdd(ctx context.Context, in *SponsorAddReq, out *SponsorAddRes) error
 		SponsorList(ctx context.Context, in *SponsorListReq, out *SponsorListRes) error
 	}
-	type SponsornodeService struct {
-		sponsornodeService
+	type PaynodeService struct {
+		paynodeService
 	}
-	h := &sponsornodeServiceHandler{hdlr}
-	return s.Handle(s.NewHandler(&SponsornodeService{h}, opts...))
+	h := &paynodeServiceHandler{hdlr}
+	return s.Handle(s.NewHandler(&PaynodeService{h}, opts...))
 }
 
-type sponsornodeServiceHandler struct {
-	SponsornodeServiceHandler
+type paynodeServiceHandler struct {
+	PaynodeServiceHandler
 }
 
-func (h *sponsornodeServiceHandler) SponsorAdd(ctx context.Context, in *SponsorAddReq, out *SponsorAddRes) error {
-	return h.SponsornodeServiceHandler.SponsorAdd(ctx, in, out)
+func (h *paynodeServiceHandler) SponsorAdd(ctx context.Context, in *SponsorAddReq, out *SponsorAddRes) error {
+	return h.PaynodeServiceHandler.SponsorAdd(ctx, in, out)
 }
 
-func (h *sponsornodeServiceHandler) SponsorList(ctx context.Context, in *SponsorListReq, out *SponsorListRes) error {
-	return h.SponsornodeServiceHandler.SponsorList(ctx, in, out)
+func (h *paynodeServiceHandler) SponsorList(ctx context.Context, in *SponsorListReq, out *SponsorListRes) error {
+	return h.PaynodeServiceHandler.SponsorList(ctx, in, out)
 }

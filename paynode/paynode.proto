@@ -32,7 +32,7 @@ message SponsorListRes {
     map<string,string>          extra = 4;
 }
 
-service SponsornodeService {
+service PaynodeService {
     // 添加赞助信息
     rpc  SponsorAdd(SponsorAddReq) returns(SponsorAddRes){}
     // 获取赞助列表
