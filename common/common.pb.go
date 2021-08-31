@@ -903,41 +903,41 @@ type QuestionQuery struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"roll_id"
-	RollId string `protobuf:"bytes,1,opt,name=roll_id,json=rollId,proto3" json:"roll_id,omitempty"`
+	RollId string `protobuf:"bytes,1,opt,name=roll_id,json=rollId,proto3" json:"roll_id,omitempty" form:"roll_id"`
 	// @inject_tag: form:"roll_name"
-	RollName string `protobuf:"bytes,2,opt,name=roll_name,json=rollName,proto3" json:"roll_name,omitempty"`
+	RollName string `protobuf:"bytes,2,opt,name=roll_name,json=rollName,proto3" json:"roll_name,omitempty" form:"roll_name"`
 	// @inject_tag: form:"grade_id"
-	GradeId string `protobuf:"bytes,3,opt,name=grade_id,json=gradeId,proto3" json:"grade_id,omitempty"`
+	GradeId string `protobuf:"bytes,3,opt,name=grade_id,json=gradeId,proto3" json:"grade_id,omitempty" form:"grade_id"`
 	// @inject_tag: form:"grade_name"
-	GradeName string `protobuf:"bytes,4,opt,name=grade_name,json=gradeName,proto3" json:"grade_name,omitempty"`
+	GradeName string `protobuf:"bytes,4,opt,name=grade_name,json=gradeName,proto3" json:"grade_name,omitempty" form:"grade_name"`
 	// @inject_tag: form:"subject_id"
-	SubjectId string `protobuf:"bytes,5,opt,name=subject_id,json=subjectId,proto3" json:"subject_id,omitempty"`
+	SubjectId string `protobuf:"bytes,5,opt,name=subject_id,json=subjectId,proto3" json:"subject_id,omitempty" form:"subject_id"`
 	// @inject_tag: form:"subject_name"
-	SubjectName string `protobuf:"bytes,6,opt,name=subject_name,json=subjectName,proto3" json:"subject_name,omitempty"`
+	SubjectName string `protobuf:"bytes,6,opt,name=subject_name,json=subjectName,proto3" json:"subject_name,omitempty" form:"subject_name"`
 	// @inject_tag: form:"version_id"
-	VersionId string `protobuf:"bytes,7,opt,name=version_id,json=versionId,proto3" json:"version_id,omitempty"`
+	VersionId string `protobuf:"bytes,7,opt,name=version_id,json=versionId,proto3" json:"version_id,omitempty" form:"version_id"`
 	// @inject_tag: form:"version_name"
-	VersionName string `protobuf:"bytes,8,opt,name=version_name,json=versionName,proto3" json:"version_name,omitempty"`
+	VersionName string `protobuf:"bytes,8,opt,name=version_name,json=versionName,proto3" json:"version_name,omitempty" form:"version_name"`
 	// @inject_tag: form:"chapter_id"
-	ChapterId string `protobuf:"bytes,9,opt,name=chapter_id,json=chapterId,proto3" json:"chapter_id,omitempty"`
+	ChapterId string `protobuf:"bytes,9,opt,name=chapter_id,json=chapterId,proto3" json:"chapter_id,omitempty" form:"chapter_id"`
 	// @inject_tag: form:"chapter_name"
-	ChapterName string `protobuf:"bytes,10,opt,name=chapter_name,json=chapterName,proto3" json:"chapter_name,omitempty"`
+	ChapterName string `protobuf:"bytes,10,opt,name=chapter_name,json=chapterName,proto3" json:"chapter_name,omitempty" form:"chapter_name"`
 	// @inject_tag: form:"ti_xing_id"
-	TiXingId string `protobuf:"bytes,11,opt,name=ti_xing_id,json=tiXingId,proto3" json:"ti_xing_id,omitempty"`
+	TiXingId string `protobuf:"bytes,11,opt,name=ti_xing_id,json=tiXingId,proto3" json:"ti_xing_id,omitempty" form:"ti_xing_id"`
 	// @inject_tag: form:"ti_xing_name"
-	TiXingName string `protobuf:"bytes,12,opt,name=ti_xing_name,json=tiXingName,proto3" json:"ti_xing_name,omitempty"`
+	TiXingName string `protobuf:"bytes,12,opt,name=ti_xing_name,json=tiXingName,proto3" json:"ti_xing_name,omitempty" form:"ti_xing_name"`
 	// @inject_tag: form:"source_id"
-	SourceId string `protobuf:"bytes,13,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`
+	SourceId string `protobuf:"bytes,13,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty" form:"source_id"`
 	// @inject_tag: form:"source_name"
-	SourceName string `protobuf:"bytes,14,opt,name=source_name,json=sourceName,proto3" json:"source_name,omitempty"`
+	SourceName string `protobuf:"bytes,14,opt,name=source_name,json=sourceName,proto3" json:"source_name,omitempty" form:"source_name"`
 	// @inject_tag: form:"page"
-	Page int32 `protobuf:"varint,15,opt,name=page,proto3" json:"page,omitempty"`
+	Page int32 `protobuf:"varint,15,opt,name=page,proto3" json:"page,omitempty" form:"page"`
 	// @inject_tag: form:"size"
-	Size int32 `protobuf:"varint,16,opt,name=size,proto3" json:"size,omitempty"`
+	Size int32 `protobuf:"varint,16,opt,name=size,proto3" json:"size,omitempty" form:"size"`
 	// @inject_tag: form:"user_id"
-	UserId int64 `protobuf:"varint,17,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	UserId int64 `protobuf:"varint,17,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty" form:"user_id"`
 	// @inject_tag: form:"extra"
-	Extra map[string]string `protobuf:"bytes,18,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Extra map[string]string `protobuf:"bytes,18,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3" form:"extra"`
 }
 
 func (x *QuestionQuery) Reset() {
@@ -1183,9 +1183,9 @@ type QuestionOption struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"name"
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty" form:"name"`
 	// @inject_tag: form:"images"
-	Images []string `protobuf:"bytes,2,rep,name=images,proto3" json:"images,omitempty"`
+	Images []string `protobuf:"bytes,2,rep,name=images,proto3" json:"images,omitempty" form:"images"`
 }
 
 func (x *QuestionOption) Reset() {
@@ -1240,11 +1240,11 @@ type Question struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: form:"timu"
-	Timu string `protobuf:"bytes,1,opt,name=timu,proto3" json:"timu,omitempty"`
+	Timu string `protobuf:"bytes,1,opt,name=timu,proto3" json:"timu,omitempty" form:"timu"`
 	// @inject_tag: form:"images"
-	Images []string `protobuf:"bytes,2,rep,name=images,proto3" json:"images,omitempty"`
+	Images []string `protobuf:"bytes,2,rep,name=images,proto3" json:"images,omitempty" form:"images"`
 	// @inject_tag: form:"options"
-	Options []*QuestionOption `protobuf:"bytes,3,rep,name=options,proto3" json:"options,omitempty"`
+	Options []*QuestionOption `protobuf:"bytes,3,rep,name=options,proto3" json:"options,omitempty" form:"options"`
 }
 
 func (x *Question) Reset() {
