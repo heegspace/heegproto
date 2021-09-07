@@ -48,6 +48,10 @@ type LimitnodeService interface {
 	ModifyTimuLimit(ctx context.Context, in *ModifyTimuLimitReq, opts ...client.CallOption) (*ModifyTimuLimitRes, error)
 	// 检查添加试题是否受限
 	AddTimuLimit(ctx context.Context, in *AddTimuLimitReq, opts ...client.CallOption) (*AddTimuLimitRes, error)
+	// 浏览试题量是否达到限制
+	BrowserTimuLimit(ctx context.Context, in *BrowserTimuLimitReq, opts ...client.CallOption) (*BrowserTimuLimitRes, error)
+	// 下载试题是否达到限制
+	DownTimuLimit(ctx context.Context, in *DownTimuLimitReq, opts ...client.CallOption) (*DownTimuLimitRes, error)
 }
 
 type limitnodeService struct {
@@ -82,6 +86,26 @@ func (c *limitnodeService) AddTimuLimit(ctx context.Context, in *AddTimuLimitReq
 	return out, nil
 }
 
+func (c *limitnodeService) BrowserTimuLimit(ctx context.Context, in *BrowserTimuLimitReq, opts ...client.CallOption) (*BrowserTimuLimitRes, error) {
+	req := c.c.NewRequest(c.name, "LimitnodeService.BrowserTimuLimit", in)
+	out := new(BrowserTimuLimitRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *limitnodeService) DownTimuLimit(ctx context.Context, in *DownTimuLimitReq, opts ...client.CallOption) (*DownTimuLimitRes, error) {
+	req := c.c.NewRequest(c.name, "LimitnodeService.DownTimuLimit", in)
+	out := new(DownTimuLimitRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for LimitnodeService service
 
 type LimitnodeServiceHandler interface {
@@ -89,12 +113,18 @@ type LimitnodeServiceHandler interface {
 	ModifyTimuLimit(context.Context, *ModifyTimuLimitReq, *ModifyTimuLimitRes) error
 	// 检查添加试题是否受限
 	AddTimuLimit(context.Context, *AddTimuLimitReq, *AddTimuLimitRes) error
+	// 浏览试题量是否达到限制
+	BrowserTimuLimit(context.Context, *BrowserTimuLimitReq, *BrowserTimuLimitRes) error
+	// 下载试题是否达到限制
+	DownTimuLimit(context.Context, *DownTimuLimitReq, *DownTimuLimitRes) error
 }
 
 func RegisterLimitnodeServiceHandler(s server.Server, hdlr LimitnodeServiceHandler, opts ...server.HandlerOption) error {
 	type limitnodeService interface {
 		ModifyTimuLimit(ctx context.Context, in *ModifyTimuLimitReq, out *ModifyTimuLimitRes) error
 		AddTimuLimit(ctx context.Context, in *AddTimuLimitReq, out *AddTimuLimitRes) error
+		BrowserTimuLimit(ctx context.Context, in *BrowserTimuLimitReq, out *BrowserTimuLimitRes) error
+		DownTimuLimit(ctx context.Context, in *DownTimuLimitReq, out *DownTimuLimitRes) error
 	}
 	type LimitnodeService struct {
 		limitnodeService
@@ -113,4 +143,12 @@ func (h *limitnodeServiceHandler) ModifyTimuLimit(ctx context.Context, in *Modif
 
 func (h *limitnodeServiceHandler) AddTimuLimit(ctx context.Context, in *AddTimuLimitReq, out *AddTimuLimitRes) error {
 	return h.LimitnodeServiceHandler.AddTimuLimit(ctx, in, out)
+}
+
+func (h *limitnodeServiceHandler) BrowserTimuLimit(ctx context.Context, in *BrowserTimuLimitReq, out *BrowserTimuLimitRes) error {
+	return h.LimitnodeServiceHandler.BrowserTimuLimit(ctx, in, out)
+}
+
+func (h *limitnodeServiceHandler) DownTimuLimit(ctx context.Context, in *DownTimuLimitReq, out *DownTimuLimitRes) error {
+	return h.LimitnodeServiceHandler.DownTimuLimit(ctx, in, out)
 }
