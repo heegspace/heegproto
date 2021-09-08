@@ -262,6 +262,8 @@ type DatanodeService interface {
 	SponsorAdd(ctx context.Context, in *SponsorAddReq, opts ...client.CallOption) (*SponsorAddRes, error)
 	// 获取赞助列表
 	SponsorList(ctx context.Context, in *SponsorListReq, opts ...client.CallOption) (*SponsorListRes, error)
+	// 获取vip对应的限制
+	VipLimit(ctx context.Context, in *VipLimitReq, opts ...client.CallOption) (*VipLimitRes, error)
 }
 
 type datanodeService struct {
@@ -1386,6 +1388,16 @@ func (c *datanodeService) SponsorList(ctx context.Context, in *SponsorListReq, o
 	return out, nil
 }
 
+func (c *datanodeService) VipLimit(ctx context.Context, in *VipLimitReq, opts ...client.CallOption) (*VipLimitRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.VipLimit", in)
+	out := new(VipLimitRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for DatanodeService service
 
 type DatanodeServiceHandler interface {
@@ -1607,6 +1619,8 @@ type DatanodeServiceHandler interface {
 	SponsorAdd(context.Context, *SponsorAddReq, *SponsorAddRes) error
 	// 获取赞助列表
 	SponsorList(context.Context, *SponsorListReq, *SponsorListRes) error
+	// 获取vip对应的限制
+	VipLimit(context.Context, *VipLimitReq, *VipLimitRes) error
 }
 
 func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler, opts ...server.HandlerOption) error {
@@ -1722,6 +1736,7 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		PkgCount(ctx context.Context, in *PkgCountReq, out *PkgCountRes) error
 		SponsorAdd(ctx context.Context, in *SponsorAddReq, out *SponsorAddRes) error
 		SponsorList(ctx context.Context, in *SponsorListReq, out *SponsorListRes) error
+		VipLimit(ctx context.Context, in *VipLimitReq, out *VipLimitRes) error
 	}
 	type DatanodeService struct {
 		datanodeService
@@ -2176,4 +2191,8 @@ func (h *datanodeServiceHandler) SponsorAdd(ctx context.Context, in *SponsorAddR
 
 func (h *datanodeServiceHandler) SponsorList(ctx context.Context, in *SponsorListReq, out *SponsorListRes) error {
 	return h.DatanodeServiceHandler.SponsorList(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) VipLimit(ctx context.Context, in *VipLimitReq, out *VipLimitRes) error {
+	return h.DatanodeServiceHandler.VipLimit(ctx, in, out)
 }
