@@ -1477,6 +1477,58 @@ message VipLimitRes {
     map<string,string>          extra = 4;
 }
 
+message VipProductReq {
+    int32                       page = 1;
+    int32                       size = 2;
+    common.VipProduct           products = 3;
+    map<string,string>          extra = 4;
+}
+
+message VipProductRes {
+    rescode.Code                rescode = 1;
+    string                      resmsg = 2;
+    repeated common.VipProduct  products = 3;
+    map<string,string>          extra = 4;
+}
+
+message VipPayReq {
+    common.VipOrder             order = 1;
+    map<string,string>          extra = 2;
+}
+
+message VipPayRes {
+    rescode.Code                rescode = 1;
+    string                      resmsg = 2;
+    common.VipOrder             order = 3;
+    map<string,string>          extra = 4;
+}
+
+message VipOrderStatusReq {
+    common.VipOrder             order = 1;
+    map<string,string>          extra = 2;
+}
+
+message VipOrderStatusRes {
+    rescode.Code                rescode = 1;
+    string                      resmsg = 2;
+    common.VipOrder             order = 3;
+    map<string,string>          extra = 4;
+}
+
+message VipOrderListReq {
+    common.VipOrder             order = 1;
+    int32                       page = 2;
+    int32                       size = 3;
+    map<string,string>          extra = 4;
+}
+
+message VipOrderListRes {
+    rescode.Code                rescode = 1;
+    string                      resmsg = 2;
+    repeated common.VipOrder    order = 3;
+    map<string,string>          extra = 4;
+}
+
 service DatanodeService {
 	// ---------- 用户接口 ------- //
 	// 创建新用户
@@ -1700,4 +1752,13 @@ service DatanodeService {
 
     // 获取vip对应的限制
     rpc VipLimit(VipLimitReq) returns (VipLimitRes) {}
+
+    // vip产品列表
+    rpc VipProduct(VipProductReq) returns (VipProductRes) {}
+    // vip充值
+    rpc VipPay(VipPayReq) returns (VipPayRes) {}
+    // 更新vip充值状态
+    rpc VipOrderStatus(VipOrderStatusReq) returns (VipOrderStatusRes) {}
+    // 获取vip充值列表
+    rpc VipOrderList(VipOrderListReq) returns (VipOrderListRes) {}
 }

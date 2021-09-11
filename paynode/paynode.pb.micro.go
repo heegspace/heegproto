@@ -48,6 +48,14 @@ type PaynodeService interface {
 	SponsorAdd(ctx context.Context, in *SponsorAddReq, opts ...client.CallOption) (*SponsorAddRes, error)
 	// 获取赞助列表
 	SponsorList(ctx context.Context, in *SponsorListReq, opts ...client.CallOption) (*SponsorListRes, error)
+	// vip产品列表
+	VipProduct(ctx context.Context, in *VipProductReq, opts ...client.CallOption) (*VipProductRes, error)
+	// vip充值
+	VipPay(ctx context.Context, in *VipPayReq, opts ...client.CallOption) (*VipPayRes, error)
+	// vip充值会掉
+	VipPayCall(ctx context.Context, in *VipPayCallReq, opts ...client.CallOption) (*VipPayCallRes, error)
+	// 获取vip充值列表
+	VipOrderList(ctx context.Context, in *VipOrderListReq, opts ...client.CallOption) (*VipOrderListRes, error)
 }
 
 type paynodeService struct {
@@ -82,6 +90,46 @@ func (c *paynodeService) SponsorList(ctx context.Context, in *SponsorListReq, op
 	return out, nil
 }
 
+func (c *paynodeService) VipProduct(ctx context.Context, in *VipProductReq, opts ...client.CallOption) (*VipProductRes, error) {
+	req := c.c.NewRequest(c.name, "PaynodeService.VipProduct", in)
+	out := new(VipProductRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paynodeService) VipPay(ctx context.Context, in *VipPayReq, opts ...client.CallOption) (*VipPayRes, error) {
+	req := c.c.NewRequest(c.name, "PaynodeService.VipPay", in)
+	out := new(VipPayRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paynodeService) VipPayCall(ctx context.Context, in *VipPayCallReq, opts ...client.CallOption) (*VipPayCallRes, error) {
+	req := c.c.NewRequest(c.name, "PaynodeService.VipPayCall", in)
+	out := new(VipPayCallRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paynodeService) VipOrderList(ctx context.Context, in *VipOrderListReq, opts ...client.CallOption) (*VipOrderListRes, error) {
+	req := c.c.NewRequest(c.name, "PaynodeService.VipOrderList", in)
+	out := new(VipOrderListRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for PaynodeService service
 
 type PaynodeServiceHandler interface {
@@ -89,12 +137,24 @@ type PaynodeServiceHandler interface {
 	SponsorAdd(context.Context, *SponsorAddReq, *SponsorAddRes) error
 	// 获取赞助列表
 	SponsorList(context.Context, *SponsorListReq, *SponsorListRes) error
+	// vip产品列表
+	VipProduct(context.Context, *VipProductReq, *VipProductRes) error
+	// vip充值
+	VipPay(context.Context, *VipPayReq, *VipPayRes) error
+	// vip充值会掉
+	VipPayCall(context.Context, *VipPayCallReq, *VipPayCallRes) error
+	// 获取vip充值列表
+	VipOrderList(context.Context, *VipOrderListReq, *VipOrderListRes) error
 }
 
 func RegisterPaynodeServiceHandler(s server.Server, hdlr PaynodeServiceHandler, opts ...server.HandlerOption) error {
 	type paynodeService interface {
 		SponsorAdd(ctx context.Context, in *SponsorAddReq, out *SponsorAddRes) error
 		SponsorList(ctx context.Context, in *SponsorListReq, out *SponsorListRes) error
+		VipProduct(ctx context.Context, in *VipProductReq, out *VipProductRes) error
+		VipPay(ctx context.Context, in *VipPayReq, out *VipPayRes) error
+		VipPayCall(ctx context.Context, in *VipPayCallReq, out *VipPayCallRes) error
+		VipOrderList(ctx context.Context, in *VipOrderListReq, out *VipOrderListRes) error
 	}
 	type PaynodeService struct {
 		paynodeService
@@ -113,4 +173,20 @@ func (h *paynodeServiceHandler) SponsorAdd(ctx context.Context, in *SponsorAddRe
 
 func (h *paynodeServiceHandler) SponsorList(ctx context.Context, in *SponsorListReq, out *SponsorListRes) error {
 	return h.PaynodeServiceHandler.SponsorList(ctx, in, out)
+}
+
+func (h *paynodeServiceHandler) VipProduct(ctx context.Context, in *VipProductReq, out *VipProductRes) error {
+	return h.PaynodeServiceHandler.VipProduct(ctx, in, out)
+}
+
+func (h *paynodeServiceHandler) VipPay(ctx context.Context, in *VipPayReq, out *VipPayRes) error {
+	return h.PaynodeServiceHandler.VipPay(ctx, in, out)
+}
+
+func (h *paynodeServiceHandler) VipPayCall(ctx context.Context, in *VipPayCallReq, out *VipPayCallRes) error {
+	return h.PaynodeServiceHandler.VipPayCall(ctx, in, out)
+}
+
+func (h *paynodeServiceHandler) VipOrderList(ctx context.Context, in *VipOrderListReq, out *VipOrderListRes) error {
+	return h.PaynodeServiceHandler.VipOrderList(ctx, in, out)
 }

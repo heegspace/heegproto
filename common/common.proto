@@ -587,3 +587,49 @@ message SponsorItem {
     double                  amount = 6;
     string                  create_ar = 7;
 }
+
+message VipProduct {
+    int64                   id = 1;       
+    string                  uid = 2;      
+    int64                   vip = 3;      
+    int32                   amount = 4;   
+    int32                   cost_price = 5;
+    string                  info = 6;     
+    int32                   status = 7;   
+    string                  creator = 8;  
+    string                  create_at = 9; 
+}
+
+message VipOrder {
+    int64                   id = 1;      
+    int64                   vip = 2;     
+    int64                   uid = 3;     
+    string                  trade_no = 4; 
+    string                  code_url = 5; 
+    int32                   amount = 6;  
+    int32                   status = 7;  
+    string                  info = 8;    
+    string                  create_at = 9;
+    string                  update_at = 10;
+}
+
+enum VipPayStyle {
+    WECHART     = 0x0000;   // 微信充值
+    ALIPAY      = 0x0001;   // 支付宝充值
+}
+
+message VipPayCbRe {
+    string              original_type = 1;
+    string              algorithm = 2;
+    string              ciphertext = 3;
+    string              associated_data = 4;
+    string              nonce = 5;
+}
+message VipPayCb {
+    string              id = 1;
+    string              create_time = 2;
+    string              resource_type = 3;
+    string              event_type = 4;
+    string              summary = 5;
+    VipPayCbRe          resource = 6;
+}
