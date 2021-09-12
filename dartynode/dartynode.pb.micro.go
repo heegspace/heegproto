@@ -70,6 +70,10 @@ type DartynodeService interface {
 	BaiduTextCensor(ctx context.Context, in *BaiduTextCensorReq, opts ...client.CallOption) (*BaiduTextCensorRes, error)
 	// 检查图像是否违规
 	BaiduImgCensor(ctx context.Context, in *BaiduImgCensorReq, opts ...client.CallOption) (*BaiduImgCensorRes, error)
+	// 微信支付
+	WechatPay(ctx context.Context, in *WechatPayReq, opts ...client.CallOption) (*WechatPayRes, error)
+	// 支付宝支付
+	Alipay(ctx context.Context, in *AlipayReq, opts ...client.CallOption) (*AlipayRes, error)
 }
 
 type dartynodeService struct {
@@ -214,6 +218,26 @@ func (c *dartynodeService) BaiduImgCensor(ctx context.Context, in *BaiduImgCenso
 	return out, nil
 }
 
+func (c *dartynodeService) WechatPay(ctx context.Context, in *WechatPayReq, opts ...client.CallOption) (*WechatPayRes, error) {
+	req := c.c.NewRequest(c.name, "DartynodeService.WechatPay", in)
+	out := new(WechatPayRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dartynodeService) Alipay(ctx context.Context, in *AlipayReq, opts ...client.CallOption) (*AlipayRes, error) {
+	req := c.c.NewRequest(c.name, "DartynodeService.Alipay", in)
+	out := new(AlipayRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for DartynodeService service
 
 type DartynodeServiceHandler interface {
@@ -243,6 +267,10 @@ type DartynodeServiceHandler interface {
 	BaiduTextCensor(context.Context, *BaiduTextCensorReq, *BaiduTextCensorRes) error
 	// 检查图像是否违规
 	BaiduImgCensor(context.Context, *BaiduImgCensorReq, *BaiduImgCensorRes) error
+	// 微信支付
+	WechatPay(context.Context, *WechatPayReq, *WechatPayRes) error
+	// 支付宝支付
+	Alipay(context.Context, *AlipayReq, *AlipayRes) error
 }
 
 func RegisterDartynodeServiceHandler(s server.Server, hdlr DartynodeServiceHandler, opts ...server.HandlerOption) error {
@@ -260,6 +288,8 @@ func RegisterDartynodeServiceHandler(s server.Server, hdlr DartynodeServiceHandl
 		BaiduIdcardIdent(ctx context.Context, in *BaiduIdcardIdentReq, out *BaiduIdcardIdentRes) error
 		BaiduTextCensor(ctx context.Context, in *BaiduTextCensorReq, out *BaiduTextCensorRes) error
 		BaiduImgCensor(ctx context.Context, in *BaiduImgCensorReq, out *BaiduImgCensorRes) error
+		WechatPay(ctx context.Context, in *WechatPayReq, out *WechatPayRes) error
+		Alipay(ctx context.Context, in *AlipayReq, out *AlipayRes) error
 	}
 	type DartynodeService struct {
 		dartynodeService
@@ -322,4 +352,12 @@ func (h *dartynodeServiceHandler) BaiduTextCensor(ctx context.Context, in *Baidu
 
 func (h *dartynodeServiceHandler) BaiduImgCensor(ctx context.Context, in *BaiduImgCensorReq, out *BaiduImgCensorRes) error {
 	return h.DartynodeServiceHandler.BaiduImgCensor(ctx, in, out)
+}
+
+func (h *dartynodeServiceHandler) WechatPay(ctx context.Context, in *WechatPayReq, out *WechatPayRes) error {
+	return h.DartynodeServiceHandler.WechatPay(ctx, in, out)
+}
+
+func (h *dartynodeServiceHandler) Alipay(ctx context.Context, in *AlipayReq, out *AlipayRes) error {
+	return h.DartynodeServiceHandler.Alipay(ctx, in, out)
 }
