@@ -20,6 +20,8 @@ enum Code {
     code_NOT_EXISTS = 400;    // 不存在
     
     code_NOT_DATA = 404;      // 没有数据
+
+    code_SYS_ERROR = 999;       // 系统错误
     code_NODE_CREATE_ERR = 9999; // 节点创建失败
 
     code_SEND_CODE_ERR = 10000;  // 发送验证码错误
@@ -41,7 +43,8 @@ enum Code {
     code_WECHAT_LOGIN_ERROR = 30001;     // 微信登录错误
     code_WECHAT_TOKEN_TIMEOUT = 30002;   // 微信token过期
     code_WECHAT_REFRESH_ERROR = 30003;   // 微信token刷新失败
-    code_WECHAT_USERINFO_ERR = 30004;    // 微信信息获取错误
+    code_WECHAT_USERINFO_ERR = 30004;    // 
+    code_WECHAT_PAY_ERR = 30005;         // 微信支付失败
 
     code_ALIPAY_LOGIN_ERROR = 30031;     // 微信登录错误
     code_ALIPAY_TOKEN_TIMEOUT = 30032;   // 微信token过期
