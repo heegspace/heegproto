@@ -1529,6 +1529,19 @@ message VipOrderListRes {
     map<string,string>          extra = 4;
 }
 
+message UserScoreReq {
+    int32                       op = 1;     // 操作  0:获取 1:添加  2:更新
+    common.UserScore            score = 2;
+    map<string, string>         extra = 3;
+}
+
+message UserScoreRes {
+    rescode.Code                rescode = 1;
+    string                      resmsg = 2;
+    common.UserScore            score = 3;
+    map<string,string>          extra = 4;
+}
+
 service DatanodeService {
 	// ---------- 用户接口 ------- //
 	// 创建新用户
@@ -1761,4 +1774,6 @@ service DatanodeService {
     rpc VipOrderStatus(VipOrderStatusReq) returns (VipOrderStatusRes) {}
     // 获取vip充值列表
     rpc VipOrderList(VipOrderListReq) returns (VipOrderListRes) {}
+    // 用户积分操作
+    rpc UserScore(UserScoreReq) returns (UserScoreReq) {}
 }

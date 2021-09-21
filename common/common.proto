@@ -585,40 +585,43 @@ message SponsorItem {
     int64                   pay_style = 4;
     string                  pay_info = 5;
     double                  amount = 6;
-    string                  create_ar = 7;
+    string                  create_at = 7;
 }
 
 message VipProduct {
     int64                   id = 1;       
-    string                  uid = 2;      
-    int64                   vip = 3;      
+    int64                   level = 2;
+    int64                   genre = 3;      
     int64                   amount = 4;   
     int64                   cost_price = 5;
-    string                  info = 6;     
-    int64                   status = 7;   
-    string                  creator = 8;  
-    string                  create_at = 9; 
-    int64                   score = 10;
-    string                  desc = 11;
-    string                  extra = 12;
+    int64                   score = 6;
+    string                  info = 7;     
+    int64                   status = 8;
+    int64                   invalid = 9;   
+    string                  creator = 10;  
+    string                  create_at = 11; 
+    string                  desc = 12;
+    string                  func = 13;
+    string                  extra = 14;
 }
 
 message VipOrder {
     int64                   id = 1;      
-    int64                   vip = 2;     
-    int64                   uid = 3;     
-    string                  trade_no = 4; 
-    string                  code_url = 5; 
-    int64                   amount = 6;  
-    int64                   status = 7; 
-    int64                   pay_style = 8; 
-    string                  info = 9;  
-    string                  extra = 10;  
-    string                  create_at = 11;
-    string                  update_at = 12;
-    string                  openid = 13;
-    string                  trans_id = 14;
-    string                  desc = 15;
+    int64                   level = 2;   
+    int64                   genre = 3;  
+    int64                   uid = 4;     
+    string                  trade_no = 5; 
+    string                  code_url = 6; 
+    int64                   amount = 7;  
+    int64                   status = 8; 
+    int64                   pay_style = 9; 
+    string                  info = 10;  
+    string                  extra = 11;  
+    string                  create_at = 12;
+    string                  update_at = 13;
+    string                  openid = 14;
+    string                  trans_id = 15;
+    string                  desc = 16;
 }
 
 enum VipPayStyle {
@@ -640,4 +643,11 @@ message VipPayCb {
     string              event_type = 4;
     string              summary = 5;
     VipPayCbRe          resource = 6;
+}
+
+message UserScore {
+   int64                uid = 1;
+   int64                score = 2;
+   string               create_at = 3;
+   string               update_at = 4; 
 }

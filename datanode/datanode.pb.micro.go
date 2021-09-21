@@ -272,6 +272,8 @@ type DatanodeService interface {
 	VipOrderStatus(ctx context.Context, in *VipOrderStatusReq, opts ...client.CallOption) (*VipOrderStatusRes, error)
 	// 获取vip充值列表
 	VipOrderList(ctx context.Context, in *VipOrderListReq, opts ...client.CallOption) (*VipOrderListRes, error)
+	// 用户积分操作
+	UserScore(ctx context.Context, in *UserScoreReq, opts ...client.CallOption) (*UserScoreReq, error)
 }
 
 type datanodeService struct {
@@ -1446,6 +1448,16 @@ func (c *datanodeService) VipOrderList(ctx context.Context, in *VipOrderListReq,
 	return out, nil
 }
 
+func (c *datanodeService) UserScore(ctx context.Context, in *UserScoreReq, opts ...client.CallOption) (*UserScoreReq, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.UserScore", in)
+	out := new(UserScoreReq)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for DatanodeService service
 
 type DatanodeServiceHandler interface {
@@ -1677,6 +1689,8 @@ type DatanodeServiceHandler interface {
 	VipOrderStatus(context.Context, *VipOrderStatusReq, *VipOrderStatusRes) error
 	// 获取vip充值列表
 	VipOrderList(context.Context, *VipOrderListReq, *VipOrderListRes) error
+	// 用户积分操作
+	UserScore(context.Context, *UserScoreReq, *UserScoreReq) error
 }
 
 func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler, opts ...server.HandlerOption) error {
@@ -1797,6 +1811,7 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		VipPay(ctx context.Context, in *VipPayReq, out *VipPayRes) error
 		VipOrderStatus(ctx context.Context, in *VipOrderStatusReq, out *VipOrderStatusRes) error
 		VipOrderList(ctx context.Context, in *VipOrderListReq, out *VipOrderListRes) error
+		UserScore(ctx context.Context, in *UserScoreReq, out *UserScoreReq) error
 	}
 	type DatanodeService struct {
 		datanodeService
@@ -2271,4 +2286,8 @@ func (h *datanodeServiceHandler) VipOrderStatus(ctx context.Context, in *VipOrde
 
 func (h *datanodeServiceHandler) VipOrderList(ctx context.Context, in *VipOrderListReq, out *VipOrderListRes) error {
 	return h.DatanodeServiceHandler.VipOrderList(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) UserScore(ctx context.Context, in *UserScoreReq, out *UserScoreReq) error {
+	return h.DatanodeServiceHandler.UserScore(ctx, in, out)
 }
