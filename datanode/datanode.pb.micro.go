@@ -4,10 +4,10 @@
 package datanode
 
 import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
 	common "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	fmt "fmt"
+	proto "google.golang.org/protobuf/proto"
 	math "math"
 )
 
@@ -22,12 +22,6 @@ import (
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ api.Endpoint
@@ -273,7 +267,7 @@ type DatanodeService interface {
 	// 获取vip充值列表
 	VipOrderList(ctx context.Context, in *VipOrderListReq, opts ...client.CallOption) (*VipOrderListRes, error)
 	// 用户积分操作
-	UserScore(ctx context.Context, in *UserScoreReq, opts ...client.CallOption) (*UserScoreReq, error)
+	UserScore(ctx context.Context, in *UserScoreReq, opts ...client.CallOption) (*UserScoreRes, error)
 }
 
 type datanodeService struct {
@@ -1448,9 +1442,9 @@ func (c *datanodeService) VipOrderList(ctx context.Context, in *VipOrderListReq,
 	return out, nil
 }
 
-func (c *datanodeService) UserScore(ctx context.Context, in *UserScoreReq, opts ...client.CallOption) (*UserScoreReq, error) {
+func (c *datanodeService) UserScore(ctx context.Context, in *UserScoreReq, opts ...client.CallOption) (*UserScoreRes, error) {
 	req := c.c.NewRequest(c.name, "DatanodeService.UserScore", in)
-	out := new(UserScoreReq)
+	out := new(UserScoreRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1690,7 +1684,7 @@ type DatanodeServiceHandler interface {
 	// 获取vip充值列表
 	VipOrderList(context.Context, *VipOrderListReq, *VipOrderListRes) error
 	// 用户积分操作
-	UserScore(context.Context, *UserScoreReq, *UserScoreReq) error
+	UserScore(context.Context, *UserScoreReq, *UserScoreRes) error
 }
 
 func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler, opts ...server.HandlerOption) error {
@@ -1811,7 +1805,7 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		VipPay(ctx context.Context, in *VipPayReq, out *VipPayRes) error
 		VipOrderStatus(ctx context.Context, in *VipOrderStatusReq, out *VipOrderStatusRes) error
 		VipOrderList(ctx context.Context, in *VipOrderListReq, out *VipOrderListRes) error
-		UserScore(ctx context.Context, in *UserScoreReq, out *UserScoreReq) error
+		UserScore(ctx context.Context, in *UserScoreReq, out *UserScoreRes) error
 	}
 	type DatanodeService struct {
 		datanodeService
@@ -2288,6 +2282,6 @@ func (h *datanodeServiceHandler) VipOrderList(ctx context.Context, in *VipOrderL
 	return h.DatanodeServiceHandler.VipOrderList(ctx, in, out)
 }
 
-func (h *datanodeServiceHandler) UserScore(ctx context.Context, in *UserScoreReq, out *UserScoreReq) error {
+func (h *datanodeServiceHandler) UserScore(ctx context.Context, in *UserScoreReq, out *UserScoreRes) error {
 	return h.DatanodeServiceHandler.UserScore(ctx, in, out)
 }

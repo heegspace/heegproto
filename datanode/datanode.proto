@@ -1775,5 +1775,5 @@ service DatanodeService {
     // 获取vip充值列表
     rpc VipOrderList(VipOrderListReq) returns (VipOrderListRes) {}
     // 用户积分操作
-    rpc UserScore(UserScoreReq) returns (UserScoreReq) {}
+    rpc UserScore(UserScoreReq) returns (UserScoreRes) {}
 }
