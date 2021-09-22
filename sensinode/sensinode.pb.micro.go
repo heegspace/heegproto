@@ -54,6 +54,8 @@ type SensinodeService interface {
 	RefreshIdentReward(ctx context.Context, in *RefreshIdentRewardReq, opts ...client.CallOption) (*RefreshIdentRewardRes, error)
 	// 更新用户vip
 	RefreshUserVip(ctx context.Context, in *RefreshUserVipReq, opts ...client.CallOption) (*RefreshUserVipRes, error)
+	// 更新用户积分
+	RefreshUserScore(ctx context.Context, in *RefreshUserScoreReq, opts ...client.CallOption) (*RefreshUserScoreRes, error)
 }
 
 type sensinodeService struct {
@@ -118,6 +120,16 @@ func (c *sensinodeService) RefreshUserVip(ctx context.Context, in *RefreshUserVi
 	return out, nil
 }
 
+func (c *sensinodeService) RefreshUserScore(ctx context.Context, in *RefreshUserScoreReq, opts ...client.CallOption) (*RefreshUserScoreRes, error) {
+	req := c.c.NewRequest(c.name, "SensinodeService.RefreshUserScore", in)
+	out := new(RefreshUserScoreRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for SensinodeService service
 
 type SensinodeServiceHandler interface {
@@ -131,6 +143,8 @@ type SensinodeServiceHandler interface {
 	RefreshIdentReward(context.Context, *RefreshIdentRewardReq, *RefreshIdentRewardRes) error
 	// 更新用户vip
 	RefreshUserVip(context.Context, *RefreshUserVipReq, *RefreshUserVipRes) error
+	// 更新用户积分
+	RefreshUserScore(context.Context, *RefreshUserScoreReq, *RefreshUserScoreRes) error
 }
 
 func RegisterSensinodeServiceHandler(s server.Server, hdlr SensinodeServiceHandler, opts ...server.HandlerOption) error {
@@ -140,6 +154,7 @@ func RegisterSensinodeServiceHandler(s server.Server, hdlr SensinodeServiceHandl
 		RefreshUserCoin(ctx context.Context, in *RefreshUserCoinReq, out *RefreshUserCoinRes) error
 		RefreshIdentReward(ctx context.Context, in *RefreshIdentRewardReq, out *RefreshIdentRewardRes) error
 		RefreshUserVip(ctx context.Context, in *RefreshUserVipReq, out *RefreshUserVipRes) error
+		RefreshUserScore(ctx context.Context, in *RefreshUserScoreReq, out *RefreshUserScoreRes) error
 	}
 	type SensinodeService struct {
 		sensinodeService
@@ -170,4 +185,8 @@ func (h *sensinodeServiceHandler) RefreshIdentReward(ctx context.Context, in *Re
 
 func (h *sensinodeServiceHandler) RefreshUserVip(ctx context.Context, in *RefreshUserVipReq, out *RefreshUserVipRes) error {
 	return h.SensinodeServiceHandler.RefreshUserVip(ctx, in, out)
+}
+
+func (h *sensinodeServiceHandler) RefreshUserScore(ctx context.Context, in *RefreshUserScoreReq, out *RefreshUserScoreRes) error {
+	return h.SensinodeServiceHandler.RefreshUserScore(ctx, in, out)
 }
