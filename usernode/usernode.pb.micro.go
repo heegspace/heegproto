@@ -4,10 +4,10 @@
 package usernode
 
 import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
 	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	fmt "fmt"
+	proto "google.golang.org/protobuf/proto"
 	math "math"
 )
 
@@ -22,12 +22,6 @@ import (
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ api.Endpoint
@@ -54,6 +48,8 @@ type UsernodeService interface {
 	UserInfo(ctx context.Context, in *UserInfoReq, opts ...client.CallOption) (*UserInfoRes, error)
 	// 用户缓存
 	UserCache(ctx context.Context, in *UserCacheReq, opts ...client.CallOption) (*UserCacheRes, error)
+	// 用户积分获取
+	UserScore(ctx context.Context, in *UserScoreReq, opts ...client.CallOption) (*UserScoreRes, error)
 }
 
 type usernodeService struct {
@@ -118,6 +114,16 @@ func (c *usernodeService) UserCache(ctx context.Context, in *UserCacheReq, opts 
 	return out, nil
 }
 
+func (c *usernodeService) UserScore(ctx context.Context, in *UserScoreReq, opts ...client.CallOption) (*UserScoreRes, error) {
+	req := c.c.NewRequest(c.name, "UsernodeService.UserScore", in)
+	out := new(UserScoreRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for UsernodeService service
 
 type UsernodeServiceHandler interface {
@@ -131,6 +137,8 @@ type UsernodeServiceHandler interface {
 	UserInfo(context.Context, *UserInfoReq, *UserInfoRes) error
 	// 用户缓存
 	UserCache(context.Context, *UserCacheReq, *UserCacheRes) error
+	// 用户积分获取
+	UserScore(context.Context, *UserScoreReq, *UserScoreRes) error
 }
 
 func RegisterUsernodeServiceHandler(s server.Server, hdlr UsernodeServiceHandler, opts ...server.HandlerOption) error {
@@ -140,6 +148,7 @@ func RegisterUsernodeServiceHandler(s server.Server, hdlr UsernodeServiceHandler
 		UpdateAttention(ctx context.Context, in *UpdateAttentionReq, out *UpdateUserRes) error
 		UserInfo(ctx context.Context, in *UserInfoReq, out *UserInfoRes) error
 		UserCache(ctx context.Context, in *UserCacheReq, out *UserCacheRes) error
+		UserScore(ctx context.Context, in *UserScoreReq, out *UserScoreRes) error
 	}
 	type UsernodeService struct {
 		usernodeService
@@ -170,4 +179,8 @@ func (h *usernodeServiceHandler) UserInfo(ctx context.Context, in *UserInfoReq, 
 
 func (h *usernodeServiceHandler) UserCache(ctx context.Context, in *UserCacheReq, out *UserCacheRes) error {
 	return h.UsernodeServiceHandler.UserCache(ctx, in, out)
+}
+
+func (h *usernodeServiceHandler) UserScore(ctx context.Context, in *UserScoreReq, out *UserScoreRes) error {
+	return h.UsernodeServiceHandler.UserScore(ctx, in, out)
 }
