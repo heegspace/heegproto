@@ -4,10 +4,10 @@
 package datanode
 
 import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
 	common "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
-	fmt "fmt"
-	proto "google.golang.org/protobuf/proto"
 	math "math"
 )
 
@@ -22,6 +22,12 @@ import (
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the proto package it is being compiled against.
+// A compilation error at this line likely means your copy of the
+// proto package needs to be updated.
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ api.Endpoint
@@ -210,8 +216,6 @@ type DatanodeService interface {
 	IdentCount(ctx context.Context, in *IdentCountReq, opts ...client.CallOption) (*IdentCountRes, error)
 	// 刷新识别奖励
 	RefreshIdentReward(ctx context.Context, in *RefreshIdentRewardReq, opts ...client.CallOption) (*RefreshIdentRewardRes, error)
-	// 更新用户vip
-	RefreshUserVip(ctx context.Context, in *RefreshUserVipReq, opts ...client.CallOption) (*RefreshUserVipRes, error)
 	// 添加或者根据教师信息
 	UpdateTeacher(ctx context.Context, in *UpdateTeacherReq, opts ...client.CallOption) (*UpdateTeacherRes, error)
 	// 查询教师信息
@@ -268,6 +272,8 @@ type DatanodeService interface {
 	VipOrderList(ctx context.Context, in *VipOrderListReq, opts ...client.CallOption) (*VipOrderListRes, error)
 	// 用户积分操作
 	UserScore(ctx context.Context, in *UserScoreReq, opts ...client.CallOption) (*UserScoreRes, error)
+	// 用户vip操作
+	UserVip(ctx context.Context, in *UserVipReq, opts ...client.CallOption) (*UserVipRes, error)
 }
 
 type datanodeService struct {
@@ -1142,16 +1148,6 @@ func (c *datanodeService) RefreshIdentReward(ctx context.Context, in *RefreshIde
 	return out, nil
 }
 
-func (c *datanodeService) RefreshUserVip(ctx context.Context, in *RefreshUserVipReq, opts ...client.CallOption) (*RefreshUserVipRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.RefreshUserVip", in)
-	out := new(RefreshUserVipRes)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *datanodeService) UpdateTeacher(ctx context.Context, in *UpdateTeacherReq, opts ...client.CallOption) (*UpdateTeacherRes, error) {
 	req := c.c.NewRequest(c.name, "DatanodeService.UpdateTeacher", in)
 	out := new(UpdateTeacherRes)
@@ -1452,6 +1448,16 @@ func (c *datanodeService) UserScore(ctx context.Context, in *UserScoreReq, opts 
 	return out, nil
 }
 
+func (c *datanodeService) UserVip(ctx context.Context, in *UserVipReq, opts ...client.CallOption) (*UserVipRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.UserVip", in)
+	out := new(UserVipRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for DatanodeService service
 
 type DatanodeServiceHandler interface {
@@ -1627,8 +1633,6 @@ type DatanodeServiceHandler interface {
 	IdentCount(context.Context, *IdentCountReq, *IdentCountRes) error
 	// 刷新识别奖励
 	RefreshIdentReward(context.Context, *RefreshIdentRewardReq, *RefreshIdentRewardRes) error
-	// 更新用户vip
-	RefreshUserVip(context.Context, *RefreshUserVipReq, *RefreshUserVipRes) error
 	// 添加或者根据教师信息
 	UpdateTeacher(context.Context, *UpdateTeacherReq, *UpdateTeacherRes) error
 	// 查询教师信息
@@ -1685,6 +1689,8 @@ type DatanodeServiceHandler interface {
 	VipOrderList(context.Context, *VipOrderListReq, *VipOrderListRes) error
 	// 用户积分操作
 	UserScore(context.Context, *UserScoreReq, *UserScoreRes) error
+	// 用户vip操作
+	UserVip(context.Context, *UserVipReq, *UserVipRes) error
 }
 
 func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler, opts ...server.HandlerOption) error {
@@ -1775,7 +1781,6 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		IdentList(ctx context.Context, in *IdentListReq, out *IdentListRes) error
 		IdentCount(ctx context.Context, in *IdentCountReq, out *IdentCountRes) error
 		RefreshIdentReward(ctx context.Context, in *RefreshIdentRewardReq, out *RefreshIdentRewardRes) error
-		RefreshUserVip(ctx context.Context, in *RefreshUserVipReq, out *RefreshUserVipRes) error
 		UpdateTeacher(ctx context.Context, in *UpdateTeacherReq, out *UpdateTeacherRes) error
 		GetTeacher(ctx context.Context, in *FindTeacherReq, out *FindTeacherRes) error
 		FocusTeacher(ctx context.Context, in *FocusTeacherReq, out *FocusTeacherRes) error
@@ -1806,6 +1811,7 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		VipOrderStatus(ctx context.Context, in *VipOrderStatusReq, out *VipOrderStatusRes) error
 		VipOrderList(ctx context.Context, in *VipOrderListReq, out *VipOrderListRes) error
 		UserScore(ctx context.Context, in *UserScoreReq, out *UserScoreRes) error
+		UserVip(ctx context.Context, in *UserVipReq, out *UserVipRes) error
 	}
 	type DatanodeService struct {
 		datanodeService
@@ -2162,10 +2168,6 @@ func (h *datanodeServiceHandler) RefreshIdentReward(ctx context.Context, in *Ref
 	return h.DatanodeServiceHandler.RefreshIdentReward(ctx, in, out)
 }
 
-func (h *datanodeServiceHandler) RefreshUserVip(ctx context.Context, in *RefreshUserVipReq, out *RefreshUserVipRes) error {
-	return h.DatanodeServiceHandler.RefreshUserVip(ctx, in, out)
-}
-
 func (h *datanodeServiceHandler) UpdateTeacher(ctx context.Context, in *UpdateTeacherReq, out *UpdateTeacherRes) error {
 	return h.DatanodeServiceHandler.UpdateTeacher(ctx, in, out)
 }
@@ -2284,4 +2286,8 @@ func (h *datanodeServiceHandler) VipOrderList(ctx context.Context, in *VipOrderL
 
 func (h *datanodeServiceHandler) UserScore(ctx context.Context, in *UserScoreReq, out *UserScoreRes) error {
 	return h.DatanodeServiceHandler.UserScore(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) UserVip(ctx context.Context, in *UserVipReq, out *UserVipRes) error {
+	return h.DatanodeServiceHandler.UserVip(ctx, in, out)
 }

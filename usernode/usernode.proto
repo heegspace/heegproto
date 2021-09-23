@@ -106,6 +106,19 @@ message UserScoreRes {
     map<string,string>          extra = 4;
 }
 
+message UserVipReq {
+    common.Authorize      auth = 1;
+    int64 		          userid = 2;
+    map<string,string>    extra = 3;
+}
+
+message UserVipRes {
+    rescode.Code                rescode = 1;
+    string                      resmsg = 2;
+    common.UserVip              vip = 3;
+    map<string,string>          extra = 4;
+}
+
 service UsernodeService {
     // 更新用户信息
     rpc  UpdateUserInfo(UpdateUserinfoReq) returns(UpdateUserinfoRes) {}
@@ -124,4 +137,7 @@ service UsernodeService {
 
     // 用户积分获取
     rpc UserScore(UserScoreReq) returns (UserScoreRes) {}
+
+    // 用户VIP获取
+    rpc UserVip(UserVipReq) returns (UserVipRes) {}
 }

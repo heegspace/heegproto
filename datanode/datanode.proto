@@ -1099,20 +1099,6 @@ message RefreshIdentRewardRes {
     map<string,string>    extra = 4;
 }
 
-message RefreshUserVipReq {
-    string                auth = 1;
-    int64                 userid = 2;
-    int64                 vip = 3;
-    map<string,string>    extra = 4;
-}
-
-message RefreshUserVipRes {
-    rescode.Code          rescode = 1;
-    string                resmsg = 2;
-    string                code = 3;
-    map<string,string>    extra = 4;
-}
-
 message TeacherItem {
     int64                 uid = 1;
     string                tag = 2;
@@ -1542,6 +1528,19 @@ message UserScoreRes {
     map<string,string>          extra = 4;
 }
 
+message UserVipReq {
+    int32                       op = 1;     // 操作  0:获取 1:添加  2:更新
+    common.UserVip             vip = 2;
+    map<string, string>         extra = 3;
+}
+
+message UserVipRes {
+    rescode.Code                rescode = 1;
+    string                      resmsg = 2;
+    common.UserVip              vip = 3;
+    map<string,string>          extra = 4;
+}
+
 service DatanodeService {
 	// ---------- 用户接口 ------- //
 	// 创建新用户
@@ -1715,8 +1714,6 @@ service DatanodeService {
 	rpc IdentCount(IdentCountReq) returns (IdentCountRes) {}
 	// 刷新识别奖励
 	rpc RefreshIdentReward(RefreshIdentRewardReq) returns (RefreshIdentRewardRes) {}
-	// 更新用户vip
-	rpc RefreshUserVip(RefreshUserVipReq) returns (RefreshUserVipRes) {}
 	// 添加或者根据教师信息
 	rpc UpdateTeacher(UpdateTeacherReq) returns (UpdateTeacherRes) {}
 	// 查询教师信息
@@ -1776,4 +1773,6 @@ service DatanodeService {
     rpc VipOrderList(VipOrderListReq) returns (VipOrderListRes) {}
     // 用户积分操作
     rpc UserScore(UserScoreReq) returns (UserScoreRes) {}
+    // 用户vip操作
+    rpc UserVip(UserVipReq) returns (UserVipRes) {}
 }

@@ -652,3 +652,11 @@ message UserScore {
    string               create_at = 3;
    string               update_at = 4; 
 }
+
+message UserVip {
+    int64                uid = 1;
+    int64                vip = 2;
+    int64                invalid = 3;
+    string               create_at = 4;
+    string               update_at = 5; 
+ }
