@@ -1516,9 +1516,10 @@ message VipOrderListRes {
 }
 
 message UserScoreReq {
-    int32                       op = 1;     // 操作  0:获取 1:添加  2:更新
-    common.UserScore            score = 2;
-    map<string, string>         extra = 3;
+    string                      auth = 1;
+    int32                       op = 2;     // 操作  0:获取 1:添加  2:更新
+    common.UserScore            score = 3;
+    map<string, string>         extra = 4;
 }
 
 message UserScoreRes {
@@ -1529,9 +1530,10 @@ message UserScoreRes {
 }
 
 message UserVipReq {
-    int32                       op = 1;     // 操作  0:获取 1:添加  2:更新
-    common.UserVip             vip = 2;
-    map<string, string>         extra = 3;
+    string                      auth = 1;
+    int32                       op = 2;     // 操作  0:获取 1:添加/更新
+    common.UserVip              vip = 3;
+    map<string, string>         extra = 4;
 }
 
 message UserVipRes {

@@ -65,7 +65,8 @@ message RefreshUserVipReq {
     common.Authorize      auth = 1;
     int64                 userid = 2;
     common.VipLevel       level = 3;
-    map<string,string>    extra = 4;
+    int64                 invalid = 4;
+    map<string,string>    extra = 5;
 }
 
 message RefreshUserVipRes {
