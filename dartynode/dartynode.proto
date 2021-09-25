@@ -244,6 +244,44 @@ message AlipayRes {
     map<string,string>                extra =  4;
 }
 
+message WxNativeCloseReq {
+    string              trade_no = 1;
+    map<string,string>  extra = 2;
+}
+
+message WxNativeCloseRes {
+    rescode.Code                      rescode =  1;
+    string                            resmsg =  2;
+    map<string,string>                extra =  3;
+}
+
+message WxNativeTrans {
+    string              appid = 1;
+    string              attach = 2;
+    string              bank_type = 3;
+    string              mchid = 4;
+    string              out_trade_no = 5;
+    string              success_time = 6;
+    string              trade_state = 7;
+    string              trade_state_desc = 8;
+    string              trade_type = 9;
+    string              trans_id = 10;
+    map<string,string>  extra = 11;
+}
+
+message WxNativeOrderQueryReq {
+    string                  trade_no = 1;   // 商户订单号
+    string                  trans_id = 2;   // 微信订单号
+    map<string,string>      extra = 4;
+}
+
+message WxNativeOrderQueryRes {
+    rescode.Code                      rescode =  1;
+    string                            resmsg =  2;
+    WxNativeTrans                     transaction = 3;
+    map<string,string>                extra =  4;
+}
+
 service DartynodeService {
 	// 登录微信
 	rpc LoginWechat(LoginWechatReq) returns (LoginWechatRes) {}
@@ -288,4 +326,9 @@ service DartynodeService {
     rpc WechatPay(WechatPayReq) returns (WechatPayRes) {}
     // 支付宝支付
     rpc Alipay(AlipayReq) returns (AlipayRes) {}
+
+    // 微信native订单关闭
+    rpc WxNativeClose(WxNativeCloseReq) returns (WxNativeCloseRes) {}
+    // 微信native订单查询
+    rpc WxNativeOrderQuery(WxNativeOrderQueryReq) returns (WxNativeOrderQueryRes) {}
 }

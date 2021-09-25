@@ -623,6 +623,7 @@ message VipOrder {
     string                  trans_id = 15;
     string                  desc = 16;
     int64                   score =  17;
+    int64                   invalid = 18;
 }
 
 enum VipPayStyle {
@@ -659,4 +660,4 @@ message UserVip {
     int64                invalid = 3;
     string               create_at = 4;
     string               update_at = 5; 
- }
+}
