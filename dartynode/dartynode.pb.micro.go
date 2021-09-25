@@ -72,12 +72,12 @@ type DartynodeService interface {
 	BaiduImgCensor(ctx context.Context, in *BaiduImgCensorReq, opts ...client.CallOption) (*BaiduImgCensorRes, error)
 	// 微信支付
 	WechatPay(ctx context.Context, in *WechatPayReq, opts ...client.CallOption) (*WechatPayRes, error)
-	// 支付宝支付
-	Alipay(ctx context.Context, in *AlipayReq, opts ...client.CallOption) (*AlipayRes, error)
 	// 微信native订单关闭
-	WxNativeClose(ctx context.Context, in *WxNativeCloseReq, opts ...client.CallOption) (*WxNativeCloseRes, error)
+	WxNativeOrderClose(ctx context.Context, in *WxNativeOrderCloseReq, opts ...client.CallOption) (*WxNativeOrderCloseRes, error)
 	// 微信native订单查询
 	WxNativeOrderQuery(ctx context.Context, in *WxNativeOrderQueryReq, opts ...client.CallOption) (*WxNativeOrderQueryRes, error)
+	// 支付宝支付
+	Alipay(ctx context.Context, in *AlipayReq, opts ...client.CallOption) (*AlipayRes, error)
 }
 
 type dartynodeService struct {
@@ -232,19 +232,9 @@ func (c *dartynodeService) WechatPay(ctx context.Context, in *WechatPayReq, opts
 	return out, nil
 }
 
-func (c *dartynodeService) Alipay(ctx context.Context, in *AlipayReq, opts ...client.CallOption) (*AlipayRes, error) {
-	req := c.c.NewRequest(c.name, "DartynodeService.Alipay", in)
-	out := new(AlipayRes)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *dartynodeService) WxNativeClose(ctx context.Context, in *WxNativeCloseReq, opts ...client.CallOption) (*WxNativeCloseRes, error) {
-	req := c.c.NewRequest(c.name, "DartynodeService.WxNativeClose", in)
-	out := new(WxNativeCloseRes)
+func (c *dartynodeService) WxNativeOrderClose(ctx context.Context, in *WxNativeOrderCloseReq, opts ...client.CallOption) (*WxNativeOrderCloseRes, error) {
+	req := c.c.NewRequest(c.name, "DartynodeService.WxNativeOrderClose", in)
+	out := new(WxNativeOrderCloseRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -255,6 +245,16 @@ func (c *dartynodeService) WxNativeClose(ctx context.Context, in *WxNativeCloseR
 func (c *dartynodeService) WxNativeOrderQuery(ctx context.Context, in *WxNativeOrderQueryReq, opts ...client.CallOption) (*WxNativeOrderQueryRes, error) {
 	req := c.c.NewRequest(c.name, "DartynodeService.WxNativeOrderQuery", in)
 	out := new(WxNativeOrderQueryRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dartynodeService) Alipay(ctx context.Context, in *AlipayReq, opts ...client.CallOption) (*AlipayRes, error) {
+	req := c.c.NewRequest(c.name, "DartynodeService.Alipay", in)
+	out := new(AlipayRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -293,12 +293,12 @@ type DartynodeServiceHandler interface {
 	BaiduImgCensor(context.Context, *BaiduImgCensorReq, *BaiduImgCensorRes) error
 	// 微信支付
 	WechatPay(context.Context, *WechatPayReq, *WechatPayRes) error
-	// 支付宝支付
-	Alipay(context.Context, *AlipayReq, *AlipayRes) error
 	// 微信native订单关闭
-	WxNativeClose(context.Context, *WxNativeCloseReq, *WxNativeCloseRes) error
+	WxNativeOrderClose(context.Context, *WxNativeOrderCloseReq, *WxNativeOrderCloseRes) error
 	// 微信native订单查询
 	WxNativeOrderQuery(context.Context, *WxNativeOrderQueryReq, *WxNativeOrderQueryRes) error
+	// 支付宝支付
+	Alipay(context.Context, *AlipayReq, *AlipayRes) error
 }
 
 func RegisterDartynodeServiceHandler(s server.Server, hdlr DartynodeServiceHandler, opts ...server.HandlerOption) error {
@@ -317,9 +317,9 @@ func RegisterDartynodeServiceHandler(s server.Server, hdlr DartynodeServiceHandl
 		BaiduTextCensor(ctx context.Context, in *BaiduTextCensorReq, out *BaiduTextCensorRes) error
 		BaiduImgCensor(ctx context.Context, in *BaiduImgCensorReq, out *BaiduImgCensorRes) error
 		WechatPay(ctx context.Context, in *WechatPayReq, out *WechatPayRes) error
-		Alipay(ctx context.Context, in *AlipayReq, out *AlipayRes) error
-		WxNativeClose(ctx context.Context, in *WxNativeCloseReq, out *WxNativeCloseRes) error
+		WxNativeOrderClose(ctx context.Context, in *WxNativeOrderCloseReq, out *WxNativeOrderCloseRes) error
 		WxNativeOrderQuery(ctx context.Context, in *WxNativeOrderQueryReq, out *WxNativeOrderQueryRes) error
+		Alipay(ctx context.Context, in *AlipayReq, out *AlipayRes) error
 	}
 	type DartynodeService struct {
 		dartynodeService
@@ -388,14 +388,14 @@ func (h *dartynodeServiceHandler) WechatPay(ctx context.Context, in *WechatPayRe
 	return h.DartynodeServiceHandler.WechatPay(ctx, in, out)
 }
 
-func (h *dartynodeServiceHandler) Alipay(ctx context.Context, in *AlipayReq, out *AlipayRes) error {
-	return h.DartynodeServiceHandler.Alipay(ctx, in, out)
-}
-
-func (h *dartynodeServiceHandler) WxNativeClose(ctx context.Context, in *WxNativeCloseReq, out *WxNativeCloseRes) error {
-	return h.DartynodeServiceHandler.WxNativeClose(ctx, in, out)
+func (h *dartynodeServiceHandler) WxNativeOrderClose(ctx context.Context, in *WxNativeOrderCloseReq, out *WxNativeOrderCloseRes) error {
+	return h.DartynodeServiceHandler.WxNativeOrderClose(ctx, in, out)
 }
 
 func (h *dartynodeServiceHandler) WxNativeOrderQuery(ctx context.Context, in *WxNativeOrderQueryReq, out *WxNativeOrderQueryRes) error {
 	return h.DartynodeServiceHandler.WxNativeOrderQuery(ctx, in, out)
+}
+
+func (h *dartynodeServiceHandler) Alipay(ctx context.Context, in *AlipayReq, out *AlipayRes) error {
+	return h.DartynodeServiceHandler.Alipay(ctx, in, out)
 }

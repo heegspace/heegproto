@@ -244,12 +244,12 @@ message AlipayRes {
     map<string,string>                extra =  4;
 }
 
-message WxNativeCloseReq {
+message WxNativeOrderCloseReq {
     string              trade_no = 1;
     map<string,string>  extra = 2;
 }
 
-message WxNativeCloseRes {
+message WxNativeOrderCloseRes {
     rescode.Code                      rescode =  1;
     string                            resmsg =  2;
     map<string,string>                extra =  3;
@@ -324,11 +324,11 @@ service DartynodeService {
 
     // 微信支付
     rpc WechatPay(WechatPayReq) returns (WechatPayRes) {}
-    // 支付宝支付
-    rpc Alipay(AlipayReq) returns (AlipayRes) {}
-
     // 微信native订单关闭
-    rpc WxNativeClose(WxNativeCloseReq) returns (WxNativeCloseRes) {}
+    rpc WxNativeOrderClose(WxNativeOrderCloseReq) returns (WxNativeOrderCloseRes) {}
     // 微信native订单查询
     rpc WxNativeOrderQuery(WxNativeOrderQueryReq) returns (WxNativeOrderQueryRes) {}
+
+    // 支付宝支付
+    rpc Alipay(AlipayReq) returns (AlipayRes) {}
 }
