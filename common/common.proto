@@ -660,4 +660,5 @@ message UserVip {
     int64                invalid = 3;
     string               create_at = 4;
     string               update_at = 5; 
+    int64 		 vip_at = 6;
 }
