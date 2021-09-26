@@ -266,7 +266,8 @@ message WxNativeTrans {
     string              trade_state_desc = 8;
     string              trade_type = 9;
     string              trans_id = 10;
-    map<string,string>  extra = 11;
+    string              openid = 11;
+    map<string,string>  extra = 12;
 }
 
 message WxNativeOrderQueryReq {
