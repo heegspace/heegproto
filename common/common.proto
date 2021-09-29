@@ -605,6 +605,13 @@ message VipProduct {
     string                  extra = 14;
 }
 
+message VipDesc {
+    int64                   id = 1;
+    string                  desc = 2;
+    string                  create_at = 3;
+    map<string,string>      extra = 4;
+}
+
 message VipOrder {
     int64                   id = 1;      
     int64                   level = 2;   
@@ -661,5 +668,5 @@ message UserVip {
     int64                invalid = 3;
     string               create_at = 4;
     string               update_at = 5; 
-    int64 		 vip_at = 6;
+    int64 		         vip_at = 6;
 }

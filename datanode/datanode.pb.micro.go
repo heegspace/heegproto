@@ -264,6 +264,8 @@ type DatanodeService interface {
 	VipLimit(ctx context.Context, in *VipLimitReq, opts ...client.CallOption) (*VipLimitRes, error)
 	// vip产品列表
 	VipProduct(ctx context.Context, in *VipProductReq, opts ...client.CallOption) (*VipProductRes, error)
+	// vip产品介绍
+	VipDesc(ctx context.Context, in *VipDescReq, opts ...client.CallOption) (*VipDescRes, error)
 	// vip充值
 	VipPay(ctx context.Context, in *VipPayReq, opts ...client.CallOption) (*VipPayRes, error)
 	// 更新vip充值状态
@@ -1408,6 +1410,16 @@ func (c *datanodeService) VipProduct(ctx context.Context, in *VipProductReq, opt
 	return out, nil
 }
 
+func (c *datanodeService) VipDesc(ctx context.Context, in *VipDescReq, opts ...client.CallOption) (*VipDescRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.VipDesc", in)
+	out := new(VipDescRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *datanodeService) VipPay(ctx context.Context, in *VipPayReq, opts ...client.CallOption) (*VipPayRes, error) {
 	req := c.c.NewRequest(c.name, "DatanodeService.VipPay", in)
 	out := new(VipPayRes)
@@ -1681,6 +1693,8 @@ type DatanodeServiceHandler interface {
 	VipLimit(context.Context, *VipLimitReq, *VipLimitRes) error
 	// vip产品列表
 	VipProduct(context.Context, *VipProductReq, *VipProductRes) error
+	// vip产品介绍
+	VipDesc(context.Context, *VipDescReq, *VipDescRes) error
 	// vip充值
 	VipPay(context.Context, *VipPayReq, *VipPayRes) error
 	// 更新vip充值状态
@@ -1807,6 +1821,7 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		SponsorList(ctx context.Context, in *SponsorListReq, out *SponsorListRes) error
 		VipLimit(ctx context.Context, in *VipLimitReq, out *VipLimitRes) error
 		VipProduct(ctx context.Context, in *VipProductReq, out *VipProductRes) error
+		VipDesc(ctx context.Context, in *VipDescReq, out *VipDescRes) error
 		VipPay(ctx context.Context, in *VipPayReq, out *VipPayRes) error
 		VipOrderStatus(ctx context.Context, in *VipOrderStatusReq, out *VipOrderStatusRes) error
 		VipOrderList(ctx context.Context, in *VipOrderListReq, out *VipOrderListRes) error
@@ -2270,6 +2285,10 @@ func (h *datanodeServiceHandler) VipLimit(ctx context.Context, in *VipLimitReq, 
 
 func (h *datanodeServiceHandler) VipProduct(ctx context.Context, in *VipProductReq, out *VipProductRes) error {
 	return h.DatanodeServiceHandler.VipProduct(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) VipDesc(ctx context.Context, in *VipDescReq, out *VipDescRes) error {
+	return h.DatanodeServiceHandler.VipDesc(ctx, in, out)
 }
 
 func (h *datanodeServiceHandler) VipPay(ctx context.Context, in *VipPayReq, out *VipPayRes) error {

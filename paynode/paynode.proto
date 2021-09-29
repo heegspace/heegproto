@@ -47,6 +47,20 @@ message VipProductRes {
     map<string,string>          extra = 4;
 }
 
+message VipDescReq {
+    common.Authorize            auth = 1;
+    int32                       op = 2;     // 操作  0:获取 1:添加/更新
+    common.VipDesc              desc = 3;
+    map<string, string>         extra = 4;
+}
+
+message VipDescRes {
+    rescode.Code                rescode = 1;
+    string                      resmsg = 2;
+    common.VipDesc              desc = 3;
+    map<string,string>          extra = 4;
+}
+
 message VipPayReq {
     common.Authorize            auth = 1;
     common.VipOrder             order = 2;
@@ -95,6 +109,8 @@ service PaynodeService {
 
     // vip产品列表
     rpc VipProduct(VipProductReq) returns (VipProductRes) {}
+    // vip产品介绍
+    rpc VipDesc(VipDescReq) returns (VipDescRes) {}
     // vip充值
     rpc VipPay(VipPayReq) returns (VipPayRes) {}
     // vip充值会掉

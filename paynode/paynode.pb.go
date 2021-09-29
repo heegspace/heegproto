@@ -448,6 +448,148 @@ func (x *VipProductRes) GetExtra() map[string]string {
 	return nil
 }
 
+type VipDescReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Auth  *common.Authorize `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	Op    int32             `protobuf:"varint,2,opt,name=op,proto3" json:"op,omitempty"` // 操作  0:获取 1:添加/更新
+	Desc  *common.VipDesc   `protobuf:"bytes,3,opt,name=desc,proto3" json:"desc,omitempty"`
+	Extra map[string]string `protobuf:"bytes,4,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+}
+
+func (x *VipDescReq) Reset() {
+	*x = VipDescReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_paynode_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VipDescReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VipDescReq) ProtoMessage() {}
+
+func (x *VipDescReq) ProtoReflect() protoreflect.Message {
+	mi := &file_paynode_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VipDescReq.ProtoReflect.Descriptor instead.
+func (*VipDescReq) Descriptor() ([]byte, []int) {
+	return file_paynode_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *VipDescReq) GetAuth() *common.Authorize {
+	if x != nil {
+		return x.Auth
+	}
+	return nil
+}
+
+func (x *VipDescReq) GetOp() int32 {
+	if x != nil {
+		return x.Op
+	}
+	return 0
+}
+
+func (x *VipDescReq) GetDesc() *common.VipDesc {
+	if x != nil {
+		return x.Desc
+	}
+	return nil
+}
+
+func (x *VipDescReq) GetExtra() map[string]string {
+	if x != nil {
+		return x.Extra
+	}
+	return nil
+}
+
+type VipDescRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Rescode rescode.Code      `protobuf:"varint,1,opt,name=rescode,proto3,enum=rescode.Code" json:"rescode,omitempty"`
+	Resmsg  string            `protobuf:"bytes,2,opt,name=resmsg,proto3" json:"resmsg,omitempty"`
+	Desc    *common.VipDesc   `protobuf:"bytes,3,opt,name=desc,proto3" json:"desc,omitempty"`
+	Extra   map[string]string `protobuf:"bytes,4,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+}
+
+func (x *VipDescRes) Reset() {
+	*x = VipDescRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_paynode_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VipDescRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VipDescRes) ProtoMessage() {}
+
+func (x *VipDescRes) ProtoReflect() protoreflect.Message {
+	mi := &file_paynode_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VipDescRes.ProtoReflect.Descriptor instead.
+func (*VipDescRes) Descriptor() ([]byte, []int) {
+	return file_paynode_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *VipDescRes) GetRescode() rescode.Code {
+	if x != nil {
+		return x.Rescode
+	}
+	return rescode.Code_code_SUCCESS
+}
+
+func (x *VipDescRes) GetResmsg() string {
+	if x != nil {
+		return x.Resmsg
+	}
+	return ""
+}
+
+func (x *VipDescRes) GetDesc() *common.VipDesc {
+	if x != nil {
+		return x.Desc
+	}
+	return nil
+}
+
+func (x *VipDescRes) GetExtra() map[string]string {
+	if x != nil {
+		return x.Extra
+	}
+	return nil
+}
+
 type VipPayReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -461,7 +603,7 @@ type VipPayReq struct {
 func (x *VipPayReq) Reset() {
 	*x = VipPayReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_paynode_proto_msgTypes[6]
+		mi := &file_paynode_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -474,7 +616,7 @@ func (x *VipPayReq) String() string {
 func (*VipPayReq) ProtoMessage() {}
 
 func (x *VipPayReq) ProtoReflect() protoreflect.Message {
-	mi := &file_paynode_proto_msgTypes[6]
+	mi := &file_paynode_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -487,7 +629,7 @@ func (x *VipPayReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VipPayReq.ProtoReflect.Descriptor instead.
 func (*VipPayReq) Descriptor() ([]byte, []int) {
-	return file_paynode_proto_rawDescGZIP(), []int{6}
+	return file_paynode_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *VipPayReq) GetAuth() *common.Authorize {
@@ -525,7 +667,7 @@ type VipPayRes struct {
 func (x *VipPayRes) Reset() {
 	*x = VipPayRes{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_paynode_proto_msgTypes[7]
+		mi := &file_paynode_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -538,7 +680,7 @@ func (x *VipPayRes) String() string {
 func (*VipPayRes) ProtoMessage() {}
 
 func (x *VipPayRes) ProtoReflect() protoreflect.Message {
-	mi := &file_paynode_proto_msgTypes[7]
+	mi := &file_paynode_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -551,7 +693,7 @@ func (x *VipPayRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VipPayRes.ProtoReflect.Descriptor instead.
 func (*VipPayRes) Descriptor() ([]byte, []int) {
-	return file_paynode_proto_rawDescGZIP(), []int{7}
+	return file_paynode_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *VipPayRes) GetRescode() rescode.Code {
@@ -595,7 +737,7 @@ type VipPayCallReq struct {
 func (x *VipPayCallReq) Reset() {
 	*x = VipPayCallReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_paynode_proto_msgTypes[8]
+		mi := &file_paynode_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -608,7 +750,7 @@ func (x *VipPayCallReq) String() string {
 func (*VipPayCallReq) ProtoMessage() {}
 
 func (x *VipPayCallReq) ProtoReflect() protoreflect.Message {
-	mi := &file_paynode_proto_msgTypes[8]
+	mi := &file_paynode_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -621,7 +763,7 @@ func (x *VipPayCallReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VipPayCallReq.ProtoReflect.Descriptor instead.
 func (*VipPayCallReq) Descriptor() ([]byte, []int) {
-	return file_paynode_proto_rawDescGZIP(), []int{8}
+	return file_paynode_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *VipPayCallReq) GetAuth() *common.Authorize {
@@ -658,7 +800,7 @@ type VipPayCallRes struct {
 func (x *VipPayCallRes) Reset() {
 	*x = VipPayCallRes{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_paynode_proto_msgTypes[9]
+		mi := &file_paynode_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -671,7 +813,7 @@ func (x *VipPayCallRes) String() string {
 func (*VipPayCallRes) ProtoMessage() {}
 
 func (x *VipPayCallRes) ProtoReflect() protoreflect.Message {
-	mi := &file_paynode_proto_msgTypes[9]
+	mi := &file_paynode_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -684,7 +826,7 @@ func (x *VipPayCallRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VipPayCallRes.ProtoReflect.Descriptor instead.
 func (*VipPayCallRes) Descriptor() ([]byte, []int) {
-	return file_paynode_proto_rawDescGZIP(), []int{9}
+	return file_paynode_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *VipPayCallRes) GetRescode() rescode.Code {
@@ -723,7 +865,7 @@ type VipOrderListReq struct {
 func (x *VipOrderListReq) Reset() {
 	*x = VipOrderListReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_paynode_proto_msgTypes[10]
+		mi := &file_paynode_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -736,7 +878,7 @@ func (x *VipOrderListReq) String() string {
 func (*VipOrderListReq) ProtoMessage() {}
 
 func (x *VipOrderListReq) ProtoReflect() protoreflect.Message {
-	mi := &file_paynode_proto_msgTypes[10]
+	mi := &file_paynode_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -749,7 +891,7 @@ func (x *VipOrderListReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VipOrderListReq.ProtoReflect.Descriptor instead.
 func (*VipOrderListReq) Descriptor() ([]byte, []int) {
-	return file_paynode_proto_rawDescGZIP(), []int{10}
+	return file_paynode_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *VipOrderListReq) GetAuth() *common.Authorize {
@@ -801,7 +943,7 @@ type VipOrderListRes struct {
 func (x *VipOrderListRes) Reset() {
 	*x = VipOrderListRes{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_paynode_proto_msgTypes[11]
+		mi := &file_paynode_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -814,7 +956,7 @@ func (x *VipOrderListRes) String() string {
 func (*VipOrderListRes) ProtoMessage() {}
 
 func (x *VipOrderListRes) ProtoReflect() protoreflect.Message {
-	mi := &file_paynode_proto_msgTypes[11]
+	mi := &file_paynode_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -827,7 +969,7 @@ func (x *VipOrderListRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VipOrderListRes.ProtoReflect.Descriptor instead.
 func (*VipOrderListRes) Descriptor() ([]byte, []int) {
-	return file_paynode_proto_rawDescGZIP(), []int{11}
+	return file_paynode_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *VipOrderListRes) GetRescode() rescode.Code {
@@ -952,6 +1094,34 @@ var file_paynode_proto_rawDesc = []byte{
 	0x1a, 0x38, 0x0a, 0x0a, 0x45, 0x78, 0x74, 0x72, 0x61, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10,
 	0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79,
 	0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0xd8, 0x01, 0x0a, 0x0a, 0x56,
+	0x69, 0x70, 0x44, 0x65, 0x73, 0x63, 0x52, 0x65, 0x71, 0x12, 0x25, 0x0a, 0x04, 0x61, 0x75, 0x74,
+	0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e,
+	0x2e, 0x41, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x52, 0x04, 0x61, 0x75, 0x74, 0x68,
+	0x12, 0x0e, 0x0a, 0x02, 0x6f, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x02, 0x6f, 0x70,
+	0x12, 0x23, 0x0a, 0x04, 0x64, 0x65, 0x73, 0x63, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0f,
+	0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x56, 0x69, 0x70, 0x44, 0x65, 0x73, 0x63, 0x52,
+	0x04, 0x64, 0x65, 0x73, 0x63, 0x12, 0x34, 0x0a, 0x05, 0x65, 0x78, 0x74, 0x72, 0x61, 0x18, 0x04,
+	0x20, 0x03, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x70, 0x61, 0x79, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x56,
+	0x69, 0x70, 0x44, 0x65, 0x73, 0x63, 0x52, 0x65, 0x71, 0x2e, 0x45, 0x78, 0x74, 0x72, 0x61, 0x45,
+	0x6e, 0x74, 0x72, 0x79, 0x52, 0x05, 0x65, 0x78, 0x74, 0x72, 0x61, 0x1a, 0x38, 0x0a, 0x0a, 0x45,
+	0x78, 0x74, 0x72, 0x61, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76,
+	0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75,
+	0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0xe2, 0x01, 0x0a, 0x0a, 0x56, 0x69, 0x70, 0x44, 0x65, 0x73,
+	0x63, 0x52, 0x65, 0x73, 0x12, 0x27, 0x0a, 0x07, 0x72, 0x65, 0x73, 0x63, 0x6f, 0x64, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x0d, 0x2e, 0x72, 0x65, 0x73, 0x63, 0x6f, 0x64, 0x65, 0x2e,
+	0x43, 0x6f, 0x64, 0x65, 0x52, 0x07, 0x72, 0x65, 0x73, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x16, 0x0a,
+	0x06, 0x72, 0x65, 0x73, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72,
+	0x65, 0x73, 0x6d, 0x73, 0x67, 0x12, 0x23, 0x0a, 0x04, 0x64, 0x65, 0x73, 0x63, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x56, 0x69, 0x70,
+	0x44, 0x65, 0x73, 0x63, 0x52, 0x04, 0x64, 0x65, 0x73, 0x63, 0x12, 0x34, 0x0a, 0x05, 0x65, 0x78,
+	0x74, 0x72, 0x61, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x70, 0x61, 0x79, 0x6e,
+	0x6f, 0x64, 0x65, 0x2e, 0x56, 0x69, 0x70, 0x44, 0x65, 0x73, 0x63, 0x52, 0x65, 0x73, 0x2e, 0x45,
+	0x78, 0x74, 0x72, 0x61, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x05, 0x65, 0x78, 0x74, 0x72, 0x61,
+	0x1a, 0x38, 0x0a, 0x0a, 0x45, 0x78, 0x74, 0x72, 0x61, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10,
+	0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79,
+	0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
 	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0xc9, 0x01, 0x0a, 0x09, 0x56,
 	0x69, 0x70, 0x50, 0x61, 0x79, 0x52, 0x65, 0x71, 0x12, 0x25, 0x0a, 0x04, 0x61, 0x75, 0x74, 0x68,
 	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e,
@@ -1036,7 +1206,7 @@ var file_paynode_proto_rawDesc = []byte{
 	0x61, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20,
 	0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75,
 	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02,
-	0x38, 0x01, 0x32, 0x8d, 0x03, 0x0a, 0x0e, 0x50, 0x61, 0x79, 0x6e, 0x6f, 0x64, 0x65, 0x53, 0x65,
+	0x38, 0x01, 0x32, 0xc4, 0x03, 0x0a, 0x0e, 0x50, 0x61, 0x79, 0x6e, 0x6f, 0x64, 0x65, 0x53, 0x65,
 	0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x3e, 0x0a, 0x0a, 0x53, 0x70, 0x6f, 0x6e, 0x73, 0x6f, 0x72,
 	0x41, 0x64, 0x64, 0x12, 0x16, 0x2e, 0x70, 0x61, 0x79, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x53, 0x70,
 	0x6f, 0x6e, 0x73, 0x6f, 0x72, 0x41, 0x64, 0x64, 0x52, 0x65, 0x71, 0x1a, 0x16, 0x2e, 0x70, 0x61,
@@ -1049,20 +1219,23 @@ var file_paynode_proto_rawDesc = []byte{
 	0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x12, 0x16, 0x2e, 0x70, 0x61, 0x79, 0x6e, 0x6f, 0x64, 0x65,
 	0x2e, 0x56, 0x69, 0x70, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x52, 0x65, 0x71, 0x1a, 0x16,
 	0x2e, 0x70, 0x61, 0x79, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x56, 0x69, 0x70, 0x50, 0x72, 0x6f, 0x64,
-	0x75, 0x63, 0x74, 0x52, 0x65, 0x73, 0x22, 0x00, 0x12, 0x32, 0x0a, 0x06, 0x56, 0x69, 0x70, 0x50,
-	0x61, 0x79, 0x12, 0x12, 0x2e, 0x70, 0x61, 0x79, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x56, 0x69, 0x70,
-	0x50, 0x61, 0x79, 0x52, 0x65, 0x71, 0x1a, 0x12, 0x2e, 0x70, 0x61, 0x79, 0x6e, 0x6f, 0x64, 0x65,
-	0x2e, 0x56, 0x69, 0x70, 0x50, 0x61, 0x79, 0x52, 0x65, 0x73, 0x22, 0x00, 0x12, 0x3e, 0x0a, 0x0a,
-	0x56, 0x69, 0x70, 0x50, 0x61, 0x79, 0x43, 0x61, 0x6c, 0x6c, 0x12, 0x16, 0x2e, 0x70, 0x61, 0x79,
-	0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x56, 0x69, 0x70, 0x50, 0x61, 0x79, 0x43, 0x61, 0x6c, 0x6c, 0x52,
-	0x65, 0x71, 0x1a, 0x16, 0x2e, 0x70, 0x61, 0x79, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x56, 0x69, 0x70,
-	0x50, 0x61, 0x79, 0x43, 0x61, 0x6c, 0x6c, 0x52, 0x65, 0x73, 0x22, 0x00, 0x12, 0x44, 0x0a, 0x0c,
-	0x56, 0x69, 0x70, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x18, 0x2e, 0x70,
-	0x61, 0x79, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x56, 0x69, 0x70, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x4c,
-	0x69, 0x73, 0x74, 0x52, 0x65, 0x71, 0x1a, 0x18, 0x2e, 0x70, 0x61, 0x79, 0x6e, 0x6f, 0x64, 0x65,
-	0x2e, 0x56, 0x69, 0x70, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73,
-	0x22, 0x00, 0x42, 0x0b, 0x5a, 0x09, 0x2e, 0x2f, 0x70, 0x61, 0x79, 0x6e, 0x6f, 0x64, 0x65, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x75, 0x63, 0x74, 0x52, 0x65, 0x73, 0x22, 0x00, 0x12, 0x35, 0x0a, 0x07, 0x56, 0x69, 0x70, 0x44,
+	0x65, 0x73, 0x63, 0x12, 0x13, 0x2e, 0x70, 0x61, 0x79, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x56, 0x69,
+	0x70, 0x44, 0x65, 0x73, 0x63, 0x52, 0x65, 0x71, 0x1a, 0x13, 0x2e, 0x70, 0x61, 0x79, 0x6e, 0x6f,
+	0x64, 0x65, 0x2e, 0x56, 0x69, 0x70, 0x44, 0x65, 0x73, 0x63, 0x52, 0x65, 0x73, 0x22, 0x00, 0x12,
+	0x32, 0x0a, 0x06, 0x56, 0x69, 0x70, 0x50, 0x61, 0x79, 0x12, 0x12, 0x2e, 0x70, 0x61, 0x79, 0x6e,
+	0x6f, 0x64, 0x65, 0x2e, 0x56, 0x69, 0x70, 0x50, 0x61, 0x79, 0x52, 0x65, 0x71, 0x1a, 0x12, 0x2e,
+	0x70, 0x61, 0x79, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x56, 0x69, 0x70, 0x50, 0x61, 0x79, 0x52, 0x65,
+	0x73, 0x22, 0x00, 0x12, 0x3e, 0x0a, 0x0a, 0x56, 0x69, 0x70, 0x50, 0x61, 0x79, 0x43, 0x61, 0x6c,
+	0x6c, 0x12, 0x16, 0x2e, 0x70, 0x61, 0x79, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x56, 0x69, 0x70, 0x50,
+	0x61, 0x79, 0x43, 0x61, 0x6c, 0x6c, 0x52, 0x65, 0x71, 0x1a, 0x16, 0x2e, 0x70, 0x61, 0x79, 0x6e,
+	0x6f, 0x64, 0x65, 0x2e, 0x56, 0x69, 0x70, 0x50, 0x61, 0x79, 0x43, 0x61, 0x6c, 0x6c, 0x52, 0x65,
+	0x73, 0x22, 0x00, 0x12, 0x44, 0x0a, 0x0c, 0x56, 0x69, 0x70, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x4c,
+	0x69, 0x73, 0x74, 0x12, 0x18, 0x2e, 0x70, 0x61, 0x79, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x56, 0x69,
+	0x70, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x71, 0x1a, 0x18, 0x2e,
+	0x70, 0x61, 0x79, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x56, 0x69, 0x70, 0x4f, 0x72, 0x64, 0x65, 0x72,
+	0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x22, 0x00, 0x42, 0x0b, 0x5a, 0x09, 0x2e, 0x2f, 0x70,
+	0x61, 0x79, 0x6e, 0x6f, 0x64, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1077,7 +1250,7 @@ func file_paynode_proto_rawDescGZIP() []byte {
 	return file_paynode_proto_rawDescData
 }
 
-var file_paynode_proto_msgTypes = make([]protoimpl.MessageInfo, 24)
+var file_paynode_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
 var file_paynode_proto_goTypes = []interface{}{
 	(*SponsorAddReq)(nil),      // 0: paynode.SponsorAddReq
 	(*SponsorAddRes)(nil),      // 1: paynode.SponsorAddRes
@@ -1085,82 +1258,95 @@ var file_paynode_proto_goTypes = []interface{}{
 	(*SponsorListRes)(nil),     // 3: paynode.SponsorListRes
 	(*VipProductReq)(nil),      // 4: paynode.VipProductReq
 	(*VipProductRes)(nil),      // 5: paynode.VipProductRes
-	(*VipPayReq)(nil),          // 6: paynode.VipPayReq
-	(*VipPayRes)(nil),          // 7: paynode.VipPayRes
-	(*VipPayCallReq)(nil),      // 8: paynode.VipPayCallReq
-	(*VipPayCallRes)(nil),      // 9: paynode.VipPayCallRes
-	(*VipOrderListReq)(nil),    // 10: paynode.VipOrderListReq
-	(*VipOrderListRes)(nil),    // 11: paynode.VipOrderListRes
-	nil,                        // 12: paynode.SponsorAddReq.ExtraEntry
-	nil,                        // 13: paynode.SponsorAddRes.ExtraEntry
-	nil,                        // 14: paynode.SponsorListReq.ExtraEntry
-	nil,                        // 15: paynode.SponsorListRes.ExtraEntry
-	nil,                        // 16: paynode.VipProductReq.ExtraEntry
-	nil,                        // 17: paynode.VipProductRes.ExtraEntry
-	nil,                        // 18: paynode.VipPayReq.ExtraEntry
-	nil,                        // 19: paynode.VipPayRes.ExtraEntry
-	nil,                        // 20: paynode.VipPayCallReq.ExtraEntry
-	nil,                        // 21: paynode.VipPayCallRes.ExtraEntry
-	nil,                        // 22: paynode.VipOrderListReq.ExtraEntry
-	nil,                        // 23: paynode.VipOrderListRes.ExtraEntry
-	(*common.Authorize)(nil),   // 24: common.Authorize
-	(*common.SponsorItem)(nil), // 25: common.SponsorItem
-	(rescode.Code)(0),          // 26: rescode.Code
-	(*common.VipProduct)(nil),  // 27: common.VipProduct
-	(*common.VipOrder)(nil),    // 28: common.VipOrder
-	(*common.VipPayCb)(nil),    // 29: common.VipPayCb
+	(*VipDescReq)(nil),         // 6: paynode.VipDescReq
+	(*VipDescRes)(nil),         // 7: paynode.VipDescRes
+	(*VipPayReq)(nil),          // 8: paynode.VipPayReq
+	(*VipPayRes)(nil),          // 9: paynode.VipPayRes
+	(*VipPayCallReq)(nil),      // 10: paynode.VipPayCallReq
+	(*VipPayCallRes)(nil),      // 11: paynode.VipPayCallRes
+	(*VipOrderListReq)(nil),    // 12: paynode.VipOrderListReq
+	(*VipOrderListRes)(nil),    // 13: paynode.VipOrderListRes
+	nil,                        // 14: paynode.SponsorAddReq.ExtraEntry
+	nil,                        // 15: paynode.SponsorAddRes.ExtraEntry
+	nil,                        // 16: paynode.SponsorListReq.ExtraEntry
+	nil,                        // 17: paynode.SponsorListRes.ExtraEntry
+	nil,                        // 18: paynode.VipProductReq.ExtraEntry
+	nil,                        // 19: paynode.VipProductRes.ExtraEntry
+	nil,                        // 20: paynode.VipDescReq.ExtraEntry
+	nil,                        // 21: paynode.VipDescRes.ExtraEntry
+	nil,                        // 22: paynode.VipPayReq.ExtraEntry
+	nil,                        // 23: paynode.VipPayRes.ExtraEntry
+	nil,                        // 24: paynode.VipPayCallReq.ExtraEntry
+	nil,                        // 25: paynode.VipPayCallRes.ExtraEntry
+	nil,                        // 26: paynode.VipOrderListReq.ExtraEntry
+	nil,                        // 27: paynode.VipOrderListRes.ExtraEntry
+	(*common.Authorize)(nil),   // 28: common.Authorize
+	(*common.SponsorItem)(nil), // 29: common.SponsorItem
+	(rescode.Code)(0),          // 30: rescode.Code
+	(*common.VipProduct)(nil),  // 31: common.VipProduct
+	(*common.VipDesc)(nil),     // 32: common.VipDesc
+	(*common.VipOrder)(nil),    // 33: common.VipOrder
+	(*common.VipPayCb)(nil),    // 34: common.VipPayCb
 }
 var file_paynode_proto_depIdxs = []int32{
-	24, // 0: paynode.SponsorAddReq.auth:type_name -> common.Authorize
-	25, // 1: paynode.SponsorAddReq.sponsor:type_name -> common.SponsorItem
-	12, // 2: paynode.SponsorAddReq.extra:type_name -> paynode.SponsorAddReq.ExtraEntry
-	26, // 3: paynode.SponsorAddRes.rescode:type_name -> rescode.Code
-	13, // 4: paynode.SponsorAddRes.extra:type_name -> paynode.SponsorAddRes.ExtraEntry
-	24, // 5: paynode.SponsorListReq.auth:type_name -> common.Authorize
-	14, // 6: paynode.SponsorListReq.extra:type_name -> paynode.SponsorListReq.ExtraEntry
-	26, // 7: paynode.SponsorListRes.rescode:type_name -> rescode.Code
-	25, // 8: paynode.SponsorListRes.lists:type_name -> common.SponsorItem
-	15, // 9: paynode.SponsorListRes.extra:type_name -> paynode.SponsorListRes.ExtraEntry
-	24, // 10: paynode.VipProductReq.auth:type_name -> common.Authorize
-	27, // 11: paynode.VipProductReq.products:type_name -> common.VipProduct
-	16, // 12: paynode.VipProductReq.extra:type_name -> paynode.VipProductReq.ExtraEntry
-	26, // 13: paynode.VipProductRes.rescode:type_name -> rescode.Code
-	27, // 14: paynode.VipProductRes.products:type_name -> common.VipProduct
-	17, // 15: paynode.VipProductRes.extra:type_name -> paynode.VipProductRes.ExtraEntry
-	24, // 16: paynode.VipPayReq.auth:type_name -> common.Authorize
-	28, // 17: paynode.VipPayReq.order:type_name -> common.VipOrder
-	18, // 18: paynode.VipPayReq.extra:type_name -> paynode.VipPayReq.ExtraEntry
-	26, // 19: paynode.VipPayRes.rescode:type_name -> rescode.Code
-	28, // 20: paynode.VipPayRes.order:type_name -> common.VipOrder
-	19, // 21: paynode.VipPayRes.extra:type_name -> paynode.VipPayRes.ExtraEntry
-	24, // 22: paynode.VipPayCallReq.auth:type_name -> common.Authorize
-	29, // 23: paynode.VipPayCallReq.cb:type_name -> common.VipPayCb
-	20, // 24: paynode.VipPayCallReq.extra:type_name -> paynode.VipPayCallReq.ExtraEntry
-	26, // 25: paynode.VipPayCallRes.rescode:type_name -> rescode.Code
-	21, // 26: paynode.VipPayCallRes.extra:type_name -> paynode.VipPayCallRes.ExtraEntry
-	24, // 27: paynode.VipOrderListReq.auth:type_name -> common.Authorize
-	28, // 28: paynode.VipOrderListReq.order:type_name -> common.VipOrder
-	22, // 29: paynode.VipOrderListReq.extra:type_name -> paynode.VipOrderListReq.ExtraEntry
-	26, // 30: paynode.VipOrderListRes.rescode:type_name -> rescode.Code
-	28, // 31: paynode.VipOrderListRes.order:type_name -> common.VipOrder
-	23, // 32: paynode.VipOrderListRes.extra:type_name -> paynode.VipOrderListRes.ExtraEntry
-	0,  // 33: paynode.PaynodeService.SponsorAdd:input_type -> paynode.SponsorAddReq
-	2,  // 34: paynode.PaynodeService.SponsorList:input_type -> paynode.SponsorListReq
-	4,  // 35: paynode.PaynodeService.VipProduct:input_type -> paynode.VipProductReq
-	6,  // 36: paynode.PaynodeService.VipPay:input_type -> paynode.VipPayReq
-	8,  // 37: paynode.PaynodeService.VipPayCall:input_type -> paynode.VipPayCallReq
-	10, // 38: paynode.PaynodeService.VipOrderList:input_type -> paynode.VipOrderListReq
-	1,  // 39: paynode.PaynodeService.SponsorAdd:output_type -> paynode.SponsorAddRes
-	3,  // 40: paynode.PaynodeService.SponsorList:output_type -> paynode.SponsorListRes
-	5,  // 41: paynode.PaynodeService.VipProduct:output_type -> paynode.VipProductRes
-	7,  // 42: paynode.PaynodeService.VipPay:output_type -> paynode.VipPayRes
-	9,  // 43: paynode.PaynodeService.VipPayCall:output_type -> paynode.VipPayCallRes
-	11, // 44: paynode.PaynodeService.VipOrderList:output_type -> paynode.VipOrderListRes
-	39, // [39:45] is the sub-list for method output_type
-	33, // [33:39] is the sub-list for method input_type
-	33, // [33:33] is the sub-list for extension type_name
-	33, // [33:33] is the sub-list for extension extendee
-	0,  // [0:33] is the sub-list for field type_name
+	28, // 0: paynode.SponsorAddReq.auth:type_name -> common.Authorize
+	29, // 1: paynode.SponsorAddReq.sponsor:type_name -> common.SponsorItem
+	14, // 2: paynode.SponsorAddReq.extra:type_name -> paynode.SponsorAddReq.ExtraEntry
+	30, // 3: paynode.SponsorAddRes.rescode:type_name -> rescode.Code
+	15, // 4: paynode.SponsorAddRes.extra:type_name -> paynode.SponsorAddRes.ExtraEntry
+	28, // 5: paynode.SponsorListReq.auth:type_name -> common.Authorize
+	16, // 6: paynode.SponsorListReq.extra:type_name -> paynode.SponsorListReq.ExtraEntry
+	30, // 7: paynode.SponsorListRes.rescode:type_name -> rescode.Code
+	29, // 8: paynode.SponsorListRes.lists:type_name -> common.SponsorItem
+	17, // 9: paynode.SponsorListRes.extra:type_name -> paynode.SponsorListRes.ExtraEntry
+	28, // 10: paynode.VipProductReq.auth:type_name -> common.Authorize
+	31, // 11: paynode.VipProductReq.products:type_name -> common.VipProduct
+	18, // 12: paynode.VipProductReq.extra:type_name -> paynode.VipProductReq.ExtraEntry
+	30, // 13: paynode.VipProductRes.rescode:type_name -> rescode.Code
+	31, // 14: paynode.VipProductRes.products:type_name -> common.VipProduct
+	19, // 15: paynode.VipProductRes.extra:type_name -> paynode.VipProductRes.ExtraEntry
+	28, // 16: paynode.VipDescReq.auth:type_name -> common.Authorize
+	32, // 17: paynode.VipDescReq.desc:type_name -> common.VipDesc
+	20, // 18: paynode.VipDescReq.extra:type_name -> paynode.VipDescReq.ExtraEntry
+	30, // 19: paynode.VipDescRes.rescode:type_name -> rescode.Code
+	32, // 20: paynode.VipDescRes.desc:type_name -> common.VipDesc
+	21, // 21: paynode.VipDescRes.extra:type_name -> paynode.VipDescRes.ExtraEntry
+	28, // 22: paynode.VipPayReq.auth:type_name -> common.Authorize
+	33, // 23: paynode.VipPayReq.order:type_name -> common.VipOrder
+	22, // 24: paynode.VipPayReq.extra:type_name -> paynode.VipPayReq.ExtraEntry
+	30, // 25: paynode.VipPayRes.rescode:type_name -> rescode.Code
+	33, // 26: paynode.VipPayRes.order:type_name -> common.VipOrder
+	23, // 27: paynode.VipPayRes.extra:type_name -> paynode.VipPayRes.ExtraEntry
+	28, // 28: paynode.VipPayCallReq.auth:type_name -> common.Authorize
+	34, // 29: paynode.VipPayCallReq.cb:type_name -> common.VipPayCb
+	24, // 30: paynode.VipPayCallReq.extra:type_name -> paynode.VipPayCallReq.ExtraEntry
+	30, // 31: paynode.VipPayCallRes.rescode:type_name -> rescode.Code
+	25, // 32: paynode.VipPayCallRes.extra:type_name -> paynode.VipPayCallRes.ExtraEntry
+	28, // 33: paynode.VipOrderListReq.auth:type_name -> common.Authorize
+	33, // 34: paynode.VipOrderListReq.order:type_name -> common.VipOrder
+	26, // 35: paynode.VipOrderListReq.extra:type_name -> paynode.VipOrderListReq.ExtraEntry
+	30, // 36: paynode.VipOrderListRes.rescode:type_name -> rescode.Code
+	33, // 37: paynode.VipOrderListRes.order:type_name -> common.VipOrder
+	27, // 38: paynode.VipOrderListRes.extra:type_name -> paynode.VipOrderListRes.ExtraEntry
+	0,  // 39: paynode.PaynodeService.SponsorAdd:input_type -> paynode.SponsorAddReq
+	2,  // 40: paynode.PaynodeService.SponsorList:input_type -> paynode.SponsorListReq
+	4,  // 41: paynode.PaynodeService.VipProduct:input_type -> paynode.VipProductReq
+	6,  // 42: paynode.PaynodeService.VipDesc:input_type -> paynode.VipDescReq
+	8,  // 43: paynode.PaynodeService.VipPay:input_type -> paynode.VipPayReq
+	10, // 44: paynode.PaynodeService.VipPayCall:input_type -> paynode.VipPayCallReq
+	12, // 45: paynode.PaynodeService.VipOrderList:input_type -> paynode.VipOrderListReq
+	1,  // 46: paynode.PaynodeService.SponsorAdd:output_type -> paynode.SponsorAddRes
+	3,  // 47: paynode.PaynodeService.SponsorList:output_type -> paynode.SponsorListRes
+	5,  // 48: paynode.PaynodeService.VipProduct:output_type -> paynode.VipProductRes
+	7,  // 49: paynode.PaynodeService.VipDesc:output_type -> paynode.VipDescRes
+	9,  // 50: paynode.PaynodeService.VipPay:output_type -> paynode.VipPayRes
+	11, // 51: paynode.PaynodeService.VipPayCall:output_type -> paynode.VipPayCallRes
+	13, // 52: paynode.PaynodeService.VipOrderList:output_type -> paynode.VipOrderListRes
+	46, // [46:53] is the sub-list for method output_type
+	39, // [39:46] is the sub-list for method input_type
+	39, // [39:39] is the sub-list for extension type_name
+	39, // [39:39] is the sub-list for extension extendee
+	0,  // [0:39] is the sub-list for field type_name
 }
 
 func init() { file_paynode_proto_init() }
@@ -1242,7 +1428,7 @@ func file_paynode_proto_init() {
 			}
 		}
 		file_paynode_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VipPayReq); i {
+			switch v := v.(*VipDescReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1254,7 +1440,7 @@ func file_paynode_proto_init() {
 			}
 		}
 		file_paynode_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VipPayRes); i {
+			switch v := v.(*VipDescRes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1266,7 +1452,7 @@ func file_paynode_proto_init() {
 			}
 		}
 		file_paynode_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VipPayCallReq); i {
+			switch v := v.(*VipPayReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1278,7 +1464,7 @@ func file_paynode_proto_init() {
 			}
 		}
 		file_paynode_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VipPayCallRes); i {
+			switch v := v.(*VipPayRes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1290,7 +1476,7 @@ func file_paynode_proto_init() {
 			}
 		}
 		file_paynode_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VipOrderListReq); i {
+			switch v := v.(*VipPayCallReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1302,6 +1488,30 @@ func file_paynode_proto_init() {
 			}
 		}
 		file_paynode_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VipPayCallRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_paynode_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VipOrderListReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_paynode_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*VipOrderListRes); i {
 			case 0:
 				return &v.state
@@ -1320,7 +1530,7 @@ func file_paynode_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_paynode_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   24,
+			NumMessages:   28,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

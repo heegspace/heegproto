@@ -50,6 +50,8 @@ type PaynodeService interface {
 	SponsorList(ctx context.Context, in *SponsorListReq, opts ...client.CallOption) (*SponsorListRes, error)
 	// vip产品列表
 	VipProduct(ctx context.Context, in *VipProductReq, opts ...client.CallOption) (*VipProductRes, error)
+	// vip产品介绍
+	VipDesc(ctx context.Context, in *VipDescReq, opts ...client.CallOption) (*VipDescRes, error)
 	// vip充值
 	VipPay(ctx context.Context, in *VipPayReq, opts ...client.CallOption) (*VipPayRes, error)
 	// vip充值会掉
@@ -100,6 +102,16 @@ func (c *paynodeService) VipProduct(ctx context.Context, in *VipProductReq, opts
 	return out, nil
 }
 
+func (c *paynodeService) VipDesc(ctx context.Context, in *VipDescReq, opts ...client.CallOption) (*VipDescRes, error) {
+	req := c.c.NewRequest(c.name, "PaynodeService.VipDesc", in)
+	out := new(VipDescRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *paynodeService) VipPay(ctx context.Context, in *VipPayReq, opts ...client.CallOption) (*VipPayRes, error) {
 	req := c.c.NewRequest(c.name, "PaynodeService.VipPay", in)
 	out := new(VipPayRes)
@@ -139,6 +151,8 @@ type PaynodeServiceHandler interface {
 	SponsorList(context.Context, *SponsorListReq, *SponsorListRes) error
 	// vip产品列表
 	VipProduct(context.Context, *VipProductReq, *VipProductRes) error
+	// vip产品介绍
+	VipDesc(context.Context, *VipDescReq, *VipDescRes) error
 	// vip充值
 	VipPay(context.Context, *VipPayReq, *VipPayRes) error
 	// vip充值会掉
@@ -152,6 +166,7 @@ func RegisterPaynodeServiceHandler(s server.Server, hdlr PaynodeServiceHandler, 
 		SponsorAdd(ctx context.Context, in *SponsorAddReq, out *SponsorAddRes) error
 		SponsorList(ctx context.Context, in *SponsorListReq, out *SponsorListRes) error
 		VipProduct(ctx context.Context, in *VipProductReq, out *VipProductRes) error
+		VipDesc(ctx context.Context, in *VipDescReq, out *VipDescRes) error
 		VipPay(ctx context.Context, in *VipPayReq, out *VipPayRes) error
 		VipPayCall(ctx context.Context, in *VipPayCallReq, out *VipPayCallRes) error
 		VipOrderList(ctx context.Context, in *VipOrderListReq, out *VipOrderListRes) error
@@ -177,6 +192,10 @@ func (h *paynodeServiceHandler) SponsorList(ctx context.Context, in *SponsorList
 
 func (h *paynodeServiceHandler) VipProduct(ctx context.Context, in *VipProductReq, out *VipProductRes) error {
 	return h.PaynodeServiceHandler.VipProduct(ctx, in, out)
+}
+
+func (h *paynodeServiceHandler) VipDesc(ctx context.Context, in *VipDescReq, out *VipDescRes) error {
+	return h.PaynodeServiceHandler.VipDesc(ctx, in, out)
 }
 
 func (h *paynodeServiceHandler) VipPay(ctx context.Context, in *VipPayReq, out *VipPayRes) error {
