@@ -278,9 +278,7 @@ message OpenLogReq {
     string              name = 2;
     // @inject_tag: form:"version"
     string              version = 3;
-	// @inject_tag: form:"filename"
-	string 				filename = 5;
-    map<string,string>  extra = 6;
+    map<string,string>  extra = 4;
 }
 
 message OpenLogRes {
