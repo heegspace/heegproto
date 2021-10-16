@@ -2219,6 +2219,168 @@ func (x *StatusRes) GetExtra() map[string]string {
 	return nil
 }
 
+type OpenLogReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// @inject_tag: form:"auth"
+	Auth *Authorie `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty" form:"auth"`
+	// @inject_tag: form:"name"
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" form:"name"`
+	// @inject_tag: form:"version"
+	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty" form:"version"`
+	// @inject_tag: form:"filename"
+	Filename string            `protobuf:"bytes,5,opt,name=filename,proto3" json:"filename,omitempty" form:"filename"`
+	Extra    map[string]string `protobuf:"bytes,6,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+}
+
+func (x *OpenLogReq) Reset() {
+	*x = OpenLogReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_governnode_proto_msgTypes[29]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OpenLogReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OpenLogReq) ProtoMessage() {}
+
+func (x *OpenLogReq) ProtoReflect() protoreflect.Message {
+	mi := &file_governnode_proto_msgTypes[29]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OpenLogReq.ProtoReflect.Descriptor instead.
+func (*OpenLogReq) Descriptor() ([]byte, []int) {
+	return file_governnode_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *OpenLogReq) GetAuth() *Authorie {
+	if x != nil {
+		return x.Auth
+	}
+	return nil
+}
+
+func (x *OpenLogReq) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *OpenLogReq) GetVersion() string {
+	if x != nil {
+		return x.Version
+	}
+	return ""
+}
+
+func (x *OpenLogReq) GetFilename() string {
+	if x != nil {
+		return x.Filename
+	}
+	return ""
+}
+
+func (x *OpenLogReq) GetExtra() map[string]string {
+	if x != nil {
+		return x.Extra
+	}
+	return nil
+}
+
+type OpenLogRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Rescode int32             `protobuf:"varint,1,opt,name=rescode,proto3" json:"rescode,omitempty"`
+	Resmsg  string            `protobuf:"bytes,2,opt,name=resmsg,proto3" json:"resmsg,omitempty"`
+	Data    string            `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+	Update  bool              `protobuf:"varint,4,opt,name=update,proto3" json:"update,omitempty"`
+	Extra   map[string]string `protobuf:"bytes,5,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+}
+
+func (x *OpenLogRes) Reset() {
+	*x = OpenLogRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_governnode_proto_msgTypes[30]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OpenLogRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OpenLogRes) ProtoMessage() {}
+
+func (x *OpenLogRes) ProtoReflect() protoreflect.Message {
+	mi := &file_governnode_proto_msgTypes[30]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OpenLogRes.ProtoReflect.Descriptor instead.
+func (*OpenLogRes) Descriptor() ([]byte, []int) {
+	return file_governnode_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *OpenLogRes) GetRescode() int32 {
+	if x != nil {
+		return x.Rescode
+	}
+	return 0
+}
+
+func (x *OpenLogRes) GetResmsg() string {
+	if x != nil {
+		return x.Resmsg
+	}
+	return ""
+}
+
+func (x *OpenLogRes) GetData() string {
+	if x != nil {
+		return x.Data
+	}
+	return ""
+}
+
+func (x *OpenLogRes) GetUpdate() bool {
+	if x != nil {
+		return x.Update
+	}
+	return false
+}
+
+func (x *OpenLogRes) GetExtra() map[string]string {
+	if x != nil {
+		return x.Extra
+	}
+	return nil
+}
+
 var File_governnode_proto protoreflect.FileDescriptor
 
 var file_governnode_proto_rawDesc = []byte{
@@ -2616,8 +2778,37 @@ var file_governnode_proto_rawDesc = []byte{
 	0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28,
 	0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18,
 	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01,
-	0x42, 0x0e, 0x5a, 0x0c, 0x2e, 0x2f, 0x67, 0x6f, 0x76, 0x65, 0x72, 0x6e, 0x6e, 0x6f, 0x64, 0x65,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x22, 0xf3, 0x01, 0x0a, 0x0a, 0x4f, 0x70, 0x65, 0x6e, 0x4c, 0x6f, 0x67, 0x52, 0x65, 0x71, 0x12,
+	0x28, 0x0a, 0x04, 0x61, 0x75, 0x74, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x14, 0x2e,
+	0x67, 0x6f, 0x76, 0x65, 0x72, 0x6e, 0x6e, 0x6f, 0x64, 0x65, 0x2e, 0x41, 0x75, 0x74, 0x68, 0x6f,
+	0x72, 0x69, 0x65, 0x52, 0x04, 0x61, 0x75, 0x74, 0x68, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d,
+	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x18, 0x0a,
+	0x07, 0x76, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
+	0x76, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x12, 0x1a, 0x0a, 0x08, 0x66, 0x69, 0x6c, 0x65, 0x6e,
+	0x61, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x69, 0x6c, 0x65, 0x6e,
+	0x61, 0x6d, 0x65, 0x12, 0x37, 0x0a, 0x05, 0x65, 0x78, 0x74, 0x72, 0x61, 0x18, 0x06, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x21, 0x2e, 0x67, 0x6f, 0x76, 0x65, 0x72, 0x6e, 0x6e, 0x6f, 0x64, 0x65, 0x2e,
+	0x4f, 0x70, 0x65, 0x6e, 0x4c, 0x6f, 0x67, 0x52, 0x65, 0x71, 0x2e, 0x45, 0x78, 0x74, 0x72, 0x61,
+	0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x05, 0x65, 0x78, 0x74, 0x72, 0x61, 0x1a, 0x38, 0x0a, 0x0a,
+	0x45, 0x78, 0x74, 0x72, 0x61, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65,
+	0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c,
+	0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0xdd, 0x01, 0x0a, 0x0a, 0x4f, 0x70, 0x65, 0x6e, 0x4c,
+	0x6f, 0x67, 0x52, 0x65, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x72, 0x65, 0x73, 0x63, 0x6f, 0x64, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x07, 0x72, 0x65, 0x73, 0x63, 0x6f, 0x64, 0x65, 0x12,
+	0x16, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x06, 0x72, 0x65, 0x73, 0x6d, 0x73, 0x67, 0x12, 0x12, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x12, 0x16, 0x0a, 0x06, 0x75,
+	0x70, 0x64, 0x61, 0x74, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x75, 0x70, 0x64,
+	0x61, 0x74, 0x65, 0x12, 0x37, 0x0a, 0x05, 0x65, 0x78, 0x74, 0x72, 0x61, 0x18, 0x05, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x21, 0x2e, 0x67, 0x6f, 0x76, 0x65, 0x72, 0x6e, 0x6e, 0x6f, 0x64, 0x65, 0x2e,
+	0x4f, 0x70, 0x65, 0x6e, 0x4c, 0x6f, 0x67, 0x52, 0x65, 0x73, 0x2e, 0x45, 0x78, 0x74, 0x72, 0x61,
+	0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x05, 0x65, 0x78, 0x74, 0x72, 0x61, 0x1a, 0x38, 0x0a, 0x0a,
+	0x45, 0x78, 0x74, 0x72, 0x61, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65,
+	0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c,
+	0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x42, 0x0e, 0x5a, 0x0c, 0x2e, 0x2f, 0x67, 0x6f, 0x76, 0x65,
+	0x72, 0x6e, 0x6e, 0x6f, 0x64, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2632,7 +2823,7 @@ func file_governnode_proto_rawDescGZIP() []byte {
 	return file_governnode_proto_rawDescData
 }
 
-var file_governnode_proto_msgTypes = make([]protoimpl.MessageInfo, 56)
+var file_governnode_proto_msgTypes = make([]protoimpl.MessageInfo, 60)
 var file_governnode_proto_goTypes = []interface{}{
 	(*Authorie)(nil),       // 0: governnode.Authorie
 	(*RunningReq)(nil),     // 1: governnode.RunningReq
@@ -2663,82 +2854,89 @@ var file_governnode_proto_goTypes = []interface{}{
 	(*StatusItem)(nil),     // 26: governnode.StatusItem
 	(*StatusReq)(nil),      // 27: governnode.StatusReq
 	(*StatusRes)(nil),      // 28: governnode.StatusRes
-	nil,                    // 29: governnode.Authorie.ExtraEntry
-	nil,                    // 30: governnode.RunningReq.ExtraEntry
-	nil,                    // 31: governnode.RunningRes.ExtraEntry
-	nil,                    // 32: governnode.InstallReq.ExtraEntry
-	nil,                    // 33: governnode.InstallRes.ExtraEntry
-	nil,                    // 34: governnode.InstalledReq.ExtraEntry
-	nil,                    // 35: governnode.InstalledRes.ExtraEntry
-	nil,                    // 36: governnode.UnInstallReq.ExtraEntry
-	nil,                    // 37: governnode.UnInstallRes.ExtraEntry
-	nil,                    // 38: governnode.StartReq.ExtraEntry
-	nil,                    // 39: governnode.StartRes.ExtraEntry
-	nil,                    // 40: governnode.StopReq.ExtraEntry
-	nil,                    // 41: governnode.StopRes.ExtraEntry
-	nil,                    // 42: governnode.UpgradeReq.ExtraEntry
-	nil,                    // 43: governnode.UpgradeRes.ExtraEntry
-	nil,                    // 44: governnode.ExcuteShellReq.ExtraEntry
-	nil,                    // 45: governnode.ExcuteShellRes.ExtraEntry
-	nil,                    // 46: governnode.OpenDirReq.ExtraEntry
-	nil,                    // 47: governnode.OpenDirRes.ExtraEntry
-	nil,                    // 48: governnode.OpenFileReq.ExtraEntry
-	nil,                    // 49: governnode.OpenFileRes.ExtraEntry
-	nil,                    // 50: governnode.WriteFileReq.ExtraEntry
-	nil,                    // 51: governnode.WriteFileRes.ExtraEntry
-	nil,                    // 52: governnode.StatisticReq.ExtraEntry
-	nil,                    // 53: governnode.StatisticRes.ExtraEntry
-	nil,                    // 54: governnode.StatusReq.ExtraEntry
-	nil,                    // 55: governnode.StatusRes.ExtraEntry
+	(*OpenLogReq)(nil),     // 29: governnode.OpenLogReq
+	(*OpenLogRes)(nil),     // 30: governnode.OpenLogRes
+	nil,                    // 31: governnode.Authorie.ExtraEntry
+	nil,                    // 32: governnode.RunningReq.ExtraEntry
+	nil,                    // 33: governnode.RunningRes.ExtraEntry
+	nil,                    // 34: governnode.InstallReq.ExtraEntry
+	nil,                    // 35: governnode.InstallRes.ExtraEntry
+	nil,                    // 36: governnode.InstalledReq.ExtraEntry
+	nil,                    // 37: governnode.InstalledRes.ExtraEntry
+	nil,                    // 38: governnode.UnInstallReq.ExtraEntry
+	nil,                    // 39: governnode.UnInstallRes.ExtraEntry
+	nil,                    // 40: governnode.StartReq.ExtraEntry
+	nil,                    // 41: governnode.StartRes.ExtraEntry
+	nil,                    // 42: governnode.StopReq.ExtraEntry
+	nil,                    // 43: governnode.StopRes.ExtraEntry
+	nil,                    // 44: governnode.UpgradeReq.ExtraEntry
+	nil,                    // 45: governnode.UpgradeRes.ExtraEntry
+	nil,                    // 46: governnode.ExcuteShellReq.ExtraEntry
+	nil,                    // 47: governnode.ExcuteShellRes.ExtraEntry
+	nil,                    // 48: governnode.OpenDirReq.ExtraEntry
+	nil,                    // 49: governnode.OpenDirRes.ExtraEntry
+	nil,                    // 50: governnode.OpenFileReq.ExtraEntry
+	nil,                    // 51: governnode.OpenFileRes.ExtraEntry
+	nil,                    // 52: governnode.WriteFileReq.ExtraEntry
+	nil,                    // 53: governnode.WriteFileRes.ExtraEntry
+	nil,                    // 54: governnode.StatisticReq.ExtraEntry
+	nil,                    // 55: governnode.StatisticRes.ExtraEntry
+	nil,                    // 56: governnode.StatusReq.ExtraEntry
+	nil,                    // 57: governnode.StatusRes.ExtraEntry
+	nil,                    // 58: governnode.OpenLogReq.ExtraEntry
+	nil,                    // 59: governnode.OpenLogRes.ExtraEntry
 }
 var file_governnode_proto_depIdxs = []int32{
-	29, // 0: governnode.Authorie.extra:type_name -> governnode.Authorie.ExtraEntry
+	31, // 0: governnode.Authorie.extra:type_name -> governnode.Authorie.ExtraEntry
 	0,  // 1: governnode.RunningReq.auth:type_name -> governnode.Authorie
-	30, // 2: governnode.RunningReq.extra:type_name -> governnode.RunningReq.ExtraEntry
-	31, // 3: governnode.RunningRes.extra:type_name -> governnode.RunningRes.ExtraEntry
+	32, // 2: governnode.RunningReq.extra:type_name -> governnode.RunningReq.ExtraEntry
+	33, // 3: governnode.RunningRes.extra:type_name -> governnode.RunningRes.ExtraEntry
 	0,  // 4: governnode.InstallReq.auth:type_name -> governnode.Authorie
-	32, // 5: governnode.InstallReq.extra:type_name -> governnode.InstallReq.ExtraEntry
-	33, // 6: governnode.InstallRes.extra:type_name -> governnode.InstallRes.ExtraEntry
+	34, // 5: governnode.InstallReq.extra:type_name -> governnode.InstallReq.ExtraEntry
+	35, // 6: governnode.InstallRes.extra:type_name -> governnode.InstallRes.ExtraEntry
 	0,  // 7: governnode.InstalledReq.auth:type_name -> governnode.Authorie
-	34, // 8: governnode.InstalledReq.extra:type_name -> governnode.InstalledReq.ExtraEntry
-	35, // 9: governnode.InstalledRes.extra:type_name -> governnode.InstalledRes.ExtraEntry
+	36, // 8: governnode.InstalledReq.extra:type_name -> governnode.InstalledReq.ExtraEntry
+	37, // 9: governnode.InstalledRes.extra:type_name -> governnode.InstalledRes.ExtraEntry
 	0,  // 10: governnode.UnInstallReq.auth:type_name -> governnode.Authorie
-	36, // 11: governnode.UnInstallReq.extra:type_name -> governnode.UnInstallReq.ExtraEntry
-	37, // 12: governnode.UnInstallRes.extra:type_name -> governnode.UnInstallRes.ExtraEntry
+	38, // 11: governnode.UnInstallReq.extra:type_name -> governnode.UnInstallReq.ExtraEntry
+	39, // 12: governnode.UnInstallRes.extra:type_name -> governnode.UnInstallRes.ExtraEntry
 	0,  // 13: governnode.StartReq.auth:type_name -> governnode.Authorie
-	38, // 14: governnode.StartReq.extra:type_name -> governnode.StartReq.ExtraEntry
-	39, // 15: governnode.StartRes.extra:type_name -> governnode.StartRes.ExtraEntry
+	40, // 14: governnode.StartReq.extra:type_name -> governnode.StartReq.ExtraEntry
+	41, // 15: governnode.StartRes.extra:type_name -> governnode.StartRes.ExtraEntry
 	0,  // 16: governnode.StopReq.auth:type_name -> governnode.Authorie
-	40, // 17: governnode.StopReq.extra:type_name -> governnode.StopReq.ExtraEntry
-	41, // 18: governnode.StopRes.extra:type_name -> governnode.StopRes.ExtraEntry
+	42, // 17: governnode.StopReq.extra:type_name -> governnode.StopReq.ExtraEntry
+	43, // 18: governnode.StopRes.extra:type_name -> governnode.StopRes.ExtraEntry
 	0,  // 19: governnode.UpgradeReq.auth:type_name -> governnode.Authorie
-	42, // 20: governnode.UpgradeReq.extra:type_name -> governnode.UpgradeReq.ExtraEntry
-	43, // 21: governnode.UpgradeRes.extra:type_name -> governnode.UpgradeRes.ExtraEntry
+	44, // 20: governnode.UpgradeReq.extra:type_name -> governnode.UpgradeReq.ExtraEntry
+	45, // 21: governnode.UpgradeRes.extra:type_name -> governnode.UpgradeRes.ExtraEntry
 	0,  // 22: governnode.ExcuteShellReq.auth:type_name -> governnode.Authorie
-	44, // 23: governnode.ExcuteShellReq.extra:type_name -> governnode.ExcuteShellReq.ExtraEntry
-	45, // 24: governnode.ExcuteShellRes.extra:type_name -> governnode.ExcuteShellRes.ExtraEntry
+	46, // 23: governnode.ExcuteShellReq.extra:type_name -> governnode.ExcuteShellReq.ExtraEntry
+	47, // 24: governnode.ExcuteShellRes.extra:type_name -> governnode.ExcuteShellRes.ExtraEntry
 	0,  // 25: governnode.OpenDirReq.auth:type_name -> governnode.Authorie
-	46, // 26: governnode.OpenDirReq.extra:type_name -> governnode.OpenDirReq.ExtraEntry
+	48, // 26: governnode.OpenDirReq.extra:type_name -> governnode.OpenDirReq.ExtraEntry
 	18, // 27: governnode.OpenDirRes.dirs:type_name -> governnode.DirItem
-	47, // 28: governnode.OpenDirRes.extra:type_name -> governnode.OpenDirRes.ExtraEntry
+	49, // 28: governnode.OpenDirRes.extra:type_name -> governnode.OpenDirRes.ExtraEntry
 	0,  // 29: governnode.OpenFileReq.auth:type_name -> governnode.Authorie
-	48, // 30: governnode.OpenFileReq.extra:type_name -> governnode.OpenFileReq.ExtraEntry
-	49, // 31: governnode.OpenFileRes.extra:type_name -> governnode.OpenFileRes.ExtraEntry
+	50, // 30: governnode.OpenFileReq.extra:type_name -> governnode.OpenFileReq.ExtraEntry
+	51, // 31: governnode.OpenFileRes.extra:type_name -> governnode.OpenFileRes.ExtraEntry
 	0,  // 32: governnode.WriteFileReq.auth:type_name -> governnode.Authorie
-	50, // 33: governnode.WriteFileReq.extra:type_name -> governnode.WriteFileReq.ExtraEntry
-	51, // 34: governnode.WriteFileRes.extra:type_name -> governnode.WriteFileRes.ExtraEntry
+	52, // 33: governnode.WriteFileReq.extra:type_name -> governnode.WriteFileReq.ExtraEntry
+	53, // 34: governnode.WriteFileRes.extra:type_name -> governnode.WriteFileRes.ExtraEntry
 	0,  // 35: governnode.StatisticReq.auth:type_name -> governnode.Authorie
-	52, // 36: governnode.StatisticReq.extra:type_name -> governnode.StatisticReq.ExtraEntry
-	53, // 37: governnode.StatisticRes.extra:type_name -> governnode.StatisticRes.ExtraEntry
+	54, // 36: governnode.StatisticReq.extra:type_name -> governnode.StatisticReq.ExtraEntry
+	55, // 37: governnode.StatisticRes.extra:type_name -> governnode.StatisticRes.ExtraEntry
 	0,  // 38: governnode.StatusReq.auth:type_name -> governnode.Authorie
-	54, // 39: governnode.StatusReq.extra:type_name -> governnode.StatusReq.ExtraEntry
+	56, // 39: governnode.StatusReq.extra:type_name -> governnode.StatusReq.ExtraEntry
 	26, // 40: governnode.StatusRes.status:type_name -> governnode.StatusItem
-	55, // 41: governnode.StatusRes.extra:type_name -> governnode.StatusRes.ExtraEntry
-	42, // [42:42] is the sub-list for method output_type
-	42, // [42:42] is the sub-list for method input_type
-	42, // [42:42] is the sub-list for extension type_name
-	42, // [42:42] is the sub-list for extension extendee
-	0,  // [0:42] is the sub-list for field type_name
+	57, // 41: governnode.StatusRes.extra:type_name -> governnode.StatusRes.ExtraEntry
+	0,  // 42: governnode.OpenLogReq.auth:type_name -> governnode.Authorie
+	58, // 43: governnode.OpenLogReq.extra:type_name -> governnode.OpenLogReq.ExtraEntry
+	59, // 44: governnode.OpenLogRes.extra:type_name -> governnode.OpenLogRes.ExtraEntry
+	45, // [45:45] is the sub-list for method output_type
+	45, // [45:45] is the sub-list for method input_type
+	45, // [45:45] is the sub-list for extension type_name
+	45, // [45:45] is the sub-list for extension extendee
+	0,  // [0:45] is the sub-list for field type_name
 }
 
 func init() { file_governnode_proto_init() }
@@ -3095,6 +3293,30 @@ func file_governnode_proto_init() {
 				return nil
 			}
 		}
+		file_governnode_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OpenLogReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_governnode_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OpenLogRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -3102,7 +3324,7 @@ func file_governnode_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_governnode_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   56,
+			NumMessages:   60,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -270,3 +270,23 @@ message StatusRes  {
     repeated StatusItem status = 3;
     map<string,string>  extra = 4;
 }
+
+message OpenLogReq {
+    // @inject_tag: form:"auth"
+	Authorie            auth = 1;
+    // @inject_tag: form:"name"
+    string              name = 2;
+    // @inject_tag: form:"version"
+    string              version = 3;
+	// @inject_tag: form:"filename"
+	string 				filename = 5;
+    map<string,string>  extra = 6;
+}
+
+message OpenLogRes {
+	int32               rescode = 1;
+    string              resmsg = 2;
+	string 				data = 3;
+    bool                update = 4;
+    map<string,string>  extra = 5;
+}
