@@ -1556,6 +1556,21 @@ message VipDescRes {
     map<string,string>          extra = 4;
 }
 
+message FootLogReq {
+    int32                       op = 1;     // 操作  0:获取 1:添加/更新
+    common.FootLog              foot_log = 2;
+    int32                       page = 3;
+    int32                       size = 4;
+    map<string,string>          extra = 5;
+}
+
+message FootLogRes {
+    rescode.Code                rescode = 1;
+    string                      resmsg = 2;
+    repeated common.FootLog     desc = 3;
+    map<string,string>          extra = 4;
+}
+
 service DatanodeService {
 	// ---------- 用户接口 ------- //
 	// 创建新用户
@@ -1792,4 +1807,7 @@ service DatanodeService {
     rpc UserScore(UserScoreReq) returns (UserScoreRes) {}
     // 用户vip操作
     rpc UserVip(UserVipReq) returns (UserVipRes) {}
+
+    // 服务调用日志
+    rpc FootLog(FootLogReq) returns (FootLogRes) {}
 }

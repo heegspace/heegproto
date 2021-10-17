@@ -670,3 +670,16 @@ message UserVip {
     string               update_at = 5; 
     int64 		         vip_at = 6;
 }
+
+message FootLog {
+    int64               id = 1;
+    string              svr_name = 2;
+    string              call_svr = 3;
+    string              call_method = 4;
+    int64               timeout = 5;
+    string              remote = 6;
+    int64               rescode = 7;
+    string              svr_type = 8;
+    int64               create_at = 9;
+    map<string,string>  extra = 10;
+}

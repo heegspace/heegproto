@@ -5,9 +5,9 @@ package datanode
 
 import (
 	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
 	common "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	proto "google.golang.org/protobuf/proto"
 	math "math"
 )
 
@@ -22,12 +22,6 @@ import (
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ api.Endpoint
@@ -276,6 +270,8 @@ type DatanodeService interface {
 	UserScore(ctx context.Context, in *UserScoreReq, opts ...client.CallOption) (*UserScoreRes, error)
 	// 用户vip操作
 	UserVip(ctx context.Context, in *UserVipReq, opts ...client.CallOption) (*UserVipRes, error)
+	// 服务调用日志
+	FootLog(ctx context.Context, in *FootLogReq, opts ...client.CallOption) (*FootLogRes, error)
 }
 
 type datanodeService struct {
@@ -1470,6 +1466,16 @@ func (c *datanodeService) UserVip(ctx context.Context, in *UserVipReq, opts ...c
 	return out, nil
 }
 
+func (c *datanodeService) FootLog(ctx context.Context, in *FootLogReq, opts ...client.CallOption) (*FootLogRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.FootLog", in)
+	out := new(FootLogRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for DatanodeService service
 
 type DatanodeServiceHandler interface {
@@ -1705,6 +1711,8 @@ type DatanodeServiceHandler interface {
 	UserScore(context.Context, *UserScoreReq, *UserScoreRes) error
 	// 用户vip操作
 	UserVip(context.Context, *UserVipReq, *UserVipRes) error
+	// 服务调用日志
+	FootLog(context.Context, *FootLogReq, *FootLogRes) error
 }
 
 func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler, opts ...server.HandlerOption) error {
@@ -1827,6 +1835,7 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		VipOrderList(ctx context.Context, in *VipOrderListReq, out *VipOrderListRes) error
 		UserScore(ctx context.Context, in *UserScoreReq, out *UserScoreRes) error
 		UserVip(ctx context.Context, in *UserVipReq, out *UserVipRes) error
+		FootLog(ctx context.Context, in *FootLogReq, out *FootLogRes) error
 	}
 	type DatanodeService struct {
 		datanodeService
@@ -2309,4 +2318,8 @@ func (h *datanodeServiceHandler) UserScore(ctx context.Context, in *UserScoreReq
 
 func (h *datanodeServiceHandler) UserVip(ctx context.Context, in *UserVipReq, out *UserVipRes) error {
 	return h.DatanodeServiceHandler.UserVip(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) FootLog(ctx context.Context, in *FootLogReq, out *FootLogRes) error {
+	return h.DatanodeServiceHandler.FootLog(ctx, in, out)
 }
