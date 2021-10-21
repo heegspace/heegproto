@@ -4,10 +4,10 @@
 package dartynode
 
 import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
 	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	fmt "fmt"
+	proto "google.golang.org/protobuf/proto"
 	math "math"
 )
 
@@ -22,12 +22,6 @@ import (
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ api.Endpoint
@@ -77,7 +71,7 @@ type DartynodeService interface {
 	// 微信native订单查询
 	WxNativeOrderQuery(ctx context.Context, in *WxNativeOrderQueryReq, opts ...client.CallOption) (*WxNativeOrderQueryRes, error)
 	// 支付宝支付
-	Alipay(ctx context.Context, in *AlipayReq, opts ...client.CallOption) (*AlipayRes, error)
+	AliPagePay(ctx context.Context, in *AliPagePayReq, opts ...client.CallOption) (*AliPagePayRes, error)
 }
 
 type dartynodeService struct {
@@ -252,9 +246,9 @@ func (c *dartynodeService) WxNativeOrderQuery(ctx context.Context, in *WxNativeO
 	return out, nil
 }
 
-func (c *dartynodeService) Alipay(ctx context.Context, in *AlipayReq, opts ...client.CallOption) (*AlipayRes, error) {
-	req := c.c.NewRequest(c.name, "DartynodeService.Alipay", in)
-	out := new(AlipayRes)
+func (c *dartynodeService) AliPagePay(ctx context.Context, in *AliPagePayReq, opts ...client.CallOption) (*AliPagePayRes, error) {
+	req := c.c.NewRequest(c.name, "DartynodeService.AliPagePay", in)
+	out := new(AliPagePayRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -298,7 +292,7 @@ type DartynodeServiceHandler interface {
 	// 微信native订单查询
 	WxNativeOrderQuery(context.Context, *WxNativeOrderQueryReq, *WxNativeOrderQueryRes) error
 	// 支付宝支付
-	Alipay(context.Context, *AlipayReq, *AlipayRes) error
+	AliPagePay(context.Context, *AliPagePayReq, *AliPagePayRes) error
 }
 
 func RegisterDartynodeServiceHandler(s server.Server, hdlr DartynodeServiceHandler, opts ...server.HandlerOption) error {
@@ -319,7 +313,7 @@ func RegisterDartynodeServiceHandler(s server.Server, hdlr DartynodeServiceHandl
 		WechatPay(ctx context.Context, in *WechatPayReq, out *WechatPayRes) error
 		WxNativeOrderClose(ctx context.Context, in *WxNativeOrderCloseReq, out *WxNativeOrderCloseRes) error
 		WxNativeOrderQuery(ctx context.Context, in *WxNativeOrderQueryReq, out *WxNativeOrderQueryRes) error
-		Alipay(ctx context.Context, in *AlipayReq, out *AlipayRes) error
+		AliPagePay(ctx context.Context, in *AliPagePayReq, out *AliPagePayRes) error
 	}
 	type DartynodeService struct {
 		dartynodeService
@@ -396,6 +390,6 @@ func (h *dartynodeServiceHandler) WxNativeOrderQuery(ctx context.Context, in *Wx
 	return h.DartynodeServiceHandler.WxNativeOrderQuery(ctx, in, out)
 }
 
-func (h *dartynodeServiceHandler) Alipay(ctx context.Context, in *AlipayReq, out *AlipayRes) error {
-	return h.DartynodeServiceHandler.Alipay(ctx, in, out)
+func (h *dartynodeServiceHandler) AliPagePay(ctx context.Context, in *AliPagePayReq, out *AliPagePayRes) error {
+	return h.DartynodeServiceHandler.AliPagePay(ctx, in, out)
 }

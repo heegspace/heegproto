@@ -230,14 +230,17 @@ message WechatPayRes {
     map<string,string>                extra =  4;
 }
 
-message AlipayReq {
-    string                  trade_no = 1;
-    string                  desc = 2;
-    int32                   amount = 3;
-    map<string,string>      extra = 4;
+message AliPagePayReq {
+    string 				               trade_no = 1;
+	string 				               desc = 2;
+	int64 				               amount = 3;
+	repeated PayDetail 	               details = 4;
+	Address 			               sender = 5;
+	Address 			               recver = 6;
+	map<string,string>	               extra = 7;
 }
 
-message AlipayRes {
+message AliPagePayRes {
     rescode.Code                      rescode =  1;
     string                            resmsg =  2;
     string                            code_url = 3;
@@ -331,5 +334,5 @@ service DartynodeService {
     rpc WxNativeOrderQuery(WxNativeOrderQueryReq) returns (WxNativeOrderQueryRes) {}
 
     // 支付宝支付
-    rpc Alipay(AlipayReq) returns (AlipayRes) {}
+    rpc AliPagePay(AliPagePayReq) returns (AliPagePayRes) {}
 }
