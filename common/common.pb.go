@@ -5959,6 +5959,126 @@ func (x *FootLog) GetExtra() map[string]string {
 	return nil
 }
 
+type AlipayCb struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// @inject_tag: form:"trade_no"
+	TradeNo string `protobuf:"bytes,1,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no,omitempty" form:"trade_no"` // 支付宝交易号
+	// @inject_tag: form:"app_id"
+	AppId string `protobuf:"bytes,2,opt,name=app_id,json=appId,proto3" json:"app_id,omitempty" form:"app_id"`
+	// @inject_tag: form:"out_trade_no"
+	OutTradeNo string `protobuf:"bytes,3,opt,name=out_trade_no,json=outTradeNo,proto3" json:"out_trade_no,omitempty" form:"out_trade_no"` // 商户订单号
+	// @inject_tag: form:"buyer_id"
+	BuyerId string `protobuf:"bytes,4,opt,name=buyer_id,json=buyerId,proto3" json:"buyer_id,omitempty" form:"buyer_id"` // 买房用户唯一id
+	// @inject_tag: form:"buyer_logon_id"
+	BuyerLogonId string `protobuf:"bytes,5,opt,name=buyer_logon_id,json=buyerLogonId,proto3" json:"buyer_logon_id,omitempty" form:"buyer_logon_id"` // 买方支付宝账号
+	// @inject_tag: form:"seller_id"
+	SellerId string `protobuf:"bytes,6,opt,name=seller_id,json=sellerId,proto3" json:"seller_id,omitempty" form:"seller_id"` // 卖方用户唯一Id
+	// @inject_tag: form:"trade_status"
+	TradeStatus string `protobuf:"bytes,7,opt,name=trade_status,json=tradeStatus,proto3" json:"trade_status,omitempty" form:"trade_status"` // 交易状态, WAIT_BUYER_PAY(创建),TRADE_CLOSED(关闭),TRADE_SUCCESS(成功),TRADE_FINISHED(结束)
+	// @inject_tag: form:"notify_type"
+	NotifyType string `protobuf:"bytes,8,opt,name=notify_type,json=notifyType,proto3" json:"notify_type,omitempty" form:"notify_type"`
+	// @inject_tag: form:"notify_id"
+	NotifyId string `protobuf:"bytes,9,opt,name=notify_id,json=notifyId,proto3" json:"notify_id,omitempty" form:"notify_id"`
+}
+
+func (x *AlipayCb) Reset() {
+	*x = AlipayCb{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_common_proto_msgTypes[55]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AlipayCb) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AlipayCb) ProtoMessage() {}
+
+func (x *AlipayCb) ProtoReflect() protoreflect.Message {
+	mi := &file_common_proto_msgTypes[55]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AlipayCb.ProtoReflect.Descriptor instead.
+func (*AlipayCb) Descriptor() ([]byte, []int) {
+	return file_common_proto_rawDescGZIP(), []int{55}
+}
+
+func (x *AlipayCb) GetTradeNo() string {
+	if x != nil {
+		return x.TradeNo
+	}
+	return ""
+}
+
+func (x *AlipayCb) GetAppId() string {
+	if x != nil {
+		return x.AppId
+	}
+	return ""
+}
+
+func (x *AlipayCb) GetOutTradeNo() string {
+	if x != nil {
+		return x.OutTradeNo
+	}
+	return ""
+}
+
+func (x *AlipayCb) GetBuyerId() string {
+	if x != nil {
+		return x.BuyerId
+	}
+	return ""
+}
+
+func (x *AlipayCb) GetBuyerLogonId() string {
+	if x != nil {
+		return x.BuyerLogonId
+	}
+	return ""
+}
+
+func (x *AlipayCb) GetSellerId() string {
+	if x != nil {
+		return x.SellerId
+	}
+	return ""
+}
+
+func (x *AlipayCb) GetTradeStatus() string {
+	if x != nil {
+		return x.TradeStatus
+	}
+	return ""
+}
+
+func (x *AlipayCb) GetNotifyType() string {
+	if x != nil {
+		return x.NotifyType
+	}
+	return ""
+}
+
+func (x *AlipayCb) GetNotifyId() string {
+	if x != nil {
+		return x.NotifyId
+	}
+	return ""
+}
+
 var File_common_proto protoreflect.FileDescriptor
 
 var file_common_proto_rawDesc = []byte{
@@ -6725,7 +6845,25 @@ var file_common_proto_rawDesc = []byte{
 	0x38, 0x0a, 0x0a, 0x45, 0x78, 0x74, 0x72, 0x61, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a,
 	0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12,
 	0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
-	0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x2a, 0x4b, 0x0a, 0x04, 0x52, 0x6f, 0x6c,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0x9d, 0x02, 0x0a, 0x08, 0x41, 0x6c,
+	0x69, 0x70, 0x61, 0x79, 0x43, 0x62, 0x12, 0x19, 0x0a, 0x08, 0x74, 0x72, 0x61, 0x64, 0x65, 0x5f,
+	0x6e, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x74, 0x72, 0x61, 0x64, 0x65, 0x4e,
+	0x6f, 0x12, 0x15, 0x0a, 0x06, 0x61, 0x70, 0x70, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x05, 0x61, 0x70, 0x70, 0x49, 0x64, 0x12, 0x20, 0x0a, 0x0c, 0x6f, 0x75, 0x74, 0x5f,
+	0x74, 0x72, 0x61, 0x64, 0x65, 0x5f, 0x6e, 0x6f, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a,
+	0x6f, 0x75, 0x74, 0x54, 0x72, 0x61, 0x64, 0x65, 0x4e, 0x6f, 0x12, 0x19, 0x0a, 0x08, 0x62, 0x75,
+	0x79, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x62, 0x75,
+	0x79, 0x65, 0x72, 0x49, 0x64, 0x12, 0x24, 0x0a, 0x0e, 0x62, 0x75, 0x79, 0x65, 0x72, 0x5f, 0x6c,
+	0x6f, 0x67, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x62,
+	0x75, 0x79, 0x65, 0x72, 0x4c, 0x6f, 0x67, 0x6f, 0x6e, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x73,
+	0x65, 0x6c, 0x6c, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08,
+	0x73, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x49, 0x64, 0x12, 0x21, 0x0a, 0x0c, 0x74, 0x72, 0x61, 0x64,
+	0x65, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b,
+	0x74, 0x72, 0x61, 0x64, 0x65, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x1f, 0x0a, 0x0b, 0x6e,
+	0x6f, 0x74, 0x69, 0x66, 0x79, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0a, 0x6e, 0x6f, 0x74, 0x69, 0x66, 0x79, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1b, 0x0a, 0x09,
+	0x6e, 0x6f, 0x74, 0x69, 0x66, 0x79, 0x5f, 0x69, 0x64, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x08, 0x6e, 0x6f, 0x74, 0x69, 0x66, 0x79, 0x49, 0x64, 0x2a, 0x4b, 0x0a, 0x04, 0x52, 0x6f, 0x6c,
 	0x65, 0x12, 0x0a, 0x0a, 0x06, 0x4e, 0x4f, 0x52, 0x4d, 0x41, 0x4c, 0x10, 0x00, 0x12, 0x0e, 0x0a,
 	0x0a, 0x43, 0x4f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x10, 0x01, 0x12, 0x0b, 0x0a,
 	0x07, 0x54, 0x45, 0x41, 0x43, 0x48, 0x45, 0x52, 0x10, 0x02, 0x12, 0x0c, 0x0a, 0x07, 0x53, 0x54,
@@ -6844,7 +6982,7 @@ func file_common_proto_rawDescGZIP() []byte {
 }
 
 var file_common_proto_enumTypes = make([]protoimpl.EnumInfo, 13)
-var file_common_proto_msgTypes = make([]protoimpl.MessageInfo, 67)
+var file_common_proto_msgTypes = make([]protoimpl.MessageInfo, 68)
 var file_common_proto_goTypes = []interface{}{
 	(Role)(0),                    // 0: common.Role
 	(VipLevel)(0),                // 1: common.VipLevel
@@ -6914,39 +7052,40 @@ var file_common_proto_goTypes = []interface{}{
 	(*UserScore)(nil),            // 65: common.UserScore
 	(*UserVip)(nil),              // 66: common.UserVip
 	(*FootLog)(nil),              // 67: common.FootLog
-	nil,                          // 68: common.Authorize.ExtraEntry
-	nil,                          // 69: common.Request.ExtraEntry
-	nil,                          // 70: common.Response.ExtraEntry
-	nil,                          // 71: common.UpdateUserinfoItem.ExtraEntry
-	nil,                          // 72: common.QuestionQuery.ExtraEntry
-	nil,                          // 73: common.SearchHitsItem.HighLightEntry
-	nil,                          // 74: common.SearchHistoryItem.ExtraEntry
-	nil,                          // 75: common.PersonCert.ExtraEntry
-	nil,                          // 76: common.BaiduIdcardIdent.ExtraEntry
-	nil,                          // 77: common.CronItem.ExtraEntry
-	nil,                          // 78: common.VipDesc.ExtraEntry
-	nil,                          // 79: common.FootLog.ExtraEntry
+	(*AlipayCb)(nil),             // 68: common.AlipayCb
+	nil,                          // 69: common.Authorize.ExtraEntry
+	nil,                          // 70: common.Request.ExtraEntry
+	nil,                          // 71: common.Response.ExtraEntry
+	nil,                          // 72: common.UpdateUserinfoItem.ExtraEntry
+	nil,                          // 73: common.QuestionQuery.ExtraEntry
+	nil,                          // 74: common.SearchHitsItem.HighLightEntry
+	nil,                          // 75: common.SearchHistoryItem.ExtraEntry
+	nil,                          // 76: common.PersonCert.ExtraEntry
+	nil,                          // 77: common.BaiduIdcardIdent.ExtraEntry
+	nil,                          // 78: common.CronItem.ExtraEntry
+	nil,                          // 79: common.VipDesc.ExtraEntry
+	nil,                          // 80: common.FootLog.ExtraEntry
 }
 var file_common_proto_depIdxs = []int32{
-	68, // 0: common.Authorize.extra:type_name -> common.Authorize.ExtraEntry
-	69, // 1: common.Request.extra:type_name -> common.Request.ExtraEntry
-	70, // 2: common.Response.extra:type_name -> common.Response.ExtraEntry
+	69, // 0: common.Authorize.extra:type_name -> common.Authorize.ExtraEntry
+	70, // 1: common.Request.extra:type_name -> common.Request.ExtraEntry
+	71, // 2: common.Response.extra:type_name -> common.Response.ExtraEntry
 	10, // 3: common.UpdateUserinfoItem.field:type_name -> common.Update_userinfo_field
-	71, // 4: common.UpdateUserinfoItem.extra:type_name -> common.UpdateUserinfoItem.ExtraEntry
-	72, // 5: common.QuestionQuery.extra:type_name -> common.QuestionQuery.ExtraEntry
+	72, // 4: common.UpdateUserinfoItem.extra:type_name -> common.UpdateUserinfoItem.ExtraEntry
+	73, // 5: common.QuestionQuery.extra:type_name -> common.QuestionQuery.ExtraEntry
 	19, // 6: common.Question.options:type_name -> common.QuestionOption
 	20, // 7: common.TimuItem.data:type_name -> common.Question
 	20, // 8: common.ModifyItem.source:type_name -> common.Question
 	20, // 9: common.ModifyItem.data:type_name -> common.Question
 	25, // 10: common.ModifyItem.meta:type_name -> common.ModifyMeta
 	21, // 11: common.SearchHitsItem.source:type_name -> common.TimuItem
-	73, // 12: common.SearchHitsItem.high_light:type_name -> common.SearchHitsItem.HighLightEntry
+	74, // 12: common.SearchHitsItem.high_light:type_name -> common.SearchHitsItem.HighLightEntry
 	27, // 13: common.SearchHits.total:type_name -> common.SearchHitsTotal
 	29, // 14: common.SearchHits.hits:type_name -> common.SearchHitsItem
 	31, // 15: common.SearchTopic.shards:type_name -> common.SearchShards
 	30, // 16: common.SearchTopic.hits:type_name -> common.SearchHits
 	35, // 17: common.GradeSubject.subjects:type_name -> common.GradeItem
-	74, // 18: common.SearchHistoryItem.extra:type_name -> common.SearchHistoryItem.ExtraEntry
+	75, // 18: common.SearchHistoryItem.extra:type_name -> common.SearchHistoryItem.ExtraEntry
 	43, // 19: common.BaiduEntity.concept:type_name -> common.BaiduConcept
 	20, // 20: common.AddTimuItem.data:type_name -> common.Question
 	46, // 21: common.BaiduWordsItem.location:type_name -> common.BaiduWordLocation
@@ -6954,12 +7093,12 @@ var file_common_proto_depIdxs = []int32{
 	48, // 23: common.BaiduResultItem.word:type_name -> common.BaiduWordsItem
 	49, // 24: common.BaiduDocAnalysis.results:type_name -> common.BaiduResultItem
 	50, // 25: common.BaiduIdentItem.result:type_name -> common.BaiduDocAnalysis
-	75, // 26: common.PersonCert.extra:type_name -> common.PersonCert.ExtraEntry
-	76, // 27: common.BaiduIdcardIdent.extra:type_name -> common.BaiduIdcardIdent.ExtraEntry
-	77, // 28: common.CronItem.extra:type_name -> common.CronItem.ExtraEntry
-	78, // 29: common.VipDesc.extra:type_name -> common.VipDesc.ExtraEntry
+	76, // 26: common.PersonCert.extra:type_name -> common.PersonCert.ExtraEntry
+	77, // 27: common.BaiduIdcardIdent.extra:type_name -> common.BaiduIdcardIdent.ExtraEntry
+	78, // 28: common.CronItem.extra:type_name -> common.CronItem.ExtraEntry
+	79, // 29: common.VipDesc.extra:type_name -> common.VipDesc.ExtraEntry
 	63, // 30: common.VipPayCb.resource:type_name -> common.VipPayCbRe
-	79, // 31: common.FootLog.extra:type_name -> common.FootLog.ExtraEntry
+	80, // 31: common.FootLog.extra:type_name -> common.FootLog.ExtraEntry
 	28, // 32: common.SearchHitsItem.HighLightEntry.value:type_name -> common.HighItem
 	33, // [33:33] is the sub-list for method output_type
 	33, // [33:33] is the sub-list for method input_type
@@ -7634,6 +7773,18 @@ func file_common_proto_init() {
 				return nil
 			}
 		}
+		file_common_proto_msgTypes[55].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AlipayCb); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -7641,7 +7792,7 @@ func file_common_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_common_proto_rawDesc,
 			NumEnums:      13,
-			NumMessages:   67,
+			NumMessages:   68,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

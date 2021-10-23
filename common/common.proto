@@ -683,3 +683,24 @@ message FootLog {
     int64               create_at = 9;
     map<string,string>  extra = 10;
 }
+
+message AlipayCb {
+    // @inject_tag: form:"trade_no"
+    string      trade_no = 1;   // 支付宝交易号
+    // @inject_tag: form:"app_id"
+    string      app_id = 2;
+    // @inject_tag: form:"out_trade_no"
+    string      out_trade_no = 3;  // 商户订单号
+    // @inject_tag: form:"buyer_id"
+    string      buyer_id = 4;   // 买房用户唯一id
+    // @inject_tag: form:"buyer_logon_id"
+    string      buyer_logon_id = 5; // 买方支付宝账号
+    // @inject_tag: form:"seller_id"
+    string      seller_id = 6; // 卖方用户唯一Id
+    // @inject_tag: form:"trade_status"
+    string      trade_status = 7; // 交易状态, WAIT_BUYER_PAY(创建),TRADE_CLOSED(关闭),TRADE_SUCCESS(成功),TRADE_FINISHED(结束)
+    // @inject_tag: form:"notify_type"
+    string      notify_type = 8;
+    // @inject_tag: form:"notify_id"
+    string      notify_id = 9;
+}

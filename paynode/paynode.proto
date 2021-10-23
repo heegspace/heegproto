@@ -77,7 +77,8 @@ message VipPayRes {
 message VipPayCallReq {
     common.Authorize            auth = 1;
     common.VipPayCb             cb = 2;
-    map<string,string>          extra = 3;
+    common.AlipayCb             acb = 3;
+    map<string,string>          extra = 4;
 }
 
 message VipPayCallRes {
