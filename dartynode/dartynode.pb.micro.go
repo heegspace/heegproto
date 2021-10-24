@@ -73,6 +73,7 @@ type DartynodeService interface {
 	// 支付宝支付
 	Alipay(ctx context.Context, in *AliPayReq, opts ...client.CallOption) (*AliPayRes, error)
 	AliOrderClose(ctx context.Context, in *AliOrderCloseReq, opts ...client.CallOption) (*AliOrderCloseRes, error)
+	AlipayOrderQuery(ctx context.Context, in *AlipayOrderQueryReq, opts ...client.CallOption) (*AlipayOrderQueryRes, error)
 }
 
 type dartynodeService struct {
@@ -267,6 +268,16 @@ func (c *dartynodeService) AliOrderClose(ctx context.Context, in *AliOrderCloseR
 	return out, nil
 }
 
+func (c *dartynodeService) AlipayOrderQuery(ctx context.Context, in *AlipayOrderQueryReq, opts ...client.CallOption) (*AlipayOrderQueryRes, error) {
+	req := c.c.NewRequest(c.name, "DartynodeService.AlipayOrderQuery", in)
+	out := new(AlipayOrderQueryRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for DartynodeService service
 
 type DartynodeServiceHandler interface {
@@ -305,6 +316,7 @@ type DartynodeServiceHandler interface {
 	// 支付宝支付
 	Alipay(context.Context, *AliPayReq, *AliPayRes) error
 	AliOrderClose(context.Context, *AliOrderCloseReq, *AliOrderCloseRes) error
+	AlipayOrderQuery(context.Context, *AlipayOrderQueryReq, *AlipayOrderQueryRes) error
 }
 
 func RegisterDartynodeServiceHandler(s server.Server, hdlr DartynodeServiceHandler, opts ...server.HandlerOption) error {
@@ -327,6 +339,7 @@ func RegisterDartynodeServiceHandler(s server.Server, hdlr DartynodeServiceHandl
 		WxNativeOrderQuery(ctx context.Context, in *WxNativeOrderQueryReq, out *WxNativeOrderQueryRes) error
 		Alipay(ctx context.Context, in *AliPayReq, out *AliPayRes) error
 		AliOrderClose(ctx context.Context, in *AliOrderCloseReq, out *AliOrderCloseRes) error
+		AlipayOrderQuery(ctx context.Context, in *AlipayOrderQueryReq, out *AlipayOrderQueryRes) error
 	}
 	type DartynodeService struct {
 		dartynodeService
@@ -409,4 +422,8 @@ func (h *dartynodeServiceHandler) Alipay(ctx context.Context, in *AliPayReq, out
 
 func (h *dartynodeServiceHandler) AliOrderClose(ctx context.Context, in *AliOrderCloseReq, out *AliOrderCloseRes) error {
 	return h.DartynodeServiceHandler.AliOrderClose(ctx, in, out)
+}
+
+func (h *dartynodeServiceHandler) AlipayOrderQuery(ctx context.Context, in *AlipayOrderQueryReq, out *AlipayOrderQueryRes) error {
+	return h.DartynodeServiceHandler.AlipayOrderQuery(ctx, in, out)
 }
