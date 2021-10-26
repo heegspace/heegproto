@@ -4,30 +4,24 @@
 package certnode
 
 import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
 	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	fmt "fmt"
+	proto "google.golang.org/protobuf/proto"
 	math "math"
 )
 
 import (
 	context "context"
-	api "go-micro.dev/v4/api"
-	client "go-micro.dev/v4/client"
-	server "go-micro.dev/v4/server"
+	api "github.com/asim/go-micro/v3/api"
+	client "github.com/asim/go-micro/v3/client"
+	server "github.com/asim/go-micro/v3/server"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ api.Endpoint
@@ -59,6 +53,8 @@ type CertnodeService interface {
 	CertRefuse(ctx context.Context, in *CertRefuseReq, opts ...client.CallOption) (*CertRefuseRes, error)
 	// 实名缓存
 	CertCache(ctx context.Context, in *CertCacheReq, opts ...client.CallOption) (*CertCacheRes, error)
+	// 实名状态
+	CertStatus(ctx context.Context, in *CertStatusReq, opts ...client.CallOption) (*CertStatusRes, error)
 }
 
 type certnodeService struct {
@@ -143,6 +139,16 @@ func (c *certnodeService) CertCache(ctx context.Context, in *CertCacheReq, opts 
 	return out, nil
 }
 
+func (c *certnodeService) CertStatus(ctx context.Context, in *CertStatusReq, opts ...client.CallOption) (*CertStatusRes, error) {
+	req := c.c.NewRequest(c.name, "CertnodeService.CertStatus", in)
+	out := new(CertStatusRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for CertnodeService service
 
 type CertnodeServiceHandler interface {
@@ -161,6 +167,8 @@ type CertnodeServiceHandler interface {
 	CertRefuse(context.Context, *CertRefuseReq, *CertRefuseRes) error
 	// 实名缓存
 	CertCache(context.Context, *CertCacheReq, *CertCacheRes) error
+	// 实名状态
+	CertStatus(context.Context, *CertStatusReq, *CertStatusRes) error
 }
 
 func RegisterCertnodeServiceHandler(s server.Server, hdlr CertnodeServiceHandler, opts ...server.HandlerOption) error {
@@ -172,6 +180,7 @@ func RegisterCertnodeServiceHandler(s server.Server, hdlr CertnodeServiceHandler
 		CertApproved(ctx context.Context, in *CertApprovedReq, out *CertApprovedRes) error
 		CertRefuse(ctx context.Context, in *CertRefuseReq, out *CertRefuseRes) error
 		CertCache(ctx context.Context, in *CertCacheReq, out *CertCacheRes) error
+		CertStatus(ctx context.Context, in *CertStatusReq, out *CertStatusRes) error
 	}
 	type CertnodeService struct {
 		certnodeService
@@ -210,4 +219,8 @@ func (h *certnodeServiceHandler) CertRefuse(ctx context.Context, in *CertRefuseR
 
 func (h *certnodeServiceHandler) CertCache(ctx context.Context, in *CertCacheReq, out *CertCacheRes) error {
 	return h.CertnodeServiceHandler.CertCache(ctx, in, out)
+}
+
+func (h *certnodeServiceHandler) CertStatus(ctx context.Context, in *CertStatusReq, out *CertStatusRes) error {
+	return h.CertnodeServiceHandler.CertStatus(ctx, in, out)
 }

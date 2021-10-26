@@ -3,6 +3,8 @@ package certnode;
 import "rescode/rescode.proto";
 import "common/common.proto";
 
+option go_package="./certnode";
+
 message SubmitCertReq {
     common.Authorize      auth = 1;
     common.PersonCert    cert = 2;
@@ -108,6 +110,19 @@ message CertCacheRes {
     map<string,string>        extra = 3;
 }
 
+message CertStatusReq {
+    common.Authorize      auth = 1;
+    int64                 uid = 2;
+    map<string,string>    extra = 3;
+}
+
+message CertStatusRes {
+    rescode.Code              rescode = 1;
+    string                    resmsg = 2;
+    string                    status = 3; // S0A,S0S,S0X
+    map<string,string>        extra = 4;
+}
+
 service CertnodeService {
 	// 提交实名
 	rpc SubmitCert(SubmitCertReq)  returns (SubmitCertRes) {}
@@ -124,4 +139,6 @@ service CertnodeService {
 	rpc CertRefuse(CertRefuseReq) returns (CertRefuseRes) {}
 	// 实名缓存
 	rpc CertCache(CertCacheReq)  returns (CertCacheRes) {}
+    // 实名状态
+    rpc CertStatus(CertStatusReq) returns (CertStatusRes) {}
 }
