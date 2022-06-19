@@ -4,10 +4,10 @@
 package questionnode
 
 import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
 	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	fmt "fmt"
+	proto "google.golang.org/protobuf/proto"
 	math "math"
 )
 
@@ -22,12 +22,6 @@ import (
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ api.Endpoint
@@ -110,6 +104,8 @@ type QuestionnodeService interface {
 	IdentList(ctx context.Context, in *IdentListReq, opts ...client.CallOption) (*IdentListRes, error)
 	// 获取识别列表熟数量
 	IdentCount(ctx context.Context, in *IdentCountReq, opts ...client.CallOption) (*IdentCountRes, error)
+	// 获取试卷列表
+	ExamLists(ctx context.Context, in *ExamListReq, opts ...client.CallOption) (*ExamListRes, error)
 }
 
 type questionnodeService struct {
@@ -454,6 +450,16 @@ func (c *questionnodeService) IdentCount(ctx context.Context, in *IdentCountReq,
 	return out, nil
 }
 
+func (c *questionnodeService) ExamLists(ctx context.Context, in *ExamListReq, opts ...client.CallOption) (*ExamListRes, error) {
+	req := c.c.NewRequest(c.name, "QuestionnodeService.ExamLists", in)
+	out := new(ExamListRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for QuestionnodeService service
 
 type QuestionnodeServiceHandler interface {
@@ -523,6 +529,8 @@ type QuestionnodeServiceHandler interface {
 	IdentList(context.Context, *IdentListReq, *IdentListRes) error
 	// 获取识别列表熟数量
 	IdentCount(context.Context, *IdentCountReq, *IdentCountRes) error
+	// 获取试卷列表
+	ExamLists(context.Context, *ExamListReq, *ExamListRes) error
 }
 
 func RegisterQuestionnodeServiceHandler(s server.Server, hdlr QuestionnodeServiceHandler, opts ...server.HandlerOption) error {
@@ -560,6 +568,7 @@ func RegisterQuestionnodeServiceHandler(s server.Server, hdlr QuestionnodeServic
 		IdentByIid(ctx context.Context, in *IdentByIidReq, out *IdentByIidRes) error
 		IdentList(ctx context.Context, in *IdentListReq, out *IdentListRes) error
 		IdentCount(ctx context.Context, in *IdentCountReq, out *IdentCountRes) error
+		ExamLists(ctx context.Context, in *ExamListReq, out *ExamListRes) error
 	}
 	type QuestionnodeService struct {
 		questionnodeService
@@ -702,4 +711,8 @@ func (h *questionnodeServiceHandler) IdentList(ctx context.Context, in *IdentLis
 
 func (h *questionnodeServiceHandler) IdentCount(ctx context.Context, in *IdentCountReq, out *IdentCountRes) error {
 	return h.QuestionnodeServiceHandler.IdentCount(ctx, in, out)
+}
+
+func (h *questionnodeServiceHandler) ExamLists(ctx context.Context, in *ExamListReq, out *ExamListRes) error {
+	return h.QuestionnodeServiceHandler.ExamLists(ctx, in, out)
 }

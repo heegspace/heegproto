@@ -704,3 +704,64 @@ message AlipayCb {
     // @inject_tag: form:"notify_id"
     string      notify_id = 9;
 }
+
+message ReqExam {
+    // @inject_tag: form:"id"
+    int64       id = 1;
+    // @inject_tag: form:"uid"
+    int64       uid = 2;
+    // @inject_tag: form:"uid"
+    int64       pri_id = 3;
+    // @inject_tag: form:"pri_id"
+    int64       city_id = 4;
+    // @inject_tag: form:"city_id"
+    int64       school_id = 5;
+    // @inject_tag: form:"school_id"
+    string      roll_id = 6;
+    // @inject_tag: form:"roll_id"
+    string      grade_id = 7;
+    // @inject_tag: form:"grade_id"
+    int64       year = 8;
+    // @inject_tag: form:"year"
+    string      cate_id = 9;
+    // @inject_tag: form:"cate_id"
+    string      chapter_id = 10;
+    // @inject_tag: form:"chapter_id"
+    string      child_ch_id = 11;
+    // @inject_tag: form:"page"
+    int32       page = 12;
+    // @inject_tag: form:"size"
+    int32       size = 13;
+}
+
+message ExamItem {
+    int64       id = 1;
+    int64       uid = 2;
+    int64       pri_id = 3;
+    string      pri_name = 4;
+    int64       city_id = 5;
+    string      city_name = 6;
+    int64       school_id = 7;
+    string      school_name = 8;
+    string      roll_id = 9;
+    string      roll_name = 10;
+    string      grade_id = 11;
+    string      grade_name = 12;
+    int64       year = 13;
+    string      cate_id = 14;
+    string      cate_name = 15;
+    string      chapter_id = 16;
+    string      chapter_name = 17;
+    string      child_ch_id = 18;
+    string      child_ch_name = 19;
+    string      title = 20;
+    string      desc = 21;
+    string      docx_addr = 22;
+    string      jiexi_addr = 23;
+    string      extra1 = 24;
+    string      extra2 = 25;
+    string      extra3 = 26;
+    int64       create_at = 27;
+    int64       update_at = 28;
+    map<string,string> extra = 29;
+}

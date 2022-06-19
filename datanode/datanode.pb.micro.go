@@ -4,9 +4,9 @@
 package datanode
 
 import (
+	common "./common"
+	_ "./rescode"
 	fmt "fmt"
-	common "github.com/heegspace/heegproto/common"
-	_ "github.com/heegspace/heegproto/rescode"
 	proto "google.golang.org/protobuf/proto"
 	math "math"
 )
@@ -272,6 +272,8 @@ type DatanodeService interface {
 	UserVip(ctx context.Context, in *UserVipReq, opts ...client.CallOption) (*UserVipRes, error)
 	// 服务调用日志
 	FootLog(ctx context.Context, in *FootLogReq, opts ...client.CallOption) (*FootLogRes, error)
+	// 获取试卷列表
+	ExamLists(ctx context.Context, in *ExamListReq, opts ...client.CallOption) (*ExamListRes, error)
 }
 
 type datanodeService struct {
@@ -1476,6 +1478,16 @@ func (c *datanodeService) FootLog(ctx context.Context, in *FootLogReq, opts ...c
 	return out, nil
 }
 
+func (c *datanodeService) ExamLists(ctx context.Context, in *ExamListReq, opts ...client.CallOption) (*ExamListRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.ExamLists", in)
+	out := new(ExamListRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for DatanodeService service
 
 type DatanodeServiceHandler interface {
@@ -1713,6 +1725,8 @@ type DatanodeServiceHandler interface {
 	UserVip(context.Context, *UserVipReq, *UserVipRes) error
 	// 服务调用日志
 	FootLog(context.Context, *FootLogReq, *FootLogRes) error
+	// 获取试卷列表
+	ExamLists(context.Context, *ExamListReq, *ExamListRes) error
 }
 
 func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler, opts ...server.HandlerOption) error {
@@ -1836,6 +1850,7 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		UserScore(ctx context.Context, in *UserScoreReq, out *UserScoreRes) error
 		UserVip(ctx context.Context, in *UserVipReq, out *UserVipRes) error
 		FootLog(ctx context.Context, in *FootLogReq, out *FootLogRes) error
+		ExamLists(ctx context.Context, in *ExamListReq, out *ExamListRes) error
 	}
 	type DatanodeService struct {
 		datanodeService
@@ -2322,4 +2337,8 @@ func (h *datanodeServiceHandler) UserVip(ctx context.Context, in *UserVipReq, ou
 
 func (h *datanodeServiceHandler) FootLog(ctx context.Context, in *FootLogReq, out *FootLogRes) error {
 	return h.DatanodeServiceHandler.FootLog(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) ExamLists(ctx context.Context, in *ExamListReq, out *ExamListRes) error {
+	return h.DatanodeServiceHandler.ExamLists(ctx, in, out)
 }
