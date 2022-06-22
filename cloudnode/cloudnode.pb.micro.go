@@ -4,10 +4,10 @@
 package cloudnode
 
 import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
 	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	fmt "fmt"
+	proto "google.golang.org/protobuf/proto"
 	math "math"
 )
 
@@ -22,12 +22,6 @@ import (
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ api.Endpoint
@@ -54,6 +48,8 @@ type CloudnodeService interface {
 	Attr(ctx context.Context, in *AttrReq, opts ...client.CallOption) (*AttrRes, error)
 	// 获取缩略图
 	Thumbnail(ctx context.Context, in *ThumbnailReq, opts ...client.CallOption) (*ThumbnailRes, error)
+	// 获取临时文件地址
+	Temp(ctx context.Context, in *TempReq, opts ...client.CallOption) (*TempRes, error)
 }
 
 type cloudnodeService struct {
@@ -118,6 +114,16 @@ func (c *cloudnodeService) Thumbnail(ctx context.Context, in *ThumbnailReq, opts
 	return out, nil
 }
 
+func (c *cloudnodeService) Temp(ctx context.Context, in *TempReq, opts ...client.CallOption) (*TempRes, error) {
+	req := c.c.NewRequest(c.name, "CloudnodeService.Temp", in)
+	out := new(TempRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for CloudnodeService service
 
 type CloudnodeServiceHandler interface {
@@ -131,6 +137,8 @@ type CloudnodeServiceHandler interface {
 	Attr(context.Context, *AttrReq, *AttrRes) error
 	// 获取缩略图
 	Thumbnail(context.Context, *ThumbnailReq, *ThumbnailRes) error
+	// 获取临时文件地址
+	Temp(context.Context, *TempReq, *TempRes) error
 }
 
 func RegisterCloudnodeServiceHandler(s server.Server, hdlr CloudnodeServiceHandler, opts ...server.HandlerOption) error {
@@ -140,6 +148,7 @@ func RegisterCloudnodeServiceHandler(s server.Server, hdlr CloudnodeServiceHandl
 		AddFile(ctx context.Context, in *AddFileReq, out *AddFileRes) error
 		Attr(ctx context.Context, in *AttrReq, out *AttrRes) error
 		Thumbnail(ctx context.Context, in *ThumbnailReq, out *ThumbnailRes) error
+		Temp(ctx context.Context, in *TempReq, out *TempRes) error
 	}
 	type CloudnodeService struct {
 		cloudnodeService
@@ -170,4 +179,8 @@ func (h *cloudnodeServiceHandler) Attr(ctx context.Context, in *AttrReq, out *At
 
 func (h *cloudnodeServiceHandler) Thumbnail(ctx context.Context, in *ThumbnailReq, out *ThumbnailRes) error {
 	return h.CloudnodeServiceHandler.Thumbnail(ctx, in, out)
+}
+
+func (h *cloudnodeServiceHandler) Temp(ctx context.Context, in *TempReq, out *TempRes) error {
+	return h.CloudnodeServiceHandler.Temp(ctx, in, out)
 }
