@@ -1,0 +1,46 @@
+syntax = "proto3";
+package strategynode;
+import "rescode/rescode.proto";
+import "common/common.proto";
+
+option go_package="./strategynode";
+
+message UserOpInfo {
+    string      unique_id = 1; // 设备标识
+    string      agent = 2; // 客户端代理
+    string      ip = 3; // 客户端ip
+    string      url_page = 4; // 访问的用户Url或界面
+    int64       uid = 5; // 用户uid
+    int64       vip = 6; // 用户vip
+    int64       role = 7; // 用户角色
+}
+
+message Strategy {
+    int64               id = 1;
+    string              info = 2;
+    map<string,string>  extra = 3;
+}
+
+message Strategys {
+    Strategy            now = 1;
+    Strategy            next = 2;
+    map<string,string>  extra = 3;
+}
+
+message QueryStrategyReq {
+    common.Authorize        auth = 1;
+    UserOpInfo              query = 2;
+    map<string,string>      extra = 3;
+} 
+
+message QueryStrategyRes {
+    rescode.Code          rescode = 1;
+    string                resmsg = 2;
+    Strategys             strategy = 3;
+    map<string,string>    extra = 4;
+}
+
+service StrategynodeService {
+    // 更新修改试题的奖励积分
+    rpc  QueryStrategy(QueryStrategyReq) returns(QueryStrategyRes) {}
+}
