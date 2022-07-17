@@ -18,7 +18,8 @@ message UserOpInfo {
 message Strategy {
     int64               id = 1;
     string              info = 2;
-    map<string,string>  extra = 3;
+    int64               info_type = 3; // 策略消息的类型，0:提示  1:跳转  2:警告  3: 2:忽略
+    map<string,string>  extra = 4;
 }
 
 message Strategys {
