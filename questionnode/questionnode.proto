@@ -482,9 +482,23 @@ message IdentCountRes {
     map<string,string>   extra = 4;
 }
 
+message AddExamReq {
+    common.Authorize            auth = 1;
+    common.ExamItem             exam = 2;
+    map<string,string>          extra = 3;
+}
+
+message AddExamRes {
+    rescode.Code                rescode = 1;
+    string                      resmsg = 2;
+    repeated common.FootLog     desc = 3;
+    map<string,string>          extra = 4;
+}
+
 message ExamListReq {
-    common.ReqExam              req = 1;
-    map<string,string>          extra = 2;
+    common.Authorize            auth = 1;
+    common.ReqExam              req = 2;
+    map<string,string>          extra = 3;
 }
 
 message ExamListRes {
@@ -562,6 +576,8 @@ service QuestionnodeService {
     // 获取识别列表熟数量
     rpc  IdentCount(IdentCountReq) returns(IdentCountRes) {}
 
+    // 添加试题
+    rpc AddExam(AddExamReq) returns (AddExamRes) {}
     // 获取试卷列表
     rpc ExamLists(ExamListReq) returns (ExamListRes) {}
 }

@@ -763,5 +763,7 @@ message ExamItem {
     string      extra3 = 26;
     int64       create_at = 27;
     int64       update_at = 28;
-    map<string,string> extra = 29;
+    int64       status = 29;
+    int64       price = 30;
+    map<string,string> extra = 31;
 }
