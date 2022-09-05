@@ -104,6 +104,8 @@ type QuestionnodeService interface {
 	IdentList(ctx context.Context, in *IdentListReq, opts ...client.CallOption) (*IdentListRes, error)
 	// 获取识别列表熟数量
 	IdentCount(ctx context.Context, in *IdentCountReq, opts ...client.CallOption) (*IdentCountRes, error)
+	// 添加试题
+	AddExam(ctx context.Context, in *AddExamReq, opts ...client.CallOption) (*AddExamRes, error)
 	// 获取试卷列表
 	ExamLists(ctx context.Context, in *ExamListReq, opts ...client.CallOption) (*ExamListRes, error)
 }
@@ -450,6 +452,16 @@ func (c *questionnodeService) IdentCount(ctx context.Context, in *IdentCountReq,
 	return out, nil
 }
 
+func (c *questionnodeService) AddExam(ctx context.Context, in *AddExamReq, opts ...client.CallOption) (*AddExamRes, error) {
+	req := c.c.NewRequest(c.name, "QuestionnodeService.AddExam", in)
+	out := new(AddExamRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *questionnodeService) ExamLists(ctx context.Context, in *ExamListReq, opts ...client.CallOption) (*ExamListRes, error) {
 	req := c.c.NewRequest(c.name, "QuestionnodeService.ExamLists", in)
 	out := new(ExamListRes)
@@ -529,6 +541,8 @@ type QuestionnodeServiceHandler interface {
 	IdentList(context.Context, *IdentListReq, *IdentListRes) error
 	// 获取识别列表熟数量
 	IdentCount(context.Context, *IdentCountReq, *IdentCountRes) error
+	// 添加试题
+	AddExam(context.Context, *AddExamReq, *AddExamRes) error
 	// 获取试卷列表
 	ExamLists(context.Context, *ExamListReq, *ExamListRes) error
 }
@@ -568,6 +582,7 @@ func RegisterQuestionnodeServiceHandler(s server.Server, hdlr QuestionnodeServic
 		IdentByIid(ctx context.Context, in *IdentByIidReq, out *IdentByIidRes) error
 		IdentList(ctx context.Context, in *IdentListReq, out *IdentListRes) error
 		IdentCount(ctx context.Context, in *IdentCountReq, out *IdentCountRes) error
+		AddExam(ctx context.Context, in *AddExamReq, out *AddExamRes) error
 		ExamLists(ctx context.Context, in *ExamListReq, out *ExamListRes) error
 	}
 	type QuestionnodeService struct {
@@ -711,6 +726,10 @@ func (h *questionnodeServiceHandler) IdentList(ctx context.Context, in *IdentLis
 
 func (h *questionnodeServiceHandler) IdentCount(ctx context.Context, in *IdentCountReq, out *IdentCountRes) error {
 	return h.QuestionnodeServiceHandler.IdentCount(ctx, in, out)
+}
+
+func (h *questionnodeServiceHandler) AddExam(ctx context.Context, in *AddExamReq, out *AddExamRes) error {
+	return h.QuestionnodeServiceHandler.AddExam(ctx, in, out)
 }
 
 func (h *questionnodeServiceHandler) ExamLists(ctx context.Context, in *ExamListReq, out *ExamListRes) error {

@@ -272,6 +272,8 @@ type DatanodeService interface {
 	UserVip(ctx context.Context, in *UserVipReq, opts ...client.CallOption) (*UserVipRes, error)
 	// 服务调用日志
 	FootLog(ctx context.Context, in *FootLogReq, opts ...client.CallOption) (*FootLogRes, error)
+	// 添加试题
+	AddExam(ctx context.Context, in *AddExamReq, opts ...client.CallOption) (*AddExamRes, error)
 	// 获取试卷列表
 	ExamLists(ctx context.Context, in *ExamListReq, opts ...client.CallOption) (*ExamListRes, error)
 }
@@ -1478,6 +1480,16 @@ func (c *datanodeService) FootLog(ctx context.Context, in *FootLogReq, opts ...c
 	return out, nil
 }
 
+func (c *datanodeService) AddExam(ctx context.Context, in *AddExamReq, opts ...client.CallOption) (*AddExamRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.AddExam", in)
+	out := new(AddExamRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *datanodeService) ExamLists(ctx context.Context, in *ExamListReq, opts ...client.CallOption) (*ExamListRes, error) {
 	req := c.c.NewRequest(c.name, "DatanodeService.ExamLists", in)
 	out := new(ExamListRes)
@@ -1725,6 +1737,8 @@ type DatanodeServiceHandler interface {
 	UserVip(context.Context, *UserVipReq, *UserVipRes) error
 	// 服务调用日志
 	FootLog(context.Context, *FootLogReq, *FootLogRes) error
+	// 添加试题
+	AddExam(context.Context, *AddExamReq, *AddExamRes) error
 	// 获取试卷列表
 	ExamLists(context.Context, *ExamListReq, *ExamListRes) error
 }
@@ -1850,6 +1864,7 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		UserScore(ctx context.Context, in *UserScoreReq, out *UserScoreRes) error
 		UserVip(ctx context.Context, in *UserVipReq, out *UserVipRes) error
 		FootLog(ctx context.Context, in *FootLogReq, out *FootLogRes) error
+		AddExam(ctx context.Context, in *AddExamReq, out *AddExamRes) error
 		ExamLists(ctx context.Context, in *ExamListReq, out *ExamListRes) error
 	}
 	type DatanodeService struct {
@@ -2337,6 +2352,10 @@ func (h *datanodeServiceHandler) UserVip(ctx context.Context, in *UserVipReq, ou
 
 func (h *datanodeServiceHandler) FootLog(ctx context.Context, in *FootLogReq, out *FootLogRes) error {
 	return h.DatanodeServiceHandler.FootLog(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) AddExam(ctx context.Context, in *AddExamReq, out *AddExamRes) error {
+	return h.DatanodeServiceHandler.AddExam(ctx, in, out)
 }
 
 func (h *datanodeServiceHandler) ExamLists(ctx context.Context, in *ExamListReq, out *ExamListRes) error {
