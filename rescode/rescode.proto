@@ -45,6 +45,9 @@ enum Code {
     code_WECHAT_REFRESH_ERROR = 30003;   // 微信token刷新失败
     code_WECHAT_USERINFO_ERR = 30004;    // 
     code_WECHAT_PAY_ERR = 30005;         // 微信支付失败
+    code_PAY_SUCCESS = 30006;            // 支付成功
+    code_PAY_FAIL = 30007;               // 支付失败
+    code_NOT_ORDER = 30008;              // 没有订单
 
     code_ALIPAY_LOGIN_ERROR = 30031;     // 微信登录错误
     code_ALIPAY_TOKEN_TIMEOUT = 30032;   // 微信token过期

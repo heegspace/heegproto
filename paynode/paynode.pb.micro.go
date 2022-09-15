@@ -4,9 +4,9 @@
 package paynode
 
 import (
-	fmt "fmt"
 	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	fmt "fmt"
 	proto "google.golang.org/protobuf/proto"
 	math "math"
 )
@@ -48,10 +48,12 @@ type PaynodeService interface {
 	VipDesc(ctx context.Context, in *VipDescReq, opts ...client.CallOption) (*VipDescRes, error)
 	// vip充值
 	VipPay(ctx context.Context, in *VipPayReq, opts ...client.CallOption) (*VipPayRes, error)
-	// vip充值会掉
+	// vip充值回调
 	VipPayCall(ctx context.Context, in *VipPayCallReq, opts ...client.CallOption) (*VipPayCallRes, error)
 	// 获取vip充值列表
 	VipOrderList(ctx context.Context, in *VipOrderListReq, opts ...client.CallOption) (*VipOrderListRes, error)
+	// 查询订单状态
+	PayStatus(ctx context.Context, in *PayStatusReq, opts ...client.CallOption) (*PayStatusReq, error)
 }
 
 type paynodeService struct {
@@ -136,6 +138,16 @@ func (c *paynodeService) VipOrderList(ctx context.Context, in *VipOrderListReq, 
 	return out, nil
 }
 
+func (c *paynodeService) PayStatus(ctx context.Context, in *PayStatusReq, opts ...client.CallOption) (*PayStatusReq, error) {
+	req := c.c.NewRequest(c.name, "PaynodeService.PayStatus", in)
+	out := new(PayStatusReq)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for PaynodeService service
 
 type PaynodeServiceHandler interface {
@@ -149,10 +161,12 @@ type PaynodeServiceHandler interface {
 	VipDesc(context.Context, *VipDescReq, *VipDescRes) error
 	// vip充值
 	VipPay(context.Context, *VipPayReq, *VipPayRes) error
-	// vip充值会掉
+	// vip充值回调
 	VipPayCall(context.Context, *VipPayCallReq, *VipPayCallRes) error
 	// 获取vip充值列表
 	VipOrderList(context.Context, *VipOrderListReq, *VipOrderListRes) error
+	// 查询订单状态
+	PayStatus(context.Context, *PayStatusReq, *PayStatusReq) error
 }
 
 func RegisterPaynodeServiceHandler(s server.Server, hdlr PaynodeServiceHandler, opts ...server.HandlerOption) error {
@@ -164,6 +178,7 @@ func RegisterPaynodeServiceHandler(s server.Server, hdlr PaynodeServiceHandler, 
 		VipPay(ctx context.Context, in *VipPayReq, out *VipPayRes) error
 		VipPayCall(ctx context.Context, in *VipPayCallReq, out *VipPayCallRes) error
 		VipOrderList(ctx context.Context, in *VipOrderListReq, out *VipOrderListRes) error
+		PayStatus(ctx context.Context, in *PayStatusReq, out *PayStatusReq) error
 	}
 	type PaynodeService struct {
 		paynodeService
@@ -202,4 +217,8 @@ func (h *paynodeServiceHandler) VipPayCall(ctx context.Context, in *VipPayCallRe
 
 func (h *paynodeServiceHandler) VipOrderList(ctx context.Context, in *VipOrderListReq, out *VipOrderListRes) error {
 	return h.PaynodeServiceHandler.VipOrderList(ctx, in, out)
+}
+
+func (h *paynodeServiceHandler) PayStatus(ctx context.Context, in *PayStatusReq, out *PayStatusReq) error {
+	return h.PaynodeServiceHandler.PayStatus(ctx, in, out)
 }

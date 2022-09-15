@@ -102,6 +102,18 @@ message VipOrderListRes {
     map<string,string>          extra = 4;
 }
 
+message PayStatusReq {
+    common.Authorize            auth = 1;
+    common.PayOrder             order = 2;
+    map<string,string>          extra = 3;
+}
+
+message PayStatusRes {
+    rescode.Code                rescode = 1;
+    string                      resmsg = 2;
+    map<string,string>          extra = 3;
+}
+
 service PaynodeService {
     // 添加赞助信息
     rpc  SponsorAdd(SponsorAddReq) returns(SponsorAddRes){}
@@ -118,4 +130,6 @@ service PaynodeService {
     rpc VipPayCall(VipPayCallReq) returns (VipPayCallRes) {}
     // 获取vip充值列表
     rpc VipOrderList(VipOrderListReq) returns (VipOrderListRes) {}
+    // 查询订单状态
+    rpc PayStatus(PayStatusReq) returns (PayStatusReq) {}
 }
