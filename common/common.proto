@@ -612,12 +612,13 @@ message VipDesc {
     map<string,string>      extra = 4;
 }
 
-message VipOrder {
+// 支付订单项
+message PayOrder {
     int64                   id = 1;      
-    int64                   level = 2;   
-    int64                   genre = 3; 
+    int64                   level = 2;  // 除了vip以外目前暂时没用  
+    int64                   genre = 3;  // 0(VIP)  1(积分)   2(exam_download)
     int64                   uid = 4;     
-    string                  trade_no = 5; 
+    string                  trade_no = 5;  // 本地订单号
     string                  code_url = 6; 
     int64                   amount = 7;  
     int64                   status = 8; 
@@ -627,10 +628,14 @@ message VipOrder {
     string                  create_at = 12;
     string                  update_at = 13;
     string                  openid = 14;
-    string                  trans_id = 15;
+    string                  trans_id = 15; // 平台交易号
     string                  desc = 16;
     int64                   score =  17;
     int64                   invalid = 18;
+    string                  uuid = 19;
+    string                  client_ip = 20;
+    string                  gid = 21;       // 物品id
+    map<string,string>      extras = 22;
 }
 
 enum VipPayStyle {
@@ -646,6 +651,7 @@ message VipPayCbRe {
     string              associated_data = 4;
     string              nonce = 5;
 }
+
 message VipPayCb {
     string              id = 1;
     string              create_time = 2;

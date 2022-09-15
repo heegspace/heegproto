@@ -63,14 +63,14 @@ message VipDescRes {
 
 message VipPayReq {
     common.Authorize            auth = 1;
-    common.VipOrder             order = 2;
+    common.PayOrder             order = 2;
     map<string,string>          extra = 3;
 }
 
 message VipPayRes {
     rescode.Code                rescode = 1;
     string                      resmsg = 2;
-    common.VipOrder             order = 3;
+    common.PayOrder             order = 3;
     map<string,string>          extra = 4;
 }
 
@@ -89,7 +89,7 @@ message VipPayCallRes {
 
 message VipOrderListReq {
     common.Authorize            auth = 1;
-    common.VipOrder             order = 2;
+    common.PayOrder             order = 2;
     int32                       page = 3;
     int32                       size = 4;
     map<string,string>          extra = 5;
@@ -98,7 +98,7 @@ message VipOrderListReq {
 message VipOrderListRes {
     rescode.Code                rescode = 1;
     string                      resmsg = 2;
-    repeated common.VipOrder    order = 3;
+    repeated common.PayOrder    order = 3;
     map<string,string>          extra = 4;
 }
 
@@ -114,7 +114,7 @@ service PaynodeService {
     rpc VipDesc(VipDescReq) returns (VipDescRes) {}
     // vip充值
     rpc VipPay(VipPayReq) returns (VipPayRes) {}
-    // vip充值会掉
+    // vip充值回调
     rpc VipPayCall(VipPayCallReq) returns (VipPayCallRes) {}
     // 获取vip充值列表
     rpc VipOrderList(VipOrderListReq) returns (VipOrderListRes) {}

@@ -1478,31 +1478,31 @@ message VipProductRes {
 }
 
 message VipPayReq {
-    common.VipOrder             order = 1;
+    common.PayOrder             order = 1;
     map<string,string>          extra = 2;
 }
 
 message VipPayRes {
     rescode.Code                rescode = 1;
     string                      resmsg = 2;
-    common.VipOrder             order = 3;
+    common.PayOrder             order = 3;
     map<string,string>          extra = 4;
 }
 
 message VipOrderStatusReq {
-    common.VipOrder             order = 1;
+    common.PayOrder             order = 1;
     map<string,string>          extra = 2;
 }
 
 message VipOrderStatusRes {
     rescode.Code                rescode = 1;
     string                      resmsg = 2;
-    common.VipOrder             order = 3;
+    common.PayOrder             order = 3;
     map<string,string>          extra = 4;
 }
 
 message VipOrderListReq {
-    common.VipOrder             order = 1;
+    common.PayOrder             order = 1;
     int32                       page = 2;
     int32                       size = 3;
     map<string,string>          extra = 4;
@@ -1511,7 +1511,7 @@ message VipOrderListReq {
 message VipOrderListRes {
     rescode.Code                rescode = 1;
     string                      resmsg = 2;
-    repeated common.VipOrder    order = 3;
+    repeated common.PayOrder    order = 3;
     map<string,string>          extra = 4;
 }
 
