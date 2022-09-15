@@ -710,6 +710,55 @@ func (VipPayStyle) EnumDescriptor() ([]byte, []int) {
 	return file_common_proto_rawDescGZIP(), []int{12}
 }
 
+type GenreValue int32
+
+const (
+	GenreValue_VIP           GenreValue = 0 // VIP充值
+	GenreValue_SCORE         GenreValue = 1 // 积分充值
+	GenreValue_EXAM_DOWNLOAD GenreValue = 2 // 试卷下载
+)
+
+// Enum value maps for GenreValue.
+var (
+	GenreValue_name = map[int32]string{
+		0: "VIP",
+		1: "SCORE",
+		2: "EXAM_DOWNLOAD",
+	}
+	GenreValue_value = map[string]int32{
+		"VIP":           0,
+		"SCORE":         1,
+		"EXAM_DOWNLOAD": 2,
+	}
+)
+
+func (x GenreValue) Enum() *GenreValue {
+	p := new(GenreValue)
+	*p = x
+	return p
+}
+
+func (x GenreValue) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (GenreValue) Descriptor() protoreflect.EnumDescriptor {
+	return file_common_proto_enumTypes[13].Descriptor()
+}
+
+func (GenreValue) Type() protoreflect.EnumType {
+	return &file_common_proto_enumTypes[13]
+}
+
+func (x GenreValue) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use GenreValue.Descriptor instead.
+func (GenreValue) EnumDescriptor() ([]byte, []int) {
+	return file_common_proto_rawDescGZIP(), []int{13}
+}
+
 type Authorize struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -7529,9 +7578,12 @@ var file_common_proto_rawDesc = []byte{
 	0x65, 0x5f, 0x43, 0x4f, 0x49, 0x4e, 0x5f, 0x55, 0x53, 0x45, 0x44, 0x10, 0x0b, 0x2a, 0x30, 0x0a,
 	0x0b, 0x56, 0x69, 0x70, 0x50, 0x61, 0x79, 0x53, 0x74, 0x79, 0x6c, 0x65, 0x12, 0x08, 0x0a, 0x04,
 	0x4e, 0x4f, 0x4e, 0x45, 0x10, 0x00, 0x12, 0x0b, 0x0a, 0x07, 0x57, 0x45, 0x43, 0x48, 0x41, 0x52,
-	0x54, 0x10, 0x01, 0x12, 0x0a, 0x0a, 0x06, 0x41, 0x4c, 0x49, 0x50, 0x41, 0x59, 0x10, 0x02, 0x42,
-	0x0a, 0x5a, 0x08, 0x2e, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x54, 0x10, 0x01, 0x12, 0x0a, 0x0a, 0x06, 0x41, 0x4c, 0x49, 0x50, 0x41, 0x59, 0x10, 0x02, 0x2a,
+	0x33, 0x0a, 0x0a, 0x47, 0x65, 0x6e, 0x72, 0x65, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x07, 0x0a,
+	0x03, 0x56, 0x49, 0x50, 0x10, 0x00, 0x12, 0x09, 0x0a, 0x05, 0x53, 0x43, 0x4f, 0x52, 0x45, 0x10,
+	0x01, 0x12, 0x11, 0x0a, 0x0d, 0x45, 0x58, 0x41, 0x4d, 0x5f, 0x44, 0x4f, 0x57, 0x4e, 0x4c, 0x4f,
+	0x41, 0x44, 0x10, 0x02, 0x42, 0x0a, 0x5a, 0x08, 0x2e, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -7546,7 +7598,7 @@ func file_common_proto_rawDescGZIP() []byte {
 	return file_common_proto_rawDescData
 }
 
-var file_common_proto_enumTypes = make([]protoimpl.EnumInfo, 13)
+var file_common_proto_enumTypes = make([]protoimpl.EnumInfo, 14)
 var file_common_proto_msgTypes = make([]protoimpl.MessageInfo, 72)
 var file_common_proto_goTypes = []interface{}{
 	(Role)(0),                    // 0: common.Role
@@ -7562,115 +7614,116 @@ var file_common_proto_goTypes = []interface{}{
 	(UpdateUserinfoField)(0),     // 10: common.Update_userinfo_field
 	(LogType)(0),                 // 11: common.LogType
 	(VipPayStyle)(0),             // 12: common.VipPayStyle
-	(*Authorize)(nil),            // 13: common.Authorize
-	(*Request)(nil),              // 14: common.Request
-	(*Response)(nil),             // 15: common.Response
-	(*UpdateUserinfoItem)(nil),   // 16: common.UpdateUserinfoItem
-	(*QuestionQuery)(nil),        // 17: common.QuestionQuery
-	(*VersionItem)(nil),          // 18: common.VersionItem
-	(*QuestionOption)(nil),       // 19: common.QuestionOption
-	(*Question)(nil),             // 20: common.Question
-	(*TimuItem)(nil),             // 21: common.TimuItem
-	(*TixingItem)(nil),           // 22: common.TixingItem
-	(*SourceItem)(nil),           // 23: common.SourceItem
-	(*ChapterItem)(nil),          // 24: common.ChapterItem
-	(*ModifyMeta)(nil),           // 25: common.ModifyMeta
-	(*ModifyItem)(nil),           // 26: common.ModifyItem
-	(*SearchHitsTotal)(nil),      // 27: common.SearchHitsTotal
-	(*HighItem)(nil),             // 28: common.HighItem
-	(*SearchHitsItem)(nil),       // 29: common.SearchHitsItem
-	(*SearchHits)(nil),           // 30: common.SearchHits
-	(*SearchShards)(nil),         // 31: common.SearchShards
-	(*SearchTopic)(nil),          // 32: common.SearchTopic
-	(*GradeCate)(nil),            // 33: common.GradeCate
-	(*SchoolStatic)(nil),         // 34: common.SchoolStatic
-	(*GradeItem)(nil),            // 35: common.GradeItem
-	(*GradeSubject)(nil),         // 36: common.GradeSubject
-	(*SchoolRoll)(nil),           // 37: common.SchoolRoll
-	(*SubjectCate)(nil),          // 38: common.SubjectCate
-	(*SearchHistoryItem)(nil),    // 39: common.SearchHistoryItem
-	(*UserInfo)(nil),             // 40: common.UserInfo
-	(*WechatUserinfo)(nil),       // 41: common.WechatUserinfo
-	(*AlipayUserinfo)(nil),       // 42: common.AlipayUserinfo
-	(*BaiduConcept)(nil),         // 43: common.BaiduConcept
-	(*BaiduEntity)(nil),          // 44: common.BaiduEntity
-	(*AddTimuItem)(nil),          // 45: common.AddTimuItem
-	(*BaiduWordLocation)(nil),    // 46: common.BaiduWordLocation
-	(*BaiduLineProbability)(nil), // 47: common.BaiduLineProbability
-	(*BaiduWordsItem)(nil),       // 48: common.BaiduWordsItem
-	(*BaiduResultItem)(nil),      // 49: common.BaiduResultItem
-	(*BaiduDocAnalysis)(nil),     // 50: common.BaiduDocAnalysis
-	(*BaiduIdentItem)(nil),       // 51: common.BaiduIdentItem
-	(*NoteMeta)(nil),             // 52: common.NoteMeta
-	(*NoteTag)(nil),              // 53: common.NoteTag
-	(*PersonCert)(nil),           // 54: common.PersonCert
-	(*BaiduIdcardIdent)(nil),     // 55: common.BaiduIdcardIdent
-	(*UserLog)(nil),              // 56: common.UserLog
-	(*CronItem)(nil),             // 57: common.CronItem
-	(*PkgItem)(nil),              // 58: common.PkgItem
-	(*SponsorItem)(nil),          // 59: common.SponsorItem
-	(*VipProduct)(nil),           // 60: common.VipProduct
-	(*VipDesc)(nil),              // 61: common.VipDesc
-	(*PayOrder)(nil),             // 62: common.PayOrder
-	(*VipPayCbRe)(nil),           // 63: common.VipPayCbRe
-	(*VipPayCb)(nil),             // 64: common.VipPayCb
-	(*UserScore)(nil),            // 65: common.UserScore
-	(*UserVip)(nil),              // 66: common.UserVip
-	(*FootLog)(nil),              // 67: common.FootLog
-	(*AlipayCb)(nil),             // 68: common.AlipayCb
-	(*ReqExam)(nil),              // 69: common.ReqExam
-	(*ExamItem)(nil),             // 70: common.ExamItem
-	nil,                          // 71: common.Authorize.ExtraEntry
-	nil,                          // 72: common.Request.ExtraEntry
-	nil,                          // 73: common.Response.ExtraEntry
-	nil,                          // 74: common.UpdateUserinfoItem.ExtraEntry
-	nil,                          // 75: common.QuestionQuery.ExtraEntry
-	nil,                          // 76: common.SearchHitsItem.HighLightEntry
-	nil,                          // 77: common.SearchHistoryItem.ExtraEntry
-	nil,                          // 78: common.PersonCert.ExtraEntry
-	nil,                          // 79: common.BaiduIdcardIdent.ExtraEntry
-	nil,                          // 80: common.CronItem.ExtraEntry
-	nil,                          // 81: common.VipDesc.ExtraEntry
-	nil,                          // 82: common.PayOrder.ExtrasEntry
-	nil,                          // 83: common.FootLog.ExtraEntry
-	nil,                          // 84: common.ExamItem.ExtraEntry
+	(GenreValue)(0),              // 13: common.GenreValue
+	(*Authorize)(nil),            // 14: common.Authorize
+	(*Request)(nil),              // 15: common.Request
+	(*Response)(nil),             // 16: common.Response
+	(*UpdateUserinfoItem)(nil),   // 17: common.UpdateUserinfoItem
+	(*QuestionQuery)(nil),        // 18: common.QuestionQuery
+	(*VersionItem)(nil),          // 19: common.VersionItem
+	(*QuestionOption)(nil),       // 20: common.QuestionOption
+	(*Question)(nil),             // 21: common.Question
+	(*TimuItem)(nil),             // 22: common.TimuItem
+	(*TixingItem)(nil),           // 23: common.TixingItem
+	(*SourceItem)(nil),           // 24: common.SourceItem
+	(*ChapterItem)(nil),          // 25: common.ChapterItem
+	(*ModifyMeta)(nil),           // 26: common.ModifyMeta
+	(*ModifyItem)(nil),           // 27: common.ModifyItem
+	(*SearchHitsTotal)(nil),      // 28: common.SearchHitsTotal
+	(*HighItem)(nil),             // 29: common.HighItem
+	(*SearchHitsItem)(nil),       // 30: common.SearchHitsItem
+	(*SearchHits)(nil),           // 31: common.SearchHits
+	(*SearchShards)(nil),         // 32: common.SearchShards
+	(*SearchTopic)(nil),          // 33: common.SearchTopic
+	(*GradeCate)(nil),            // 34: common.GradeCate
+	(*SchoolStatic)(nil),         // 35: common.SchoolStatic
+	(*GradeItem)(nil),            // 36: common.GradeItem
+	(*GradeSubject)(nil),         // 37: common.GradeSubject
+	(*SchoolRoll)(nil),           // 38: common.SchoolRoll
+	(*SubjectCate)(nil),          // 39: common.SubjectCate
+	(*SearchHistoryItem)(nil),    // 40: common.SearchHistoryItem
+	(*UserInfo)(nil),             // 41: common.UserInfo
+	(*WechatUserinfo)(nil),       // 42: common.WechatUserinfo
+	(*AlipayUserinfo)(nil),       // 43: common.AlipayUserinfo
+	(*BaiduConcept)(nil),         // 44: common.BaiduConcept
+	(*BaiduEntity)(nil),          // 45: common.BaiduEntity
+	(*AddTimuItem)(nil),          // 46: common.AddTimuItem
+	(*BaiduWordLocation)(nil),    // 47: common.BaiduWordLocation
+	(*BaiduLineProbability)(nil), // 48: common.BaiduLineProbability
+	(*BaiduWordsItem)(nil),       // 49: common.BaiduWordsItem
+	(*BaiduResultItem)(nil),      // 50: common.BaiduResultItem
+	(*BaiduDocAnalysis)(nil),     // 51: common.BaiduDocAnalysis
+	(*BaiduIdentItem)(nil),       // 52: common.BaiduIdentItem
+	(*NoteMeta)(nil),             // 53: common.NoteMeta
+	(*NoteTag)(nil),              // 54: common.NoteTag
+	(*PersonCert)(nil),           // 55: common.PersonCert
+	(*BaiduIdcardIdent)(nil),     // 56: common.BaiduIdcardIdent
+	(*UserLog)(nil),              // 57: common.UserLog
+	(*CronItem)(nil),             // 58: common.CronItem
+	(*PkgItem)(nil),              // 59: common.PkgItem
+	(*SponsorItem)(nil),          // 60: common.SponsorItem
+	(*VipProduct)(nil),           // 61: common.VipProduct
+	(*VipDesc)(nil),              // 62: common.VipDesc
+	(*PayOrder)(nil),             // 63: common.PayOrder
+	(*VipPayCbRe)(nil),           // 64: common.VipPayCbRe
+	(*VipPayCb)(nil),             // 65: common.VipPayCb
+	(*UserScore)(nil),            // 66: common.UserScore
+	(*UserVip)(nil),              // 67: common.UserVip
+	(*FootLog)(nil),              // 68: common.FootLog
+	(*AlipayCb)(nil),             // 69: common.AlipayCb
+	(*ReqExam)(nil),              // 70: common.ReqExam
+	(*ExamItem)(nil),             // 71: common.ExamItem
+	nil,                          // 72: common.Authorize.ExtraEntry
+	nil,                          // 73: common.Request.ExtraEntry
+	nil,                          // 74: common.Response.ExtraEntry
+	nil,                          // 75: common.UpdateUserinfoItem.ExtraEntry
+	nil,                          // 76: common.QuestionQuery.ExtraEntry
+	nil,                          // 77: common.SearchHitsItem.HighLightEntry
+	nil,                          // 78: common.SearchHistoryItem.ExtraEntry
+	nil,                          // 79: common.PersonCert.ExtraEntry
+	nil,                          // 80: common.BaiduIdcardIdent.ExtraEntry
+	nil,                          // 81: common.CronItem.ExtraEntry
+	nil,                          // 82: common.VipDesc.ExtraEntry
+	nil,                          // 83: common.PayOrder.ExtrasEntry
+	nil,                          // 84: common.FootLog.ExtraEntry
+	nil,                          // 85: common.ExamItem.ExtraEntry
 }
 var file_common_proto_depIdxs = []int32{
-	71, // 0: common.Authorize.extra:type_name -> common.Authorize.ExtraEntry
-	72, // 1: common.Request.extra:type_name -> common.Request.ExtraEntry
-	73, // 2: common.Response.extra:type_name -> common.Response.ExtraEntry
+	72, // 0: common.Authorize.extra:type_name -> common.Authorize.ExtraEntry
+	73, // 1: common.Request.extra:type_name -> common.Request.ExtraEntry
+	74, // 2: common.Response.extra:type_name -> common.Response.ExtraEntry
 	10, // 3: common.UpdateUserinfoItem.field:type_name -> common.Update_userinfo_field
-	74, // 4: common.UpdateUserinfoItem.extra:type_name -> common.UpdateUserinfoItem.ExtraEntry
-	75, // 5: common.QuestionQuery.extra:type_name -> common.QuestionQuery.ExtraEntry
-	19, // 6: common.Question.options:type_name -> common.QuestionOption
-	20, // 7: common.TimuItem.data:type_name -> common.Question
-	20, // 8: common.ModifyItem.source:type_name -> common.Question
-	20, // 9: common.ModifyItem.data:type_name -> common.Question
-	25, // 10: common.ModifyItem.meta:type_name -> common.ModifyMeta
-	21, // 11: common.SearchHitsItem.source:type_name -> common.TimuItem
-	76, // 12: common.SearchHitsItem.high_light:type_name -> common.SearchHitsItem.HighLightEntry
-	27, // 13: common.SearchHits.total:type_name -> common.SearchHitsTotal
-	29, // 14: common.SearchHits.hits:type_name -> common.SearchHitsItem
-	31, // 15: common.SearchTopic.shards:type_name -> common.SearchShards
-	30, // 16: common.SearchTopic.hits:type_name -> common.SearchHits
-	35, // 17: common.GradeSubject.subjects:type_name -> common.GradeItem
-	77, // 18: common.SearchHistoryItem.extra:type_name -> common.SearchHistoryItem.ExtraEntry
-	43, // 19: common.BaiduEntity.concept:type_name -> common.BaiduConcept
-	20, // 20: common.AddTimuItem.data:type_name -> common.Question
-	46, // 21: common.BaiduWordsItem.location:type_name -> common.BaiduWordLocation
-	47, // 22: common.BaiduWordsItem.probability:type_name -> common.BaiduLineProbability
-	48, // 23: common.BaiduResultItem.word:type_name -> common.BaiduWordsItem
-	49, // 24: common.BaiduDocAnalysis.results:type_name -> common.BaiduResultItem
-	50, // 25: common.BaiduIdentItem.result:type_name -> common.BaiduDocAnalysis
-	78, // 26: common.PersonCert.extra:type_name -> common.PersonCert.ExtraEntry
-	79, // 27: common.BaiduIdcardIdent.extra:type_name -> common.BaiduIdcardIdent.ExtraEntry
-	80, // 28: common.CronItem.extra:type_name -> common.CronItem.ExtraEntry
-	81, // 29: common.VipDesc.extra:type_name -> common.VipDesc.ExtraEntry
-	82, // 30: common.PayOrder.extras:type_name -> common.PayOrder.ExtrasEntry
-	63, // 31: common.VipPayCb.resource:type_name -> common.VipPayCbRe
-	83, // 32: common.FootLog.extra:type_name -> common.FootLog.ExtraEntry
-	84, // 33: common.ExamItem.extra:type_name -> common.ExamItem.ExtraEntry
-	28, // 34: common.SearchHitsItem.HighLightEntry.value:type_name -> common.HighItem
+	75, // 4: common.UpdateUserinfoItem.extra:type_name -> common.UpdateUserinfoItem.ExtraEntry
+	76, // 5: common.QuestionQuery.extra:type_name -> common.QuestionQuery.ExtraEntry
+	20, // 6: common.Question.options:type_name -> common.QuestionOption
+	21, // 7: common.TimuItem.data:type_name -> common.Question
+	21, // 8: common.ModifyItem.source:type_name -> common.Question
+	21, // 9: common.ModifyItem.data:type_name -> common.Question
+	26, // 10: common.ModifyItem.meta:type_name -> common.ModifyMeta
+	22, // 11: common.SearchHitsItem.source:type_name -> common.TimuItem
+	77, // 12: common.SearchHitsItem.high_light:type_name -> common.SearchHitsItem.HighLightEntry
+	28, // 13: common.SearchHits.total:type_name -> common.SearchHitsTotal
+	30, // 14: common.SearchHits.hits:type_name -> common.SearchHitsItem
+	32, // 15: common.SearchTopic.shards:type_name -> common.SearchShards
+	31, // 16: common.SearchTopic.hits:type_name -> common.SearchHits
+	36, // 17: common.GradeSubject.subjects:type_name -> common.GradeItem
+	78, // 18: common.SearchHistoryItem.extra:type_name -> common.SearchHistoryItem.ExtraEntry
+	44, // 19: common.BaiduEntity.concept:type_name -> common.BaiduConcept
+	21, // 20: common.AddTimuItem.data:type_name -> common.Question
+	47, // 21: common.BaiduWordsItem.location:type_name -> common.BaiduWordLocation
+	48, // 22: common.BaiduWordsItem.probability:type_name -> common.BaiduLineProbability
+	49, // 23: common.BaiduResultItem.word:type_name -> common.BaiduWordsItem
+	50, // 24: common.BaiduDocAnalysis.results:type_name -> common.BaiduResultItem
+	51, // 25: common.BaiduIdentItem.result:type_name -> common.BaiduDocAnalysis
+	79, // 26: common.PersonCert.extra:type_name -> common.PersonCert.ExtraEntry
+	80, // 27: common.BaiduIdcardIdent.extra:type_name -> common.BaiduIdcardIdent.ExtraEntry
+	81, // 28: common.CronItem.extra:type_name -> common.CronItem.ExtraEntry
+	82, // 29: common.VipDesc.extra:type_name -> common.VipDesc.ExtraEntry
+	83, // 30: common.PayOrder.extras:type_name -> common.PayOrder.ExtrasEntry
+	64, // 31: common.VipPayCb.resource:type_name -> common.VipPayCbRe
+	84, // 32: common.FootLog.extra:type_name -> common.FootLog.ExtraEntry
+	85, // 33: common.ExamItem.extra:type_name -> common.ExamItem.ExtraEntry
+	29, // 34: common.SearchHitsItem.HighLightEntry.value:type_name -> common.HighItem
 	35, // [35:35] is the sub-list for method output_type
 	35, // [35:35] is the sub-list for method input_type
 	35, // [35:35] is the sub-list for extension type_name
@@ -8386,7 +8439,7 @@ func file_common_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_common_proto_rawDesc,
-			NumEnums:      13,
+			NumEnums:      14,
 			NumMessages:   72,
 			NumExtensions: 0,
 			NumServices:   0,

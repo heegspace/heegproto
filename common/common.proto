@@ -644,6 +644,12 @@ enum VipPayStyle {
     ALIPAY      = 0x0002;   // 支付宝充值
 }
 
+enum GenreValue {
+    VIP             = 0;    // VIP充值
+    SCORE           = 1;    // 积分充值
+    EXAM_DOWNLOAD   = 2;    // 试卷下载
+}
+
 message VipPayCbRe {
     string              original_type = 1;
     string              algorithm = 2;
