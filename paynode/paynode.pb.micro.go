@@ -52,10 +52,10 @@ type PaynodeService interface {
 	VipPayCall(ctx context.Context, in *VipPayCallReq, opts ...client.CallOption) (*VipPayCallRes, error)
 	// 获取vip充值列表
 	VipOrderList(ctx context.Context, in *VipOrderListReq, opts ...client.CallOption) (*VipOrderListRes, error)
-	// 查询订单状态
-	PayStatus(ctx context.Context, in *PayStatusReq, opts ...client.CallOption) (*PayStatusReq, error)
 	// 检测是否已经支付
 	HavePay(ctx context.Context, in *HavePayReq, opts ...client.CallOption) (*HavePayRes, error)
+	// 清除支付状态
+	ClearStatus(ctx context.Context, in *ClearStatusReq, opts ...client.CallOption) (*ClearStatusRes, error)
 }
 
 type paynodeService struct {
@@ -140,9 +140,9 @@ func (c *paynodeService) VipOrderList(ctx context.Context, in *VipOrderListReq, 
 	return out, nil
 }
 
-func (c *paynodeService) PayStatus(ctx context.Context, in *PayStatusReq, opts ...client.CallOption) (*PayStatusReq, error) {
-	req := c.c.NewRequest(c.name, "PaynodeService.PayStatus", in)
-	out := new(PayStatusReq)
+func (c *paynodeService) HavePay(ctx context.Context, in *HavePayReq, opts ...client.CallOption) (*HavePayRes, error) {
+	req := c.c.NewRequest(c.name, "PaynodeService.HavePay", in)
+	out := new(HavePayRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -150,9 +150,9 @@ func (c *paynodeService) PayStatus(ctx context.Context, in *PayStatusReq, opts .
 	return out, nil
 }
 
-func (c *paynodeService) HavePay(ctx context.Context, in *HavePayReq, opts ...client.CallOption) (*HavePayRes, error) {
-	req := c.c.NewRequest(c.name, "PaynodeService.HavePay", in)
-	out := new(HavePayRes)
+func (c *paynodeService) ClearStatus(ctx context.Context, in *ClearStatusReq, opts ...client.CallOption) (*ClearStatusRes, error) {
+	req := c.c.NewRequest(c.name, "PaynodeService.ClearStatus", in)
+	out := new(ClearStatusRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -177,10 +177,10 @@ type PaynodeServiceHandler interface {
 	VipPayCall(context.Context, *VipPayCallReq, *VipPayCallRes) error
 	// 获取vip充值列表
 	VipOrderList(context.Context, *VipOrderListReq, *VipOrderListRes) error
-	// 查询订单状态
-	PayStatus(context.Context, *PayStatusReq, *PayStatusReq) error
 	// 检测是否已经支付
 	HavePay(context.Context, *HavePayReq, *HavePayRes) error
+	// 清除支付状态
+	ClearStatus(context.Context, *ClearStatusReq, *ClearStatusRes) error
 }
 
 func RegisterPaynodeServiceHandler(s server.Server, hdlr PaynodeServiceHandler, opts ...server.HandlerOption) error {
@@ -192,8 +192,8 @@ func RegisterPaynodeServiceHandler(s server.Server, hdlr PaynodeServiceHandler, 
 		VipPay(ctx context.Context, in *VipPayReq, out *VipPayRes) error
 		VipPayCall(ctx context.Context, in *VipPayCallReq, out *VipPayCallRes) error
 		VipOrderList(ctx context.Context, in *VipOrderListReq, out *VipOrderListRes) error
-		PayStatus(ctx context.Context, in *PayStatusReq, out *PayStatusReq) error
 		HavePay(ctx context.Context, in *HavePayReq, out *HavePayRes) error
+		ClearStatus(ctx context.Context, in *ClearStatusReq, out *ClearStatusRes) error
 	}
 	type PaynodeService struct {
 		paynodeService
@@ -234,10 +234,10 @@ func (h *paynodeServiceHandler) VipOrderList(ctx context.Context, in *VipOrderLi
 	return h.PaynodeServiceHandler.VipOrderList(ctx, in, out)
 }
 
-func (h *paynodeServiceHandler) PayStatus(ctx context.Context, in *PayStatusReq, out *PayStatusReq) error {
-	return h.PaynodeServiceHandler.PayStatus(ctx, in, out)
-}
-
 func (h *paynodeServiceHandler) HavePay(ctx context.Context, in *HavePayReq, out *HavePayRes) error {
 	return h.PaynodeServiceHandler.HavePay(ctx, in, out)
+}
+
+func (h *paynodeServiceHandler) ClearStatus(ctx context.Context, in *ClearStatusReq, out *ClearStatusRes) error {
+	return h.PaynodeServiceHandler.ClearStatus(ctx, in, out)
 }

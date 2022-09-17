@@ -102,19 +102,6 @@ message VipOrderListRes {
     map<string,string>          extra = 4;
 }
 
-message PayStatusReq {
-    common.Authorize            auth = 1;
-    common.PayOrder             order = 2;
-    map<string,string>          extra = 3;
-}
-
-message PayStatusRes {
-    rescode.Code                rescode = 1;
-    string                      resmsg = 2;
-    map<string,string>          extra = 3;
-}
-
-
 message HavePayReq {
     common.Authorize      auth = 1;
     int64                 genre = 2;
@@ -123,6 +110,18 @@ message HavePayReq {
 }
 
 message HavePayRes {
+    rescode.Code          rescode = 1;
+    map<string,string>    extra = 2;
+}
+
+message ClearStatusReq {
+    common.Authorize      auth = 1;
+    int64                 genre = 2;
+    map<string,string>    values = 3;
+    map<string,string>    extra = 4;
+}
+
+message ClearStatusRes {
     rescode.Code          rescode = 1;
     map<string,string>    extra = 2;
 }
@@ -143,10 +142,9 @@ service PaynodeService {
     rpc VipPayCall(VipPayCallReq) returns (VipPayCallRes) {}
     // 获取vip充值列表
     rpc VipOrderList(VipOrderListReq) returns (VipOrderListRes) {}
-    // 查询订单状态
-    rpc PayStatus(PayStatusReq) returns (PayStatusReq) {}
-
 
     // 检测是否已经支付
     rpc HavePay(HavePayReq) returns (HavePayRes) {}
+    // 清除支付状态
+    rpc ClearStatus(ClearStatusReq) returns (ClearStatusRes) {}
 }
