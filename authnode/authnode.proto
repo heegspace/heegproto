@@ -3,6 +3,8 @@ package authnode;
 import "rescode/rescode.proto";
 import "common/common.proto";
 
+option go_package="./authnode";
+
 message VerifyTokenReq {
     string                token = 1;
     common.Authorize      auth = 2;
@@ -35,6 +37,17 @@ message CooperRoleRes {
     map<string,string>    extra = 2;
 }
 
+message HavePayReq {
+    common.Authorize      auth = 1;
+    int64                 genre = 2;
+    map<string,string>    values = 3;
+    map<string,string>    extra = 4;
+}
+
+message HavePayRes {
+    rescode.Code          rescode = 1;
+    map<string,string>    extra = 2;
+}
 
 service AuthnodeService {
 	// 验证token
@@ -43,4 +56,7 @@ service AuthnodeService {
 	rpc  AdminRole(AdminRoleReq) returns (AdminRoleRes) {}
 	// 验证是否是合作用户
 	rpc  CooperRole(CooperRoleReq) returns (CooperRoleRes) {}
+
+    // 检测是否已经支付
+    rpc HavePay(HavePayReq) returns (HavePayRes) {}
 }
