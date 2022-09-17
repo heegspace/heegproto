@@ -37,18 +37,6 @@ message CooperRoleRes {
     map<string,string>    extra = 2;
 }
 
-message HavePayReq {
-    common.Authorize      auth = 1;
-    int64                 genre = 2;
-    map<string,string>    values = 3;
-    map<string,string>    extra = 4;
-}
-
-message HavePayRes {
-    rescode.Code          rescode = 1;
-    map<string,string>    extra = 2;
-}
-
 service AuthnodeService {
 	// 验证token
 	rpc  VerifyToken(VerifyTokenReq) returns (VerifyTokenRes) {}
@@ -57,6 +45,4 @@ service AuthnodeService {
 	// 验证是否是合作用户
 	rpc  CooperRole(CooperRoleReq) returns (CooperRoleRes) {}
 
-    // 检测是否已经支付
-    rpc HavePay(HavePayReq) returns (HavePayRes) {}
 }

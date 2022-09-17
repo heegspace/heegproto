@@ -44,8 +44,6 @@ type AuthnodeService interface {
 	AdminRole(ctx context.Context, in *AdminRoleReq, opts ...client.CallOption) (*AdminRoleRes, error)
 	// 验证是否是合作用户
 	CooperRole(ctx context.Context, in *CooperRoleReq, opts ...client.CallOption) (*CooperRoleRes, error)
-	// 检测是否已经支付
-	HavePay(ctx context.Context, in *HavePayReq, opts ...client.CallOption) (*HavePayRes, error)
 }
 
 type authnodeService struct {
@@ -90,16 +88,6 @@ func (c *authnodeService) CooperRole(ctx context.Context, in *CooperRoleReq, opt
 	return out, nil
 }
 
-func (c *authnodeService) HavePay(ctx context.Context, in *HavePayReq, opts ...client.CallOption) (*HavePayRes, error) {
-	req := c.c.NewRequest(c.name, "AuthnodeService.HavePay", in)
-	out := new(HavePayRes)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // Server API for AuthnodeService service
 
 type AuthnodeServiceHandler interface {
@@ -109,8 +97,6 @@ type AuthnodeServiceHandler interface {
 	AdminRole(context.Context, *AdminRoleReq, *AdminRoleRes) error
 	// 验证是否是合作用户
 	CooperRole(context.Context, *CooperRoleReq, *CooperRoleRes) error
-	// 检测是否已经支付
-	HavePay(context.Context, *HavePayReq, *HavePayRes) error
 }
 
 func RegisterAuthnodeServiceHandler(s server.Server, hdlr AuthnodeServiceHandler, opts ...server.HandlerOption) error {
@@ -118,7 +104,6 @@ func RegisterAuthnodeServiceHandler(s server.Server, hdlr AuthnodeServiceHandler
 		VerifyToken(ctx context.Context, in *VerifyTokenReq, out *VerifyTokenRes) error
 		AdminRole(ctx context.Context, in *AdminRoleReq, out *AdminRoleRes) error
 		CooperRole(ctx context.Context, in *CooperRoleReq, out *CooperRoleRes) error
-		HavePay(ctx context.Context, in *HavePayReq, out *HavePayRes) error
 	}
 	type AuthnodeService struct {
 		authnodeService
@@ -141,8 +126,4 @@ func (h *authnodeServiceHandler) AdminRole(ctx context.Context, in *AdminRoleReq
 
 func (h *authnodeServiceHandler) CooperRole(ctx context.Context, in *CooperRoleReq, out *CooperRoleRes) error {
 	return h.AuthnodeServiceHandler.CooperRole(ctx, in, out)
-}
-
-func (h *authnodeServiceHandler) HavePay(ctx context.Context, in *HavePayReq, out *HavePayRes) error {
-	return h.AuthnodeServiceHandler.HavePay(ctx, in, out)
 }

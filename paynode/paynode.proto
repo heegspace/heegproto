@@ -114,6 +114,19 @@ message PayStatusRes {
     map<string,string>          extra = 3;
 }
 
+
+message HavePayReq {
+    common.Authorize      auth = 1;
+    int64                 genre = 2;
+    map<string,string>    values = 3;
+    map<string,string>    extra = 4;
+}
+
+message HavePayRes {
+    rescode.Code          rescode = 1;
+    map<string,string>    extra = 2;
+}
+
 service PaynodeService {
     // 添加赞助信息
     rpc  SponsorAdd(SponsorAddReq) returns(SponsorAddRes){}
@@ -132,4 +145,8 @@ service PaynodeService {
     rpc VipOrderList(VipOrderListReq) returns (VipOrderListRes) {}
     // 查询订单状态
     rpc PayStatus(PayStatusReq) returns (PayStatusReq) {}
+
+
+    // 检测是否已经支付
+    rpc HavePay(HavePayReq) returns (HavePayRes) {}
 }

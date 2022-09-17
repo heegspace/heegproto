@@ -54,6 +54,8 @@ type PaynodeService interface {
 	VipOrderList(ctx context.Context, in *VipOrderListReq, opts ...client.CallOption) (*VipOrderListRes, error)
 	// 查询订单状态
 	PayStatus(ctx context.Context, in *PayStatusReq, opts ...client.CallOption) (*PayStatusReq, error)
+	// 检测是否已经支付
+	HavePay(ctx context.Context, in *HavePayReq, opts ...client.CallOption) (*HavePayRes, error)
 }
 
 type paynodeService struct {
@@ -148,6 +150,16 @@ func (c *paynodeService) PayStatus(ctx context.Context, in *PayStatusReq, opts .
 	return out, nil
 }
 
+func (c *paynodeService) HavePay(ctx context.Context, in *HavePayReq, opts ...client.CallOption) (*HavePayRes, error) {
+	req := c.c.NewRequest(c.name, "PaynodeService.HavePay", in)
+	out := new(HavePayRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for PaynodeService service
 
 type PaynodeServiceHandler interface {
@@ -167,6 +179,8 @@ type PaynodeServiceHandler interface {
 	VipOrderList(context.Context, *VipOrderListReq, *VipOrderListRes) error
 	// 查询订单状态
 	PayStatus(context.Context, *PayStatusReq, *PayStatusReq) error
+	// 检测是否已经支付
+	HavePay(context.Context, *HavePayReq, *HavePayRes) error
 }
 
 func RegisterPaynodeServiceHandler(s server.Server, hdlr PaynodeServiceHandler, opts ...server.HandlerOption) error {
@@ -179,6 +193,7 @@ func RegisterPaynodeServiceHandler(s server.Server, hdlr PaynodeServiceHandler, 
 		VipPayCall(ctx context.Context, in *VipPayCallReq, out *VipPayCallRes) error
 		VipOrderList(ctx context.Context, in *VipOrderListReq, out *VipOrderListRes) error
 		PayStatus(ctx context.Context, in *PayStatusReq, out *PayStatusReq) error
+		HavePay(ctx context.Context, in *HavePayReq, out *HavePayRes) error
 	}
 	type PaynodeService struct {
 		paynodeService
@@ -221,4 +236,8 @@ func (h *paynodeServiceHandler) VipOrderList(ctx context.Context, in *VipOrderLi
 
 func (h *paynodeServiceHandler) PayStatus(ctx context.Context, in *PayStatusReq, out *PayStatusReq) error {
 	return h.PaynodeServiceHandler.PayStatus(ctx, in, out)
+}
+
+func (h *paynodeServiceHandler) HavePay(ctx context.Context, in *HavePayReq, out *HavePayRes) error {
+	return h.PaynodeServiceHandler.HavePay(ctx, in, out)
 }
