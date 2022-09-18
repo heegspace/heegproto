@@ -4,8 +4,8 @@
 package datanode
 
 import (
-	common "./common"
-	_ "./rescode"
+	common "github.com/heegspace/heegproto/common"
+	_ "github.com/heegspace/heegproto/rescode"
 	fmt "fmt"
 	proto "google.golang.org/protobuf/proto"
 	math "math"
