@@ -4,8 +4,8 @@
 package datanode
 
 import (
-	common "github.com/heegspace/heegproto/common"
-	_ "github.com/heegspace/heegproto/rescode"
+	common "./common"
+	_ "./rescode"
 	fmt "fmt"
 	proto "google.golang.org/protobuf/proto"
 	math "math"
@@ -276,6 +276,8 @@ type DatanodeService interface {
 	AddExam(ctx context.Context, in *AddExamReq, opts ...client.CallOption) (*AddExamRes, error)
 	// 获取试卷列表
 	ExamLists(ctx context.Context, in *ExamListReq, opts ...client.CallOption) (*ExamListRes, error)
+	// 获取试卷数量
+	ExamCount(ctx context.Context, in *ExamCountReq, opts ...client.CallOption) (*ExamCountRes, error)
 }
 
 type datanodeService struct {
@@ -1500,6 +1502,16 @@ func (c *datanodeService) ExamLists(ctx context.Context, in *ExamListReq, opts .
 	return out, nil
 }
 
+func (c *datanodeService) ExamCount(ctx context.Context, in *ExamCountReq, opts ...client.CallOption) (*ExamCountRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.ExamCount", in)
+	out := new(ExamCountRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for DatanodeService service
 
 type DatanodeServiceHandler interface {
@@ -1741,6 +1753,8 @@ type DatanodeServiceHandler interface {
 	AddExam(context.Context, *AddExamReq, *AddExamRes) error
 	// 获取试卷列表
 	ExamLists(context.Context, *ExamListReq, *ExamListRes) error
+	// 获取试卷数量
+	ExamCount(context.Context, *ExamCountReq, *ExamCountRes) error
 }
 
 func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler, opts ...server.HandlerOption) error {
@@ -1866,6 +1880,7 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		FootLog(ctx context.Context, in *FootLogReq, out *FootLogRes) error
 		AddExam(ctx context.Context, in *AddExamReq, out *AddExamRes) error
 		ExamLists(ctx context.Context, in *ExamListReq, out *ExamListRes) error
+		ExamCount(ctx context.Context, in *ExamCountReq, out *ExamCountRes) error
 	}
 	type DatanodeService struct {
 		datanodeService
@@ -2360,4 +2375,8 @@ func (h *datanodeServiceHandler) AddExam(ctx context.Context, in *AddExamReq, ou
 
 func (h *datanodeServiceHandler) ExamLists(ctx context.Context, in *ExamListReq, out *ExamListRes) error {
 	return h.DatanodeServiceHandler.ExamLists(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) ExamCount(ctx context.Context, in *ExamCountReq, out *ExamCountRes) error {
+	return h.DatanodeServiceHandler.ExamCount(ctx, in, out)
 }

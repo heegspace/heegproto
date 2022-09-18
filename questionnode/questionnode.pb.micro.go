@@ -108,6 +108,8 @@ type QuestionnodeService interface {
 	AddExam(ctx context.Context, in *AddExamReq, opts ...client.CallOption) (*AddExamRes, error)
 	// 获取试卷列表
 	ExamLists(ctx context.Context, in *ExamListReq, opts ...client.CallOption) (*ExamListRes, error)
+	// 获取试卷数量
+	ExamCount(ctx context.Context, in *ExamCountReq, opts ...client.CallOption) (*ExamCountRes, error)
 }
 
 type questionnodeService struct {
@@ -472,6 +474,16 @@ func (c *questionnodeService) ExamLists(ctx context.Context, in *ExamListReq, op
 	return out, nil
 }
 
+func (c *questionnodeService) ExamCount(ctx context.Context, in *ExamCountReq, opts ...client.CallOption) (*ExamCountRes, error) {
+	req := c.c.NewRequest(c.name, "QuestionnodeService.ExamCount", in)
+	out := new(ExamCountRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for QuestionnodeService service
 
 type QuestionnodeServiceHandler interface {
@@ -545,6 +557,8 @@ type QuestionnodeServiceHandler interface {
 	AddExam(context.Context, *AddExamReq, *AddExamRes) error
 	// 获取试卷列表
 	ExamLists(context.Context, *ExamListReq, *ExamListRes) error
+	// 获取试卷数量
+	ExamCount(context.Context, *ExamCountReq, *ExamCountRes) error
 }
 
 func RegisterQuestionnodeServiceHandler(s server.Server, hdlr QuestionnodeServiceHandler, opts ...server.HandlerOption) error {
@@ -584,6 +598,7 @@ func RegisterQuestionnodeServiceHandler(s server.Server, hdlr QuestionnodeServic
 		IdentCount(ctx context.Context, in *IdentCountReq, out *IdentCountRes) error
 		AddExam(ctx context.Context, in *AddExamReq, out *AddExamRes) error
 		ExamLists(ctx context.Context, in *ExamListReq, out *ExamListRes) error
+		ExamCount(ctx context.Context, in *ExamCountReq, out *ExamCountRes) error
 	}
 	type QuestionnodeService struct {
 		questionnodeService
@@ -734,4 +749,8 @@ func (h *questionnodeServiceHandler) AddExam(ctx context.Context, in *AddExamReq
 
 func (h *questionnodeServiceHandler) ExamLists(ctx context.Context, in *ExamListReq, out *ExamListRes) error {
 	return h.QuestionnodeServiceHandler.ExamLists(ctx, in, out)
+}
+
+func (h *questionnodeServiceHandler) ExamCount(ctx context.Context, in *ExamCountReq, out *ExamCountRes) error {
+	return h.QuestionnodeServiceHandler.ExamCount(ctx, in, out)
 }
