@@ -779,3 +779,13 @@ message ExamItem {
     int64       price = 30;
     map<string,string> extra = 31;
 }
+
+enum ShareType {
+    ShareType_NONE            = 0;
+    ShareType_TIMU            = 1;    // 分享题目
+    ShareType_EXAM            = 2;    // 分享试卷
+    ShareType_COLLECT         = 3;    // 分享专辑
+    ShareType_URL             = 4;    // 分享连接
+    ShareType_IMAGE           = 5;    // 分享图片
+    ShareType_VIDEO           = 6;    // 分享视频
+}

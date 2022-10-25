@@ -3,6 +3,8 @@ package friendnode;
 import "rescode/rescode.proto";
 import "common/common.proto";
 
+option go_package="./friendnode";
+
 message AddFriendReq {
     common.Authorize auth = 1;
     int64             uid = 2;
@@ -133,6 +135,21 @@ message RemoveFriendRes {
    map<string,string> extra = 3;
 }
 
+message ShareReq {
+    common.Authorize    auth = 1;
+    int64               uid = 2;
+    common.ShareType    type = 3;       // 共享的类型
+    string              payload = 4;    // 共享元信息        
+    map<string,string>  extra = 5;
+}
+
+message ShareRes {
+    rescode.Code        rescode = 1;
+    string              resmsg = 2;
+    string              meta = 3;   // 共享返回数据，如共享的缓存key、有效期等等的组合
+    map<string,string>  extra = 4;
+}
+
 service FriendnodeService {
 	// --------------- 好友接口 ----------- //
 	// 添加好友
@@ -151,4 +168,6 @@ service FriendnodeService {
 	rpc  MoveToNewGroup(MoveGroupReq)  returns (MoveGroupRes) {}
 	// 删除好友
 	rpc  RemoveFriend(RemoveFriendReq)  returns (RemoveFriendRes) {}
+    // 共享
+    rpc Share(ShareReq) returns (ShareRes) {}
 }

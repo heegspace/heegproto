@@ -8,6 +8,7 @@ protoc --proto_path=$GOPATH/src/heegproto:. --micro_out=. --go_out=. common.prot
 ## 添加自定义tag
 ```
 go get -u github.com/favadi/protoc-go-inject-tag
+go install github.com/favadi/protoc-go-inject-tag@latest
 
 message question {
     // @inject_tag: form:"timu"

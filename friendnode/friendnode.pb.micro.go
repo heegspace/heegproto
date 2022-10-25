@@ -4,10 +4,10 @@
 package friendnode
 
 import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
 	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	fmt "fmt"
+	proto "google.golang.org/protobuf/proto"
 	math "math"
 )
 
@@ -22,12 +22,6 @@ import (
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ api.Endpoint
@@ -61,6 +55,8 @@ type FriendnodeService interface {
 	MoveToNewGroup(ctx context.Context, in *MoveGroupReq, opts ...client.CallOption) (*MoveGroupRes, error)
 	// 删除好友
 	RemoveFriend(ctx context.Context, in *RemoveFriendReq, opts ...client.CallOption) (*RemoveFriendRes, error)
+	// 共享
+	Share(ctx context.Context, in *ShareReq, opts ...client.CallOption) (*ShareRes, error)
 }
 
 type friendnodeService struct {
@@ -155,6 +151,16 @@ func (c *friendnodeService) RemoveFriend(ctx context.Context, in *RemoveFriendRe
 	return out, nil
 }
 
+func (c *friendnodeService) Share(ctx context.Context, in *ShareReq, opts ...client.CallOption) (*ShareRes, error) {
+	req := c.c.NewRequest(c.name, "FriendnodeService.Share", in)
+	out := new(ShareRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for FriendnodeService service
 
 type FriendnodeServiceHandler interface {
@@ -175,6 +181,8 @@ type FriendnodeServiceHandler interface {
 	MoveToNewGroup(context.Context, *MoveGroupReq, *MoveGroupRes) error
 	// 删除好友
 	RemoveFriend(context.Context, *RemoveFriendReq, *RemoveFriendRes) error
+	// 共享
+	Share(context.Context, *ShareReq, *ShareRes) error
 }
 
 func RegisterFriendnodeServiceHandler(s server.Server, hdlr FriendnodeServiceHandler, opts ...server.HandlerOption) error {
@@ -187,6 +195,7 @@ func RegisterFriendnodeServiceHandler(s server.Server, hdlr FriendnodeServiceHan
 		AddNoteFriend(ctx context.Context, in *AddFriendNoteReq, out *AddFriendNoteRes) error
 		MoveToNewGroup(ctx context.Context, in *MoveGroupReq, out *MoveGroupRes) error
 		RemoveFriend(ctx context.Context, in *RemoveFriendReq, out *RemoveFriendRes) error
+		Share(ctx context.Context, in *ShareReq, out *ShareRes) error
 	}
 	type FriendnodeService struct {
 		friendnodeService
@@ -229,4 +238,8 @@ func (h *friendnodeServiceHandler) MoveToNewGroup(ctx context.Context, in *MoveG
 
 func (h *friendnodeServiceHandler) RemoveFriend(ctx context.Context, in *RemoveFriendReq, out *RemoveFriendRes) error {
 	return h.FriendnodeServiceHandler.RemoveFriend(ctx, in, out)
+}
+
+func (h *friendnodeServiceHandler) Share(ctx context.Context, in *ShareReq, out *ShareRes) error {
+	return h.FriendnodeServiceHandler.Share(ctx, in, out)
 }
