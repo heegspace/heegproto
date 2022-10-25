@@ -57,6 +57,8 @@ type FriendnodeService interface {
 	RemoveFriend(ctx context.Context, in *RemoveFriendReq, opts ...client.CallOption) (*RemoveFriendRes, error)
 	// 共享
 	Share(ctx context.Context, in *ShareReq, opts ...client.CallOption) (*ShareRes, error)
+	// 获取共享信息
+	GetShare(ctx context.Context, in *GetShareReq, opts ...client.CallOption) (*GetShareRes, error)
 }
 
 type friendnodeService struct {
@@ -161,6 +163,16 @@ func (c *friendnodeService) Share(ctx context.Context, in *ShareReq, opts ...cli
 	return out, nil
 }
 
+func (c *friendnodeService) GetShare(ctx context.Context, in *GetShareReq, opts ...client.CallOption) (*GetShareRes, error) {
+	req := c.c.NewRequest(c.name, "FriendnodeService.GetShare", in)
+	out := new(GetShareRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for FriendnodeService service
 
 type FriendnodeServiceHandler interface {
@@ -183,6 +195,8 @@ type FriendnodeServiceHandler interface {
 	RemoveFriend(context.Context, *RemoveFriendReq, *RemoveFriendRes) error
 	// 共享
 	Share(context.Context, *ShareReq, *ShareRes) error
+	// 获取共享信息
+	GetShare(context.Context, *GetShareReq, *GetShareRes) error
 }
 
 func RegisterFriendnodeServiceHandler(s server.Server, hdlr FriendnodeServiceHandler, opts ...server.HandlerOption) error {
@@ -196,6 +210,7 @@ func RegisterFriendnodeServiceHandler(s server.Server, hdlr FriendnodeServiceHan
 		MoveToNewGroup(ctx context.Context, in *MoveGroupReq, out *MoveGroupRes) error
 		RemoveFriend(ctx context.Context, in *RemoveFriendReq, out *RemoveFriendRes) error
 		Share(ctx context.Context, in *ShareReq, out *ShareRes) error
+		GetShare(ctx context.Context, in *GetShareReq, out *GetShareRes) error
 	}
 	type FriendnodeService struct {
 		friendnodeService
@@ -242,4 +257,8 @@ func (h *friendnodeServiceHandler) RemoveFriend(ctx context.Context, in *RemoveF
 
 func (h *friendnodeServiceHandler) Share(ctx context.Context, in *ShareReq, out *ShareRes) error {
 	return h.FriendnodeServiceHandler.Share(ctx, in, out)
+}
+
+func (h *friendnodeServiceHandler) GetShare(ctx context.Context, in *GetShareReq, out *GetShareRes) error {
+	return h.FriendnodeServiceHandler.GetShare(ctx, in, out)
 }
