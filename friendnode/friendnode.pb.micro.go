@@ -61,6 +61,8 @@ type FriendnodeService interface {
 	GetShare(ctx context.Context, in *GetShareReq, opts ...client.CallOption) (*GetShareRes, error)
 	// 获取共享列表信息
 	ShareList(ctx context.Context, in *ShareListReq, opts ...client.CallOption) (*ShareListRes, error)
+	// 获取共享数量
+	ShareCount(ctx context.Context, in *ShareCountReq, opts ...client.CallOption) (*ShareCountRes, error)
 }
 
 type friendnodeService struct {
@@ -185,6 +187,16 @@ func (c *friendnodeService) ShareList(ctx context.Context, in *ShareListReq, opt
 	return out, nil
 }
 
+func (c *friendnodeService) ShareCount(ctx context.Context, in *ShareCountReq, opts ...client.CallOption) (*ShareCountRes, error) {
+	req := c.c.NewRequest(c.name, "FriendnodeService.ShareCount", in)
+	out := new(ShareCountRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for FriendnodeService service
 
 type FriendnodeServiceHandler interface {
@@ -211,6 +223,8 @@ type FriendnodeServiceHandler interface {
 	GetShare(context.Context, *GetShareReq, *GetShareRes) error
 	// 获取共享列表信息
 	ShareList(context.Context, *ShareListReq, *ShareListRes) error
+	// 获取共享数量
+	ShareCount(context.Context, *ShareCountReq, *ShareCountRes) error
 }
 
 func RegisterFriendnodeServiceHandler(s server.Server, hdlr FriendnodeServiceHandler, opts ...server.HandlerOption) error {
@@ -226,6 +240,7 @@ func RegisterFriendnodeServiceHandler(s server.Server, hdlr FriendnodeServiceHan
 		Share(ctx context.Context, in *ShareReq, out *ShareRes) error
 		GetShare(ctx context.Context, in *GetShareReq, out *GetShareRes) error
 		ShareList(ctx context.Context, in *ShareListReq, out *ShareListRes) error
+		ShareCount(ctx context.Context, in *ShareCountReq, out *ShareCountRes) error
 	}
 	type FriendnodeService struct {
 		friendnodeService
@@ -280,4 +295,8 @@ func (h *friendnodeServiceHandler) GetShare(ctx context.Context, in *GetShareReq
 
 func (h *friendnodeServiceHandler) ShareList(ctx context.Context, in *ShareListReq, out *ShareListRes) error {
 	return h.FriendnodeServiceHandler.ShareList(ctx, in, out)
+}
+
+func (h *friendnodeServiceHandler) ShareCount(ctx context.Context, in *ShareCountReq, out *ShareCountRes) error {
+	return h.FriendnodeServiceHandler.ShareCount(ctx, in, out)
 }

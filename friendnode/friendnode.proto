@@ -171,13 +171,28 @@ message ShareListReq {
     common.ShareType    type = 2;  
     int64               page = 3;
     int64               size = 4;
-    map<string,string>  extra = 5;
+    string              search = 5;
+    map<string,string>  extra = 6;
 }
 
 message ShareListRes {
     rescode.Code        rescode = 1;
     string              resmsg = 2;
     repeated string     lists = 3;   // 共享缓存列表
+    map<string,string>  extra = 4;
+}
+
+message ShareCountReq {
+    common.Authorize    auth = 1;
+    common.ShareType    type = 2;  
+    string              search = 3;
+    map<string,string>  extra = 4;
+}
+
+message ShareCountRes {
+    rescode.Code        rescode = 1;
+    string              resmsg = 2;
+    int64               count = 3;   // 共享缓存列表
     map<string,string>  extra = 4;
 }
 
@@ -205,4 +220,6 @@ service FriendnodeService {
     rpc GetShare(GetShareReq) returns (GetShareRes) {}
     // 获取共享列表信息
     rpc ShareList(ShareListReq) returns (ShareListRes) {}
+    // 获取共享数量
+    rpc ShareCount(ShareCountReq) returns (ShareCountRes) {}
 }
