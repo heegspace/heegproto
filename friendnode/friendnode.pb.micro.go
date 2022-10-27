@@ -59,6 +59,8 @@ type FriendnodeService interface {
 	Share(ctx context.Context, in *ShareReq, opts ...client.CallOption) (*ShareRes, error)
 	// 获取共享信息
 	GetShare(ctx context.Context, in *GetShareReq, opts ...client.CallOption) (*GetShareRes, error)
+	// 获取共享列表信息
+	ShareList(ctx context.Context, in *ShareListReq, opts ...client.CallOption) (*ShareListRes, error)
 }
 
 type friendnodeService struct {
@@ -173,6 +175,16 @@ func (c *friendnodeService) GetShare(ctx context.Context, in *GetShareReq, opts 
 	return out, nil
 }
 
+func (c *friendnodeService) ShareList(ctx context.Context, in *ShareListReq, opts ...client.CallOption) (*ShareListRes, error) {
+	req := c.c.NewRequest(c.name, "FriendnodeService.ShareList", in)
+	out := new(ShareListRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for FriendnodeService service
 
 type FriendnodeServiceHandler interface {
@@ -197,6 +209,8 @@ type FriendnodeServiceHandler interface {
 	Share(context.Context, *ShareReq, *ShareRes) error
 	// 获取共享信息
 	GetShare(context.Context, *GetShareReq, *GetShareRes) error
+	// 获取共享列表信息
+	ShareList(context.Context, *ShareListReq, *ShareListRes) error
 }
 
 func RegisterFriendnodeServiceHandler(s server.Server, hdlr FriendnodeServiceHandler, opts ...server.HandlerOption) error {
@@ -211,6 +225,7 @@ func RegisterFriendnodeServiceHandler(s server.Server, hdlr FriendnodeServiceHan
 		RemoveFriend(ctx context.Context, in *RemoveFriendReq, out *RemoveFriendRes) error
 		Share(ctx context.Context, in *ShareReq, out *ShareRes) error
 		GetShare(ctx context.Context, in *GetShareReq, out *GetShareRes) error
+		ShareList(ctx context.Context, in *ShareListReq, out *ShareListRes) error
 	}
 	type FriendnodeService struct {
 		friendnodeService
@@ -261,4 +276,8 @@ func (h *friendnodeServiceHandler) Share(ctx context.Context, in *ShareReq, out 
 
 func (h *friendnodeServiceHandler) GetShare(ctx context.Context, in *GetShareReq, out *GetShareRes) error {
 	return h.FriendnodeServiceHandler.GetShare(ctx, in, out)
+}
+
+func (h *friendnodeServiceHandler) ShareList(ctx context.Context, in *ShareListReq, out *ShareListRes) error {
+	return h.FriendnodeServiceHandler.ShareList(ctx, in, out)
 }

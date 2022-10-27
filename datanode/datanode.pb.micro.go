@@ -280,6 +280,8 @@ type DatanodeService interface {
 	ExamCount(ctx context.Context, in *ExamCountReq, opts ...client.CallOption) (*ExamCountRes, error)
 	// 共享试卷
 	ShareExam(ctx context.Context, in *ShareExamReq, opts ...client.CallOption) (*ShareExamRes, error)
+	// 获取共享列表信息
+	ShareList(ctx context.Context, in *ShareListReq, opts ...client.CallOption) (*ShareListRes, error)
 }
 
 type datanodeService struct {
@@ -1524,6 +1526,16 @@ func (c *datanodeService) ShareExam(ctx context.Context, in *ShareExamReq, opts 
 	return out, nil
 }
 
+func (c *datanodeService) ShareList(ctx context.Context, in *ShareListReq, opts ...client.CallOption) (*ShareListRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.ShareList", in)
+	out := new(ShareListRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for DatanodeService service
 
 type DatanodeServiceHandler interface {
@@ -1769,6 +1781,8 @@ type DatanodeServiceHandler interface {
 	ExamCount(context.Context, *ExamCountReq, *ExamCountRes) error
 	// 共享试卷
 	ShareExam(context.Context, *ShareExamReq, *ShareExamRes) error
+	// 获取共享列表信息
+	ShareList(context.Context, *ShareListReq, *ShareListRes) error
 }
 
 func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler, opts ...server.HandlerOption) error {
@@ -1896,6 +1910,7 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		ExamLists(ctx context.Context, in *ExamListReq, out *ExamListRes) error
 		ExamCount(ctx context.Context, in *ExamCountReq, out *ExamCountRes) error
 		ShareExam(ctx context.Context, in *ShareExamReq, out *ShareExamRes) error
+		ShareList(ctx context.Context, in *ShareListReq, out *ShareListRes) error
 	}
 	type DatanodeService struct {
 		datanodeService
@@ -2398,4 +2413,8 @@ func (h *datanodeServiceHandler) ExamCount(ctx context.Context, in *ExamCountReq
 
 func (h *datanodeServiceHandler) ShareExam(ctx context.Context, in *ShareExamReq, out *ShareExamRes) error {
 	return h.DatanodeServiceHandler.ShareExam(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) ShareList(ctx context.Context, in *ShareListReq, out *ShareListRes) error {
+	return h.DatanodeServiceHandler.ShareList(ctx, in, out)
 }
