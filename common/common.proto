@@ -642,6 +642,8 @@ enum VipPayStyle {
     NONE        = 0x0000;
     WECHART     = 0x0001;   // 微信充值
     ALIPAY      = 0x0002;   // 支付宝充值
+    SCORE_PAY   = 0x0004;   // 积分支付
+    OFFLINE     = 0x0008;   // 线下已经支付
 }
 
 enum GenreValue {
