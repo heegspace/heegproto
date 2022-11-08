@@ -48,6 +48,7 @@ enum Code {
     code_PAY_SUCCESS = 30006;            // 支付成功
     code_PAY_FAIL = 30007;               // 支付失败
     code_NOT_ORDER = 30008;              // 没有订单
+    code_NOT_MORE = 30009;               // 没有更多
 
     code_ALIPAY_LOGIN_ERROR = 30031;     // 微信登录错误
     code_ALIPAY_TOKEN_TIMEOUT = 30032;   // 微信token过期
