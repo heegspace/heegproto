@@ -746,6 +746,8 @@ message ReqExam {
     int32       page = 12;
     // @inject_tag: form:"size"
     int32       size = 13;
+    // @inject_tag: form:"title"
+    string      title = 14;
 }
 
 message ExamItem {
