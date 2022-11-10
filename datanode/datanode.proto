@@ -617,7 +617,7 @@ message SearchReq {
 message SearchRes {
     rescode.Code                  rescode = 1;
     string                        resmsg = 2;
-    repeated common.SearchItem    hits = 3;
+    repeated common.SearchItem    datas = 3;
     map<string,string>            extra = 4;
 }
 
