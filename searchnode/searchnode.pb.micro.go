@@ -4,10 +4,10 @@
 package searchnode
 
 import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
 	_ "github.com/heegspace/heegproto/common"
 	_ "github.com/heegspace/heegproto/rescode"
+	fmt "fmt"
+	proto "google.golang.org/protobuf/proto"
 	math "math"
 )
 
@@ -22,12 +22,6 @@ import (
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ api.Endpoint
@@ -45,7 +39,7 @@ func NewSearchnodeServiceEndpoints() []*api.Endpoint {
 
 type SearchnodeService interface {
 	// 搜索试题
-	SearchQuestion(ctx context.Context, in *SearchQuestionReq, opts ...client.CallOption) (*SearchQuestionRes, error)
+	Search(ctx context.Context, in *SearchReq, opts ...client.CallOption) (*SearchRes, error)
 	// 搜索关键字补全
 	SearchItem(ctx context.Context, in *SearchItemReq, opts ...client.CallOption) (*SearchItemRes, error)
 	// 获取搜索记录
@@ -64,9 +58,9 @@ func NewSearchnodeService(name string, c client.Client) SearchnodeService {
 	}
 }
 
-func (c *searchnodeService) SearchQuestion(ctx context.Context, in *SearchQuestionReq, opts ...client.CallOption) (*SearchQuestionRes, error) {
-	req := c.c.NewRequest(c.name, "SearchnodeService.SearchQuestion", in)
-	out := new(SearchQuestionRes)
+func (c *searchnodeService) Search(ctx context.Context, in *SearchReq, opts ...client.CallOption) (*SearchRes, error) {
+	req := c.c.NewRequest(c.name, "SearchnodeService.Search", in)
+	out := new(SearchRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -98,7 +92,7 @@ func (c *searchnodeService) SearchHistory(ctx context.Context, in *SearchHistory
 
 type SearchnodeServiceHandler interface {
 	// 搜索试题
-	SearchQuestion(context.Context, *SearchQuestionReq, *SearchQuestionRes) error
+	Search(context.Context, *SearchReq, *SearchRes) error
 	// 搜索关键字补全
 	SearchItem(context.Context, *SearchItemReq, *SearchItemRes) error
 	// 获取搜索记录
@@ -107,7 +101,7 @@ type SearchnodeServiceHandler interface {
 
 func RegisterSearchnodeServiceHandler(s server.Server, hdlr SearchnodeServiceHandler, opts ...server.HandlerOption) error {
 	type searchnodeService interface {
-		SearchQuestion(ctx context.Context, in *SearchQuestionReq, out *SearchQuestionRes) error
+		Search(ctx context.Context, in *SearchReq, out *SearchRes) error
 		SearchItem(ctx context.Context, in *SearchItemReq, out *SearchItemRes) error
 		SearchHistory(ctx context.Context, in *SearchHistoryReq, out *SearchHistoryRes) error
 	}
@@ -122,8 +116,8 @@ type searchnodeServiceHandler struct {
 	SearchnodeServiceHandler
 }
 
-func (h *searchnodeServiceHandler) SearchQuestion(ctx context.Context, in *SearchQuestionReq, out *SearchQuestionRes) error {
-	return h.SearchnodeServiceHandler.SearchQuestion(ctx, in, out)
+func (h *searchnodeServiceHandler) Search(ctx context.Context, in *SearchReq, out *SearchRes) error {
+	return h.SearchnodeServiceHandler.Search(ctx, in, out)
 }
 
 func (h *searchnodeServiceHandler) SearchItem(ctx context.Context, in *SearchItemReq, out *SearchItemRes) error {

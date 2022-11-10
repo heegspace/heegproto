@@ -49,13 +49,6 @@ enum FromPlatom {
     from_platom_FROM_ALIPAY     = 0x0002;    // 支付宝平台
 }
 
-enum SearchTyle {
-    FROM_QUESTION   = 0x0000;   // 来自试题
-    FROM_GRPAH      = 0x0001;   // 来自图谱
-    FROM_CLOUD      = 0x0002;   // 来自云盘
-    FROM_PRIVATE    = 0x0003;   // 来自自己
-}
-
 enum ApproveDest {
     search_tyle_APPROVE_TIMU_MODIFY  = 0x0000;  // 审核修改试题
     search_tyle_APPROVE_TIMU_ADD     = 0x0001;  // 审核试题添加
@@ -255,46 +248,6 @@ message ModifyItem {
     double   reward = 15;
 }
 
-message SearchHitsTotal {
-    int64       value = 1;
-    string    relation = 2;
-}
-
-message HighItem {
-    repeated string high = 1;
-}
-
-message SearchHitsItem {
-    
-   string         index = 1;
-   string         type = 2;
-   string         id = 3;
-   double         score = 4;
-   TimuItem      source = 5;
-   // proto not support map<string,repeated string>
-   map<string,HighItem> high_light = 6;
-}
-
-message SearchHits {
-    SearchHitsTotal         total = 1;
-    double                    max_score = 2;
-    repeated SearchHitsItem    hits = 3;
-}
-
-message SearchShards {
-    int64       total = 1;
-    int64       successful = 2;
-    int64       skipped = 3;
-    int64       failed = 4;
-}
-
-message SearchTopic {
-    int32           took = 1;
-    bool            time_out = 2;
-    SearchShards   shards = 3;
-    SearchHits     hits = 4;
-}
-
 message GradeCate {
     string    uid = 1;
     string    roll_id = 2;
@@ -351,7 +304,6 @@ message SearchHistoryItem {
     string                source = 3;
     map<string,string>    extra = 4;
 }
-
 
 message UserInfo {
     string                avatar = 1;
@@ -792,4 +744,10 @@ enum ShareType {
     ShareType_URL             = 4;    // 分享连接
     ShareType_IMAGE           = 5;    // 分享图片
     ShareType_VIDEO           = 6;    // 分享视频
+}
+
+message SearchItem {
+    int64       type = 1;
+    string      payload = 2;
+    double      score = 3;
 }

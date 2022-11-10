@@ -607,9 +607,9 @@ message ApproveRes {
 }
 
 message SearchReq {
-    string        keyword = 1;
-    int64         uid = 2;
-    common.SearchTyle   style = 3;
+    string          keyword = 1;
+    int64           uid = 2;
+    int64           type = 3;
     int32           page = 4;
     int32           size = 5;
 }
@@ -617,10 +617,8 @@ message SearchReq {
 message SearchRes {
     rescode.Code                  rescode = 1;
     string                        resmsg = 2;
-    double                        timestamp = 3;
-    common.SearchHitsTotal      total = 4;
-    repeated common.SearchHitsItem    hits = 5;
-    map<string,string> extra = 6;
+    repeated common.SearchItem    hits = 3;
+    map<string,string>            extra = 4;
 }
 
 message AddGradeCateRes {
