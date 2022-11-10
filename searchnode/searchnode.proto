@@ -19,7 +19,8 @@ message SearchRes {
     rescode.Code                  rescode = 1;
     string                        resmsg = 2;
     repeated common.SearchItem    datas = 3;
-    map<string,string>            extra = 4;
+    double                        timestamp = 4;
+    map<string,string>            extra = 5;
 }
 
 message SearchItemReq {
@@ -34,8 +35,7 @@ message SearchItemRes {
     rescode.Code                      rescode = 1;
     string                            resmsg = 2;
     repeated string                   lists = 3;
-    double                            timestamp = 4;
-    map<string,string>                extra = 5;
+    map<string,string>                extra = 4;
 }
 
 message SearchHistoryReq {
