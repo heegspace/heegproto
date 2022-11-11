@@ -754,5 +754,5 @@ message SearchItem {
 
 message Analyzer {
     string      mention = 1;
-    string      offset = 2;
+    int64       offset = 2;
 }
