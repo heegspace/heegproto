@@ -1648,6 +1648,19 @@ message ShareCountRes {
     map<string,string>  extra = 4;
 }
 
+message AnalyzerReq {
+    string              words = 1;
+    int64               uid = 2;
+    map<string,string>  extra = 3;
+}
+
+message AnalyzerRes {
+    rescode.Code                    rescode = 1;
+    string                          resmsg = 2;
+    repeated   common.Analyzer     words = 3;
+    map<string,string>              extra = 4;
+}
+
 service DatanodeService {
 	// ---------- 用户接口 ------- //
 	// 创建新用户
@@ -1900,4 +1913,7 @@ service DatanodeService {
     rpc ShareList(ShareListReq) returns (ShareListRes) {}
     // 获取共享数量
     rpc ShareCount(ShareCountReq) returns (ShareCountRes) {}
+
+    // 分词
+    rpc Analyzer(AnalyzerReq) returns (AnalyzerRes) {}
 }

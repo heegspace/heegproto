@@ -44,6 +44,8 @@ type SearchnodeService interface {
 	SearchItem(ctx context.Context, in *SearchItemReq, opts ...client.CallOption) (*SearchItemRes, error)
 	// 获取搜索记录
 	SearchHistory(ctx context.Context, in *SearchHistoryReq, opts ...client.CallOption) (*SearchHistoryRes, error)
+	// 分词
+	Analyzer(ctx context.Context, in *AnalyzerReq, opts ...client.CallOption) (*AnalyzerRes, error)
 }
 
 type searchnodeService struct {
@@ -88,6 +90,16 @@ func (c *searchnodeService) SearchHistory(ctx context.Context, in *SearchHistory
 	return out, nil
 }
 
+func (c *searchnodeService) Analyzer(ctx context.Context, in *AnalyzerReq, opts ...client.CallOption) (*AnalyzerRes, error) {
+	req := c.c.NewRequest(c.name, "SearchnodeService.Analyzer", in)
+	out := new(AnalyzerRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for SearchnodeService service
 
 type SearchnodeServiceHandler interface {
@@ -97,6 +109,8 @@ type SearchnodeServiceHandler interface {
 	SearchItem(context.Context, *SearchItemReq, *SearchItemRes) error
 	// 获取搜索记录
 	SearchHistory(context.Context, *SearchHistoryReq, *SearchHistoryRes) error
+	// 分词
+	Analyzer(context.Context, *AnalyzerReq, *AnalyzerRes) error
 }
 
 func RegisterSearchnodeServiceHandler(s server.Server, hdlr SearchnodeServiceHandler, opts ...server.HandlerOption) error {
@@ -104,6 +118,7 @@ func RegisterSearchnodeServiceHandler(s server.Server, hdlr SearchnodeServiceHan
 		Search(ctx context.Context, in *SearchReq, out *SearchRes) error
 		SearchItem(ctx context.Context, in *SearchItemReq, out *SearchItemRes) error
 		SearchHistory(ctx context.Context, in *SearchHistoryReq, out *SearchHistoryRes) error
+		Analyzer(ctx context.Context, in *AnalyzerReq, out *AnalyzerRes) error
 	}
 	type SearchnodeService struct {
 		searchnodeService
@@ -126,4 +141,8 @@ func (h *searchnodeServiceHandler) SearchItem(ctx context.Context, in *SearchIte
 
 func (h *searchnodeServiceHandler) SearchHistory(ctx context.Context, in *SearchHistoryReq, out *SearchHistoryRes) error {
 	return h.SearchnodeServiceHandler.SearchHistory(ctx, in, out)
+}
+
+func (h *searchnodeServiceHandler) Analyzer(ctx context.Context, in *AnalyzerReq, out *AnalyzerRes) error {
+	return h.SearchnodeServiceHandler.Analyzer(ctx, in, out)
 }

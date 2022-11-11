@@ -53,6 +53,20 @@ message SearchHistoryRes {
     map<string,string>                extra = 4;
 }
 
+message AnalyzerReq {
+    common.Authorize    auth = 1;
+    string              words = 2;
+    int64               uid = 3;
+    map<string,string>  extra = 4;
+}
+
+message AnalyzerRes {
+    rescode.Code                    rescode = 1;
+    string                          resmsg = 2;
+    repeated   common.Analyzer      words = 3;
+    map<string,string>              extra = 4;
+}
+
 service SearchnodeService {
     // 搜索试题
     rpc  Search(SearchReq) returns(SearchRes) {}
@@ -62,4 +76,7 @@ service SearchnodeService {
 
     // 获取搜索记录
     rpc  SearchHistory(SearchHistoryReq) returns(SearchHistoryRes) {}
+
+    // 分词
+    rpc Analyzer(AnalyzerReq) returns (AnalyzerRes) {}
 }

@@ -284,6 +284,8 @@ type DatanodeService interface {
 	ShareList(ctx context.Context, in *ShareListReq, opts ...client.CallOption) (*ShareListRes, error)
 	// 获取共享数量
 	ShareCount(ctx context.Context, in *ShareCountReq, opts ...client.CallOption) (*ShareCountRes, error)
+	// 分词
+	Analyzer(ctx context.Context, in *AnalyzerReq, opts ...client.CallOption) (*AnalyzerRes, error)
 }
 
 type datanodeService struct {
@@ -1548,6 +1550,16 @@ func (c *datanodeService) ShareCount(ctx context.Context, in *ShareCountReq, opt
 	return out, nil
 }
 
+func (c *datanodeService) Analyzer(ctx context.Context, in *AnalyzerReq, opts ...client.CallOption) (*AnalyzerRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.Analyzer", in)
+	out := new(AnalyzerRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for DatanodeService service
 
 type DatanodeServiceHandler interface {
@@ -1797,6 +1809,8 @@ type DatanodeServiceHandler interface {
 	ShareList(context.Context, *ShareListReq, *ShareListRes) error
 	// 获取共享数量
 	ShareCount(context.Context, *ShareCountReq, *ShareCountRes) error
+	// 分词
+	Analyzer(context.Context, *AnalyzerReq, *AnalyzerRes) error
 }
 
 func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler, opts ...server.HandlerOption) error {
@@ -1926,6 +1940,7 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		ShareExam(ctx context.Context, in *ShareExamReq, out *ShareExamRes) error
 		ShareList(ctx context.Context, in *ShareListReq, out *ShareListRes) error
 		ShareCount(ctx context.Context, in *ShareCountReq, out *ShareCountRes) error
+		Analyzer(ctx context.Context, in *AnalyzerReq, out *AnalyzerRes) error
 	}
 	type DatanodeService struct {
 		datanodeService
@@ -2436,4 +2451,8 @@ func (h *datanodeServiceHandler) ShareList(ctx context.Context, in *ShareListReq
 
 func (h *datanodeServiceHandler) ShareCount(ctx context.Context, in *ShareCountReq, out *ShareCountRes) error {
 	return h.DatanodeServiceHandler.ShareCount(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) Analyzer(ctx context.Context, in *AnalyzerReq, out *AnalyzerRes) error {
+	return h.DatanodeServiceHandler.Analyzer(ctx, in, out)
 }

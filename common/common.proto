@@ -751,3 +751,8 @@ message SearchItem {
     string      payload = 2;
     double      score = 3;
 }
+
+message Analyzer {
+    string      mention = 1;
+    string      offset = 2;
+}
