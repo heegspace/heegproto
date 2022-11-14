@@ -5790,24 +5790,24 @@ type ReqExam struct {
 	Id int64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" form:"id"`
 	// @inject_tag: form:"uid"
 	Uid int64 `protobuf:"varint,2,opt,name=uid,proto3" json:"uid,omitempty" form:"uid"`
-	// @inject_tag: form:"uid"
-	PriId int64 `protobuf:"varint,3,opt,name=pri_id,json=priId,proto3" json:"pri_id,omitempty" form:"uid"`
 	// @inject_tag: form:"pri_id"
-	CityId int64 `protobuf:"varint,4,opt,name=city_id,json=cityId,proto3" json:"city_id,omitempty" form:"pri_id"`
+	PriId int64 `protobuf:"varint,3,opt,name=pri_id,json=priId,proto3" json:"pri_id,omitempty" form:"pri_id"`
 	// @inject_tag: form:"city_id"
-	SchoolId int64 `protobuf:"varint,5,opt,name=school_id,json=schoolId,proto3" json:"school_id,omitempty" form:"city_id"`
+	CityId int64 `protobuf:"varint,4,opt,name=city_id,json=cityId,proto3" json:"city_id,omitempty" form:"city_id"`
 	// @inject_tag: form:"school_id"
-	RollId string `protobuf:"bytes,6,opt,name=roll_id,json=rollId,proto3" json:"roll_id,omitempty" form:"school_id"`
+	SchoolId int64 `protobuf:"varint,5,opt,name=school_id,json=schoolId,proto3" json:"school_id,omitempty" form:"school_id"`
 	// @inject_tag: form:"roll_id"
-	GradeId string `protobuf:"bytes,7,opt,name=grade_id,json=gradeId,proto3" json:"grade_id,omitempty" form:"roll_id"`
+	RollId string `protobuf:"bytes,6,opt,name=roll_id,json=rollId,proto3" json:"roll_id,omitempty" form:"roll_id"`
 	// @inject_tag: form:"grade_id"
-	Year int64 `protobuf:"varint,8,opt,name=year,proto3" json:"year,omitempty" form:"grade_id"`
+	GradeId string `protobuf:"bytes,7,opt,name=grade_id,json=gradeId,proto3" json:"grade_id,omitempty" form:"grade_id"`
 	// @inject_tag: form:"year"
-	CateId string `protobuf:"bytes,9,opt,name=cate_id,json=cateId,proto3" json:"cate_id,omitempty" form:"year"`
+	Year int64 `protobuf:"varint,8,opt,name=year,proto3" json:"year,omitempty" form:"year"`
 	// @inject_tag: form:"cate_id"
-	ChapterId string `protobuf:"bytes,10,opt,name=chapter_id,json=chapterId,proto3" json:"chapter_id,omitempty" form:"cate_id"`
+	CateId string `protobuf:"bytes,9,opt,name=cate_id,json=cateId,proto3" json:"cate_id,omitempty" form:"cate_id"`
 	// @inject_tag: form:"chapter_id"
-	ChildChId string `protobuf:"bytes,11,opt,name=child_ch_id,json=childChId,proto3" json:"child_ch_id,omitempty" form:"chapter_id"`
+	ChapterId string `protobuf:"bytes,10,opt,name=chapter_id,json=chapterId,proto3" json:"chapter_id,omitempty" form:"chapter_id"`
+	// @inject_tag: form:"child_ch_id"
+	ChildChId string `protobuf:"bytes,11,opt,name=child_ch_id,json=childChId,proto3" json:"child_ch_id,omitempty" form:"child_ch_id"`
 	// @inject_tag: form:"page"
 	Page int32 `protobuf:"varint,12,opt,name=page,proto3" json:"page,omitempty" form:"page"`
 	// @inject_tag: form:"size"

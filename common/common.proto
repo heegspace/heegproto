@@ -676,23 +676,23 @@ message ReqExam {
     int64       id = 1;
     // @inject_tag: form:"uid"
     int64       uid = 2;
-    // @inject_tag: form:"uid"
-    int64       pri_id = 3;
     // @inject_tag: form:"pri_id"
-    int64       city_id = 4;
+    int64       pri_id = 3;
     // @inject_tag: form:"city_id"
-    int64       school_id = 5;
+    int64       city_id = 4;
     // @inject_tag: form:"school_id"
-    string      roll_id = 6;
+    int64       school_id = 5;
     // @inject_tag: form:"roll_id"
-    string      grade_id = 7;
+    string      roll_id = 6;
     // @inject_tag: form:"grade_id"
-    int64       year = 8;
+    string      grade_id = 7;
     // @inject_tag: form:"year"
-    string      cate_id = 9;
+    int64       year = 8;
     // @inject_tag: form:"cate_id"
-    string      chapter_id = 10;
+    string      cate_id = 9;
     // @inject_tag: form:"chapter_id"
+    string      chapter_id = 10;
+    // @inject_tag: form:"child_ch_id"
     string      child_ch_id = 11;
     // @inject_tag: form:"page"
     int32       page = 12;
