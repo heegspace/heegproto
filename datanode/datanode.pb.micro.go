@@ -286,6 +286,8 @@ type DatanodeService interface {
 	ShareCount(ctx context.Context, in *ShareCountReq, opts ...client.CallOption) (*ShareCountRes, error)
 	// 分词
 	Analyzer(ctx context.Context, in *AnalyzerReq, opts ...client.CallOption) (*AnalyzerRes, error)
+	// 阅览接口
+	Reading(ctx context.Context, in *ReadingReq, opts ...client.CallOption) (*ReadingRes, error)
 }
 
 type datanodeService struct {
@@ -1560,6 +1562,16 @@ func (c *datanodeService) Analyzer(ctx context.Context, in *AnalyzerReq, opts ..
 	return out, nil
 }
 
+func (c *datanodeService) Reading(ctx context.Context, in *ReadingReq, opts ...client.CallOption) (*ReadingRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.Reading", in)
+	out := new(ReadingRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for DatanodeService service
 
 type DatanodeServiceHandler interface {
@@ -1811,6 +1823,8 @@ type DatanodeServiceHandler interface {
 	ShareCount(context.Context, *ShareCountReq, *ShareCountRes) error
 	// 分词
 	Analyzer(context.Context, *AnalyzerReq, *AnalyzerRes) error
+	// 阅览接口
+	Reading(context.Context, *ReadingReq, *ReadingRes) error
 }
 
 func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler, opts ...server.HandlerOption) error {
@@ -1941,6 +1955,7 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		ShareList(ctx context.Context, in *ShareListReq, out *ShareListRes) error
 		ShareCount(ctx context.Context, in *ShareCountReq, out *ShareCountRes) error
 		Analyzer(ctx context.Context, in *AnalyzerReq, out *AnalyzerRes) error
+		Reading(ctx context.Context, in *ReadingReq, out *ReadingRes) error
 	}
 	type DatanodeService struct {
 		datanodeService
@@ -2455,4 +2470,8 @@ func (h *datanodeServiceHandler) ShareCount(ctx context.Context, in *ShareCountR
 
 func (h *datanodeServiceHandler) Analyzer(ctx context.Context, in *AnalyzerReq, out *AnalyzerRes) error {
 	return h.DatanodeServiceHandler.Analyzer(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) Reading(ctx context.Context, in *ReadingReq, out *ReadingRes) error {
+	return h.DatanodeServiceHandler.Reading(ctx, in, out)
 }

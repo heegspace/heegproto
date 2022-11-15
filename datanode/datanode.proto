@@ -1661,6 +1661,21 @@ message AnalyzerRes {
     map<string,string>              extra = 4;
 }
 
+message ReadingReq {
+    int32               type = 1;   // 请求生成阅览的类型(1:试卷 )
+    int32               rw = 2;     // 请求类型(0:读    1:写)
+    string              param = 3;  // 请求参数，对应type进行解析
+    map<string,string>  extra = 4;
+}
+
+message ReadingRes {
+    rescode.Code                    rescode = 1;
+    string                          resmsg = 2;
+    int32                           type = 3;
+    string                          payload = 4;
+    map<string,string>              extra = 5;
+}
+
 service DatanodeService {
 	// ---------- 用户接口 ------- //
 	// 创建新用户
@@ -1916,4 +1931,6 @@ service DatanodeService {
 
     // 分词
     rpc Analyzer(AnalyzerReq) returns (AnalyzerRes) {}
+    // 阅览接口
+    rpc Reading(ReadingReq) returns (ReadingRes){}
 }
