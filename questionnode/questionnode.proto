@@ -521,6 +521,21 @@ message ExamCountRes {
     map<string,string>          extra = 4;
 }
 
+message PreviewReq {
+    common.Authorize            auth = 1;
+    int32                       type = 2;   // 请求阅览的类型(1:试卷 )
+    string                      payload = 3;  // 请求参数，对应type进行解析
+    map<string,string>          extra = 4;
+}
+
+message PreviewRes {
+    rescode.Code                    rescode = 1;
+    string                          resmsg = 2;
+    int32                           type = 3;
+    string                          payload = 4;
+    map<string,string>              extra = 5;
+}
+
 service QuestionnodeService {
     // 添加年纪信息
     rpc  GradeCateAdd(GradeCateAddReq) returns(GradeCateAddRes) {}
@@ -595,4 +610,6 @@ service QuestionnodeService {
     rpc ExamLists(ExamListReq) returns (ExamListRes) {}
     // 获取试卷数量
     rpc ExamCount(ExamCountReq) returns (ExamCountRes) {}
+     // 获取阅览信息接口
+    rpc Preview(PreviewReq) returns (PreviewRes) {}
 }

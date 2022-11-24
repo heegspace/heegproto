@@ -1676,6 +1676,20 @@ message ReadingRes {
     map<string,string>              extra = 5;
 }
 
+message PreviewReq {
+    int32               type = 1;   // 请求阅览的类型(1:试卷 )
+    string              payload = 2;  // 请求参数，对应type进行解析
+    map<string,string>  extra = 3;
+}
+
+message PreviewRes {
+    rescode.Code                    rescode = 1;
+    string                          resmsg = 2;
+    int32                           type = 3;
+    string                          payload = 4;
+    map<string,string>              extra = 5;
+}
+
 service DatanodeService {
 	// ---------- 用户接口 ------- //
 	// 创建新用户
@@ -1931,6 +1945,8 @@ service DatanodeService {
 
     // 分词
     rpc Analyzer(AnalyzerReq) returns (AnalyzerRes) {}
-    // 阅览接口
+    // 生成阅览接口
     rpc Reading(ReadingReq) returns (ReadingRes){}
+    // 获取阅览信息接口
+    rpc Preview(PreviewReq) returns (PreviewRes) {}
 }

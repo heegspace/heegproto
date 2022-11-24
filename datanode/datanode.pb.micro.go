@@ -286,8 +286,10 @@ type DatanodeService interface {
 	ShareCount(ctx context.Context, in *ShareCountReq, opts ...client.CallOption) (*ShareCountRes, error)
 	// 分词
 	Analyzer(ctx context.Context, in *AnalyzerReq, opts ...client.CallOption) (*AnalyzerRes, error)
-	// 阅览接口
+	// 生成阅览接口
 	Reading(ctx context.Context, in *ReadingReq, opts ...client.CallOption) (*ReadingRes, error)
+	// 获取阅览信息接口
+	Preview(ctx context.Context, in *PreviewReq, opts ...client.CallOption) (*PreviewRes, error)
 }
 
 type datanodeService struct {
@@ -1572,6 +1574,16 @@ func (c *datanodeService) Reading(ctx context.Context, in *ReadingReq, opts ...c
 	return out, nil
 }
 
+func (c *datanodeService) Preview(ctx context.Context, in *PreviewReq, opts ...client.CallOption) (*PreviewRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.Preview", in)
+	out := new(PreviewRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for DatanodeService service
 
 type DatanodeServiceHandler interface {
@@ -1823,8 +1835,10 @@ type DatanodeServiceHandler interface {
 	ShareCount(context.Context, *ShareCountReq, *ShareCountRes) error
 	// 分词
 	Analyzer(context.Context, *AnalyzerReq, *AnalyzerRes) error
-	// 阅览接口
+	// 生成阅览接口
 	Reading(context.Context, *ReadingReq, *ReadingRes) error
+	// 获取阅览信息接口
+	Preview(context.Context, *PreviewReq, *PreviewRes) error
 }
 
 func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler, opts ...server.HandlerOption) error {
@@ -1956,6 +1970,7 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		ShareCount(ctx context.Context, in *ShareCountReq, out *ShareCountRes) error
 		Analyzer(ctx context.Context, in *AnalyzerReq, out *AnalyzerRes) error
 		Reading(ctx context.Context, in *ReadingReq, out *ReadingRes) error
+		Preview(ctx context.Context, in *PreviewReq, out *PreviewRes) error
 	}
 	type DatanodeService struct {
 		datanodeService
@@ -2474,4 +2489,8 @@ func (h *datanodeServiceHandler) Analyzer(ctx context.Context, in *AnalyzerReq, 
 
 func (h *datanodeServiceHandler) Reading(ctx context.Context, in *ReadingReq, out *ReadingRes) error {
 	return h.DatanodeServiceHandler.Reading(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) Preview(ctx context.Context, in *PreviewReq, out *PreviewRes) error {
+	return h.DatanodeServiceHandler.Preview(ctx, in, out)
 }

@@ -110,6 +110,8 @@ type QuestionnodeService interface {
 	ExamLists(ctx context.Context, in *ExamListReq, opts ...client.CallOption) (*ExamListRes, error)
 	// 获取试卷数量
 	ExamCount(ctx context.Context, in *ExamCountReq, opts ...client.CallOption) (*ExamCountRes, error)
+	// 获取阅览信息接口
+	Preview(ctx context.Context, in *PreviewReq, opts ...client.CallOption) (*PreviewRes, error)
 }
 
 type questionnodeService struct {
@@ -484,6 +486,16 @@ func (c *questionnodeService) ExamCount(ctx context.Context, in *ExamCountReq, o
 	return out, nil
 }
 
+func (c *questionnodeService) Preview(ctx context.Context, in *PreviewReq, opts ...client.CallOption) (*PreviewRes, error) {
+	req := c.c.NewRequest(c.name, "QuestionnodeService.Preview", in)
+	out := new(PreviewRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for QuestionnodeService service
 
 type QuestionnodeServiceHandler interface {
@@ -559,6 +571,8 @@ type QuestionnodeServiceHandler interface {
 	ExamLists(context.Context, *ExamListReq, *ExamListRes) error
 	// 获取试卷数量
 	ExamCount(context.Context, *ExamCountReq, *ExamCountRes) error
+	// 获取阅览信息接口
+	Preview(context.Context, *PreviewReq, *PreviewRes) error
 }
 
 func RegisterQuestionnodeServiceHandler(s server.Server, hdlr QuestionnodeServiceHandler, opts ...server.HandlerOption) error {
@@ -599,6 +613,7 @@ func RegisterQuestionnodeServiceHandler(s server.Server, hdlr QuestionnodeServic
 		AddExam(ctx context.Context, in *AddExamReq, out *AddExamRes) error
 		ExamLists(ctx context.Context, in *ExamListReq, out *ExamListRes) error
 		ExamCount(ctx context.Context, in *ExamCountReq, out *ExamCountRes) error
+		Preview(ctx context.Context, in *PreviewReq, out *PreviewRes) error
 	}
 	type QuestionnodeService struct {
 		questionnodeService
@@ -753,4 +768,8 @@ func (h *questionnodeServiceHandler) ExamLists(ctx context.Context, in *ExamList
 
 func (h *questionnodeServiceHandler) ExamCount(ctx context.Context, in *ExamCountReq, out *ExamCountRes) error {
 	return h.QuestionnodeServiceHandler.ExamCount(ctx, in, out)
+}
+
+func (h *questionnodeServiceHandler) Preview(ctx context.Context, in *PreviewReq, out *PreviewRes) error {
+	return h.QuestionnodeServiceHandler.Preview(ctx, in, out)
 }
