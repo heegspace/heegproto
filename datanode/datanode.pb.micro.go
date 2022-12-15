@@ -273,13 +273,13 @@ type DatanodeService interface {
 	// 服务调用日志
 	FootLog(ctx context.Context, in *FootLogReq, opts ...client.CallOption) (*FootLogRes, error)
 	// 添加试题
-	AddExam(ctx context.Context, in *AddExamReq, opts ...client.CallOption) (*AddExamRes, error)
+	AddDocs(ctx context.Context, in *AddDocsReq, opts ...client.CallOption) (*AddDocsRes, error)
 	// 获取试卷列表
-	ExamLists(ctx context.Context, in *ExamListReq, opts ...client.CallOption) (*ExamListRes, error)
+	DocsLists(ctx context.Context, in *DocsListReq, opts ...client.CallOption) (*DocsListRes, error)
 	// 获取试卷数量
-	ExamCount(ctx context.Context, in *ExamCountReq, opts ...client.CallOption) (*ExamCountRes, error)
+	DocsCount(ctx context.Context, in *DocsCountReq, opts ...client.CallOption) (*DocsCountRes, error)
 	// 共享试卷
-	ShareExam(ctx context.Context, in *ShareExamReq, opts ...client.CallOption) (*ShareExamRes, error)
+	ShareDocs(ctx context.Context, in *ShareDocsReq, opts ...client.CallOption) (*ShareDocsRes, error)
 	// 获取共享列表信息
 	ShareList(ctx context.Context, in *ShareListReq, opts ...client.CallOption) (*ShareListRes, error)
 	// 获取共享数量
@@ -1494,9 +1494,9 @@ func (c *datanodeService) FootLog(ctx context.Context, in *FootLogReq, opts ...c
 	return out, nil
 }
 
-func (c *datanodeService) AddExam(ctx context.Context, in *AddExamReq, opts ...client.CallOption) (*AddExamRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.AddExam", in)
-	out := new(AddExamRes)
+func (c *datanodeService) AddDocs(ctx context.Context, in *AddDocsReq, opts ...client.CallOption) (*AddDocsRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.AddDocs", in)
+	out := new(AddDocsRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1504,9 +1504,9 @@ func (c *datanodeService) AddExam(ctx context.Context, in *AddExamReq, opts ...c
 	return out, nil
 }
 
-func (c *datanodeService) ExamLists(ctx context.Context, in *ExamListReq, opts ...client.CallOption) (*ExamListRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.ExamLists", in)
-	out := new(ExamListRes)
+func (c *datanodeService) DocsLists(ctx context.Context, in *DocsListReq, opts ...client.CallOption) (*DocsListRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.DocsLists", in)
+	out := new(DocsListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1514,9 +1514,9 @@ func (c *datanodeService) ExamLists(ctx context.Context, in *ExamListReq, opts .
 	return out, nil
 }
 
-func (c *datanodeService) ExamCount(ctx context.Context, in *ExamCountReq, opts ...client.CallOption) (*ExamCountRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.ExamCount", in)
-	out := new(ExamCountRes)
+func (c *datanodeService) DocsCount(ctx context.Context, in *DocsCountReq, opts ...client.CallOption) (*DocsCountRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.DocsCount", in)
+	out := new(DocsCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1524,9 +1524,9 @@ func (c *datanodeService) ExamCount(ctx context.Context, in *ExamCountReq, opts 
 	return out, nil
 }
 
-func (c *datanodeService) ShareExam(ctx context.Context, in *ShareExamReq, opts ...client.CallOption) (*ShareExamRes, error) {
-	req := c.c.NewRequest(c.name, "DatanodeService.ShareExam", in)
-	out := new(ShareExamRes)
+func (c *datanodeService) ShareDocs(ctx context.Context, in *ShareDocsReq, opts ...client.CallOption) (*ShareDocsRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.ShareDocs", in)
+	out := new(ShareDocsRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1822,13 +1822,13 @@ type DatanodeServiceHandler interface {
 	// 服务调用日志
 	FootLog(context.Context, *FootLogReq, *FootLogRes) error
 	// 添加试题
-	AddExam(context.Context, *AddExamReq, *AddExamRes) error
+	AddDocs(context.Context, *AddDocsReq, *AddDocsRes) error
 	// 获取试卷列表
-	ExamLists(context.Context, *ExamListReq, *ExamListRes) error
+	DocsLists(context.Context, *DocsListReq, *DocsListRes) error
 	// 获取试卷数量
-	ExamCount(context.Context, *ExamCountReq, *ExamCountRes) error
+	DocsCount(context.Context, *DocsCountReq, *DocsCountRes) error
 	// 共享试卷
-	ShareExam(context.Context, *ShareExamReq, *ShareExamRes) error
+	ShareDocs(context.Context, *ShareDocsReq, *ShareDocsRes) error
 	// 获取共享列表信息
 	ShareList(context.Context, *ShareListReq, *ShareListRes) error
 	// 获取共享数量
@@ -1962,10 +1962,10 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		UserScore(ctx context.Context, in *UserScoreReq, out *UserScoreRes) error
 		UserVip(ctx context.Context, in *UserVipReq, out *UserVipRes) error
 		FootLog(ctx context.Context, in *FootLogReq, out *FootLogRes) error
-		AddExam(ctx context.Context, in *AddExamReq, out *AddExamRes) error
-		ExamLists(ctx context.Context, in *ExamListReq, out *ExamListRes) error
-		ExamCount(ctx context.Context, in *ExamCountReq, out *ExamCountRes) error
-		ShareExam(ctx context.Context, in *ShareExamReq, out *ShareExamRes) error
+		AddDocs(ctx context.Context, in *AddDocsReq, out *AddDocsRes) error
+		DocsLists(ctx context.Context, in *DocsListReq, out *DocsListRes) error
+		DocsCount(ctx context.Context, in *DocsCountReq, out *DocsCountRes) error
+		ShareDocs(ctx context.Context, in *ShareDocsReq, out *ShareDocsRes) error
 		ShareList(ctx context.Context, in *ShareListReq, out *ShareListRes) error
 		ShareCount(ctx context.Context, in *ShareCountReq, out *ShareCountRes) error
 		Analyzer(ctx context.Context, in *AnalyzerReq, out *AnalyzerRes) error
@@ -2459,20 +2459,20 @@ func (h *datanodeServiceHandler) FootLog(ctx context.Context, in *FootLogReq, ou
 	return h.DatanodeServiceHandler.FootLog(ctx, in, out)
 }
 
-func (h *datanodeServiceHandler) AddExam(ctx context.Context, in *AddExamReq, out *AddExamRes) error {
-	return h.DatanodeServiceHandler.AddExam(ctx, in, out)
+func (h *datanodeServiceHandler) AddDocs(ctx context.Context, in *AddDocsReq, out *AddDocsRes) error {
+	return h.DatanodeServiceHandler.AddDocs(ctx, in, out)
 }
 
-func (h *datanodeServiceHandler) ExamLists(ctx context.Context, in *ExamListReq, out *ExamListRes) error {
-	return h.DatanodeServiceHandler.ExamLists(ctx, in, out)
+func (h *datanodeServiceHandler) DocsLists(ctx context.Context, in *DocsListReq, out *DocsListRes) error {
+	return h.DatanodeServiceHandler.DocsLists(ctx, in, out)
 }
 
-func (h *datanodeServiceHandler) ExamCount(ctx context.Context, in *ExamCountReq, out *ExamCountRes) error {
-	return h.DatanodeServiceHandler.ExamCount(ctx, in, out)
+func (h *datanodeServiceHandler) DocsCount(ctx context.Context, in *DocsCountReq, out *DocsCountRes) error {
+	return h.DatanodeServiceHandler.DocsCount(ctx, in, out)
 }
 
-func (h *datanodeServiceHandler) ShareExam(ctx context.Context, in *ShareExamReq, out *ShareExamRes) error {
-	return h.DatanodeServiceHandler.ShareExam(ctx, in, out)
+func (h *datanodeServiceHandler) ShareDocs(ctx context.Context, in *ShareDocsReq, out *ShareDocsRes) error {
+	return h.DatanodeServiceHandler.ShareDocs(ctx, in, out)
 }
 
 func (h *datanodeServiceHandler) ShareList(ctx context.Context, in *ShareListReq, out *ShareListRes) error {

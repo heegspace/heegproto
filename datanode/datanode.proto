@@ -1570,50 +1570,50 @@ message FootLogRes {
     map<string,string>          extra = 4;
 }
 
-message AddExamReq {
-    common.ExamItem             exam = 1;
+message AddDocsReq {
+    common.DocsItem             exam = 1;
     map<string,string>          extra = 2;
 }
 
-message AddExamRes {
+message AddDocsRes {
     rescode.Code                rescode = 1;
     string                      resmsg = 2;
     repeated common.FootLog     desc = 3;
     map<string,string>          extra = 4;
 }
 
-message ExamListReq {
-    common.ReqExam              req = 1;
+message DocsListReq {
+    common.ReqDocs              req = 1;
     map<string,string>          extra = 2;
 }
 
-message ExamListRes {
+message DocsListRes {
     rescode.Code                rescode = 1;
     string                      resmsg = 2;
-    repeated common.ExamItem    exams = 3;
+    repeated common.DocsItem    exams = 3;
     map<string,string>          extra = 4;
 }
 
-message ExamCountReq {
-    common.ReqExam              req = 1;
+message DocsCountReq {
+    common.ReqDocs              req = 1;
     map<string,string>          extra = 2;
 }
 
-message ExamCountRes {
+message DocsCountRes {
     rescode.Code                rescode = 1;
     string                      resmsg = 2;
     int64                       count = 3;
     map<string,string>          extra = 4;
 }
 
-message ShareExamReq {
+message ShareDocsReq {
     string                     id = 1;  // 试卷id
     int64                      uid = 2; // 用户uid 
     int64                      expire = 3;
     map<string,string>         extra = 4;
 }
 
-message ShareExamRes {
+message ShareDocsRes {
     rescode.Code                rescode = 1;
     string                      resmsg = 2;
     string                      url = 3;
@@ -1931,13 +1931,13 @@ service DatanodeService {
     rpc FootLog(FootLogReq) returns (FootLogRes) {}
 
     // 添加试题
-    rpc AddExam(AddExamReq) returns (AddExamRes) {}
+    rpc AddDocs(AddDocsReq) returns (AddDocsRes) {}
     // 获取试卷列表
-    rpc ExamLists(ExamListReq) returns (ExamListRes) {}
+    rpc DocsLists(DocsListReq) returns (DocsListRes) {}
     // 获取试卷数量
-    rpc ExamCount(ExamCountReq) returns (ExamCountRes) {}
+    rpc DocsCount(DocsCountReq) returns (DocsCountRes) {}
     // 共享试卷
-    rpc ShareExam(ShareExamReq) returns (ShareExamRes) {}
+    rpc ShareDocs(ShareDocsReq) returns (ShareDocsRes) {}
     // 获取共享列表信息
     rpc ShareList(ShareListReq) returns (ShareListRes) {}
     // 获取共享数量

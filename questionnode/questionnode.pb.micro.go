@@ -105,11 +105,11 @@ type QuestionnodeService interface {
 	// 获取识别列表熟数量
 	IdentCount(ctx context.Context, in *IdentCountReq, opts ...client.CallOption) (*IdentCountRes, error)
 	// 添加试题
-	AddExam(ctx context.Context, in *AddExamReq, opts ...client.CallOption) (*AddExamRes, error)
+	AddDocs(ctx context.Context, in *AddDocsReq, opts ...client.CallOption) (*AddDocsRes, error)
 	// 获取试卷列表
-	ExamLists(ctx context.Context, in *ExamListReq, opts ...client.CallOption) (*ExamListRes, error)
+	DocsLists(ctx context.Context, in *DocsListReq, opts ...client.CallOption) (*DocsListRes, error)
 	// 获取试卷数量
-	ExamCount(ctx context.Context, in *ExamCountReq, opts ...client.CallOption) (*ExamCountRes, error)
+	DocsCount(ctx context.Context, in *DocsCountReq, opts ...client.CallOption) (*DocsCountRes, error)
 	// 获取阅览信息接口
 	Preview(ctx context.Context, in *PreviewReq, opts ...client.CallOption) (*PreviewRes, error)
 }
@@ -456,9 +456,9 @@ func (c *questionnodeService) IdentCount(ctx context.Context, in *IdentCountReq,
 	return out, nil
 }
 
-func (c *questionnodeService) AddExam(ctx context.Context, in *AddExamReq, opts ...client.CallOption) (*AddExamRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.AddExam", in)
-	out := new(AddExamRes)
+func (c *questionnodeService) AddDocs(ctx context.Context, in *AddDocsReq, opts ...client.CallOption) (*AddDocsRes, error) {
+	req := c.c.NewRequest(c.name, "QuestionnodeService.AddDocs", in)
+	out := new(AddDocsRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -466,9 +466,9 @@ func (c *questionnodeService) AddExam(ctx context.Context, in *AddExamReq, opts 
 	return out, nil
 }
 
-func (c *questionnodeService) ExamLists(ctx context.Context, in *ExamListReq, opts ...client.CallOption) (*ExamListRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.ExamLists", in)
-	out := new(ExamListRes)
+func (c *questionnodeService) DocsLists(ctx context.Context, in *DocsListReq, opts ...client.CallOption) (*DocsListRes, error) {
+	req := c.c.NewRequest(c.name, "QuestionnodeService.DocsLists", in)
+	out := new(DocsListRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -476,9 +476,9 @@ func (c *questionnodeService) ExamLists(ctx context.Context, in *ExamListReq, op
 	return out, nil
 }
 
-func (c *questionnodeService) ExamCount(ctx context.Context, in *ExamCountReq, opts ...client.CallOption) (*ExamCountRes, error) {
-	req := c.c.NewRequest(c.name, "QuestionnodeService.ExamCount", in)
-	out := new(ExamCountRes)
+func (c *questionnodeService) DocsCount(ctx context.Context, in *DocsCountReq, opts ...client.CallOption) (*DocsCountRes, error) {
+	req := c.c.NewRequest(c.name, "QuestionnodeService.DocsCount", in)
+	out := new(DocsCountRes)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -566,11 +566,11 @@ type QuestionnodeServiceHandler interface {
 	// 获取识别列表熟数量
 	IdentCount(context.Context, *IdentCountReq, *IdentCountRes) error
 	// 添加试题
-	AddExam(context.Context, *AddExamReq, *AddExamRes) error
+	AddDocs(context.Context, *AddDocsReq, *AddDocsRes) error
 	// 获取试卷列表
-	ExamLists(context.Context, *ExamListReq, *ExamListRes) error
+	DocsLists(context.Context, *DocsListReq, *DocsListRes) error
 	// 获取试卷数量
-	ExamCount(context.Context, *ExamCountReq, *ExamCountRes) error
+	DocsCount(context.Context, *DocsCountReq, *DocsCountRes) error
 	// 获取阅览信息接口
 	Preview(context.Context, *PreviewReq, *PreviewRes) error
 }
@@ -610,9 +610,9 @@ func RegisterQuestionnodeServiceHandler(s server.Server, hdlr QuestionnodeServic
 		IdentByIid(ctx context.Context, in *IdentByIidReq, out *IdentByIidRes) error
 		IdentList(ctx context.Context, in *IdentListReq, out *IdentListRes) error
 		IdentCount(ctx context.Context, in *IdentCountReq, out *IdentCountRes) error
-		AddExam(ctx context.Context, in *AddExamReq, out *AddExamRes) error
-		ExamLists(ctx context.Context, in *ExamListReq, out *ExamListRes) error
-		ExamCount(ctx context.Context, in *ExamCountReq, out *ExamCountRes) error
+		AddDocs(ctx context.Context, in *AddDocsReq, out *AddDocsRes) error
+		DocsLists(ctx context.Context, in *DocsListReq, out *DocsListRes) error
+		DocsCount(ctx context.Context, in *DocsCountReq, out *DocsCountRes) error
 		Preview(ctx context.Context, in *PreviewReq, out *PreviewRes) error
 	}
 	type QuestionnodeService struct {
@@ -758,16 +758,16 @@ func (h *questionnodeServiceHandler) IdentCount(ctx context.Context, in *IdentCo
 	return h.QuestionnodeServiceHandler.IdentCount(ctx, in, out)
 }
 
-func (h *questionnodeServiceHandler) AddExam(ctx context.Context, in *AddExamReq, out *AddExamRes) error {
-	return h.QuestionnodeServiceHandler.AddExam(ctx, in, out)
+func (h *questionnodeServiceHandler) AddDocs(ctx context.Context, in *AddDocsReq, out *AddDocsRes) error {
+	return h.QuestionnodeServiceHandler.AddDocs(ctx, in, out)
 }
 
-func (h *questionnodeServiceHandler) ExamLists(ctx context.Context, in *ExamListReq, out *ExamListRes) error {
-	return h.QuestionnodeServiceHandler.ExamLists(ctx, in, out)
+func (h *questionnodeServiceHandler) DocsLists(ctx context.Context, in *DocsListReq, out *DocsListRes) error {
+	return h.QuestionnodeServiceHandler.DocsLists(ctx, in, out)
 }
 
-func (h *questionnodeServiceHandler) ExamCount(ctx context.Context, in *ExamCountReq, out *ExamCountRes) error {
-	return h.QuestionnodeServiceHandler.ExamCount(ctx, in, out)
+func (h *questionnodeServiceHandler) DocsCount(ctx context.Context, in *DocsCountReq, out *DocsCountRes) error {
+	return h.QuestionnodeServiceHandler.DocsCount(ctx, in, out)
 }
 
 func (h *questionnodeServiceHandler) Preview(ctx context.Context, in *PreviewReq, out *PreviewRes) error {

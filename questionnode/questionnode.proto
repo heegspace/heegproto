@@ -482,39 +482,39 @@ message IdentCountRes {
     map<string,string>   extra = 4;
 }
 
-message AddExamReq {
+message AddDocsReq {
     common.Authorize            auth = 1;
-    common.ExamItem             exam = 2;
+    common.DocsItem             exam = 2;
     map<string,string>          extra = 3;
 }
 
-message AddExamRes {
+message AddDocsRes {
     rescode.Code                rescode = 1;
     string                      resmsg = 2;
     repeated common.FootLog     desc = 3;
     map<string,string>          extra = 4;
 }
 
-message ExamListReq {
+message DocsListReq {
     common.Authorize            auth = 1;
-    common.ReqExam              req = 2;
+    common.ReqDocs              req = 2;
     map<string,string>          extra = 3;
 }
 
-message ExamListRes {
+message DocsListRes {
     rescode.Code                rescode = 1;
     string                      resmsg = 2;
-    repeated common.ExamItem    exams = 3;
+    repeated common.DocsItem    exams = 3;
     map<string,string>          extra = 4;
 }
 
-message ExamCountReq {
+message DocsCountReq {
     common.Authorize            auth = 1;
-    common.ReqExam              req = 2;
+    common.ReqDocs              req = 2;
     map<string,string>          extra = 3;
 }
 
-message ExamCountRes {
+message DocsCountRes {
     rescode.Code                rescode = 1;
     string                      resmsg = 2;
     int64                       count = 3;
@@ -605,11 +605,11 @@ service QuestionnodeService {
     rpc  IdentCount(IdentCountReq) returns(IdentCountRes) {}
 
     // 添加试题
-    rpc AddExam(AddExamReq) returns (AddExamRes) {}
+    rpc AddDocs(AddDocsReq) returns (AddDocsRes) {}
     // 获取试卷列表
-    rpc ExamLists(ExamListReq) returns (ExamListRes) {}
+    rpc DocsLists(DocsListReq) returns (DocsListRes) {}
     // 获取试卷数量
-    rpc ExamCount(ExamCountReq) returns (ExamCountRes) {}
+    rpc DocsCount(DocsCountReq) returns (DocsCountRes) {}
      // 获取阅览信息接口
     rpc Preview(PreviewReq) returns (PreviewRes) {}
 }
