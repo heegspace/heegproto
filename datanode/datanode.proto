@@ -1571,7 +1571,7 @@ message FootLogRes {
 }
 
 message AddDocsReq {
-    common.DocsItem             exam = 1;
+    common.DocsItem             docs = 1;
     map<string,string>          extra = 2;
 }
 
@@ -1590,7 +1590,7 @@ message DocsListReq {
 message DocsListRes {
     rescode.Code                rescode = 1;
     string                      resmsg = 2;
-    repeated common.DocsItem    exams = 3;
+    repeated common.DocsItem    docs = 3;
     map<string,string>          extra = 4;
 }
 

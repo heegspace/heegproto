@@ -484,7 +484,7 @@ message IdentCountRes {
 
 message AddDocsReq {
     common.Authorize            auth = 1;
-    common.DocsItem             exam = 2;
+    common.DocsItem             docs = 2;
     map<string,string>          extra = 3;
 }
 
@@ -504,7 +504,7 @@ message DocsListReq {
 message DocsListRes {
     rescode.Code                rescode = 1;
     string                      resmsg = 2;
-    repeated common.DocsItem    exams = 3;
+    repeated common.DocsItem    docs = 3;
     map<string,string>          extra = 4;
 }
 
