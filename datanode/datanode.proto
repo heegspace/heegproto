@@ -1582,6 +1582,19 @@ message AddDocsRes {
     map<string,string>          extra = 4;
 }
 
+message UpdateDocsReq {
+    common.DocsItem             docs = 1;
+    int64                       op = 2; // 0:返回   1:删除
+    map<string,string>          extra = 3;
+}
+
+message UpdateDocsRes {
+    rescode.Code                rescode = 1;
+    string                      resmsg = 2;
+    repeated common.FootLog     desc = 3;
+    map<string,string>          extra = 4;
+}
+
 message DocsListReq {
     common.ReqDocs              req = 1;
     map<string,string>          extra = 2;
@@ -1930,8 +1943,10 @@ service DatanodeService {
     // 服务调用日志
     rpc FootLog(FootLogReq) returns (FootLogRes) {}
 
-    // 添加试题
+    // 添加文档
     rpc AddDocs(AddDocsReq) returns (AddDocsRes) {}
+    // 更新文档
+    rpc UpdateDocs(UpdateDocsReq) returns (UpdateDocsRes) {}
     // 获取试卷列表
     rpc DocsLists(DocsListReq) returns (DocsListRes) {}
     // 获取试卷数量

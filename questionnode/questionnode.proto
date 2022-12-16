@@ -495,6 +495,20 @@ message AddDocsRes {
     map<string,string>          extra = 4;
 }
 
+message UpdateDocsReq {
+    common.Authorize            auth = 1;
+    common.DocsItem             docs = 2;
+    int64                       op = 3; // 0:返回   1:删除
+    map<string,string>          extra = 4;
+}
+
+message UpdateDocsRes {
+    rescode.Code                rescode = 1;
+    string                      resmsg = 2;
+    repeated common.FootLog     desc = 3;
+    map<string,string>          extra = 4;
+}
+
 message DocsListReq {
     common.Authorize            auth = 1;
     common.ReqDocs              req = 2;
@@ -604,8 +618,10 @@ service QuestionnodeService {
     // 获取识别列表熟数量
     rpc  IdentCount(IdentCountReq) returns(IdentCountRes) {}
 
-    // 添加试题
+    // 添加文档
     rpc AddDocs(AddDocsReq) returns (AddDocsRes) {}
+    // 更新文档
+    rpc UpdateDocs(UpdateDocsReq) returns (UpdateDocsRes) {}
     // 获取试卷列表
     rpc DocsLists(DocsListReq) returns (DocsListRes) {}
     // 获取试卷数量

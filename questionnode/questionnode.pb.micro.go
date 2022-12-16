@@ -104,8 +104,10 @@ type QuestionnodeService interface {
 	IdentList(ctx context.Context, in *IdentListReq, opts ...client.CallOption) (*IdentListRes, error)
 	// 获取识别列表熟数量
 	IdentCount(ctx context.Context, in *IdentCountReq, opts ...client.CallOption) (*IdentCountRes, error)
-	// 添加试题
+	// 添加文档
 	AddDocs(ctx context.Context, in *AddDocsReq, opts ...client.CallOption) (*AddDocsRes, error)
+	// 更新文档
+	UpdateDocs(ctx context.Context, in *UpdateDocsReq, opts ...client.CallOption) (*UpdateDocsRes, error)
 	// 获取试卷列表
 	DocsLists(ctx context.Context, in *DocsListReq, opts ...client.CallOption) (*DocsListRes, error)
 	// 获取试卷数量
@@ -466,6 +468,16 @@ func (c *questionnodeService) AddDocs(ctx context.Context, in *AddDocsReq, opts 
 	return out, nil
 }
 
+func (c *questionnodeService) UpdateDocs(ctx context.Context, in *UpdateDocsReq, opts ...client.CallOption) (*UpdateDocsRes, error) {
+	req := c.c.NewRequest(c.name, "QuestionnodeService.UpdateDocs", in)
+	out := new(UpdateDocsRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *questionnodeService) DocsLists(ctx context.Context, in *DocsListReq, opts ...client.CallOption) (*DocsListRes, error) {
 	req := c.c.NewRequest(c.name, "QuestionnodeService.DocsLists", in)
 	out := new(DocsListRes)
@@ -565,8 +577,10 @@ type QuestionnodeServiceHandler interface {
 	IdentList(context.Context, *IdentListReq, *IdentListRes) error
 	// 获取识别列表熟数量
 	IdentCount(context.Context, *IdentCountReq, *IdentCountRes) error
-	// 添加试题
+	// 添加文档
 	AddDocs(context.Context, *AddDocsReq, *AddDocsRes) error
+	// 更新文档
+	UpdateDocs(context.Context, *UpdateDocsReq, *UpdateDocsRes) error
 	// 获取试卷列表
 	DocsLists(context.Context, *DocsListReq, *DocsListRes) error
 	// 获取试卷数量
@@ -611,6 +625,7 @@ func RegisterQuestionnodeServiceHandler(s server.Server, hdlr QuestionnodeServic
 		IdentList(ctx context.Context, in *IdentListReq, out *IdentListRes) error
 		IdentCount(ctx context.Context, in *IdentCountReq, out *IdentCountRes) error
 		AddDocs(ctx context.Context, in *AddDocsReq, out *AddDocsRes) error
+		UpdateDocs(ctx context.Context, in *UpdateDocsReq, out *UpdateDocsRes) error
 		DocsLists(ctx context.Context, in *DocsListReq, out *DocsListRes) error
 		DocsCount(ctx context.Context, in *DocsCountReq, out *DocsCountRes) error
 		Preview(ctx context.Context, in *PreviewReq, out *PreviewRes) error
@@ -760,6 +775,10 @@ func (h *questionnodeServiceHandler) IdentCount(ctx context.Context, in *IdentCo
 
 func (h *questionnodeServiceHandler) AddDocs(ctx context.Context, in *AddDocsReq, out *AddDocsRes) error {
 	return h.QuestionnodeServiceHandler.AddDocs(ctx, in, out)
+}
+
+func (h *questionnodeServiceHandler) UpdateDocs(ctx context.Context, in *UpdateDocsReq, out *UpdateDocsRes) error {
+	return h.QuestionnodeServiceHandler.UpdateDocs(ctx, in, out)
 }
 
 func (h *questionnodeServiceHandler) DocsLists(ctx context.Context, in *DocsListReq, out *DocsListRes) error {

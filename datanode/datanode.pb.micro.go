@@ -272,8 +272,10 @@ type DatanodeService interface {
 	UserVip(ctx context.Context, in *UserVipReq, opts ...client.CallOption) (*UserVipRes, error)
 	// 服务调用日志
 	FootLog(ctx context.Context, in *FootLogReq, opts ...client.CallOption) (*FootLogRes, error)
-	// 添加试题
+	// 添加文档
 	AddDocs(ctx context.Context, in *AddDocsReq, opts ...client.CallOption) (*AddDocsRes, error)
+	// 更新文档
+	UpdateDocs(ctx context.Context, in *UpdateDocsReq, opts ...client.CallOption) (*UpdateDocsRes, error)
 	// 获取试卷列表
 	DocsLists(ctx context.Context, in *DocsListReq, opts ...client.CallOption) (*DocsListRes, error)
 	// 获取试卷数量
@@ -1504,6 +1506,16 @@ func (c *datanodeService) AddDocs(ctx context.Context, in *AddDocsReq, opts ...c
 	return out, nil
 }
 
+func (c *datanodeService) UpdateDocs(ctx context.Context, in *UpdateDocsReq, opts ...client.CallOption) (*UpdateDocsRes, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.UpdateDocs", in)
+	out := new(UpdateDocsRes)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *datanodeService) DocsLists(ctx context.Context, in *DocsListReq, opts ...client.CallOption) (*DocsListRes, error) {
 	req := c.c.NewRequest(c.name, "DatanodeService.DocsLists", in)
 	out := new(DocsListRes)
@@ -1821,8 +1833,10 @@ type DatanodeServiceHandler interface {
 	UserVip(context.Context, *UserVipReq, *UserVipRes) error
 	// 服务调用日志
 	FootLog(context.Context, *FootLogReq, *FootLogRes) error
-	// 添加试题
+	// 添加文档
 	AddDocs(context.Context, *AddDocsReq, *AddDocsRes) error
+	// 更新文档
+	UpdateDocs(context.Context, *UpdateDocsReq, *UpdateDocsRes) error
 	// 获取试卷列表
 	DocsLists(context.Context, *DocsListReq, *DocsListRes) error
 	// 获取试卷数量
@@ -1963,6 +1977,7 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		UserVip(ctx context.Context, in *UserVipReq, out *UserVipRes) error
 		FootLog(ctx context.Context, in *FootLogReq, out *FootLogRes) error
 		AddDocs(ctx context.Context, in *AddDocsReq, out *AddDocsRes) error
+		UpdateDocs(ctx context.Context, in *UpdateDocsReq, out *UpdateDocsRes) error
 		DocsLists(ctx context.Context, in *DocsListReq, out *DocsListRes) error
 		DocsCount(ctx context.Context, in *DocsCountReq, out *DocsCountRes) error
 		ShareDocs(ctx context.Context, in *ShareDocsReq, out *ShareDocsRes) error
@@ -2461,6 +2476,10 @@ func (h *datanodeServiceHandler) FootLog(ctx context.Context, in *FootLogReq, ou
 
 func (h *datanodeServiceHandler) AddDocs(ctx context.Context, in *AddDocsReq, out *AddDocsRes) error {
 	return h.DatanodeServiceHandler.AddDocs(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) UpdateDocs(ctx context.Context, in *UpdateDocsReq, out *UpdateDocsRes) error {
+	return h.DatanodeServiceHandler.UpdateDocs(ctx, in, out)
 }
 
 func (h *datanodeServiceHandler) DocsLists(ctx context.Context, in *DocsListReq, out *DocsListRes) error {
