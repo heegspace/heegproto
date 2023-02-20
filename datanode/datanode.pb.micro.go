@@ -292,6 +292,10 @@ type DatanodeService interface {
 	Reading(ctx context.Context, in *ReadingReq, opts ...client.CallOption) (*ReadingRes, error)
 	// 获取阅览信息接口
 	Preview(ctx context.Context, in *PreviewReq, opts ...client.CallOption) (*PreviewRes, error)
+	// 写入购买记录
+	BuyRecord(ctx context.Context, in *BuyRecordReq, opts ...client.CallOption) (*Response, error)
+	// 写入下载记录
+	DownloadRecord(ctx context.Context, in *DownloadRecordReq, opts ...client.CallOption) (*Response, error)
 }
 
 type datanodeService struct {
@@ -1596,6 +1600,26 @@ func (c *datanodeService) Preview(ctx context.Context, in *PreviewReq, opts ...c
 	return out, nil
 }
 
+func (c *datanodeService) BuyRecord(ctx context.Context, in *BuyRecordReq, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.BuyRecord", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *datanodeService) DownloadRecord(ctx context.Context, in *DownloadRecordReq, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "DatanodeService.DownloadRecord", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for DatanodeService service
 
 type DatanodeServiceHandler interface {
@@ -1853,6 +1877,10 @@ type DatanodeServiceHandler interface {
 	Reading(context.Context, *ReadingReq, *ReadingRes) error
 	// 获取阅览信息接口
 	Preview(context.Context, *PreviewReq, *PreviewRes) error
+	// 写入购买记录
+	BuyRecord(context.Context, *BuyRecordReq, *Response) error
+	// 写入下载记录
+	DownloadRecord(context.Context, *DownloadRecordReq, *Response) error
 }
 
 func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler, opts ...server.HandlerOption) error {
@@ -1986,6 +2014,8 @@ func RegisterDatanodeServiceHandler(s server.Server, hdlr DatanodeServiceHandler
 		Analyzer(ctx context.Context, in *AnalyzerReq, out *AnalyzerRes) error
 		Reading(ctx context.Context, in *ReadingReq, out *ReadingRes) error
 		Preview(ctx context.Context, in *PreviewReq, out *PreviewRes) error
+		BuyRecord(ctx context.Context, in *BuyRecordReq, out *Response) error
+		DownloadRecord(ctx context.Context, in *DownloadRecordReq, out *Response) error
 	}
 	type DatanodeService struct {
 		datanodeService
@@ -2512,4 +2542,12 @@ func (h *datanodeServiceHandler) Reading(ctx context.Context, in *ReadingReq, ou
 
 func (h *datanodeServiceHandler) Preview(ctx context.Context, in *PreviewReq, out *PreviewRes) error {
 	return h.DatanodeServiceHandler.Preview(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) BuyRecord(ctx context.Context, in *BuyRecordReq, out *Response) error {
+	return h.DatanodeServiceHandler.BuyRecord(ctx, in, out)
+}
+
+func (h *datanodeServiceHandler) DownloadRecord(ctx context.Context, in *DownloadRecordReq, out *Response) error {
+	return h.DatanodeServiceHandler.DownloadRecord(ctx, in, out)
 }

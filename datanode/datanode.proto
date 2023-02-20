@@ -1703,6 +1703,26 @@ message PreviewRes {
     map<string,string>              extra = 5;
 }
 
+message BuyRecordReq {
+    int64                           uid = 1;
+    string                          gid = 2;
+    int64                           genre = 3;
+    map<string,string>              extra = 5;
+}
+
+message DownloadRecordReq {
+    int64                           uid = 1;
+    string                          gid = 2;
+    int64                           genre = 3;
+    map<string,string>              extra = 5;
+}
+
+message Response {
+    rescode.Code        rescode = 1;
+    string              resmsg = 2;
+    map<string,string>  extra = 3;
+}
+
 service DatanodeService {
 	// ---------- 用户接口 ------- //
 	// 创建新用户
@@ -1964,4 +1984,8 @@ service DatanodeService {
     rpc Reading(ReadingReq) returns (ReadingRes){}
     // 获取阅览信息接口
     rpc Preview(PreviewReq) returns (PreviewRes) {}
+    // 写入购买记录
+    rpc BuyRecord(BuyRecordReq) returns (Response) {}
+    // 写入下载记录
+    rpc DownloadRecord(DownloadRecordReq) returns (Response) {}
 }
