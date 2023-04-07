@@ -313,6 +313,7 @@ message UserInfo {
     string                city = 5;
     string                country = 6;
     int64                 vip = 7;
+    int64                 uid = 8;
 }
 
 message WechatUserinfo {
