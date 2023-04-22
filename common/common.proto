@@ -44,9 +44,10 @@ enum UserStatus {
 }
 
 enum FromPlatom {
-    from_platom_FROM_LOCAL      = 0x0000;     // 自己平台
+    from_platom_FROM_LOCAL      = 0x0000;    // 自己平台
     from_platom_FROM_WECHAT     = 0x0001;    // 微信平台
     from_platom_FROM_ALIPAY     = 0x0002;    // 支付宝平台
+    from_platom_FROM_UNKNOWN    = 0x0099;    // 未知平台
 }
 
 enum ApproveDest {
