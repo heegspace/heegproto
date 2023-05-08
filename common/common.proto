@@ -702,7 +702,7 @@ message ReqDocs {
     int32       size = 13;
     // @inject_tag: form:"title"
     string      title = 14;
-    // @inject_tag: from:"doc_type"
+    // @inject_tag: form:"doc_type"
     int32       doc_type = 15;
 }
 

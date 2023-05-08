@@ -5825,8 +5825,8 @@ type ReqDocs struct {
 	Size int32 `protobuf:"varint,13,opt,name=size,proto3" json:"size,omitempty" form:"size"`
 	// @inject_tag: form:"title"
 	Title string `protobuf:"bytes,14,opt,name=title,proto3" json:"title,omitempty" form:"title"`
-	// @inject_tag: from:"doc_type"
-	DocType int32 `protobuf:"varint,15,opt,name=doc_type,json=docType,proto3" json:"doc_type,omitempty" from:"doc_type"`
+	// @inject_tag: form:"doc_type"
+	DocType int32 `protobuf:"varint,15,opt,name=doc_type,json=docType,proto3" json:"doc_type,omitempty" form:"doc_type"`
 }
 
 func (x *ReqDocs) Reset() {
